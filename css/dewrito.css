@@ -1,4 +1,4 @@
-* {font-family: "TV Nord";  -webkit-user-select: none;}
+* {font-family: "TV Nord";  -webkit-user-select: none; user-select: none;}
 
 html {
     background-color: #000;
@@ -12,6 +12,8 @@ html {
     height: 720px;
     overflow: hidden;
     -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1);
 }
 
 #copyright {
@@ -61,6 +63,10 @@ audio {display: none;}
 .animated {
     -webkit-transition: 400ms;
     -webkit-transition-timing-function: cubic-bezier(.55,0,.1,1);
+    -moz-transition: 400ms;
+    -moz-transition-timing-function: cubic-bezier(.55,0,.1,1);
+    transition: 400ms;
+    transition-timing-function: cubic-bezier(.55,0,.1,1);
 }
 
 #customgame {top: -720px; left: 0;}
@@ -78,6 +84,8 @@ audio {display: none;}
     border-radius: 4px;
     border: 1px solid rgba(0,0,0,1);
     -webkit-box-shadow: 0px 0px 50px 16px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 50px 16px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 50px 16px rgba(0,0,0,0.75);
 }
 
 #map-thumb-options {
@@ -218,6 +226,8 @@ audio {display: none;}
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
 }
 
 .map-select .selection {
@@ -255,6 +265,8 @@ audio {display: none;}
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
 }
 
 .left {
@@ -298,6 +310,8 @@ audio {display: none;}
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
 }
 
 .select-main .selection {
@@ -310,6 +324,8 @@ audio {display: none;}
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
 }
 
 .select-main .selection .value, #select .selection .value  {
@@ -442,6 +458,8 @@ audio {display: none;}
     box-sizing: border-box;
     color: #fff;
     -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
 }
 
 #lobby td.rank {
@@ -453,6 +471,8 @@ audio {display: none;}
     text-align: center;
     color: #fff;
     -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
 }
 
 #lobby td.rank img {
@@ -518,7 +538,12 @@ audio {display: none;}
 }
 
 .options-menu {
-    background: -webkit-linear-gradient(top, rgba(0,38,64,0.9) 0%,rgba(0,0,0,0.9) 100%);
+    background: -moz-linear-gradient(top, rgba(0,38,64,0.9) 0%, rgba(0,0,0,0.9) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,38,64,0.9)), color-stop(100%,rgba(0,0,0,0.9))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(0,38,64,0.9) 0%,rgba(0,0,0,0.9) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(0,38,64,0.9) 0%,rgba(0,0,0,0.9) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(0,38,64,0.9) 0%,rgba(0,0,0,0.9) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(0,38,64,0.9) 0%,rgba(0,0,0,0.9) 100%); /* W3C */
     position: absolute;
     top: 0px; left: 0;
     margin: 0;
