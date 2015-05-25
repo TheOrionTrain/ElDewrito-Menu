@@ -1,11 +1,8 @@
-    var descriptions = {
-        "DIAMONDBACK" : "Hot winds blow over what should be a dead moon. A reminder of the power the Forerunners once wielded. 6-16 players.",
-        "EDGE" : "The remote frontier world of Parition has provided this ancient databank with the safety of seclusion. 6-16 players.",
-        "GUARDIAN" : "Millennia of tending has produced trees as ancient as the Forerunner structures they have grown around. 2-6 players",
-        "ICEBOX" : "Though they dominate on the open terrain, many Scarabs have fallen victim to the narrow streets of Earth's cities. 4-10 players.",
-        "REACTOR" : "Being constructed just prior to the Invasion, its builders had to evacuate before it was completed. 6-16 players.",
-        "RIVERWORLD" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge. 6-16 players."
-    };
+
+    /*
+        (c) 2015 Brayden Strasen
+        https://creativecommons.org/licenses/by-nc-sa/4.0/
+    */
 
     function changeSetting(s,by) {
         $('#click')[0].currentTime = 0;
@@ -25,6 +22,8 @@
 
   $(document).ready(function() {
       loadMaps();
+      var e = ((window.innerHeight-$('#menu').height())/2)-40;
+      $('#menu').css('margin-top',e+'px');
       $('#music')[0].volume = settings.musicvolume.current;
       $('#click')[0].volume = settings.sfxvolume.current;
       $('#start').click(function() {startgame();});
