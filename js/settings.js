@@ -39,6 +39,22 @@ var settings = {
             $("[data-option='resolution']").children('.value').text(settings.resolution.labels[c/0.5]);
         }
     },
+    "background" : {
+        "current" : 0,
+        "min" : 0,
+        "max" : 1,
+        "default" : 0,
+        "labels" : [
+            "Halo Reach",
+            "Crash"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.background.current;
+            $('#bg').attr('src','video/'+settings.background.labels[c]+'.mp4');
+            $("[data-option='background']").children('.value').text(settings.background.labels[c]);
+        }
+    },
     "musicvolume" : {
         "current" : 0.25,
         "min" : 0,
