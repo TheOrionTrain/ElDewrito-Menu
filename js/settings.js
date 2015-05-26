@@ -42,16 +42,18 @@ var settings = {
     "background" : {
         "current" : 0,
         "min" : 0,
-        "max" : 1,
+        "max" : 3,
         "default" : 0,
         "labels" : [
-            "Halo Reach",
-            "Crash"
+            "Halo Reach.webm",
+            "Crash.webm",
+            "Halo Reach.mp4",
+            "Crash.mp4",
         ],
         "increment" : 1,
         "update" : function() {
             var c = settings.background.current;
-            $('#bg').attr('src','video/'+settings.background.labels[c]+'.mp4');
+            $('#bg').attr('src','video/'+settings.background.labels[c]);
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
         }
     },
