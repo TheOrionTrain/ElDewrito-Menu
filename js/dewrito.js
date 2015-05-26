@@ -45,12 +45,12 @@
           var c = $(this).parent('.selection').attr('data-option');
           changeSetting(c,0);
       });
-      $('#start-button').click(function() { changeMenu("main-custom"); });
-      $('#main2-button').click(function() { changeMenu("main2-main"); });
-      $('#options-button').click(function() { changeMenu("main-options"); });
+
+      $("[data-action='menu']").click(function() {
+          changeMenu($(this).attr('data-menu'));
+      });
+
       $('#back').click(function() { changeMenu($(this).attr('data-action')); });
-      $('#open-options-menu').click(function() { changeMenu("custom-options"); });
-      $('#open-map-menu').click(function() { changeMenu("custom-map"); });
   });
 
   var players = [], joined = 0, track = 5, scale = 1, anit = 400;
@@ -98,6 +98,19 @@
       if(menu == "custom-main") {
           $('#dewrito').css({"opacity":0.95, "top":"240px","-webkit-transition-timing-function":"400ms","-webkit-transition-delay":"0ms"});
           $('#customgame').css({"top":"-720px"});
+          $('#main').css({"top":"0px"});
+          $('#back').attr('data-action','main-main2');
+      }
+      if(menu == "main-serverbrowser") {
+          $('#dewrito').css({"opacity":0, "top":"920px"});
+          $('#back').fadeIn(anit);
+          $('#back').attr('data-action','serverbrowser-main');
+          $('#serverbrowser').css({"top":"0px"});
+          $('#main').css({"top":"720px"});
+      }
+      if(menu == "serverbrowser-main") {
+          $('#dewrito').css({"opacity":0.95, "top":"240px","-webkit-transition-timing-function":"400ms","-webkit-transition-delay":"0ms"});
+          $('#serverbrowser').css({"top":"-720px"});
           $('#main').css({"top":"0px"});
           $('#back').attr('data-action','main-main2');
       }

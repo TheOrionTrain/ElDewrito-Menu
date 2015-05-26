@@ -58,7 +58,7 @@ audio {display: none;}
     height: 720px;
 }
 
-#main {top: -720px;}
+#main, #serverbrowser {top: -720px;}
 
 .animated {
     -webkit-transition: 400ms;
