@@ -116,7 +116,7 @@ maps = {
     },
     "Halo1" : {
         "BATTLE CREEK" : "Splash Splash, Bang Bang.",
-        "BLOOD GLUCH" : "The Quick and the Dead.",
+        "BLOOD GULCH" : "The Quick and the Dead.",
         "BOARDING ACTION" : "Ship-to-Ship Combat.",
         "CHILL OUT" : "Dude, you really need to...",
         "CHIRON TL-34" : "Spartan Clone Training Complex.",
