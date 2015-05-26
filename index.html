@@ -10,6 +10,12 @@
 
     </div>
 
+    <div class="menu-container animated" id="serverbrowser">
+        <table id="browser" cellspacing="0">
+            <tr class="top"><td class="thumb"></td><td class="name">SERVER</td><td class="mode">GAMETYPE</td><td class="players">PLAYERS</td><td class="ping">PING</td></tr>
+        </table>
+    </div>
+
     <div class="menu-container animated" id="customgame">
         <div id="map-thumb">
             <div id="gametype-icon"></div>
@@ -22,11 +28,11 @@
                 <span class="label">GAME TYPE</span>
                 <span class="value">SLAYER</span>
             </div>
-            <div id="open-map-menu" class="selection">
+            <div data-action="menu" data-menu="custom-map" class="selection">
                 <span class="label">MAP</span>
                 <span id="currentmap" class="value">EDGE</span>
             </div>
-            <div id="open-options-menu" class="selection">
+            <div data-action="menu" data-menu="custom-options" class="selection">
                 <span class="label">GAME OPTIONS</span>
                 <span class="value"></span>
             </div>
@@ -43,11 +49,11 @@
 
     <div class="menu-container animated" id="main2">
         <div class="select-main">
-            <div id="main2-button" class="selection">
+            <div data-action="menu" data-menu="main2-main" class="selection">
                 <span class="label">PLAY MULTIPLAYER</span>
                 <span class="value"></span>
             </div>
-            <div id="options-button" class="selection">
+            <div data-action="menu" data-menu="main-options" class="selection">
                 <span class="label">SETTINGS</span>
                 <span class="value"></span>
             </div>
@@ -56,11 +62,11 @@
 
     <div class="menu-container animated" id="main">
         <div class="select-main">
-            <div id="browse-button" class="selection">
+            <div data-action="menu" data-menu="main-serverbrowser" class="selection">
                 <span class="label">BROWSE SERVERS</span>
                 <span class="value"></span>
             </div>
-            <div id="start-button" class="selection">
+            <div data-action="menu" data-menu="main-custom" class="selection">
                 <span class="label">CUSTOM GAMES</span>
                 <span class="value"></span>
             </div>
