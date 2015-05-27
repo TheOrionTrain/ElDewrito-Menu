@@ -31,6 +31,10 @@
           $('#click')[0].currentTime = 0;
           $('#click')[0].play();
       });
+      $('.server').hover(function() {
+          $('#click')[0].currentTime = 0;
+          $('#click')[0].play();
+      });
       $('.map-select .selection').click(function() {changeMap1($(this).attr('data-game'));});
       $('.map-select2 .selection').click(function() {
           changeMap2($(this).attr('data-map'),0);

@@ -18,7 +18,7 @@ html {
 
 #browser-title {
     position: absolute;
-    top: 60px; left: 100px;
+    top: 100px; left: 100px;
     font-weight: 700;
     font-size: 70px;
     color: #fff;
@@ -28,9 +28,25 @@ html {
     -webkit-text-fill-color: transparent;
 }
 
+#line3 {
+    position: absolute;
+    top: 200px; left: 100px;
+    width: 1080px;
+    height: 1px;
+    background-color: rgba(255,255,255,0.25);
+}
+
+#line4 {
+    position: absolute;
+    top: 600px; left: 100px;
+    width: 1080px;
+    height: 1px;
+    background-color: rgba(255,255,255,0.25);
+}
+
 #browser {
     position: absolute;
-    left: 100px; top: 160px;
+    left: 100px; top: 220px;
     width: 1080px;
     border-collapse:separate;
     border-spacing:0px 2px;
@@ -38,44 +54,59 @@ html {
     box-sizing: border-box;
 }
 
-#browser .top td {
-    background-color: rgba(0,0,0,0.5);
-    font-weight: 300;
-    font-size: 20px;
-    width: 300px;
-    height: 32px;
-    padding: 5px 10px;
+#browser .server {
+    width: 535px;
+    height: 70px;
     box-sizing: border-box;
-    color: #fff;
-    transition: 0.5s;
+    font-weight: 300;
+    font-size: 22px;
+    color: rgba(255,255,255,0.85);
+    border-left: 3px solid rgba(255,255,255,0);
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
+    transition: 0.5s;
+    display: inline-block;
 }
 
-#browser td {
-    height: 32px;
-    font-weight: 300;
-    font-size: 20px;
-    padding: 5px 10px;
+#browser .server .thumb {
+    display: inline-block;
+    width: 200px;
+    height: 70px;
     box-sizing: border-box;
-    color: #fff;
+    text-align: center;
+    padding: 10px 0px !important;
+    vertical-align: top;
 }
 
-#browser td.thumb {
+#browser .server .info {
+    display: inline-block;
+    width: 200px;
+    height: 70px;
+    box-sizing: border-box;
+    padding: 10px 0px !important;
+    vertical-align: top;
+}
+
+#browser .server .players {
+    display: inline-block;
     width: 120px;
+    height: 70px;
+    box-sizing: border-box;
+    padding: 15px 0px !important;
+    vertical-align: top;
+    font-weight: 300;
+    font-size: 40px;
+    text-align: center;
 }
 
-#browser td.name {
-    width: 660px;
+#browser .server .thumb img {
+    border: 1px solid rgba(255,255,255,0.9);
+    width: 180px;
+    height: 50px;
 }
 
-#browser td.mode {
-    width: 240px;
-}
-
-#browser td.ping {
-    width: 60px;
-    text-align: right;
+#browser .name, #browser .settings {
+    display: block;
 }
 
 #copyright, #hublink {
@@ -414,7 +445,7 @@ audio {display: none;}
     height: 40px;
 }
 
-.selection:hover {
+.selection:hover, .server:hover {
     border-left: 3px solid rgba(255,255,255,0.3) !important;
     background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
@@ -431,19 +462,6 @@ audio {display: none;}
 #currentmap {
     text-transform: uppercase;
 }
-
-/* #dewrito {
-    position: relative;
-    margin: auto;
-    top: 80px;
-    width: 250px;
-    height: 400px;
-    opacity: 0.95;
-    background-image: url('../img/EldewritoLogo.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: 1;
-} */
 
 #dewrito {
     position: absolute;
@@ -535,7 +553,7 @@ audio {display: none;}
     height: 32px;
     margin-bottom: 3px;
     width: 50px;
-    padding: 0px 10px 2px 10px;
+    padding: 0px 10px 0px 10px;
     box-sizing: border-box;
     text-align: center;
     color: #fff;
