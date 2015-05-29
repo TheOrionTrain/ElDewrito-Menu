@@ -180,7 +180,7 @@ maps = {
         "LONGSHORE" : "Abandoned during the invasion of Earth, the Mombasa Quays are now bereft of commerce, but rife with danger.",
         "NARROWS" : "Without cooling systems such as these, excess heat from the Ark's forges would render the construct uninhabitable.",
         "ORBITAL" : "With a lot of situational awareness, and a little luck, hopefully the only thing you will lose is your luggage.",
-        "RAT'S NEST" : "Snowmelt from Kilimanjaro feeds reservoirs every bit as vital as the fuel and ammunition stores.",
+        "RAT NEST" : "Snowmelt from Kilimanjaro feeds reservoirs every bit as vital as the fuel and ammunition stores.",
         "SANDBOX" : "This endless wasteland still holds many secrets. Some of them are held more deeply than others.",
         "SANDTRAP" : "Although the Brute occupiers have been driven from this ancient structure, they left plenty to remember them by.",
         "SNOWBOUND" : "Hostile conditions did not prevent the Covenant from seeking salvage on this buried Forerunner construct.",
