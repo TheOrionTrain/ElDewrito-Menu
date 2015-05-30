@@ -10,7 +10,7 @@
     },
     {
         "name" : "Generic Server Name #1",
-        "gametype" : "CTF",
+        "gametype" : "Capture the Flag",
         "map" : "BLOOD GULCH",
         "players" : {
             "current" : 14,
@@ -19,7 +19,7 @@
     },
     {
         "name" : "Killtacular Clan",
-        "gametype" : "CTF",
+        "gametype" : "Capture the Flag",
         "map" : "STANDOFF",
         "players" : {
             "current" : 7,
