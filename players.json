@@ -1,82 +1,82 @@
 [
     {
-        "name" : "emoose",
+        "name" : "Your Name Here",
         "color" : "red",
+        "rank" : 11
+    },
+    {
+        "name" : "emoose",
+        "color" : "yellow",
         "rank" : 35
     },
     {
         "name" : "Wunk",
-        "color" : "yellow",
+        "color" : "green",
         "rank" : 8
     },
     {
         "name" : "Shockfire",
-        "color" : "green",
+        "color" : "blue",
         "rank" : 12
     },
     {
         "name" : "ihatecompvir",
-        "color" : "blue",
+        "color" : "cyan",
         "rank" : 4
     },
     {
         "name" : "Gamecheat13",
-        "color" : "cyan",
+        "color" : "blue",
         "rank" : 24
     },
     {
         "name" : "Woovie",
-        "color" : "blue",
+        "color" : "red",
         "rank" : 22
     },
     {
         "name" : "Pyong",
-        "color" : "red",
+        "color" : "white",
         "rank" : 17
     },
     {
         "name" : "pwnsrv",
-        "color" : "white",
+        "color" : "cyan",
         "rank" : 6
     },
     {
         "name" : "Chaosvex",
-        "color" : "cyan",
+        "color" : "pink",
         "rank" : 14
     },
     {
         "name" : "Fishphd",
-        "color" : "pink",
+        "color" : "red",
         "rank" : 10
     },
     {
         "name" : "Bivi",
-        "color" : "red",
+        "color" : "gray",
         "rank" : 28
     },
     {
         "name" : "Insane",
-        "color" : "gray",
+        "color" : "blue",
         "rank" : 4
     },
     {
         "name" : "Sn_420",
-        "color" : "blue",
+        "color" : "green",
         "rank" : 20
     },
     {
         "name" : "Woolba",
-        "color" : "green",
+        "color" : "orange",
         "rank" : 14
     },
     {
         "name" : "noob622",
-        "color" : "orange",
-        "rank" : 18
-    },
-    {
-        "name" : "That one guy",
         "color" : "yellow",
-        "rank" : 11
+        "rank" : 18
     }
 ]
