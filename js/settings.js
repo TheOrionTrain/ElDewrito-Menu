@@ -91,6 +91,7 @@ var settings = {
 
 maps = {
     "HaloOnline" : {
+        "name": "HALO ONLINE",
         "DIAMONDBACK" : "Hot winds blow over what should be a dead moon. A reminder of the power the Forerunners once wielded.",
         "EDGE" : "The remote frontier world of Parition has provided this ancient databank with the safety of seclusion.",
         "GUARDIAN" : "Millennia of tending has produced trees as ancient as the Forerunner structures they have grown around.",
@@ -99,6 +100,7 @@ maps = {
         "RIVERWORLD" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."
     },
     "HaloReach" : {
+        "name": "HALO REACH",
         "ANCHOR 9" : "Orbital dockyards provide rapid refueling and repairs for a variety of UNSC vessels.",
         "BATTLE CANYON" : "The telemetry spires in these canyons help manage the Halo ring’s vast translocation grid.",
         "BOARDWALK" : "New Alexandria's civilian concourses provide access to rapid transit and views of Reach's serene vistas.",
@@ -120,6 +122,7 @@ maps = {
         "ZEALOT" : "Covenant vessels like the Ardent Prayer are a prelude to the devastation the full fleet can visit upon a planet."
     },
     "Halo1" : {
+        "name": "HALO COMBAT EVOLVED",
         "BATTLE CREEK" : "Splash Splash, Bang Bang.",
         "BLOOD GULCH" : "The Quick and the Dead.",
         "BOARDING ACTION" : "Ship-to-Ship Combat.",
@@ -141,6 +144,7 @@ maps = {
         "WIZARD" : "Round and Round and Round."
     },
     "Halo2" : {
+        "name": "HALO 2",
         "ASCENSION" : "This relay station is part of a network that has kept Delta Halo functioning smoothly for untold centuries.",
         "BACKWASH" : "There are strong indications that beneath the shroud of mist drowning this swamp on Delta Halo lies a powerful intelligence.",
         "BEAVER CREEK" : "These forgotten structures were once the site of many bitter battles but have since been reclaimed by nature.",
@@ -168,6 +172,7 @@ maps = {
         "ZANZIBAR" : "Wind Power Station 7 sits as a mute reminder of the EAP's late 25th-century attempt at re-nationalization."
     },
     "Halo3" : {
+        "name": "HALO 3",
         "ASSEMBLY" : "The Covenant war machine continues its march to conquest; even with its head severed it is still dangerous",
         "AVALANCHE" : "“Freezing winds scour blasted terrain, and ancient battle scars are a grim reminder that this is a precious prize.",
         "BLACKOUT" : "Bathed in frozen moonlight, this abandoned drilling platform is now a monument to human frailty.",
@@ -192,5 +197,8 @@ maps = {
         "STANDOFF" : "Once, nearby telescopes listened for a message from the stars. Now, these silos contain our prepared response.",
         "THE PIT" : "Software simulations are held in contempt by the veteran instructors who run these training facilities.",
         "VALHALLA" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."
+    },
+    "Custom" : {
+        "name" : "CUSTOM MAPS"
     }
 };
