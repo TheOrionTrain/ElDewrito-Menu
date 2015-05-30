@@ -31,13 +31,6 @@
             $('#click')[0].currentTime = 0;
             $('#click')[0].play();
         });
-        $('.server').hover(function() {
-            $('#click')[0].currentTime = 0;
-            $('#click')[0].play();
-        });
-        $('.server').click(function() {
-            changeMenu("serverbrowser-custom");
-        });
         $('.map-select .selection').click(function() {changeMap1($(this).attr('data-game'));});
         $('.map-select2 .selection').click(function() {
             changeMap2($(this).attr('data-map'),0);
@@ -66,7 +59,6 @@
         var b,g,i,e;
         for(i=0; i < Object.keys(maps).length; i++) {
             b = Object.keys(maps)[i];
-            console.log(b);
             for(e=0; e < Object.keys(maps[b]).length; e++) {
                 g = Object.keys(maps[b])[e];
                 $('#maps-'+b).append("<div data-map='"+g+"' class='selection'><span class='label'>"+g+"</span></div>");
@@ -84,15 +76,21 @@
             servers = data;
             for(var i=0; i<servers.length; i++) {
                 var p = (servers[i].map.toLowerCase()).toTitleCase();
-                $('#browser').append("<div class='server' id='server"+i+"'><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+"</span><span class='settings'>"+servers[i].gametype+" on "+p+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
+                $('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+"</span><span class='settings'>"+servers[i].gametype+" on "+p+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
                 $('#server'+i).css("display","none");
-                $('#server'+i).delay(Math.floor(Math.random()*3000)).fadeIn(anit);
+                $('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
             }
             $('.server').hover(function() {
                 $('#click')[0].currentTime = 0;
                 $('#click')[0].play();
             });
-            $('.server').click(function() {changeMenu("serverbrowser-custom");});
+            $('.server').click(function() {
+                var id = $(this).attr('data-server'),d;
+                $.getJSON("servers.json", function(json){
+                    d = json[id].map;
+                    changeMenu("serverbrowser-custom",d);
+                });
+            });
         });
     }
 
@@ -131,7 +129,8 @@
             $('#main').css({"top":"0px"});
             $('#back').attr('data-action','main-main2');
         }
-        if(menu == "serverbrowser-custom") {
+        if(menu == "serverbrowser-custom" && details) {
+            changeMap2(details);
             $('#serverbrowser').css({"top":"720px"});
             $('#customgame').css({"top":"0px"});
             $('#back').attr('data-action','custom-serverbrowser');
