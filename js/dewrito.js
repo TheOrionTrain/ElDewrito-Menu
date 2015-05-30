@@ -74,16 +74,16 @@
         }
     }
 
-    function toTitleCase(str) {
-        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-    }
+    String.prototype.toTitleCase = function() {
+        return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    };
 
     function loadServers() {
         $('#browser').empty();
         $.getJSON( "servers.json", function( data ) {
             servers = data;
             for(var i=0; i<servers.length; i++) {
-                var p = (servers[i].map.toLowerCase()).capitalize();
+                var p = (servers[i].map.toLowerCase()).toTitleCase();
                 $('#browser').append("<div class='server' id='server"+i+"'><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+"</span><span class='settings'>"+servers[i].gametype+" on "+p+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
                 $('#server'+i).css("display","none");
                 $('#server'+i).delay(Math.floor(Math.random()*3000)).fadeIn(anit);
