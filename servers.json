@@ -1,0 +1,74 @@
+[
+    {
+        "name" : "Dave the Server",
+        "gametype" : "Team Slayer",
+        "map" : "EDGE",
+        "players" : {
+            "current" : 5,
+            "max" : 12
+        }
+    },
+    {
+        "name" : "Generic Server Name #1",
+        "gametype" : "CTF",
+        "map" : "BLOOD GULCH",
+        "players" : {
+            "current" : 14,
+            "max" : 16
+        }
+    },
+    {
+        "name" : "Killtacular Clan",
+        "gametype" : "CTF",
+        "map" : "STANDOFF",
+        "players" : {
+            "current" : 7,
+            "max" : 10
+        }
+    },
+    {
+        "name" : "24/7 Free For All US East",
+        "gametype" : "Slayer",
+        "map" : "TIMBERLAND",
+        "players" : {
+            "current" : 7,
+            "max" : 8
+        }
+    },
+    {
+        "name" : "JOIN THE HORDE",
+        "gametype" : "Infection",
+        "map" : "ANCHOR 9",
+        "players" : {
+            "current" : 3,
+            "max" : 16
+        }
+    },
+    {
+        "name" : "Generic Server Name #2",
+        "gametype" : "Team Slayer",
+        "map" : "MIDSHIP",
+        "players" : {
+            "current" : 12,
+            "max" : 12
+        }
+    },
+    {
+        "name" : "Spooky Scary Skeletons",
+        "gametype" : "Oddball",
+        "map" : "REACTOR",
+        "players" : {
+            "current" : 10,
+            "max" : 12
+        }
+    },
+    {
+        "name" : "24/7 Free For All US East",
+        "gametype" : "Slayer",
+        "map" : "IVORY TOWER",
+        "players" : {
+            "current" : 8,
+            "max" : 8
+        }
+    }
+]
