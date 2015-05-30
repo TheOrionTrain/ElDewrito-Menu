@@ -1,8 +1,18 @@
-* {font-family: "TV Nord";  -webkit-user-select: none; user-select: none;}
-
-html {
-    background: #000;
+@font-face {
+  font-family: 'TV Nord';
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/TV Nord EF Cond Regular.woff") format('woff');
 }
+@font-face {
+  font-family: 'TV Nord';
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/TV Nord EF Cond Bold.woff") format('woff');
+}
+
+* {font-family: "TV Nord";  -webkit-user-select: none; user-select: none;}
+html {background: #000;}
 
 #menu {
     position: relative;
