@@ -123,7 +123,7 @@
             $.getJSON( "players.json", function( data ) {
                 players = data;
                 for(var i=0; i<players.length; i++) {
-                    $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='ranks/"+players[i].rank+".png'</td></tr>");
+                    $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
                     $('#player'+i).css("display","none");
                     $('#player'+i).delay(Math.floor(Math.random()*10000)).fadeIn(anit,callback);
                 }
