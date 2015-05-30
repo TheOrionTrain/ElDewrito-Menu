@@ -11,6 +11,22 @@
         anit = 400,
         currentGame = "HaloOnline";
 
+    function initalize() {
+        var set,b,g,i,e;
+        for(i=0; i < Object.keys(settings).length; i++) {
+            set = Object.keys(settings)[i];
+            $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='left'></span><span class='value'>"+settings[set].default+"</span><span class='right'></span></div>");
+        }
+        for(i=0; i < Object.keys(maps).length; i++) {
+            b = Object.keys(maps)[i];
+            $('#choosemap').append("<div class='map-select2 animated' id='maps-"+b+"'></div>");
+            for(e=0; e < Object.keys(maps[b]).length; e++) {
+                g = Object.keys(maps[b])[e];
+                $('#maps-'+b).append("<div data-map='"+g+"' class='selection'><span class='label'>"+g+"</span></div>");
+            }
+        }
+    }
+
     function changeSetting(s,by) {
         $('#click')[0].currentTime = 0;
         $('#click')[0].play();
@@ -27,16 +43,8 @@
         e.update();
     }
 
-    function loadSettings() {
-        var set;
-        for(i=0; i < Object.keys(settings).length; i++) {
-            set = Object.keys(settings)[i];
-            $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='left'></span><span class='value'>"+settings[set].default+"</span><span class='right'></span></div>");
-        }
-    }
-
     $(document).ready(function() {
-        loadMaps(); loadSettings();
+        initalize();
         var e = ((window.innerHeight-$('#menu').height())/2)-40;
         $('#menu').css('margin-top',e+'px');
         $('#music')[0].volume = settings.musicvolume.current;
@@ -60,29 +68,11 @@
             var c = $(this).parent('.selection').attr('data-option');
             changeSetting(c,0);
         });
-
-        $("[data-action='menu']").click(function() {
-            changeMenu($(this).attr('data-menu'));
-        });
-
+        $("[data-action='menu']").click(function() {changeMenu($(this).attr('data-menu'));});
         $('#back').click(function() { changeMenu($(this).attr('data-action')); });
     });
 
-    function loadMaps() {
-        var b,g,i,e;
-        for(i=0; i < Object.keys(maps).length; i++) {
-            b = Object.keys(maps)[i];
-            $('#choosemap').append("<div class='map-select2 animated' id='maps-"+b+"'></div>");
-            for(e=0; e < Object.keys(maps[b]).length; e++) {
-                g = Object.keys(maps[b])[e];
-                $('#maps-'+b).append("<div data-map='"+g+"' class='selection'><span class='label'>"+g+"</span></div>");
-            }
-        }
-    }
-
-    String.prototype.toTitleCase = function() {
-        return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-    };
+    String.prototype.toTitleCase = function() {return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});};
 
     function acr(s){
         var words, acronym, nextWord;
