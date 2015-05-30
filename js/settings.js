@@ -1,9 +1,10 @@
 var settings = {
     "musictrack" : {
+        "name" : "MENU MUSIC",
         "current" : 6,
         "min" : 0,
         "max" : 7,
-        "default" : 6,
+        "default" : "Halo 3 Mythic",
         "labels" : [
             "Halo Reach",
             "Halo Reach Beta",
@@ -22,10 +23,11 @@ var settings = {
         }
     },
     "resolution" : {
+        "name" : "RESOLUTION",
         "current" : 0.5,
         "min" : 0,
         "max" : 1.5,
-        "default" : 0.5,
+        "default" : "1280x720",
         "labels" : [
             "640x360",
             "1280x720",
@@ -40,10 +42,11 @@ var settings = {
         }
     },
     "background" : {
+        "name" : "BACKGROUND",
         "current" : 0,
         "min" : 0,
         "max" : 3,
-        "default" : 0,
+        "default" : "Halo Reach.webm",
         "labels" : [
             "Halo Reach.webm",
             "Crash.webm",
@@ -58,10 +61,11 @@ var settings = {
         }
     },
     "musicvolume" : {
+        "name" : "MUSIC VOLUME",
         "current" : 0.25,
         "min" : 0,
         "max" : 1,
-        "default" : 0.25,
+        "default" : 25,
         "increment" : 0.05,
         "update" : function() {
             var c = settings.musicvolume.current;
@@ -70,10 +74,11 @@ var settings = {
         }
     },
     "sfxvolume" : {
+        "name" : "EFFECTS VOLUME",
         "current" : 0.05,
         "min" : 0,
         "max" : 1,
-        "default" : 0.05,
+        "default" : 5,
         "increment" : 0.05,
         "update" : function() {
             var c = settings.sfxvolume.current;
