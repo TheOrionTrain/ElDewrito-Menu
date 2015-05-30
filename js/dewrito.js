@@ -27,8 +27,16 @@
         e.update();
     }
 
+    function loadSettings() {
+        var set;
+        for(i=0; i < Object.keys(settings).length; i++) {
+            set = Object.keys(settings)[i];
+            $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='left'></span><span class='value'>"+settings[set].default+"</span><span class='right'></span></div>");
+        }
+    }
+
     $(document).ready(function() {
-        loadMaps();
+        loadMaps(); loadSettings();
         var e = ((window.innerHeight-$('#menu').height())/2)-40;
         $('#menu').css('margin-top',e+'px');
         $('#music')[0].volume = settings.musicvolume.current;
@@ -64,6 +72,7 @@
         var b,g,i,e;
         for(i=0; i < Object.keys(maps).length; i++) {
             b = Object.keys(maps)[i];
+            $('#choosemap').append("<div class='map-select2 animated' id='maps-"+b+"'></div>");
             for(e=0; e < Object.keys(maps[b]).length; e++) {
                 g = Object.keys(maps[b])[e];
                 $('#maps-'+b).append("<div data-map='"+g+"' class='selection'><span class='label'>"+g+"</span></div>");
