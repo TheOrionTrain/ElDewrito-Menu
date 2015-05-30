@@ -236,7 +236,7 @@
             $('#back').fadeOut(anit);
             $('#main2').fadeIn(anit);
             $('#options').fadeOut(anit);
-            $('#dewrito').css({"top":"240px"});
+            $('#dewrito').css({"top":"240px","-webkit-transition-delay":"0ms"});
         }
         if(menu == "custom-player" && details) {
             $('#customgame').css({"left" : "-800px"});
