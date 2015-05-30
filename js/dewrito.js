@@ -108,35 +108,42 @@
         });
     }
 
+    function playersJoin(number,max,time) {
+        joined = 1;
+        $('#lobby').empty();
+        $('#lobby').append("<tr class='top'><td colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+        $('#maxplayers').text(max);
+        $.getJSON( "players.json", function( data ) {
+            players = data;
+            for(var i=0; i<number+1; i++) {
+                $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
+                if(i > 0) {
+                    $('#player'+i).css("display","none");
+                    $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
+                }
+            }
+            function callback() {joined++; $('#joined').text(joined);}
+            $('#lobby tr').hover(function() {
+                $('#click')[0].currentTime = 0;
+                $('#click')[0].play();
+            });
+            $('#lobby tr').click(function() {
+                var e = $(this).children('.name').text();
+                changeMenu("custom-player",e);
+            });
+        });
+    }
+
     function changeMenu(menu,details) {
         var f;
         if(menu == "main-custom") {
-            joined = 0;
-            $('#lobby').empty();
-            $('#lobby').append("<tr class='top'><td colspan='2'>Current Lobby <span id='joined'>0</span>/16</td></tr>");
             $('#customgame').attr('data-from','main');
             $('#dewrito').css({"opacity":0, "top":"920px"});
             $('#back').fadeIn(anit);
             $('#back').attr('data-action','custom-main');
             $('#customgame').css({"top":"0px"});
             $('#main').css({"top":"720px"});
-            $.getJSON( "players.json", function( data ) {
-                players = data;
-                for(var i=0; i<players.length; i++) {
-                    $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
-                    $('#player'+i).css("display","none");
-                    $('#player'+i).delay(Math.floor(Math.random()*10000)).fadeIn(anit,callback);
-                }
-                function callback() {joined++; $('#joined').text(joined);}
-                $('#lobby tr').hover(function() {
-                    $('#click')[0].currentTime = 0;
-                    $('#click')[0].play();
-                });
-                $('#lobby tr').click(function() {
-                    var e = $(this).children('.name').text();
-                    changeMenu("custom-player",e);
-                });
-            });
+            playersJoin(15,16,10000);
         }
         if(menu == "custom-main") {
             $('#dewrito').css({"opacity":0.95, "top":"240px","-webkit-transition-timing-function":"400ms","-webkit-transition-delay":"0ms"});
@@ -156,6 +163,7 @@
                 $('#customgame').css({"top":"0px"});
                 $('#back').attr('data-action','custom-serverbrowser');
                 $('#customgame').attr('data-from','serverbrowser');
+                playersJoin(d.players.current,d.players.max,3000);
             });
         }
         if(menu == "custom-serverbrowser") {
