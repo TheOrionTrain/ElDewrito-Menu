@@ -116,17 +116,8 @@ html {background: #000;}
 }
 
 #bg {z-index: 0;}
-
-#bg-cover {
-    z-index: 1;
-    background: rgba(0,0,0,0.25);
-}
-
-#black {
-    background: #000;
-    z-index: 10;
-    display: none;
-}
+#bg-cover {z-index: 1;background: rgba(0,0,0,0.25);}
+#black {background: #000;z-index: 10;display: none;}
 
 audio {display: none;}
 
@@ -235,29 +226,10 @@ audio {display: none;}
 #line3 {top: 200px; left: 100px; width: 1080px;}
 #line4 {top: 600px; left: 100px; width: 1080px;}
 
-#select {
-    position: absolute;
-    top: 460px; left: 90px;
-    width: 450px;
-}
-
-.select-main {
-    position: absolute;
-    top: 500px; left: 90px;
-    width: 450px;
-}
-
-.options-select {
-    position: absolute;
-    top: 150px; left: 150px;
-    width: 490px;
-}
-
-.map-select {
-    position: absolute;
-    top: 150px; left: 150px;
-    width: 260px;
-}
+#select {position: absolute;top: 460px; left: 90px;width: 450px;}
+.select-main {position: absolute;top: 500px; left: 90px;width: 450px;}
+.options-select {position: absolute;top: 150px; left: 150px;width: 490px;}
+.map-select {position: absolute;top: 150px; left: 150px;width: 260px;}
 
 ::-webkit-scrollbar {display: none;}
 
