@@ -464,9 +464,9 @@ audio {display: none;}
 }
 
 #lobby td.rank img {
-    max-width: 27px;
-    max-height: 27px;
-    margin-top: 2px;
+    max-width: 32px;
+    max-height: 32px;
+    margin-top: 0px;
     opacity: 0.9;
     box-sizing: border-box;
 }
