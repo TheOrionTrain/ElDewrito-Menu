@@ -3,7 +3,7 @@ var settings = {
         "name" : "MENU MUSIC",
         "current" : 6,
         "min" : 0,
-        "max" : 7,
+        "max" : 9,
         "default" : "Halo 3 Mythic",
         "labels" : [
             "Halo Reach",
@@ -13,7 +13,9 @@ var settings = {
             "Halo 2 Guitar",
             "Halo 3",
             "Halo 3 Mythic",
-            "Halo 3 ODST"
+            "Halo 3 ODST",
+            "ElDewrito",
+            "Halo Online"
         ],
         "increment" : 1,
         "update" : function() {
