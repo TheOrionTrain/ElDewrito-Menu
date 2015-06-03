@@ -1,4 +1,4 @@
-# ElDewrito UI Mockup
+# Halo 3 Custom Edition UI Mockup
 
 Possible replacement for Halo Online's UI. Working on the implementation of it still.
 
