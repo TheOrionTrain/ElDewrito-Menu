@@ -402,42 +402,24 @@ audio {display: none;}
     color: #fff;
 }
 
-.red td {background: rgba(207,62,62,0.5);}
-.red td.rank {background: rgba(177,32,32,0.5);}
-.green td {background: rgba(47,112,61,0.5);}
-.green td.rank {background: rgba(17,82,31,0.5);}
-.blue td {background: rgba(55,87,153,0.5);}
-.blue td.rank {background: rgba(25,57,123,0.5);}
-.orange td {background: rgba(233,115,57,0.5);}
-.orange td.rank {background: rgba(203,85,27,0.5);}
-.cyan td {background: rgba(65,170,169,0.5);}
-.cyan td.rank {background: rgba(35,140,139,0.5);}
-.white td {background: rgba(212,212,212,0.5);}
-.white td.rank {background: rgba(182,182,182,0.5);}
-.pink td {background: rgba(251,139,159,0.5);}
-.pink td.rank {background: rgba(221,109,129,0.5);}
-.gray td {background: rgba(90,90,90,0.5);}
-.gray td.rank {background: rgba(60,60,60,0.5);}
-.yellow td {background: rgba(255,219,65,0.5);}
-.yellow td.rank {background: rgba(225,189,35,0.5);}
-.red:hover td {background: rgba(237,92,92,0.75);}
-.red:hover td.rank {background: rgba(207,62,62,0.75);}
-.green:hover td {background: rgba(77,142,91,0.75);}
-.green:hover td.rank {background: rgba(47,112,61,0.75);}
-.blue:hover td {background: rgba(85,117,183,0.75);}
-.blue:hover td.rank {background: rgba(55,87,153,0.75);}
-.orange:hover td {background: rgba(255,145,87,0.75);}
-.orange:hover td.rank {background: rgba(233,115,57,0.75);}
-.cyan:hover td {background: rgba(95,200,199,0.75);}
-.cyan:hover td.rank {background: rgba(65,170,169,0.75);}
-.white:hover td {background: rgba(242,242,242,0.75);}
-.white:hover td.rank {background: rgba(212,212,212,0.75);}
-.pink:hover td {background: rgba(255,159,189,0.75);}
-.pink:hover td.rank {background: rgba(251,139,159,0.75);}
-.gray:hover td {background: rgba(120,120,120,0.75);}
-.gray:hover td.rank {background: rgba(90,90,90,0.75);}
-.yellow:hover td {background: rgba(255,249,95,0.75);}
-.yellow:hover td.rank {background: rgba(255,219,65,0.75);}
+.red td {background: rgba(207,62,62,0.5);} .red td.rank {background: rgba(177,32,32,0.5);}
+.green td {background: rgba(47,112,61,0.5);} .green td.rank {background: rgba(17,82,31,0.5);}
+.blue td {background: rgba(55,87,153,0.5);} .blue td.rank {background: rgba(25,57,123,0.5);}
+.orange td {background: rgba(233,115,57,0.5);} .orange td.rank {background: rgba(203,85,27,0.5);}
+.cyan td {background: rgba(65,170,169,0.5);} .cyan td.rank {background: rgba(35,140,139,0.5);}
+.white td {background: rgba(212,212,212,0.5);} .white td.rank {background: rgba(182,182,182,0.5);}
+.pink td {background: rgba(251,139,159,0.5);} .pink td.rank {background: rgba(221,109,129,0.5);}
+.gray td {background: rgba(90,90,90,0.5);} .gray td.rank {background: rgba(60,60,60,0.5);}
+.yellow td {background: rgba(255,219,65,0.5);} .yellow td.rank {background: rgba(225,189,35,0.5);}
+.red:hover td {background: rgba(237,92,92,0.75);} .red:hover td.rank {background: rgba(207,62,62,0.75);}
+.green:hover td {background: rgba(77,142,91,0.75);} .green:hover td.rank {background: rgba(47,112,61,0.75);}
+.blue:hover td {background: rgba(85,117,183,0.75);} .blue:hover td.rank {background: rgba(55,87,153,0.75);}
+.orange:hover td {background: rgba(255,145,87,0.75);} .orange:hover td.rank {background: rgba(233,115,57,0.75);}
+.cyan:hover td {background: rgba(95,200,199,0.75);} .cyan:hover td.rank {background: rgba(65,170,169,0.75);}
+.white:hover td {background: rgba(242,242,242,0.75);} .white:hover td.rank {background: rgba(212,212,212,0.75);}
+.pink:hover td {background: rgba(255,159,189,0.75);} .pink:hover td.rank {background: rgba(251,139,159,0.75);}
+.gray:hover td {background: rgba(120,120,120,0.75);} .gray:hover td.rank {background: rgba(90,90,90,0.75);}
+.yellow:hover td {background: rgba(255,249,95,0.75);} .yellow:hover td.rank {background: rgba(255,219,65,0.75);}
 
 #lobby td {
     -webkit-transition: 0.5s;
