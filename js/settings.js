@@ -68,11 +68,12 @@ var settings = {
         "name" : "LOGO",
         "current" : 0,
         "min" : 0,
-        "max" : 1,
+        "max" : 2,
         "default" : "Halo 3 CE",
         "labels" : [
             "Halo 3 CE",
 			"ElDewrito",
+            "Halo Online"
         ],
         "increment" : 1,
         "update" : function() {
