@@ -64,6 +64,23 @@ var settings = {
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
         }
     },
+    "logo" : {
+        "name" : "LOGO",
+        "current" : 0,
+        "min" : 0,
+        "max" : 1,
+        "default" : "Halo 3 CE",
+        "labels" : [
+            "Halo 3 CE",
+			"ElDewrito",
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.logo.current;
+            $('#dewrito').css({'background':"url('img/"+settings.logo.labels[c]+".png') no-repeat 0 0/cover"});
+            $("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
+        }
+    },
     "musicvolume" : {
         "name" : "MUSIC VOLUME",
         "current" : 0.25,
