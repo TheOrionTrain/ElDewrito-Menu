@@ -21,6 +21,10 @@
             b = Object.keys(maps)[i];
             $('#choosemap').children('.map-select').append("<div data-game='"+b+"' class='selection'><span class='label'>"+maps[b].name+"</span></div>");
             $('#choosemap').append("<div class='map-select2 animated' id='maps-"+b+"'></div>");
+            $(".map-select2").mousewheel(function(event, delta) {
+                this.scrollTop -= (delta*5);
+                event.preventDefault();
+            });
             for(e=1; e < Object.keys(maps[b]).length; e++) {
                 g = Object.keys(maps[b])[e];
                 $('#maps-'+b).append("<div data-map='"+g+"' class='selection'><span class='label'>"+g+"</span></div>");
