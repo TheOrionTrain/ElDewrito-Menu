@@ -1,6 +1,8 @@
 # Halo 3 Custom Edition UI Mockup
 
-Possible replacement for Halo Online's UI. Working on the implementation of it still.
+Possible replacement for Halo Online's UI. /u/vicelio is currently working on the implementation.
+
+Check out his work: https://www.reddit.com/r/HaloOnline/comments/38enq8/hype_html5_menu_in_game/
 
 My reddit accounts are /u/GiveMeBTC and /u/thefeeltrain
 
@@ -12,6 +14,10 @@ Credits
 The ElDewrito developers for being awesome
 
 Microsoft, 343 Industries, Bungie
+
+/u/RackJonan for the Halo CE background
+
+/u/vicelio for adding it into Halo Online
 
 /u/rexadde for the logo
 
