@@ -39,7 +39,7 @@ var settings = {
         "increment" : 0.5,
         "update" : function() {
             var c = settings.resolution.current;
-            $('#menu').css('-webkit-transform','scale('+(0.5+c)+')');
+            $('#menu').css({'-webkit-transform':'scale('+(0.5+c)+')','-moz-transform':'scale('+(0.5+c)+')'});
             $("[data-option='resolution']").children('.value').text(settings.resolution.labels[c/0.5]);
         }
     },
@@ -47,13 +47,15 @@ var settings = {
         "name" : "BACKGROUND",
         "current" : 0,
         "min" : 0,
-        "max" : 3,
+        "max" : 5,
         "default" : "Halo Reach.webm",
         "labels" : [
             "Halo Reach.webm",
+			"Halo CE.webm",
             "Crash.webm",
             "Halo Reach.mp4",
-            "Crash.mp4",
+			"Halo CE.mp4",
+            "Crash.mp4"
         ],
         "increment" : 1,
         "update" : function() {
