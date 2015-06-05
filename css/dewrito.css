@@ -66,6 +66,18 @@ html {background: #000;}
     text-overflow: ellipsis;
 }
 
+input[type="text"] {
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    color: rgba(255,255,255,0.85);
+    outline: none;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 34px;
+}
+
 .server .thumb, .server .info, .server .players {
     display: inline-block;
     width: 200px;
@@ -272,6 +284,15 @@ audio {display: none;}
     display: table-cell;
     width: 210px;
     padding: 7px 0px 0px 0px;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.options-select .selection .input {
+    text-align: center;
+    display: table-cell;
+    width: 250px;
+    padding: 0;
     box-sizing: border-box;
     height: 40px;
 }

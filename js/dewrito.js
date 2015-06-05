@@ -38,7 +38,12 @@
         var set,b,g,i,e;
         for(i=0; i < Object.keys(settings).length; i++) {
             set = Object.keys(settings)[i];
-            $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
+            if(settings[set].typeof == "select") {
+                $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
+            }
+            if(settings[set].typeof == "input") {
+                $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='input'><input type='text' maxlength=24 /></span></div>");
+            }
             settings[set].update();
         }
         for(i=0; i < Object.keys(maps).length; i++) {
@@ -60,14 +65,17 @@
         $('#click')[0].currentTime = 0;
         $('#click')[0].play();
         var e = settings[s];
-        if(by == 1) {
-            if(e.current < e.max) {e.current+=e.increment;}
-            else {e.current=e.min;}
+        if(e.typeof == "select") {
+            if(by == 1) {
+                if(e.current < e.max) {e.current+=e.increment;}
+                else {e.current=e.min;}
+            }
+            else if(by === 0) {
+                if(e.current > e.min) {e.current-=e.increment;}
+                else {e.current=e.max;}
+            }
         }
-        else if(by === 0) {
-            if(e.current > e.min) {e.current-=e.increment;}
-            else {e.current=e.max;}
-        }
+        if(e.typeof == "input") {e.current = by;}
         settings[s] = e;
         e.update();
         $.cookie(s,e.current);
@@ -97,6 +105,10 @@
         $('.left').click(function() {
             var c = $(this).parent('.selection').attr('data-option');
             changeSetting(c,0);
+        });
+        $('input').focusout(function() {
+            var c = $(this).parent('.input').parent('.selection').attr('data-option'), val = $(this).val();
+            changeSetting(c,val);
         });
         $("[data-action='menu']").click(function() {changeMenu($(this).attr('data-menu'));});
         $('#back').click(function() { changeMenu($(this).attr('data-action')); });
