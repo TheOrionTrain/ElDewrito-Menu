@@ -141,10 +141,10 @@
         $('#browser').empty();
         randomServers(randomNum(12)+6);
         for(var i=0; i<servers.length; i++) {
-            var p = (servers[i].map.toLowerCase()).toTitleCase();
-            console.log(servers[i].gametype);
-            if(servers[i].gametype.length > 12) {servers[i].gametype = acr(servers[i].gametype);}
-            $('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+"</span><span class='settings'>"+servers[i].gametype+" on "+p+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
+            var p = (servers[i].map.toLowerCase()).toTitleCase(),
+                gt = servers[i].gametype;
+            if(servers[i].gametype.length > 12) {gt = acr(servers[i].gametype);}
+            $('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+"</span><span class='settings'>"+gt+" on "+p+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
             $('#server'+i).css("display","none");
             $('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
         }
