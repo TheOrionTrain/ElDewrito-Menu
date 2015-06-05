@@ -1,7 +1,17 @@
 var user = {
     "name" : isset($.cookie('username'),"Your Username"),
     "color" : isset($.cookie('color'),"red"),
-    "rank" : 0
+    "rank" : 0,
+    "armor" : {
+        "helmet": "air_assault",
+        "chest": "hoplite",
+        "shoulders": "air_assault",
+        "arms": "juggernaut",
+        "legs": "juggernaut",
+        "accessory": "base",
+        "pelvis": "base"
+    },
+
 },
 
 settings = {
@@ -49,45 +59,6 @@ settings = {
             $("[data-option='resolution']").children('.value').text(settings.resolution.labels[c/0.5]);
         }
     },
-    "background" : {
-        "name" : "BACKGROUND",
-        "current" : isset($.cookie('background',Number),0),
-        "min" : 0,
-        "max" : 5,
-        "default" : "Halo Reach.webm",
-        "labels" : [
-            "Halo Reach.webm",
-			"Halo CE.webm",
-            "Crash.webm",
-            "Halo Reach.mp4",
-			"Halo CE.mp4",
-            "Crash.mp4"
-        ],
-        "increment" : 1,
-        "update" : function() {
-            var c = settings.background.current;
-            $('#bg').attr('src','video/'+settings.background.labels[c]);
-            $("[data-option='background']").children('.value').text(settings.background.labels[c]);
-        }
-    },
-    "logo" : {
-        "name" : "LOGO",
-        "current" : isset($.cookie('logo',Number),0),
-        "min" : 0,
-        "max" : 2,
-        "default" : "Halo 3 CE",
-        "labels" : [
-            "Halo 3 CE",
-			"ElDewrito",
-            "Halo Online"
-        ],
-        "increment" : 1,
-        "update" : function() {
-            var c = settings.logo.current;
-            $('#dewrito').css({'background':"url('img/"+settings.logo.labels[c]+".png') no-repeat 0 0/cover"});
-            $("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
-        }
-    },
     "musicvolume" : {
         "name" : "MUSIC VOLUME",
         "current" : isset($.cookie('musicvolume',Number),0.25),
@@ -111,10 +82,77 @@ settings = {
         "update" : function() {
             var c = settings.sfxvolume.current;
             $('#click')[0].volume = c;
-            $('#slide')[0].volume = c;
+            $('#slide')[0].volume = (c*10 >= 1) ? 1 : c*10;
             $("[data-option='sfxvolume']").children('.value').text(Math.round(c*100));
         }
-    }
+    },
+    "background" : {
+        "name" : "BACKGROUND",
+        "current" : isset($.cookie('background',Number),0),
+        "min" : 0,
+        "max" : 5,
+        "default" : "Halo Reach.webm",
+        "labels" : [
+            "Halo Reach.webm",
+			"Halo CE.webm",
+            "Crash.webm",
+            "Halo Reach.mp4",
+			"Halo CE.mp4",
+            "Crash.mp4"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.background.current;
+            $('#bg').attr('src','video/'+settings.background.labels[c]);
+            $("[data-option='background']").children('.value').text(settings.background.labels[c]);
+        }
+    },
+    "rawmouse" : {
+        "name" : "RAW INPUT",
+        "current" : isset($.cookie('rawmouse',Number),0),
+        "min" : 0,
+        "max" : 1,
+        "default" : "TRUE",
+        "labels" : [
+            "TRUE",
+			"FALSE"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.rawmouse.current;
+            $("[data-option='rawmouse']").children('.value').text(settings.rawmouse.labels[c]);
+        }
+    },
+    "logo" : {
+        "name" : "LOGO",
+        "current" : isset($.cookie('logo',Number),0),
+        "min" : 0,
+        "max" : 2,
+        "default" : "Halo 3 CE",
+        "labels" : [
+            "Halo 3 CE",
+			"ElDewrito",
+            "Halo Online"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.logo.current;
+            $('#dewrito').css({'background':"url('img/"+settings.logo.labels[c]+".png') no-repeat 0 0/cover"});
+            $("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
+        }
+    },
+    "fov" : {
+        "name" : "GAME FOV",
+        "current" : isset($.cookie('fov',Number),90),
+        "min" : 60,
+        "max" : 120,
+        "default" : 90,
+        "increment" : 5,
+        "update" : function() {
+            var c = settings.fov.current;
+            $("[data-option='fov']").children('.value').text(c);
+        }
+    },
 },
 
 maps = {
