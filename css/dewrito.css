@@ -87,25 +87,18 @@ html {background: #000;}
 
 #browser .name, #browser .settings {display: block;}
 
-#copyright, #hublink {
+#thefeeltrain {
     position: relative;
     margin: 20px auto;
-    font-size: 16px;
-    color: #fff;
-    text-align: center;
+    background: url('../img/thefeeltrain.png') no-repeat 0 0/cover;
     width: 250px;
+    height: 35px;
     opacity: 0.8;
 }
 
-#copyright a {
-    text-decoration: none;
-    color: #32aacd;
-}
-
-#hublink a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 15px;
+#thefeeltrain:hover {
+    opacity: 1;
+    cursor: pointer;
 }
 
 #bg,#bg-cover,#black {
