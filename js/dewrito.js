@@ -198,15 +198,17 @@
         }
         if(menu == "serverbrowser-custom" && details) {
             var d = servers[details];
-            changeMap2(d.map);
-            $('#subtitle').text(d.name);
-            $('#gametype-display').text(d.gametype);
-            $('#gametype-icon').css('background',"url('img/gametypes/"+d.gametype+".png') no-repeat 0 0/cover");
-            $('#serverbrowser').css({"top":"720px"});
-            $('#customgame').css({"top":"0px"});
-            $('#back').attr('data-action','custom-serverbrowser');
-            $('#customgame').attr('data-from','serverbrowser');
-            playersJoin(d.players.current,d.players.max,3000);
+            if(d.players.current != d.players.max) {
+                changeMap2(d.map);
+                $('#subtitle').text(d.name);
+                $('#gametype-display').text(d.gametype);
+                $('#gametype-icon').css('background',"url('img/gametypes/"+d.gametype+".png') no-repeat 0 0/cover");
+                $('#serverbrowser').css({"top":"720px"});
+                $('#customgame').css({"top":"0px"});
+                $('#back').attr('data-action','custom-serverbrowser');
+                $('#customgame').attr('data-from','serverbrowser');
+                playersJoin(d.players.current,d.players.max,3000);
+            }
         }
         if(menu == "custom-serverbrowser") {
             $('#customgame').css({"top":"-720px"});
