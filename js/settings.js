@@ -10,12 +10,12 @@ var user = {
         "legs": "juggernaut",
         "accessory": "base",
         "pelvis": "base"
-    },
-
+    }
 },
 
 settings = {
     "musictrack" : {
+        "typeof" : "select",
         "name" : "MENU MUSIC",
         "current" : isset($.cookie('musictrack',Number),6),
         "min" : 0,
@@ -41,6 +41,7 @@ settings = {
         }
     },
     "resolution" : {
+        "typeof" : "select",
         "name" : "RESOLUTION",
         "current" : isset($.cookie('resolution',Number),0.5),
         "min" : 0,
@@ -60,6 +61,7 @@ settings = {
         }
     },
     "musicvolume" : {
+        "typeof" : "select",
         "name" : "MUSIC VOLUME",
         "current" : isset($.cookie('musicvolume',Number),0.25),
         "min" : 0,
@@ -73,6 +75,7 @@ settings = {
         }
     },
     "sfxvolume" : {
+        "typeof" : "select",
         "name" : "EFFECTS VOLUME",
         "current" : isset($.cookie('sfxvolume',Number),0.05),
         "min" : 0,
@@ -87,6 +90,7 @@ settings = {
         }
     },
     "background" : {
+        "typeof" : "select",
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
@@ -108,6 +112,7 @@ settings = {
         }
     },
     "rawmouse" : {
+        "typeof" : "select",
         "name" : "RAW INPUT",
         "current" : isset($.cookie('rawmouse',Number),0),
         "min" : 0,
@@ -124,6 +129,7 @@ settings = {
         }
     },
     "logo" : {
+        "typeof" : "select",
         "name" : "LOGO",
         "current" : isset($.cookie('logo',Number),0),
         "min" : 0,
@@ -142,6 +148,7 @@ settings = {
         }
     },
     "fov" : {
+        "typeof" : "select",
         "name" : "GAME FOV",
         "current" : isset($.cookie('fov',Number),90),
         "min" : 60,
@@ -151,6 +158,16 @@ settings = {
         "update" : function() {
             var c = settings.fov.current;
             $("[data-option='fov']").children('.value').text(c);
+        }
+    },
+    "username" : {
+        "typeof" : "input",
+        "name" : "USERNAME",
+        "current" : isset($.cookie('username'),"Your Username"),
+        "update" : function() {
+            var c = settings.username.current;
+            user.name = c;
+            $("[data-option='username']").children('.input').children('input').val(c);
         }
     },
 },
