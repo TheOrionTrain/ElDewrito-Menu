@@ -44,6 +44,15 @@
             if(settings[set].typeof == "input") {
                 $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='input'><input type='text' maxlength=24 /></span></div>");
             }
+            if(settings[set].typeof == "color") {
+                $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='input'><input id='option-"+set+"'/></span></div>");
+                $('#option-'+set).spectrum({
+                    color: settings[set].current,
+                    preferredFormat: "hex",
+                    showInput: true,
+                    change: function(color) {changeSetting(set,color.toHexString()); console.log(color.toHexString());}
+                });
+            }
             settings[set].update();
         }
         for(i=0; i < Object.keys(maps).length; i++) {
@@ -75,7 +84,7 @@
                 else {e.current=e.max;}
             }
         }
-        if(e.typeof == "input") {e.current = by;}
+        if(e.typeof == "input" || e.typeof == "color") {e.current = by;}
         settings[s] = e;
         e.update();
         $.cookie(s,e.current);
@@ -155,6 +164,12 @@
         $('.server').click(function() {changeMenu("serverbrowser-custom",$(this).attr('data-server'));});
     }
 
+    function hexToRgb(hex,opacity) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return "rgba("+parseInt(result[1], 16)+","+parseInt(result[2], 16)+","+parseInt(result[3], 16)+","+opacity+")";
+    }
+
+
     function playersJoin(number,max,time) {
         joined = 1;
         $('#lobby').empty();
@@ -173,9 +188,9 @@
                 return array;
             }
             players = shuffle(data);
-            $('#lobby').append("<tr id='player"+i+"' class='"+user.color+"'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td></tr>");
+            $('#lobby').append("<tr id='user' style='background-color:"+hexToRgb(user.color,0.5)+";'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td></tr>");
             for(var i=0; i<number; i++) {
-                $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
+                $('#lobby').append("<tr id='player"+i+"' style='background-color:"+hexToRgb(players[i].color,0.5)+";'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
                 $('#player'+i).css("display","none");
                 $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
             }
@@ -183,6 +198,23 @@
             $('#lobby tr').hover(function() {
                 $('#click')[0].currentTime = 0;
                 $('#click')[0].play();
+            });
+            $("#lobby tr").mouseover(function() {
+                var n = $(this).attr('id'),
+                    nn = parseInt(n.split("r")[1],10),
+                    colorhex = (n == "user") ? ((user.color).split("#")[1]).match(/.{2}/g) : ((players[nn].color).split("#")[1]).match(/.{2}/g),
+                    bright;
+                for(var i=0; i < 2; i++) {
+                    var e = parseInt(colorhex[i],16);
+                    e+= 30;
+                    colorhex[i] = ((e > 255) ? 255 : e).toString(16);
+                }
+                bright = "#"+colorhex[0]+colorhex[1]+colorhex[2];
+                $(this).css("background-color",hexToRgb(bright,0.75));
+            }).mouseout(function() {
+                var n = $(this).attr('id'),
+                    nn = parseInt(n.split("r")[1],10);
+                $(this).css("background-color",(n == "user") ? hexToRgb(user.color,0.5) : hexToRgb(players[nn].color,0.5));
             });
             $('#lobby tr').click(function() {
                 var e = $(this).children('.name').text();
