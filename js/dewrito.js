@@ -162,7 +162,7 @@
             }
             players = shuffle(data);
             $('#lobby').append("<tr id='player"+i+"' class='"+user.color+"'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td></tr>");
-            for(var i=0; i<number-1; i++) {
+            for(var i=0; i<number; i++) {
                 $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
                 $('#player'+i).css("display","none");
                 $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
@@ -197,19 +197,16 @@
             $('#back').attr('data-action','main-main2');
         }
         if(menu == "serverbrowser-custom" && details) {
-            var d;
-            $.getJSON("servers.json", function(json){
-                d = json[details];
-                changeMap2(d.map);
-                $('#subtitle').text(d.name);
-                $('#gametype-display').text(d.gametype);
-                $('#gametype-icon').css('background',"url('img/gametypes/"+d.gametype+".png') no-repeat 0 0/cover");
-                $('#serverbrowser').css({"top":"720px"});
-                $('#customgame').css({"top":"0px"});
-                $('#back').attr('data-action','custom-serverbrowser');
-                $('#customgame').attr('data-from','serverbrowser');
-                playersJoin(d.players.current,d.players.max,3000);
-            });
+            var d = servers[details];
+            changeMap2(d.map);
+            $('#subtitle').text(d.name);
+            $('#gametype-display').text(d.gametype);
+            $('#gametype-icon').css('background',"url('img/gametypes/"+d.gametype+".png') no-repeat 0 0/cover");
+            $('#serverbrowser').css({"top":"720px"});
+            $('#customgame').css({"top":"0px"});
+            $('#back').attr('data-action','custom-serverbrowser');
+            $('#customgame').attr('data-from','serverbrowser');
+            playersJoin(d.players.current,d.players.max,3000);
         }
         if(menu == "custom-serverbrowser") {
             $('#customgame').css({"top":"-720px"});
