@@ -1,7 +1,13 @@
-var settings = {
+var user = {
+    "name" : isset($.cookie('username'),"Your Username"),
+    "color" : isset($.cookie('color'),"red"),
+    "rank" : 0
+},
+
+settings = {
     "musictrack" : {
         "name" : "MENU MUSIC",
-        "current" : 6,
+        "current" : isset($.cookie('musictrack',Number),6),
         "min" : 0,
         "max" : 9,
         "default" : "Halo 3 Mythic",
@@ -26,7 +32,7 @@ var settings = {
     },
     "resolution" : {
         "name" : "RESOLUTION",
-        "current" : 0.5,
+        "current" : isset($.cookie('resolution',Number),0.5),
         "min" : 0,
         "max" : 1.5,
         "default" : "1280x720",
@@ -45,7 +51,7 @@ var settings = {
     },
     "background" : {
         "name" : "BACKGROUND",
-        "current" : 0,
+        "current" : isset($.cookie('background',Number),0),
         "min" : 0,
         "max" : 5,
         "default" : "Halo Reach.webm",
@@ -66,7 +72,7 @@ var settings = {
     },
     "logo" : {
         "name" : "LOGO",
-        "current" : 0,
+        "current" : isset($.cookie('logo',Number),0),
         "min" : 0,
         "max" : 2,
         "default" : "Halo 3 CE",
@@ -84,7 +90,7 @@ var settings = {
     },
     "musicvolume" : {
         "name" : "MUSIC VOLUME",
-        "current" : 0.25,
+        "current" : isset($.cookie('musicvolume',Number),0.25),
         "min" : 0,
         "max" : 1,
         "default" : 25,
@@ -97,7 +103,7 @@ var settings = {
     },
     "sfxvolume" : {
         "name" : "EFFECTS VOLUME",
-        "current" : 0.05,
+        "current" : isset($.cookie('sfxvolume',Number),0.05),
         "min" : 0,
         "max" : 1,
         "default" : 5,

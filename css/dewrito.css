@@ -384,11 +384,17 @@ audio {display: none;}
 }
 
 #lobby {
-    position: absolute;
-    top: 50px; right: 100px;
     width: 300px;
     border-collapse:separate;
     border-spacing:0px 2px;
+}
+
+#lobby-container {
+    position: absolute;
+    top: 50px; right: 100px;
+    width: 300px;
+    height: 612px;
+    overflow-y: hidden;
 }
 
 #lobby .top td {

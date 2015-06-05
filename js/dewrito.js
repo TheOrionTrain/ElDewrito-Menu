@@ -11,11 +11,16 @@
         anit = 400,
         currentGame = "HaloOnline";
 
+    function isset(val,other) {
+        return (val !== undefined) ? val : other;
+    }
+
     function initalize() {
         var set,b,g,i,e;
         for(i=0; i < Object.keys(settings).length; i++) {
             set = Object.keys(settings)[i];
-            $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='left'></span><span class='value'>"+settings[set].default+"</span><span class='right'></span></div>");
+            $('#dewrito-options').children('.options-select').append("<div data-option='"+set+"' class='selection'><span class='label'>"+settings[set].name+"</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
+            settings[set].update();
         }
         for(i=0; i < Object.keys(maps).length; i++) {
             b = Object.keys(maps)[i];
@@ -46,6 +51,7 @@
         }
         settings[s] = e;
         e.update();
+        $.cookie(s,e.current);
     }
 
     $(document).ready(function() {
@@ -75,6 +81,11 @@
         });
         $("[data-action='menu']").click(function() {changeMenu($(this).attr('data-menu'));});
         $('#back').click(function() { changeMenu($(this).attr('data-action')); });
+        $("#lobby-container").mousewheel(function(event, delta) {
+            this.scrollTop -= (delta*34);
+            console.log(delta);
+            event.preventDefault();
+        });
     });
 
     String.prototype.toTitleCase = function() {return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});};
@@ -130,12 +141,11 @@
                 return array;
             }
             players = shuffle(data);
-            for(var i=0; i<number+1; i++) {
+            $('#lobby').append("<tr id='player"+i+"' class='"+user.color+"'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td></tr>");
+            for(var i=0; i<number-1; i++) {
                 $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
-                if(i > 0) {
-                    $('#player'+i).css("display","none");
-                    $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
-                }
+                $('#player'+i).css("display","none");
+                $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
             }
             function callback() {joined++; $('#joined').text(joined);}
             $('#lobby tr').hover(function() {
