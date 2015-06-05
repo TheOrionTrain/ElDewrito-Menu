@@ -221,7 +221,7 @@ audio {display: none;}
 
 #select {position: absolute;top: 460px; left: 90px;width: 450px;}
 .select-main {position: absolute;top: 500px; left: 90px;width: 450px;}
-.options-select {position: absolute;top: 150px; left: 150px;width: 490px;}
+.options-select {position: absolute;top: 150px; left: 150px;width: 980px;}
 .map-select {position: absolute;top: 150px; left: 150px;width: 260px;}
 
 ::-webkit-scrollbar {display: none;}
@@ -266,7 +266,7 @@ audio {display: none;}
 .options-select .selection .value, #select .selection .value  {
     text-align: center;
     display: table-cell;
-    width: 250px;
+    width: 210px;
     padding: 7px 0px 0px 0px;
     box-sizing: border-box;
     height: 40px;
@@ -275,7 +275,7 @@ audio {display: none;}
 .options-select .selection .label, #select .selection .label {
     text-align: left;
     display: table-cell;
-    width: 180px;
+    width: 220px;
     padding: 7px 10px 0px 10px;
     box-sizing: border-box;
     height: 40px;
@@ -285,7 +285,7 @@ audio {display: none;}
     font-weight: 300;
     font-size: 25px;
     color: rgba(255,255,255,0.85);
-    width: 450px;
+    width: 430px;
     height: 35px;
     border-left: 3px solid rgba(255,255,255,0);
     box-sizing: border-box;
@@ -293,6 +293,8 @@ audio {display: none;}
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
+    display: inline-block;
+    margin-right: 60px;
 }
 
 .left,.right {
