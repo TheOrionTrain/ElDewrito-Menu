@@ -118,7 +118,18 @@
         $('#lobby').append("<tr class='top'><td colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
         $('#maxplayers').text(max);
         $.getJSON( "players.json", function( data ) {
-            players = data;
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex ;
+                while (0 !== currentIndex) {
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+                return array;
+            }
+            players = shuffle(data);
             for(var i=0; i<number+1; i++) {
                 $('#lobby').append("<tr id='player"+i+"' class='"+players[i].color+"'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
                 if(i > 0) {

@@ -1,8 +1,48 @@
 [
     {
-        "name" : "Your Name Here",
+        "name" : "vicelio",
         "color" : "red",
+        "rank" : 12
+    },
+    {
+        "name" : "RackJonan",
+        "color" : "green",
+        "rank" : 30
+    },
+    {
+        "name" : "rexadde",
+        "color" : "cyan",
         "rank" : 16
+    },
+    {
+        "name" : "StephanSwinford",
+        "color" : "yellow",
+        "rank" : 4
+    },
+    {
+        "name" : "Swarmmm",
+        "color" : "red",
+        "rank" : 3
+    },
+    {
+        "name" : "no1dead",
+        "color" : "white",
+        "rank" : 45
+    },
+    {
+        "name" : "AssaultCommand",
+        "color" : "pink",
+        "rank" : 10
+    },
+    {
+        "name" : "devDorito",
+        "color" : "orange",
+        "rank" : 41
+    },
+    {
+        "name" : "DEElekgolo",
+        "color" : "green",
+        "rank" : 34
     },
     {
         "name" : "emoose",
