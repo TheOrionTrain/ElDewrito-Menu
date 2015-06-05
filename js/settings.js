@@ -155,6 +155,8 @@ settings = {
     },
 },
 
+gametypes = ["Slayer","Team Slayer","Capture the Flag","Oddball","Assault","Infection","Juggernaut","King of the Hill"],
+
 maps = {
     "HaloOnline" : {
         "name": "HALO ONLINE",
@@ -263,8 +265,8 @@ maps = {
         "STANDOFF" : "Once, nearby telescopes listened for a message from the stars. Now, these silos contain our prepared response.",
         "THE PIT" : "Software simulations are held in contempt by the veteran instructors who run these training facilities.",
         "VALHALLA" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."
-    },
+    }/*,
     "Custom" : {
         "name" : "CUSTOM MAPS"
-    }
+    }*/
 };

@@ -46,6 +46,8 @@ html {background: #000;}
     border-spacing:0px 2px;
     padding: 2px;
     box-sizing: border-box;
+    height: 360px;
+    overflow: hidden;
 }
 
 #browser .server {
@@ -60,6 +62,8 @@ html {background: #000;}
     -moz-transition: 0.5s;
     transition: 0.5s;
     display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .server .thumb, .server .info, .server .players {
@@ -72,11 +76,11 @@ html {background: #000;}
 }
 .server .thumb {text-align: center;}
 .server .players {
-    padding: 15px 0px !important;
+    padding: 15px 15px !important;
     font-weight: 300;
     font-size: 40px;
-    text-align: center;
-    width: 120px;
+    text-align: right;
+    width: 100px;
 }
 
 #browser .server .thumb img {
