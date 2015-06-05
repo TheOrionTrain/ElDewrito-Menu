@@ -20,9 +20,9 @@ Possible replacement for Halo Online's UI heavily based on Halo: Reach.
 &nbsp;
 
 #### Credits:
-* The ElDewrito developers for being awesome
+* The <a href="https://github.com/FishPhd/DewritoLauncher">ElDewrito</a> developers for being awesome
 * Microsoft, 343 Industries, Bungie
-* /u/RackJonan for the Halo CE background
-* /u/vicelio for adding it into Halo Online
-* /u/rexadde for the logo
+* <a href="http://reddit.com/user/RackJonan">/u/RackJonan</a> for the Halo CE background
+* <a href="http://reddit.com/user/vicelio">/u/vicelio</a> for adding it into Halo Online
+* <a href="http://reddit.com/user/rexadde">/u/rexadde</a> for the logo
 * Stephan Swinford for the "Crash" background
