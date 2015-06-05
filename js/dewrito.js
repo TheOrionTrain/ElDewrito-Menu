@@ -9,10 +9,29 @@
         track = 5,
         scale = 1,
         anit = 400,
-        currentGame = "HaloOnline";
+        currentGame = "HaloOnline",
+        servers;
 
-    function isset(val,other) {
-        return (val !== undefined) ? val : other;
+    function isset(val,other) {return (val !== undefined) ? val : other;}
+    function randomNum(n) {return Math.floor(Math.random()*n);}
+
+    function randomServers(num) {
+        var b,r;
+        servers = [];
+        for(i=0; i < num; i++) {
+            b = Object.keys(maps)[randomNum(Object.keys(maps).length)];
+            r = (randomNum(7)+1)*2;
+            servers[i] = {
+                "name" : "Random Server #"+(i+1),
+                "gametype" : gametypes[randomNum(gametypes.length)],
+                "map" : Object.keys(maps[b])[randomNum(Object.keys(maps[b]).length)],
+                "players" : {
+                    "max" : r,
+                    "current" : randomNum(r)+1
+                }
+            };
+            if(servers[i].map == "name") {servers[i].map = "EDGE";}
+        }
     }
 
     function initalize() {
@@ -83,7 +102,10 @@
         $('#back').click(function() { changeMenu($(this).attr('data-action')); });
         $("#lobby-container").mousewheel(function(event, delta) {
             this.scrollTop -= (delta*34);
-            console.log(delta);
+            event.preventDefault();
+        });
+        $("#browser").mousewheel(function(event, delta) {
+            this.scrollTop -= (delta*70);
             event.preventDefault();
         });
     });
@@ -105,22 +127,20 @@
 
     function loadServers() {
         $('#browser').empty();
-        $.getJSON( "servers.json", function(data) {
-            servers = data;
-            for(var i=0; i<servers.length; i++) {
-                var p = (servers[i].map.toLowerCase()).toTitleCase();
-                console.log(servers[i].gametype);
-                if(servers[i].gametype.length > 12) {servers[i].gametype = acr(servers[i].gametype);}
-                $('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+"</span><span class='settings'>"+servers[i].gametype+" on "+p+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
-                $('#server'+i).css("display","none");
-                $('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
-            }
-            $('.server').hover(function() {
-                $('#click')[0].currentTime = 0;
-                $('#click')[0].play();
-            });
-            $('.server').click(function() {changeMenu("serverbrowser-custom",$(this).attr('data-server'));});
+        randomServers(randomNum(12)+6);
+        for(var i=0; i<servers.length; i++) {
+            var p = (servers[i].map.toLowerCase()).toTitleCase();
+            console.log(servers[i].gametype);
+            if(servers[i].gametype.length > 12) {servers[i].gametype = acr(servers[i].gametype);}
+            $('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+"</span><span class='settings'>"+servers[i].gametype+" on "+p+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
+            $('#server'+i).css("display","none");
+            $('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
+        }
+        $('.server').hover(function() {
+            $('#click')[0].currentTime = 0;
+            $('#click')[0].play();
         });
+        $('.server').click(function() {changeMenu("serverbrowser-custom",$(this).attr('data-server'));});
     }
 
     function playersJoin(number,max,time) {
