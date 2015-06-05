@@ -204,7 +204,7 @@
                     nn = parseInt(n.split("r")[1],10),
                     colorhex = (n == "user") ? ((user.color).split("#")[1]).match(/.{2}/g) : ((players[nn].color).split("#")[1]).match(/.{2}/g),
                     bright;
-                for(var i=0; i < 2; i++) {
+                for(var i=0; i < 3; i++) {
                     var e = parseInt(colorhex[i],16);
                     e+= 30;
                     colorhex[i] = ((e > 255) ? 255 : e).toString(16);
