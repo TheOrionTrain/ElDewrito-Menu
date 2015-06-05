@@ -1,122 +1,122 @@
 [
     {
         "name" : "vicelio",
-        "color" : "red",
+        "color" : "#cf3e3e",
         "rank" : 12
     },
     {
         "name" : "RackJonan",
-        "color" : "green",
+        "color" : "#2f703d",
         "rank" : 30
     },
     {
         "name" : "rexadde",
-        "color" : "cyan",
+        "color" : "#41aaa9",
         "rank" : 16
     },
     {
         "name" : "StephanSwinford",
-        "color" : "yellow",
+        "color" : "#ffdb41",
         "rank" : 4
     },
     {
         "name" : "Swarmmm",
-        "color" : "red",
+        "color" : "#cf3e3e",
         "rank" : 3
     },
     {
         "name" : "no1dead",
-        "color" : "white",
+        "color" : "#d4d4d4",
         "rank" : 45
     },
     {
         "name" : "AssaultCommand",
-        "color" : "pink",
+        "color" : "#fb8b9f",
         "rank" : 10
     },
     {
         "name" : "devDorito",
-        "color" : "orange",
+        "color" : "#e97339",
         "rank" : 41
     },
     {
         "name" : "DEElekgolo",
-        "color" : "green",
+        "color" : "#2f703d",
         "rank" : 34
     },
     {
         "name" : "emoose",
-        "color" : "yellow",
+        "color" : "#ffdb41",
         "rank" : 49
     },
     {
         "name" : "Wunk",
-        "color" : "green",
+        "color" : "#2f703d",
         "rank" : 47
     },
     {
         "name" : "Shockfire",
-        "color" : "blue",
+        "color" : "#375799",
         "rank" : 37
     },
     {
         "name" : "ihatecompvir",
-        "color" : "cyan",
+        "color" : "#41aaa9",
         "rank" : 42
     },
     {
         "name" : "Gamecheat13",
-        "color" : "blue",
+        "color" : "#375799",
         "rank" : 30
     },
     {
         "name" : "Woovie",
-        "color" : "red",
+        "color" : "#cf3e3e",
         "rank" : 39
     },
     {
         "name" : "Pyong",
-        "color" : "white",
+        "color" : "#d4d4d4",
         "rank" : 3
     },
     {
         "name" : "pwnsrv",
-        "color" : "cyan",
+        "color" : "#41aaa9",
         "rank" : 8
     },
     {
         "name" : "Chaosvex",
-        "color" : "pink",
+        "color" : "#fb8b9f",
         "rank" : 37
     },
     {
         "name" : "Fishphd",
-        "color" : "red",
+        "color" : "#cf3e3e",
         "rank" : 1
     },
     {
         "name" : "Bivi",
-        "color" : "gray",
+        "color" : "#5a5a5a",
         "rank" : 7
     },
     {
         "name" : "Insane",
-        "color" : "blue",
+        "color" : "#375799",
         "rank" : 46
     },
     {
         "name" : "Sn_420",
-        "color" : "green",
+        "color" : "#2f703d",
         "rank" : 19
     },
     {
         "name" : "Woolba",
-        "color" : "orange",
+        "color" : "#e97339",
         "rank" : 14
     },
     {
         "name" : "noob622",
-        "color" : "yellow",
+        "color" : "#ffdb41",
         "rank" : 26
     }
 ]

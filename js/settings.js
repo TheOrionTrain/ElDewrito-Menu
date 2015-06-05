@@ -1,6 +1,6 @@
 var user = {
     "name" : isset($.cookie('username'),"Your Username"),
-    "color" : isset($.cookie('color'),"red"),
+    "color" : isset($.cookie('color'),"#ff0000"),
     "rank" : 0,
     "armor" : {
         "helmet": "air_assault",
@@ -170,6 +170,15 @@ settings = {
             $("[data-option='username']").children('.input').children('input').val(c);
         }
     },
+    "color" : {
+        "typeof" : "color",
+        "name" : "COLOR",
+        "current" : isset($.cookie('color'),"#ff0000"),
+        "update" : function() {
+            var c = settings.color.current;
+            user.color = c;
+        }
+    }
 },
 
 gametypes = ["Slayer","Team Slayer","Capture the Flag","Oddball","Assault","Infection","Juggernaut","King of the Hill"],
