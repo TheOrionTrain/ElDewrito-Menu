@@ -19,7 +19,7 @@ settings = {
         "name" : "MENU MUSIC",
         "current" : isset($.cookie('musictrack',Number),6),
         "min" : 0,
-        "max" : 9,
+        "max" : 10,
         "default" : "Halo 3 Mythic",
         "labels" : [
             "Halo Reach",
@@ -31,13 +31,26 @@ settings = {
             "Halo 3 Mythic",
             "Halo 3 ODST",
             "ElDewrito",
-            "Halo Online"
+            "Halo Online",
+            "Random"
         ],
         "increment" : 1,
         "update" : function() {
-            var c = settings.musictrack.current;
-            $('#music').attr('src','audio/'+settings.musictrack.labels[c]+'.ogg');
-            $("[data-option='musictrack']").children('.value').text(settings.musictrack.labels[c]);
+            var c = settings.musictrack.current, l = settings.musictrack.labels[c];
+            if(l == "Random") {
+                $('#music')[0].loop = false;
+                var r = Math.floor(Math.random()*settings.musictrack.labels.length-1);
+                $('#music').attr('src','audio/'+settings.musictrack.labels[r]+'.ogg');
+                $('#music')[0].addEventListener('ended', function(){
+                    var r = Math.floor(Math.random()*settings.musictrack.labels.length-1);
+                    $('#music').attr('src','audio/'+settings.musictrack.labels[r]+'.ogg');
+                });
+            }
+            else {
+                $('#music')[0].loop = true;
+                $('#music').attr('src','audio/'+settings.musictrack.labels[c]+'.ogg');
+                $("[data-option='musictrack']").children('.value').text(settings.musictrack.labels[c]);
+            }
         }
     },
     "resolution" : {
