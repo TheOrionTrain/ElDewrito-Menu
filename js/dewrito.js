@@ -50,6 +50,13 @@
                     color: settings[set].current,
                     preferredFormat: "hex",
                     showInput: true,
+                    showPalette: true,
+                    showSelectionPalette: false,
+                    palette: [
+                        ["#fb8b9f", "#cf3e3e", "#e97339"],
+                        ["#2f703d","#375799","#41aaa9"],
+                        ["#d4d4d4","#5a5a5a"]
+                    ],
                     change: function(color) {changeSetting(set,color.toHexString()); console.log(color.toHexString());}
                 });
             }
