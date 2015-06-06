@@ -45,6 +45,7 @@ settings = {
                     var r = Math.floor(Math.random()*settings.musictrack.labels.length-1);
                     $('#music').attr('src','audio/'+settings.musictrack.labels[r]+'.ogg');
                 });
+                $("[data-option='musictrack']").children('.value').text("Random");
             }
             else {
                 $('#music')[0].loop = true;

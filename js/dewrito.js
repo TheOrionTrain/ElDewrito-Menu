@@ -176,11 +176,20 @@
         return "rgba("+parseInt(result[1], 16)+","+parseInt(result[2], 16)+","+parseInt(result[3], 16)+","+opacity+")";
     }
 
+    function brighter(color) {
+        var colorhex = (color.split("#")[1]).match(/.{2}/g);
+        for(var i=0; i < 3; i++) {
+            var e = parseInt(colorhex[i],16);
+            e+= 30;
+            colorhex[i] = ((e > 255) ? 255 : e).toString(16);
+        }
+        return "#"+colorhex[0]+colorhex[1]+colorhex[2];
+    }
 
     function playersJoin(number,max,time) {
         joined = 1;
         $('#lobby').empty();
-        $('#lobby').append("<tr class='top'><td colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+        $('#lobby').append("<tr class='top'><td class='info' colspan='3'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
         $('#maxplayers').text(max);
         $.getJSON( "players.json", function( data ) {
             function shuffle(array) {
@@ -195,9 +204,9 @@
                 return array;
             }
             players = shuffle(data);
-            $('#lobby').append("<tr id='user' style='background-color:"+hexToRgb(user.color,0.5)+";'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td></tr>");
+            $('#lobby').append("<tr id='user' data-color='"+hexToRgb(user.color,0.5)+"' style='background:"+hexToRgb(user.color,0.5)+";'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td><td class='arrow'></td></tr>");
             for(var i=0; i<number; i++) {
-                $('#lobby').append("<tr id='player"+i+"' style='background-color:"+hexToRgb(players[i].color,0.5)+";'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
+                $('#lobby').append("<tr id='player"+i+"' data-color='"+hexToRgb(players[i].color,0.5)+"' style='background:"+hexToRgb(players[i].color,0.5)+";'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td><td class='arrow'></td></tr>");
                 $('#player'+i).css("display","none");
                 $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
             }
@@ -209,14 +218,8 @@
             $("#lobby tr").mouseover(function() {
                 var n = $(this).attr('id'),
                     nn = parseInt(n.split("r")[1],10),
-                    colorhex = (n == "user") ? ((user.color).split("#")[1]).match(/.{2}/g) : ((players[nn].color).split("#")[1]).match(/.{2}/g),
-                    bright;
-                for(var i=0; i < 3; i++) {
-                    var e = parseInt(colorhex[i],16);
-                    e+= 30;
-                    colorhex[i] = ((e > 255) ? 255 : e).toString(16);
-                }
-                bright = "#"+colorhex[0]+colorhex[1]+colorhex[2];
+                    hexes = (n == "user") ? user.color : players[nn].color,
+                    bright = brighter(hexes);
                 $(this).css("background-color",hexToRgb(bright,0.75));
             }).mouseout(function() {
                 var n = $(this).attr('id'),
@@ -224,8 +227,19 @@
                 $(this).css("background-color",(n == "user") ? hexToRgb(user.color,0.5) : hexToRgb(players[nn].color,0.5));
             });
             $('#lobby tr').click(function() {
-                var e = $(this).children('.name').text();
+                var e = $(this).children('.name').text(),
+                    n = $(this).attr('id'),
+                    nn = parseInt(n.split("r")[1],10),
+                    hexes = (n == "user") ? user.color : players[nn].color,
+                    bright = brighter(hexes);
                 changeMenu("custom-player",e);
+                $('#lobby tr').each(function() {
+                    var color = $(this).attr('data-color');
+                    $(this).css('background',color);
+                    $(this).children('.rank').css('background','rgba(0,0,0,0.15)');
+                });
+                $(this).css("background-color",hexToRgb(bright,0.75));
+                $(this).children('.rank').css('background','transparent');
             });
         });
     }

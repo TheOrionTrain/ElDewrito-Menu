@@ -149,6 +149,8 @@ audio {display: none;}
     transition-timing-function: cubic-bezier(.55,0,.1,1);
 }
 
+
+
 #customgame {top: -720px; left: 0;}
 #main2 {top: 0px; left: 0;}
 
@@ -182,6 +184,19 @@ audio {display: none;}
     width: 450px;
 }
 
+#lobby .top td.arrow {border: 0;}
+
+#lobby td.arrow {
+    width: 0;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border-top: 17px solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 17px solid;
+    border-left-color: green;
+    background: transparent;
+}
 #map-name-options {
     top: 320px;
     font-size: 28px;
@@ -404,7 +419,7 @@ audio {display: none;}
 }
 
 #lobby {
-    width: 300px;
+    width: 317px;
     border-collapse:separate;
     border-spacing:0px 2px;
 }
@@ -417,7 +432,7 @@ audio {display: none;}
     overflow-y: hidden;
 }
 
-#lobby .top td {
+#lobby .top td.info {
     background: rgba(0,0,0,0.5);
     font-weight: 300;
     font-size: 20px;
