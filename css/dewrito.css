@@ -184,19 +184,7 @@ audio {display: none;}
     width: 450px;
 }
 
-#lobby .top td.arrow {border: 0;}
 
-#lobby td.arrow {
-    width: 0;
-    position: relative;
-    padding: 0;
-    margin: 0;
-    border-top: 17px solid transparent;
-	border-bottom: 17px solid transparent;
-	border-left: 17px solid;
-    border-left-color: green;
-    background: transparent;
-}
 #map-name-options {
     top: 320px;
     font-size: 28px;
@@ -419,7 +407,7 @@ audio {display: none;}
 }
 
 #lobby {
-    width: 317px;
+    width: 300px;
     border-collapse:separate;
     border-spacing:0px 2px;
 }
@@ -460,7 +448,7 @@ audio {display: none;}
 #lobby td.name {
     font-weight: 300;
     font-size: 20px;
-    width: 400px;
+    width: 250px;
     padding: 0px 20px 2px 20px;
 }
 
