@@ -477,7 +477,7 @@ audio {display: none;}
     z-index: 2;
     overflow: hidden;
     opacity: 0.9;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.45);
 }
 
 #player-rank-display {
@@ -512,7 +512,7 @@ audio {display: none;}
 #player-title {
     position: absolute;
     top: 10px; left: 10px;
-    background-color: rgba(0, 0, 0, 0.67);
+    background-color: rgba(0, 0, 0, 0.55);
     width: 646px;
     height: 100px;
 }
@@ -520,7 +520,7 @@ audio {display: none;}
 #player-level {
     position: absolute;
     bottom: 10px; left: 10px;
-    background-color: rgba(0, 0, 0, 0.67);
+    background-color: rgba(0, 0, 0, 0.55);
     width: 646px;
     height: 100px;
 }
