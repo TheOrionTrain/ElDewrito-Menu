@@ -364,16 +364,40 @@
         $('#slide')[0].play();
     }
 
+    var KDdata = [
+        {
+            value: 1,
+            color: "#cf3e3e",
+            highlight: "#ed5c5c",
+            label: "Deaths"
+        },
+        {
+            value: 1,
+            color:"#375799",
+            highlight: "#5575b7",
+            label: "Kills"
+        }
+    ],
+        ctx = $("#player-kd-chart")[0].getContext("2d"),
+        KDchart = new Chart(ctx).Doughnut(KDdata,{segmentShowStroke:false,percentageInnerCutout:75,animationEasing: "easeInQuad"});
+
     function playerInfo(name) {
-        console.log(name);
         if(name != "user") {
             var info = players[name];
+            KDchart.segments[0].value = info.deaths;
+            KDchart.segments[1].value = info.kills;
+            KDchart.update();
+            $('#player-kd-display').text((info.kills/info.deaths).toFixed(2));
             $('#player-name').text(info.name);
             $('#player-level-display').text("Level "+info.rank);
             $('#player-rank-display').css('background',"url('img/ranks/"+info.rank+".png') no-repeat center center/72px 72px");
             $('#player-armor').css('background',"url('img/players/"+info.color.split("#")[1]+".png') no-repeat 0 -50px/320px 704px");
         }
         else {
+            KDchart.segments[0].value = 1;
+            KDchart.segments[1].value = 1;
+            KDchart.update();
+            $('#player-kd-display').text("0.00");
             $('#player-name').text(user.name);
             $('#player-level-display').text("Level "+user.rank);
             $('#player-rank-display').css('background',"url('img/ranks/"+user.rank+".png') no-repeat center center/72px 72px");
