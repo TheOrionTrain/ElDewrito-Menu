@@ -450,6 +450,7 @@ audio {display: none;}
     font-size: 20px;
     width: 250px;
     padding: 0px 20px 2px 20px;
+    background: no-repeat 160px 4px/58px 26px;
 }
 
 #lobby td.rank {
@@ -520,6 +521,7 @@ audio {display: none;}
 #player-title {
     position: absolute;
     top: 10px; left: 10px;
+    background: no-repeat 458px 10px/178px 80px;
     background-color: rgba(0, 0, 0, 0.55);
     width: 646px;
     height: 100px;
@@ -548,7 +550,6 @@ audio {display: none;}
     top: 120px; right: 10px;
     width: 320px;
     height: 372px;
-    background: url('../img/players/Insane.png') no-repeat 0 -50px/320px 704px;
 }
 
 #player-stats {
