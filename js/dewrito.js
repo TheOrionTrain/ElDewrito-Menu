@@ -232,7 +232,7 @@
                     nn = parseInt(n.split("r")[1],10),
                     hexes = (n == "user") ? user.color : players[nn].color,
                     bright = brighter(hexes);
-                changeMenu("custom-player",e);
+                changeMenu("custom-player",(n == "user") ? "user" : nn);
                 $('#lobby tr').each(function() {
                     var color = $(this).attr('data-color');
                     $(this).css('background',color);
@@ -347,11 +347,12 @@
             $('#options').fadeOut(anit);
             $('#dewrito').css({"top":"240px","-webkit-transition-delay":"0ms"});
         }
-        if(menu == "custom-player" && details) {
+        if(menu == "custom-player") {
             $('#customgame').css({"left" : "-800px"});
             $('#playerinfo').css({"right" : "100px"});
             $('#back').attr('data-action','player-custom');
             $('#playermodel').css('background-image',"url('img/players/"+details+".png')");
+            playerInfo(details);
         }
         if(menu == "player-custom") {
             $('#customgame').css({"left" : "0px"});
@@ -361,6 +362,23 @@
         }
         $('#slide')[0].currentTime = 0;
         $('#slide')[0].play();
+    }
+
+    function playerInfo(name) {
+        console.log(name);
+        if(name != "user") {
+            var info = players[name];
+            $('#player-name').text(info.name);
+            $('#player-level-display').text("Level "+info.rank);
+            $('#player-rank-display').css('background',"url('img/ranks/"+info.rank+".png') no-repeat center center/72px 72px");
+            $('#player-armor').css('background',"url('img/players/"+info.color.split("#")[1]+".png') no-repeat 0 -50px/320px 704px");
+        }
+        else {
+            $('#player-name').text(user.name);
+            $('#player-level-display').text("Level "+user.rank);
+            $('#player-rank-display').css('background',"url('img/ranks/"+user.rank+".png') no-repeat center center/72px 72px");
+            $('#player-armor').css('background',"url('img/players/user.png') no-repeat 0 -50px/320px 704px");
+        }
     }
 
     function startgame() {
