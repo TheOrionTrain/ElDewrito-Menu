@@ -209,6 +209,9 @@
                 $('#lobby').append("<tr id='player"+i+"' data-color='"+hexToRgb(players[i].color,0.5)+"' style='background:"+hexToRgb(players[i].color,0.5)+";'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
                 $('#player'+i).css("display","none");
                 $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
+                if(players[i].nameplate) {
+                    $('#player'+i).children('.name').css('background-image',"url('img/"+players[i].nameplate+".png')");
+                }
             }
             function callback() {joined++; $('#joined').text(joined);}
             $('#lobby tr').hover(function() {
@@ -236,10 +239,8 @@
                 $('#lobby tr').each(function() {
                     var color = $(this).attr('data-color');
                     $(this).css('background',color);
-                    $(this).children('.rank').css('background','rgba(0,0,0,0.15)');
                 });
                 $(this).css("background-color",hexToRgb(bright,0.75));
-                $(this).children('.rank').css('background','transparent');
             });
         });
     }
@@ -392,6 +393,8 @@
             $('#player-level-display').text("Level "+info.rank);
             $('#player-rank-display').css('background',"url('img/ranks/"+info.rank+".png') no-repeat center center/72px 72px");
             $('#player-armor').css('background',"url('img/players/"+info.color.split("#")[1]+".png') no-repeat 0 -50px/320px 704px");
+            if(info.nameplate) {$('#player-title').css('background-image',"url('img/"+info.nameplate+".png')");}
+            else {$('#player-title').css('background-image',"");}
         }
         else {
             KDchart.segments[0].value = 1;
@@ -402,6 +405,7 @@
             $('#player-level-display').text("Level "+user.rank);
             $('#player-rank-display').css('background',"url('img/ranks/"+user.rank+".png') no-repeat center center/72px 72px");
             $('#player-armor').css('background',"url('img/players/user.png') no-repeat 0 -50px/320px 704px");
+            $('#player-title').css('background-image',"");
         }
     }
 
