@@ -100,7 +100,7 @@
     $(document).ready(function() {
         initalize();
         var e = ((window.innerHeight-$('#menu').height())/2)-40;
-        $('#menu').css('margin-top',e+'px');
+        $('#menu').css('margin-top',(e < 0) ? '0px' : e+'px');
         $('#music')[0].volume = settings.musicvolume.current;
         $('#click')[0].volume = settings.sfxvolume.current;
         $('#start').click(function() {startgame();});
@@ -189,7 +189,7 @@
     function playersJoin(number,max,time) {
         joined = 1;
         $('#lobby').empty();
-        $('#lobby').append("<tr class='top'><td class='info' colspan='3'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+        $('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
         $('#maxplayers').text(max);
         $.getJSON( "players.json", function( data ) {
             function shuffle(array) {
@@ -204,9 +204,9 @@
                 return array;
             }
             players = shuffle(data);
-            $('#lobby').append("<tr id='user' data-color='"+hexToRgb(user.color,0.5)+"' style='background:"+hexToRgb(user.color,0.5)+";'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td><td class='arrow'></td></tr>");
+            $('#lobby').append("<tr id='user' data-color='"+hexToRgb(user.color,0.5)+"' style='background:"+hexToRgb(user.color,0.5)+";'><td class='name'>"+user.name+"</td><td class='rank'><img src='img/ranks/"+user.rank+".png'</td></tr>");
             for(var i=0; i<number; i++) {
-                $('#lobby').append("<tr id='player"+i+"' data-color='"+hexToRgb(players[i].color,0.5)+"' style='background:"+hexToRgb(players[i].color,0.5)+";'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td><td class='arrow'></td></tr>");
+                $('#lobby').append("<tr id='player"+i+"' data-color='"+hexToRgb(players[i].color,0.5)+"' style='background:"+hexToRgb(players[i].color,0.5)+";'><td class='name'>"+players[i].name+"</td><td class='rank'><img src='img/ranks/"+players[i].rank+".png'</td></tr>");
                 $('#player'+i).css("display","none");
                 $('#player'+i).delay(Math.floor(Math.random()*time)).fadeIn(anit,callback);
             }
