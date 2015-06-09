@@ -40,6 +40,8 @@ settings = {
             if(l == "Random") {
                 $('#music')[0].loop = false;
                 var r = Math.floor(Math.random()*settings.musictrack.labels.length-1);
+                (r < 0) ? r=0 : r=r;
+                console.log(r);
                 $('#music').attr('src','audio/'+settings.musictrack.labels[r]+'.ogg');
                 $('#music')[0].addEventListener('ended', function(){
                     var r = Math.floor(Math.random()*settings.musictrack.labels.length-1);
