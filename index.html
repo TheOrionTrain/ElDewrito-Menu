@@ -5,7 +5,18 @@
     <div id="black"></div>
     <div id="back">Back</div>
     <div id="version">eldewrito 0.4.6-beta-9ef70b0b</div>
-    <div id="playerinfo" class="animated"></div>
+    <div id="playerinfo" class="animated">
+        <div id="player-title">
+            <div id="player-rank-display"></div>
+            <div id="player-info">
+                <span id="player-name">Insane</span>
+                <span id="player-level-display">Nova</span>
+            </div>
+        </div>
+        <div id="player-armor"></div>
+        <div id="player-stats"></div>
+        <div id="player-level"></div>
+    </div>
     <div class="menu-container animated" id="serverbrowser">
         <div id="browser-title">SERVER BROWSER</div>
         <div id="line3"></div>
@@ -15,7 +26,7 @@
     <div class="menu-container animated" id="customgame" data-from="serverbrowser">
         <div id="map-thumb"><div id="gametype-icon"></div></div>
         <div id="title">CUSTOM GAME</div>
-        <div id="subtitle">ELDEWRITO 0.5.0 PUBLIC BETA</div>
+        <div id="subtitle"></div>
         <div id="line1"></div>
         <div id="select">
             <div class="selection"><span class="label">GAME TYPE</span><span id="gametype-display" class="value">SLAYER</span></div>
@@ -57,8 +68,8 @@
     </div>
     <div id="dewrito" class="animated"></div>
     <div id="bg-cover"></div>
-    <video id="bg" loop autoplay src="video/Halo Reach.webm" type="video/webm"></video>
-    <audio id="music" src="audio/Halo 3 Mythic.ogg" loop autoplay></audio>
+    <video id="bg" loop autoplay type="video/webm"></video>
+    <audio id="music" autoplay></audio>
     <audio id="beep" src="audio/beep.ogg" type="audio/ogg"></audio>
     <audio id="click" src="audio/click.ogg" type="audio/ogg"></audio>
     <audio id="slide" src="audio/slide.ogg" type="audio/ogg"></audio>

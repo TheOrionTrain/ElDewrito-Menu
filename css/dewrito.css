@@ -470,13 +470,75 @@ audio {display: none;}
 #playerinfo {
     position: absolute;
     right: -700px;
-    top: 65px;
+    top: 50px;
     width: 666px;
-    height: 581px;
+    height: 612px;
     border: none;
     z-index: 2;
     overflow: hidden;
     opacity: 0.9;
+    background: rgba(0,0,0,0.55);
+}
+
+#player-rank-display {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100px;
+    height: 100px;
+    background: url('../img/ranks/46.png') no-repeat center center/72px 72px;
+}
+
+#player-name {
+    display: block;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+#player-level-display {
+    display: block;
+    font-size: 20px;
+    opacity: 0.8;
+    margin: 0;
+}
+
+#player-info {
+    position: absolute;
+    top: 0; left: 110px;
+    width: 536px;
+    height: 100px;
+    color: #fff;
+}
+
+#player-title {
+    position: absolute;
+    top: 10px; left: 10px;
+    background-color: rgba(0, 0, 0, 0.67);
+    width: 646px;
+    height: 100px;
+}
+
+#player-level {
+    position: absolute;
+    bottom: 10px; left: 10px;
+    background-color: rgba(0, 0, 0, 0.67);
+    width: 646px;
+    height: 100px;
+}
+
+#player-armor {
+    position: absolute;
+    top: 120px; right: 10px;
+    width: 320px;
+    height: 372px;
+    background: url('../img/players/Insane.png') no-repeat 0 -50px/320px 704px;
+}
+
+#player-stats {
+    position: absolute;
+    bottom: 120px; left: 10px;
+    background-color: rgba(0, 0, 0, 0.67);
+    width: 300px;
+    height: 200px;
 }
 
 #back,#version {
