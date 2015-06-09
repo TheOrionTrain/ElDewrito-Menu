@@ -108,15 +108,17 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 5,
+        "max" : 7,
         "default" : "Halo Reach.webm",
         "labels" : [
             "Halo Reach.webm",
 			"Halo CE.webm",
             "Crash.webm",
+            "Waypoint.webm",
             "Halo Reach.mp4",
 			"Halo CE.mp4",
-            "Crash.mp4"
+            "Crash.mp4",
+            "Waypoint.mp4"
         ],
         "increment" : 1,
         "update" : function() {
