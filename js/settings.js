@@ -151,12 +151,13 @@ settings = {
         "name" : "LOGO",
         "current" : isset($.cookie('logo',Number),0),
         "min" : 0,
-        "max" : 2,
+        "max" : 3,
         "default" : "Halo 3 CE",
         "labels" : [
             "Halo 3 CE",
 			"ElDewrito",
-            "Halo Online"
+            "Halo Online",
+            "Halo ODST"
         ],
         "increment" : 1,
         "update" : function() {
