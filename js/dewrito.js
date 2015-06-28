@@ -1,7 +1,7 @@
 
     /*
         (c) 2015 Brayden Strasen
-        https://creativecommons.org/licenses/by-nc-sa/4.0/
+        http://creativecommons.org/licenses/by-nc-sa/4.0/
     */
 
     var players = [],
@@ -14,12 +14,12 @@
 
     function isset(val,other) {return (val !== undefined) ? val : other;}
     function randomNum(n) {return Math.floor(Math.random()*n);}
-	
+
 	function getServers()
 	{
 		servers = [];
-		$.getJSON( "https://eldewrito-masterserver-personality.c9.io/list", function( data ) {
-			if(data.result.code != 0)
+		$.getJSON( "http://192.99.124.162/list", function( data ) {
+			if(data.result.code !== 0)
 			{
 				alert("Error received from master: " + data.result.msg);
 				return;
@@ -36,13 +36,13 @@
 	function queryServer(serverIP, i)
 	{
 		console.log(serverIP);
-		$.getJSON("https://" + serverIP, function(serverInfo) {
+		$.getJSON("http://" + serverIP, function(serverInfo) {
 			var startTime = (new Date()).getTime(),
 				endTime;
 
 			$.ajax({
 				type:"GET",
-				url: "https://" + serverIP + "/",
+				url: "http://" + serverIP + "/",
 				async: false,
 				success : function() {
 					endTime = (new Date()).getTime();
@@ -90,7 +90,7 @@
 	function promptPassword(i)
 	{
 		var password = prompt(servers[i].name + " has a password, enter the password to join", "");
-		if(password != null)
+		if(password !== null)
 		{
 			window.open("dorito:" + servers[i].ip + "/" + password);
 		}
@@ -101,7 +101,7 @@
 		var servName = "<td><a href=\"dorito:" + ip + "\">" + name + " (" + host + ")</a></td>";
 		if(isPassworded)
 			servName = "<td><a href=\"#\" onclick=\"promptPassword('" + ip + "');\">[PASSWORDED] " + name + " (" + host + ")</a></td>";
-			
+
 		var servMap = "<td>" + map + " (" + mapfile + ")</td>";
 		var servType = "<td>" + gamemode + "</td>";
 		var servStatus = "<td>" + status + "</td>";
@@ -109,7 +109,7 @@
 
 		$('#serverlist tr:last').after("<tr>" + servName + servMap + servType + servStatus + servPlayers + "</tr>");
 	}
-	
+
     function randomServers(num) {
         var b,r;
         servers = [];
@@ -290,7 +290,7 @@
     function playersJoin(number,max,time,ip) {
 		joined = 0;
 		var players;
-		$.getJSON("https://" + ip, function(serverInfo) {
+		$.getJSON("http://" + ip, function(serverInfo) {
 			players = serverInfo.players;
 			console.log(players);
 			$('#lobby').empty();
@@ -336,7 +336,7 @@
             });
 		});
     }
-	
+
 	/*function playersJoin(number,max,time) {
         joined = 1;
         $('#lobby').empty();
@@ -568,7 +568,7 @@
 		if (servers[$(".server").data("server")].password !== undefined)
 		{
 			var password = prompt(servers[$(".server").data("server")].name + " has a password, enter the password to join", "");
-			if(password != null)
+			if(password !== null)
 			{
 				/*$('#beep')[0].play();
 				$('#music')[0].pause();
@@ -596,7 +596,7 @@
 			//window.open("dorito:" + ip);
 		}, 3500);
     }
-	
+
 	var delay = ( function() {
 		var timer = 0;
 		return function(callback, ms) {
