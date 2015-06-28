@@ -1,7 +1,7 @@
 
     /*
         (c) 2015 Brayden Strasen
-        http://creativecommons.org/licenses/by-nc-sa/4.0/
+        https://creativecommons.org/licenses/by-nc-sa/4.0/
     */
 
     var players = [],
@@ -18,7 +18,7 @@
 	function getServers()
 	{
 		servers = [];
-		$.getJSON( "http://192.99.124.162/list", function( data ) {
+		$.getJSON( "//192.99.124.162/list", function( data ) {
 			if(data.result.code !== 0)
 			{
 				alert("Error received from master: " + data.result.msg);
@@ -36,13 +36,13 @@
 	function queryServer(serverIP, i)
 	{
 		console.log(serverIP);
-		$.getJSON("http://" + serverIP, function(serverInfo) {
+		$.getJSON("//" + serverIP, function(serverInfo) {
 			var startTime = (new Date()).getTime(),
 				endTime;
 
 			$.ajax({
 				type:"GET",
-				url: "http://" + serverIP + "/",
+				url: "//" + serverIP + "/",
 				async: false,
 				success : function() {
 					endTime = (new Date()).getTime();
@@ -290,7 +290,7 @@
     function playersJoin(number,max,time,ip) {
 		joined = 0;
 		var players;
-		$.getJSON("http://" + ip, function(serverInfo) {
+		$.getJSON("//" + ip, function(serverInfo) {
 			players = serverInfo.players;
 			console.log(players);
 			$('#lobby').empty();
