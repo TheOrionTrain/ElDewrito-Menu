@@ -80,20 +80,28 @@ html {background: #000;}
 
 .server .thumb, .server .info{
     display: inline-block;
-    width: 240px;
-    height: 70px;
+    width: 590px;
+    height: 100px;
     box-sizing: border-box;
 	white-space: nowrap;
     padding: 10px 0px !important;
     vertical-align: top;
-	text-align: top;s
 }
-.server .thumb {text-align: left;}
+
+.server .thumb {text-align: center; width: 240px;}
+
 .server .players {
+    display: inline-block;
+    width: 240px;
+    height: 100px;
 	text-align: right;
 	font-weight: 300;
-    font-size: 30px;
+    font-size: 40px;
+    box-sizing: border-box;
+	white-space: nowrap;
+    padding: 30px 40px !important;
 }
+
 .server .settings {
     padding: 15px 15px !important;
     font-weight: 300;
