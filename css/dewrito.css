@@ -51,8 +51,8 @@ html {background: #000;}
 }
 
 #browser .server {
-    width: 535px;
-    height: 70px;
+    width: 1074px;
+    height: 100px;
     box-sizing: border-box;
     font-weight: 300;
     font-size: 22px;
@@ -78,27 +78,35 @@ html {background: #000;}
     height: 34px;
 }
 
-.server .thumb, .server .info, .server .players {
+.server .thumb, .server .info{
     display: inline-block;
-    width: 200px;
+    width: 240px;
     height: 70px;
     box-sizing: border-box;
+	white-space: nowrap;
     padding: 10px 0px !important;
     vertical-align: top;
+	text-align: top;s
 }
-.server .thumb {text-align: center;}
+.server .thumb {text-align: left;}
 .server .players {
+	text-align: right;
+	font-weight: 300;
+    font-size: 30px;
+}
+.server .settings {
     padding: 15px 15px !important;
     font-weight: 300;
-    font-size: 40px;
-    text-align: right;
+    font-size: 27px;
+    text-align: center;
+	vertical-align: center;
     width: 100px;
 }
 
 #browser .server .thumb img {
     border: 1px solid rgba(255,255,255,0.9);
-    width: 180px;
-    height: 50px;
+    width: 210px;
+    height: 79px;
 }
 
 #browser .name, #browser .settings {display: block;}

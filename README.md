@@ -2,8 +2,6 @@
 
 Possible replacement for Halo Online's UI heavily based on Halo: Reach. 
 
-/u/vicelio is currently working on the implementation which you can see <a href="https://www.reddit.com/r/HaloOnline/comments/38enq8/hype_html5_menu_in_game/">here</a>.
-
 &nbsp;
 
 #### License:
@@ -22,7 +20,7 @@ Possible replacement for Halo Online's UI heavily based on Halo: Reach.
 #### Credits:
 * The <a href="https://github.com/FishPhd/DewritoLauncher">ElDewrito</a> developers for being awesome
 * Microsoft, 343 Industries, Bungie
+* <a href="http://reddit.com/user/Shadowfita">Shadowfita</a> for getting the server browser working
 * <a href="http://reddit.com/user/RackJonan">/u/RackJonan</a> for the Halo CE background
-* <a href="http://reddit.com/user/vicelio">/u/vicelio</a> for adding it into Halo Online
 * <a href="http://reddit.com/user/rexadde">/u/rexadde</a> for the logo
 * Stephan Swinford for the "Crash" background
