@@ -18,7 +18,7 @@
 	function getServers()
 	{
 		servers = [];
-		$.getJSON( "http://eldewrito-masterserver-personality.c9.io/list", function( data ) {
+		$.getJSON( "https://eldewrito-masterserver-personality.c9.io/list", function( data ) {
 			if(data.result.code != 0)
 			{
 				alert("Error received from master: " + data.result.msg);
@@ -36,13 +36,13 @@
 	function queryServer(serverIP, i)
 	{
 		console.log(serverIP);
-		$.getJSON("http://" + serverIP, function(serverInfo) {
+		$.getJSON("https://" + serverIP, function(serverInfo) {
 			var startTime = (new Date()).getTime(),
 				endTime;
 
 			$.ajax({
 				type:"GET",
-				url: "http://" + serverIP + "/",
+				url: "https://" + serverIP + "/",
 				async: false,
 				success : function() {
 					endTime = (new Date()).getTime();
@@ -290,7 +290,7 @@
     function playersJoin(number,max,time,ip) {
 		joined = 0;
 		var players;
-		$.getJSON("http://" + ip, function(serverInfo) {
+		$.getJSON("https://" + ip, function(serverInfo) {
 			players = serverInfo.players;
 			console.log(players);
 			$('#lobby').empty();
