@@ -142,7 +142,7 @@ html {background: #000;}
     height: 720px;
 }
 
-#bg {z-index: 0;}
+#bg {z-index: -1;}
 #bg-cover {z-index: 1;background: rgba(0,0,0,0.25);}
 #black {background: #000;z-index: 10;display: none;}
 
