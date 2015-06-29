@@ -61,11 +61,24 @@ settings = {
         "name" : "RESOLUTION",
         "current" : isset($.cookie('resolution',Number),0),
         "min" : 0,
-        "max" : 1,
-        "default" : "1280x720",
+        "max" : 9,
+        "default" : "Auto",
+        "labels" : [
+            "Auto",
+            "640x360",
+            "960x540",
+            "1280x720",
+            "1366x768",
+            "1600x900",
+            "1920x1080",
+            "2560x1440",
+            "3200x1800",
+            "3840x2160"
+        ],
         "increment" : 1,
         "update" : function() {
             var c = settings.resolution.current,
+                l = settings.resolution.labels[c],
                 s = window.innerHeight/720;
             console.log(s);
             if(c === 0) {
@@ -74,8 +87,9 @@ settings = {
                 $("[data-option='resolution']").children('.value').text("Auto ("+Math.floor(1280*s)+"x"+Math.floor(720*s)+")");
             }
             else {
-                $('#menu').css({'-webkit-transform':'scale(1)','-moz-transform':'scale(1)'});
-                $("[data-option='resolution']").children('.value').text("1280x720");
+                s = l.split("x")[0]/1280;
+                $('#menu').css({'-webkit-transform':'scale('+s+')','-moz-transform':'scale('+s+')'});
+                $("[data-option='resolution']").children('.value').text(l);
             }
         }
     },
