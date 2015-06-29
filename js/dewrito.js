@@ -56,7 +56,7 @@
 						"ip" : serverIP,
 						"name" : "[PASSWORDED] " + serverInfo.name,
 						"gametype" : serverInfo.variant,
-						"map" : serverInfo.map.toUpperCase(),
+						"map" : serverInfo.map.capitalizeFirstLetter(),
 						"players" : {
 							"max" : serverInfo.maxPlayers,
 							"current" : serverInfo.numPlayers
@@ -66,9 +66,9 @@
 				} else {
 					servers[i] = {
 						"ip" : serverIP,
-						"name" : serverInfo.name,
+						"name" :serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
 						"gametype" : serverInfo.variant,
-						"map" : serverInfo.map.toUpperCase(),
+						"map" : serverInfo.map.capitalizeFirstLetter(),
 						"players" : {
 							"max" : serverInfo.maxPlayers,
 							"current" : serverInfo.numPlayers
@@ -76,16 +76,31 @@
 					};
 				}
 			}
-			$('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+" (" + serverInfo.hostPlayer + ") " + (endTime - startTime) + "ms</span><span class='settings'>"+serverInfo.variant+" on "+servers[i].map+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
-			$('#server'+i).css("display","none");
-            $('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
-			$('.server').hover(function() {
-				$('#click')[0].currentTime = 0;
-				$('#click')[0].play();
-			});
-			$('.server').click(function() {changeMenu("serverbrowser-custom",$(this).attr('data-server'));});
+			ip = serverIP.substring(0, serverIP.indexOf(':'));
+			/*var test = $.get("//ipinfo.io/" + ip, function (response) {
+				$('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+" (" + serverInfo.hostPlayer + ")  [" + response.country + " " + (endTime - startTime) + "ms]</span><span class='settings'>"+serverInfo.variant+" on "+servers[i].map+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
+				$('#server'+i).css("display","none");
+				$('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
+				$('.server').hover(function() {
+					$('#click')[0].currentTime = 0;
+					$('#click')[0].play();
+				});
+				$('.server').click(function() {changeMenu("serverbrowser-custom",$(this).attr('data-server'));});
+			}, "jsonp");*/
+			$('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map.toString().replace("Default", "")+".png'></div><div class='info'><span class='name'>"+servers[i].name+" (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>"+serverInfo.variant+" on "+servers[i].map+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
+				$('#server'+i).css("display","none");
+				$('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
+				$('.server').hover(function() {
+					$('#click')[0].currentTime = 0;
+					$('#click')[0].play();
+				});
+				$('.server').click(function() {changeMenu("serverbrowser-custom",$(this).attr('data-server'));});
 		});
 	}
+
+	String.prototype.capitalizeFirstLetter = function() {return this.charAt(0).toUpperCase() + this.slice(1);};
+
+	String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
 
 	function promptPassword(i)
 	{
@@ -618,8 +633,9 @@
     }
 
     function changeMap2(map) {
-        $('#map-thumb').css({"background-image":"url('img/maps/"+map+".png')"});
-        $('#map-thumb-options').css({"background-image":"url('img/maps/"+map+".png')"});
+		console.log(map.toString());
+        $('#map-thumb').css({"background-image":"url('img/maps/"+map.toString().replace("Default", "")+".png')"});
+        $('#map-thumb-options').css({"background-image":"url('img/maps/"+map.toString().replace("Default", "")+".png')"});
         $('#currentmap').text(map);
         $('#map-name-options').text(map);
         $('#map-info-options').text(maps[currentGame][map]);
