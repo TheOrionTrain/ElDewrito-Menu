@@ -210,7 +210,6 @@
     $(document).ready(function() {
         initalize();
         var e = ((window.innerHeight-$('#menu').height())/2)-40;
-        $('#menu').css('margin-top',(e < 0) ? '0px' : e+'px');
         $('#music')[0].volume = settings.musicvolume.current;
         $('#click')[0].volume = settings.sfxvolume.current;
         $('#start').click(function()

@@ -15,15 +15,17 @@
 html {background: #000;}
 
 #menu {
-    position: relative;
+    position: absolute;
     top: 0px; left: 0;
-    margin: auto;
+    margin: 0 !important;
     width: 1280px;
     height: 720px;
     overflow: hidden;
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     transform: scale(1);
+    transform-origin: top left;
+    box-sizing: border-box;
 }
 
 #browser-title {
@@ -587,6 +589,8 @@ audio {display: none;}
     font-size: 20px;
     opacity: 0.75;
     display: none;
+    z-index: 999;
+    color: #fff;
 }
 
 #version {
