@@ -59,21 +59,24 @@ settings = {
     "resolution" : {
         "typeof" : "select",
         "name" : "RESOLUTION",
-        "current" : isset($.cookie('resolution',Number),0.5),
+        "current" : isset($.cookie('resolution',Number),0),
         "min" : 0,
-        "max" : 1.5,
+        "max" : 1,
         "default" : "1280x720",
-        "labels" : [
-            "640x360",
-            "1280x720",
-            "1920x1080",
-            "2560x1440"
-        ],
-        "increment" : 0.5,
+        "increment" : 1,
         "update" : function() {
-            var c = settings.resolution.current;
-            $('#menu').css({'-webkit-transform':'scale('+(0.5+c)+')','-moz-transform':'scale('+(0.5+c)+')'});
-            $("[data-option='resolution']").children('.value').text(settings.resolution.labels[c/0.5]);
+            var c = settings.resolution.current,
+                s = window.innerHeight/720;
+            console.log(s);
+            if(c === 0) {
+                if(1280*s > window.innerWidth) {s = window.innerWidth/1280;}
+                $('#menu').css({'-webkit-transform':'scale('+s+')','-moz-transform':'scale('+s+')'});
+                $("[data-option='resolution']").children('.value').text("Auto ("+Math.floor(1280*s)+"x"+Math.floor(720*s)+")");
+            }
+            else {
+                $('#menu').css({'-webkit-transform':'scale(1)','-moz-transform':'scale(1)'});
+                $("[data-option='resolution']").children('.value').text("1280x720");
+            }
         }
     },
     "musicvolume" : {
