@@ -197,6 +197,7 @@
 
     $(document).ready(function() {
         initalize();
+        $('#version').click(function() {clearAllCookies();});
         var e = ((window.innerHeight-$('#menu').height())/2)-40;
         $('#music')[0].volume = settings.musicvolume.current;
         $('#click')[0].volume = settings.sfxvolume.current;
@@ -628,4 +629,12 @@
         $('#map-info-options').text(maps[currentGame][map]);
         $('.map-select2 .selection').removeClass('selected');
         $("[data-map='"+map+"']").addClass('selected');
+  }
+
+  function clearAllCookies() {
+      for(var i=0; i < Object.keys(settings).length; i++) {
+          var set = Object.keys(settings)[i];
+          $.removeCookie(set);
+      }
+      alert("All cookies reset.");
   }
