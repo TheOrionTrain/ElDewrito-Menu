@@ -49,7 +49,6 @@
 				}
 			});
 			var isPassworded = serverInfo.passworded !== undefined;
-			/*addServer(serverIP, isPassworded, serverInfo.name, serverInfo.hostPlayer, serverInfo.map, serverInfo.mapFile, serverInfo.variant, serverInfo.status, serverInfo.numPlayers, serverInfo.maxPlayers);*/
 			if (serverInfo.map !== "") {
 				if (isPassworded) {
 					servers[i] = {
@@ -77,16 +76,6 @@
 				}
 			}
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
-			/*var test = $.get("//ipinfo.io/" + ip, function (response) {
-				$('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map+".png'></div><div class='info'><span class='name'>"+servers[i].name+" (" + serverInfo.hostPlayer + ")  [" + response.country + " " + (endTime - startTime) + "ms]</span><span class='settings'>"+serverInfo.variant+" on "+servers[i].map+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
-				$('#server'+i).css("display","none");
-				$('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
-				$('.server').hover(function() {
-					$('#click')[0].currentTime = 0;
-					$('#click')[0].play();
-				});
-				$('.server').click(function() {changeMenu("serverbrowser-custom",$(this).attr('data-server'));});
-			}, "jsonp");*/
 			$('#browser').append("<div class='server' id='server"+i+"' data-server="+i+"><div class='thumb'><img src='img/maps/"+servers[i].map.toString().replace("Default", "").toUpperCase()+".png'></div><div class='info'><span class='name'>"+servers[i].name+" (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>"+serverInfo.variant+" on "+servers[i].map+"</span></div><div class='players'>"+servers[i].players.current+"/"+servers[i].players.max+"</div></div>");
 				$('#server'+i).css("display","none");
 				$('#server'+i).delay(Math.floor(Math.random()*1000)+anit).fadeIn(anit);
@@ -632,8 +621,8 @@
 
     function changeMap2(map) {
 		console.log(map.toString());
-        $('#map-thumb').css({"background-image":"url('img/maps/"+map.toString().replace("Default", "")+".png')"});
-        $('#map-thumb-options').css({"background-image":"url('img/maps/"+map.toString().replace("Default", "")+".png')"});
+        $('#map-thumb').css({"background-image":"url('img/maps/"+map.toString().replace("Default", "").toUpperCase()+".png')"});
+        $('#map-thumb-options').css({"background-image":"url('img/maps/"+map.toString().replace("Default", "").toUpperCase()+".png')"});
         $('#currentmap').text(map);
         $('#map-name-options').text(map);
         $('#map-info-options').text(maps[currentGame][map]);
