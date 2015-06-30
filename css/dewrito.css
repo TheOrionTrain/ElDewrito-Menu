@@ -298,7 +298,7 @@ audio {display: none;}
 .map-select {position: absolute;top: 150px; left: 150px;width: 260px;}
 .type-select {position: absolute;top: 150px; left: 150px;width: 260px;}
 
-::-webkit-scrollbar {display: none;}
+#menu ::-webkit-scrollbar {display: none;}
 
 .map-select2, .type-select2 {
     position: absolute;
