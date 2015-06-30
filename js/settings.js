@@ -19,7 +19,7 @@ settings = {
         "name" : "MENU MUSIC",
         "current" : isset($.cookie('musictrack',Number),6),
         "min" : 0,
-        "max" : 10,
+        "max" : 11,
         "default" : "Halo 3 Mythic",
         "labels" : [
             "Halo Reach",
@@ -30,6 +30,7 @@ settings = {
             "Halo 3",
             "Halo 3 Mythic",
             "Halo 3 ODST",
+            "Halo MCC",
             "ElDewrito",
             "Halo Online",
             "Random"
