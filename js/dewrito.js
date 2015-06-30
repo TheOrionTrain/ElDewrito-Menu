@@ -8,11 +8,11 @@ var players = [],
 	scale = 1,
 	anit = 400,
 	currentGame = "HaloOnline",
-    currentType = "Slayer",
+	currentType = "Slayer",
 	servers;
 
 function isset(val, other) {
-	return(val !== undefined) ? val : other;
+	return (val !== undefined) ? val : other;
 }
 
 function randomNum(n) {
@@ -22,12 +22,12 @@ function randomNum(n) {
 function getServers() {
 	servers = [];
 	$.getJSON("http://192.99.124.162/list", function(data) {
-		if(data.result.code !== 0) {
+		if (data.result.code !== 0) {
 			alert("Error received from master: " + data.result.msg);
 			return;
 		}
 		console.log(data);
-		for(var i = 0; i < data.result.servers.length; i++) {
+		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
 			queryServer(serverIP, i);
 		}
@@ -49,13 +49,13 @@ function queryServer(serverIP, i) {
 			}
 		});
 		var isPassworded = serverInfo.passworded !== undefined;
-		if(serverInfo.map !== "") {
-			if(isPassworded) {
+		if (serverInfo.map !== "") {
+			if (isPassworded) {
 				servers[i] = {
 					"ip": serverIP,
-					"name": "[PASSWORDED] " + serverInfo.name,
+					"name": "[PASSWORDED] " + serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
 					"gametype": serverInfo.variant,
-					"map": serverInfo.map.capitalizeFirstLetter(),
+					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -67,7 +67,7 @@ function queryServer(serverIP, i) {
 					"ip": serverIP,
 					"name": serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
 					"gametype": serverInfo.variant,
-					"map": serverInfo.map.capitalizeFirstLetter(),
+					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -89,6 +89,23 @@ function queryServer(serverIP, i) {
 	});
 }
 
+function getMapName(filename) {
+	switch (filename) {
+		case "guardian":
+			return "Guardian";
+		case "riverworld":
+			return "Valhalla";
+		case "s3d_avalanche":
+			return "Diamondback";
+		case "s3d_edge":
+			return "Edge";
+		case "s3d_reactor":
+			return "Reactor";
+		case "s3d_turf":
+			return "Icebox";
+	}
+}
+
 String.prototype.capitalizeFirstLetter = function() {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 };
@@ -98,14 +115,14 @@ String.prototype.contains = function(it) {
 
 function promptPassword(i) {
 	var password = prompt(servers[i].name + " has a password, enter the password to join", "");
-	if(password !== null) {
+	if (password !== null) {
 		window.open("dorito:" + servers[i].ip + "/" + password);
 	}
 }
 
 function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status, numplayers, maxplayers) {
 	var servName = "<td><a href=\"dorito:" + ip + "\">" + name + " (" + host + ")</a></td>";
-	if(isPassworded)
+	if (isPassworded)
 		servName = "<td><a href=\"#\" onclick=\"promptPassword('" + ip + "');\">[PASSWORDED] " + name + " (" + host + ")</a></td>";
 
 	var servMap = "<td>" + map + " (" + mapfile + ")</td>";
@@ -117,19 +134,19 @@ function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status,
 }
 
 function initalize() {
-    if (window.location.protocol == "https:") {
-        alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
-    }
+	if (window.location.protocol == "https:") {
+		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
+	}
 	var set, b, g, i, e;
-	for(i = 0; i < Object.keys(settings).length; i++) {
+	for (i = 0; i < Object.keys(settings).length; i++) {
 		set = Object.keys(settings)[i];
-		if(settings[set].typeof == "select") {
+		if (settings[set].typeof == "select") {
 			$('#dewrito-options').children('.options-select').append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
 		}
-		if(settings[set].typeof == "input") {
+		if (settings[set].typeof == "input") {
 			$('#dewrito-options').children('.options-select').append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=24 /></span></div>");
 		}
-		if(settings[set].typeof == "color") {
+		if (settings[set].typeof == "color") {
 			$('#dewrito-options').children('.options-select').append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
 			$('#option-' + set).spectrum({
 				color: settings[set].current,
@@ -150,7 +167,7 @@ function initalize() {
 		}
 		settings[set].update();
 	}
-	for(i = 0; i < Object.keys(maps).length; i++) {
+	for (i = 0; i < Object.keys(maps).length; i++) {
 		b = Object.keys(maps)[i];
 		$('#choosemap').children('.map-select').append("<div data-game='" + b + "' class='selection'><span class='label'>" + maps[b].name + "</span></div>");
 		$('#choosemap').append("<div class='map-select2 animated' id='maps-" + b + "'></div>");
@@ -158,22 +175,22 @@ function initalize() {
 			this.scrollTop -= (delta * 5);
 			event.preventDefault();
 		});
-		for(e = 1; e < Object.keys(maps[b]).length; e++) {
+		for (e = 1; e < Object.keys(maps[b]).length; e++) {
 			g = Object.keys(maps[b])[e];
 			$('#maps-' + b).append("<div data-map='" + g + "' class='selection'><span class='label'>" + g + "</span></div>");
 		}
 	}
-    for(i = 0; i < Object.keys(gametypes).length; i++) {
+	for (i = 0; i < Object.keys(gametypes).length; i++) {
 		b = Object.keys(gametypes)[i];
 		$('#choosetype').children('.type-select').append("<div data-maintype='" + b + "' class='selection'><span class='label'>" + b.toUpperCase() + "</span></div>");
-		$('#choosetype').append("<div class='type-select2 animated' id='types-" + b.replace(/\s/g,"") + "'></div>");
+		$('#choosetype').append("<div class='type-select2 animated' id='types-" + b.replace(/\s/g, "") + "'></div>");
 		$(".type-select2").mousewheel(function(event, delta) {
 			this.scrollTop -= (delta * 5);
 			event.preventDefault();
 		});
-		for(e = 0; e < Object.keys(gametypes[b]).length; e++) {
+		for (e = 0; e < Object.keys(gametypes[b]).length; e++) {
 			g = Object.keys(gametypes[b])[e];
-			$('#types-' + b.replace(/\s/g,"")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
+			$('#types-' + b.replace(/\s/g, "")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
 		}
 	}
 }
@@ -182,22 +199,22 @@ function changeSetting(s, by) {
 	$('#click')[0].currentTime = 0;
 	$('#click')[0].play();
 	var e = settings[s];
-	if(e.typeof == "select") {
-		if(by == 1) {
-			if(e.current < e.max) {
+	if (e.typeof == "select") {
+		if (by == 1) {
+			if (e.current < e.max) {
 				e.current += e.increment;
 			} else {
 				e.current = e.min;
 			}
-		} else if(by === 0) {
-			if(e.current > e.min) {
+		} else if (by === 0) {
+			if (e.current > e.min) {
 				e.current -= e.increment;
 			} else {
 				e.current = e.max;
 			}
 		}
 	}
-	if(e.typeof == "input" || e.typeof == "color") {
+	if (e.typeof == "input" || e.typeof == "color") {
 		e.current = by;
 	}
 	settings[s] = e;
@@ -230,7 +247,7 @@ $(document).ready(function() {
 	$('.map-select2 .selection').hover(function() {
 		changeMap2($(this).attr('data-map'));
 	});
-    $('.type-select .selection').click(function() {
+	$('.type-select .selection').click(function() {
 		changeType1($(this).attr('data-maintype'));
 	});
 	$('.type-select2 .selection').click(function() {
@@ -280,7 +297,7 @@ function acr(s) {
 	words = s.split(' ');
 	acronym = "";
 	index = 0;
-	while(index < words.length) {
+	while (index < words.length) {
 		nextWord = words[index];
 		acronym = acronym + nextWord.charAt(0);
 		index = index + 1;
@@ -307,7 +324,7 @@ function hexToRgb(hex, opacity) {
 
 function brighter(color) {
 	var colorhex = (color.split("#")[1]).match(/.{2}/g);
-	for(var i = 0; i < 3; i++) {
+	for (var i = 0; i < 3; i++) {
 		var e = parseInt(colorhex[i], 16);
 		e += 30;
 		colorhex[i] = ((e > 255) ? 255 : e).toString(16);
@@ -324,11 +341,12 @@ function playersJoin(number, max, time, ip) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(max);
-		for(var i = 0; i < number; i++) {
+		for (var i = 0; i < number; i++) {
 			$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 			$('#player' + i).css("display", "none");
 			$('#player' + i).delay(Math.floor(Math.random() * time)).fadeIn(anit, callback);
 		}
+
 		function callback() {
 			joined++;
 			$('#joined').text(joined);
@@ -364,7 +382,7 @@ function playersJoin(number, max, time, ip) {
 
 function changeMenu(menu, details) {
 	var f;
-	if(menu == "main-custom") {
+	if (menu == "main-custom") {
 		$('#customgame').attr('data-from', 'main');
 		$('#dewrito').css({
 			"opacity": 0,
@@ -378,10 +396,10 @@ function changeMenu(menu, details) {
 		$('#main').css({
 			"top": "720px"
 		});
-        $('#lobby').empty();
+		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 	}
-	if(menu == "custom-main") {
+	if (menu == "custom-main") {
 		$('#dewrito').css({
 			"opacity": 0.95,
 			"top": "240px",
@@ -396,15 +414,14 @@ function changeMenu(menu, details) {
 		});
 		$('#back').attr('data-action', 'main-main2');
 	}
-	if(menu == "serverbrowser-custom" && details) {
-        $('#lobby').empty();
+	if (menu == "serverbrowser-custom" && details) {
+		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		var d = servers[details];
-		console.log(d.gametype);
-		if(d.players.current != d.players.max) {
+		if (d.players.current != d.players.max) {
 			changeMap2(d.map);
 			$('#subtitle').text(d.name + " : " + d.ip);
-			if(d.gametype === "") {
+			if (d.gametype === "") {
 				d.gametype = "Slayer";
 			}
 			$('#gametype-display').text(d.gametype.toUpperCase());
@@ -420,7 +437,7 @@ function changeMenu(menu, details) {
 			playersJoin(d.players.current, d.players.max, 3000, d.ip);
 		}
 	}
-	if(menu == "custom-serverbrowser") {
+	if (menu == "custom-serverbrowser") {
 		$('#customgame').css({
 			"top": "-720px"
 		});
@@ -431,7 +448,7 @@ function changeMenu(menu, details) {
 		$('#browser').empty();
 		loadServers();
 	}
-	if(menu == "main-serverbrowser") {
+	if (menu == "main-serverbrowser") {
 		$('#dewrito').css({
 			"opacity": 0,
 			"top": "920px"
@@ -447,7 +464,7 @@ function changeMenu(menu, details) {
 		$('#browser').empty();
 		loadServers();
 	}
-	if(menu == "serverbrowser-main") {
+	if (menu == "serverbrowser-main") {
 		$('#dewrito').css({
 			"opacity": 0.95,
 			"top": "240px",
@@ -462,7 +479,7 @@ function changeMenu(menu, details) {
 		});
 		$('#back').attr('data-action', 'main-main2');
 	}
-	if(menu == "main2-main") {
+	if (menu == "main2-main") {
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', 'main-main2');
 		$('#main').css({
@@ -472,7 +489,7 @@ function changeMenu(menu, details) {
 			"top": "720px"
 		});
 	}
-    if(menu == "main2-credits") {
+	if (menu == "main2-credits") {
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', 'credits-main2');
 		$('#credits').css({
@@ -483,16 +500,18 @@ function changeMenu(menu, details) {
 		});
 		$('#dewrito').css({
 			"top": "50px",
-            "left": "265px",
+			"left": "265px",
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
 		});
-        $('#bg-cover').css({
+		$('#bg-cover').css({
 			"background": "rgba(0,0,0,0.5)"
 		});
-        $('#dewrito').css({'background':"url('img/Halo 3 CE.png') no-repeat 0 0/cover"});
+		$('#dewrito').css({
+			'background': "url('img/Halo 3 CE.png') no-repeat 0 0/cover"
+		});
 	}
-    if(menu == "credits-main2") {
+	if (menu == "credits-main2") {
 		$('#back').fadeOut(anit);
 		$('#credits').css({
 			"top": "-720px"
@@ -500,19 +519,21 @@ function changeMenu(menu, details) {
 		$('#main2').css({
 			"top": "0px"
 		});
-        $('#dewrito').css({
+		$('#dewrito').css({
 			"top": "240px",
-            "left": "-10px",
+			"left": "-10px",
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
 		});
-        $('#bg-cover').css({
+		$('#bg-cover').css({
 			"background": "rgba(0,0,0,0.25)"
 		});
-        var c = settings.logo.current;
-        $('#dewrito').css({'background':"url('img/"+settings.logo.labels[c]+".png') no-repeat 0 0/cover"});
+		var c = settings.logo.current;
+		$('#dewrito').css({
+			'background': "url('img/" + settings.logo.labels[c] + ".png') no-repeat 0 0/cover"
+		});
 	}
-	if(menu == "main-main2") {
+	if (menu == "main-main2") {
 		$('#back').fadeOut(anit);
 		$('#main').css({
 			"top": "-720px"
@@ -521,7 +542,7 @@ function changeMenu(menu, details) {
 			"top": "0px"
 		});
 	}
-	if(menu == "custom-options") {
+	if (menu == "custom-options") {
 		$('#customgame-options').show();
 		$('#back').attr('data-action', 'options-custom');
 		$('#customgame').fadeOut(anit);
@@ -534,7 +555,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-delay": "200ms"
 		});
 	}
-	if(menu == "custom-map") {
+	if (menu == "custom-map") {
 		$('#choosemap').show();
 		$('#back').attr('data-action', 'options-custom');
 		$('#customgame').fadeOut(anit);
@@ -547,7 +568,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-delay": "200ms"
 		});
 	}
-    if(menu == "custom-type") {
+	if (menu == "custom-type") {
 		$('#choosetype').show();
 		$('#back').attr('data-action', 'options-custom');
 		$('#customgame').fadeOut(anit);
@@ -560,7 +581,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-delay": "200ms"
 		});
 	}
-	if(menu == "options-custom") {
+	if (menu == "options-custom") {
 		$('.options-section').hide();
 		f = $('#customgame').attr('data-from');
 		$('#back').attr('data-action', 'custom-' + f);
@@ -573,7 +594,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-delay": "0ms"
 		});
 	}
-	if(menu == "main-options") {
+	if (menu == "main-options") {
 		$('#dewrito-options').show();
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', 'options-main');
@@ -583,7 +604,7 @@ function changeMenu(menu, details) {
 			"top": "400px"
 		});
 	}
-	if(menu == "options-main") {
+	if (menu == "options-main") {
 		$('.options-section').hide();
 		$('#back').fadeOut(anit);
 		$('#main2').fadeIn(anit);
@@ -593,7 +614,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-delay": "0ms"
 		});
 	}
-	if(menu == "custom-player") {
+	if (menu == "custom-player") {
 		$('#customgame').css({
 			"left": "-800px"
 		});
@@ -604,7 +625,7 @@ function changeMenu(menu, details) {
 		$('#playermodel').css('background-image', "url('img/players/" + details + ".png')");
 		playerInfo(details);
 	}
-	if(menu == "player-custom") {
+	if (menu == "player-custom") {
 		$('#customgame').css({
 			"left": "0px"
 		});
@@ -637,7 +658,7 @@ var KDdata = [{
 	});
 
 function playerInfo(name) {
-	if(name != "user") {
+	if (name != "user") {
 		var info = players[name];
 		KDchart.segments[0].value = info.deaths;
 		KDchart.segments[1].value = info.kills;
@@ -647,7 +668,7 @@ function playerInfo(name) {
 		$('#player-level-display').text("Level " + info.rank);
 		$('#player-rank-display').css('background', "url('img/ranks/" + info.rank + ".png') no-repeat center center/72px 72px");
 		$('#player-armor').css('background', "url('img/players/" + info.color.split("#")[1] + ".png') no-repeat 0 -50px/320px 704px");
-		if(info.nameplate) {
+		if (info.nameplate) {
 			$('#player-title').css('background-image', "url('img/" + info.nameplate + ".png')");
 		} else {
 			$('#player-title').css('background-image', "");
@@ -666,9 +687,9 @@ function playerInfo(name) {
 }
 
 function startgame(ip) {
-	if(servers[$(".server").data("server")].password !== undefined) {
+	if (servers[$(".server").data("server")].password !== undefined) {
 		var password = prompt(servers[$(".server").data("server")].name + " has a password, enter the password to join", "");
-		if(password !== null) {
+		if (password !== null) {
 			/*$('#beep')[0].play();
 			$('#music')[0].pause();
 			$('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {$('#music')[0].play();});
@@ -723,7 +744,6 @@ function changeMap1(game) {
 }
 
 function changeMap2(map) {
-	console.log(map.toString());
 	$('#map-thumb').css({
 		"background-image": "url('img/maps/" + map.toString().replace("Default", "").toUpperCase() + ".png')"
 	});
@@ -743,12 +763,12 @@ function changeType1(maintype) {
 	$('.type-select').css({
 		"left": "100px"
 	});
-	$('#types-' + currentType.replace(/\s/g,"")).hide().css({
+	$('#types-' + currentType.replace(/\s/g, "")).hide().css({
 		"left": "310px",
 		"opacity": 0
 	});
-	$('#types-' + maintype.replace(/\s/g,"")).css('display', 'block');
-	$('#types-' + maintype.replace(/\s/g,"")).animate({
+	$('#types-' + maintype.replace(/\s/g, "")).css('display', 'block');
+	$('#types-' + maintype.replace(/\s/g, "")).animate({
 		"left": "360px",
 		"opacity": 1
 	}, anit / 8);
@@ -772,7 +792,7 @@ function changeType2(type) {
 }
 
 function clearAllCookies() {
-	for(var i = 0; i < Object.keys(settings).length; i++) {
+	for (var i = 0; i < Object.keys(settings).length; i++) {
 		var set = Object.keys(settings)[i];
 		$.removeCookie(set);
 	}
