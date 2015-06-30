@@ -185,11 +185,11 @@ audio {display: none;}
 
 #type-icon-options {
     position: absolute;
-    top: 80px;
-    width: 450px;
-    height: 200px;
-    right: 150px;
-    background: url('../img/gametypes/Slayer.png') no-repeat center bottom/90px 90px;
+    top: 200px;
+    width: 90px;
+    height: 90px;
+    left: 927px;
+    background: url('../img/gametypes/Slayer.png') no-repeat 0 0/90px 90px;
     box-sizing: border-box;
     border-radius: 10px;
     opacity: 0.8;
