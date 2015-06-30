@@ -21,7 +21,7 @@ function randomNum(n) {
 
 function getServers() {
 	servers = [];
-	$.getJSON("//192.99.124.162/list", function(data) {
+	$.getJSON("http://192.99.124.162/list", function(data) {
 		if(data.result.code !== 0) {
 			alert("Error received from master: " + data.result.msg);
 			return;
@@ -36,13 +36,13 @@ function getServers() {
 
 function queryServer(serverIP, i) {
 	console.log(serverIP);
-	$.getJSON("//" + serverIP, function(serverInfo) {
+	$.getJSON("http://" + serverIP, function(serverInfo) {
 		var startTime = (new Date()).getTime(),
 			endTime;
 
 		$.ajax({
 			type: "GET",
-			url: "//" + serverIP + "/",
+			url: "http://" + serverIP + "/",
 			async: false,
 			success: function() {
 				endTime = (new Date()).getTime();
@@ -315,7 +315,7 @@ function brighter(color) {
 function playersJoin(number, max, time, ip) {
 	joined = 0;
 	var players;
-	$.getJSON("//" + ip, function(serverInfo) {
+	$.getJSON("http://" + ip, function(serverInfo) {
 		players = serverInfo.players;
 		console.log(players);
 		$('#lobby').empty();
