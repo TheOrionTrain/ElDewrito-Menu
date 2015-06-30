@@ -8,6 +8,7 @@ var players = [],
 	scale = 1,
 	anit = 400,
 	currentGame = "HaloOnline",
+    currentType = "Slayer",
 	servers;
 
 function isset(val, other) {
@@ -159,6 +160,19 @@ function initalize() {
 			$('#maps-' + b).append("<div data-map='" + g + "' class='selection'><span class='label'>" + g + "</span></div>");
 		}
 	}
+    for(i = 0; i < Object.keys(gametypes).length; i++) {
+		b = Object.keys(gametypes)[i];
+		$('#choosetype').children('.type-select').append("<div data-maintype='" + b + "' class='selection'><span class='label'>" + b.toUpperCase() + "</span></div>");
+		$('#choosetype').append("<div class='type-select2 animated' id='types-" + b.replace(/\s/g,"") + "'></div>");
+		$(".type-select2").mousewheel(function(event, delta) {
+			this.scrollTop -= (delta * 5);
+			event.preventDefault();
+		});
+		for(e = 0; e < Object.keys(gametypes[b]).length; e++) {
+			g = Object.keys(gametypes[b])[e];
+			$('#types-' + b.replace(/\s/g,"")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
+		}
+	}
 }
 
 function changeSetting(s, by) {
@@ -212,6 +226,16 @@ $(document).ready(function() {
 	});
 	$('.map-select2 .selection').hover(function() {
 		changeMap2($(this).attr('data-map'));
+	});
+    $('.type-select .selection').click(function() {
+		changeType1($(this).attr('data-maintype'));
+	});
+	$('.type-select2 .selection').click(function() {
+		changeType2($(this).attr('data-type'), 0);
+		changeMenu("options-custom");
+	});
+	$('.type-select2 .selection').hover(function() {
+		changeType2($(this).attr('data-type'));
 	});
 	$('.right').click(function() {
 		var c = $(this).parent('.selection').attr('data-option');
@@ -480,6 +504,19 @@ function changeMenu(menu, details) {
 			"-webkit-transition-delay": "200ms"
 		});
 	}
+    if(menu == "custom-type") {
+		$('#choosetype').show();
+		$('#back').attr('data-action', 'options-custom');
+		$('#customgame').fadeOut(anit);
+		$('#options').fadeIn(anit);
+		$('#dewrito').css('top', '400px');
+		$('#dewrito').css({
+			"opacity": 0.9,
+			"top": "400px",
+			"-webkit-transition-timing-function": "200ms",
+			"-webkit-transition-delay": "200ms"
+		});
+	}
 	if(menu == "options-custom") {
 		$('.options-section').hide();
 		f = $('#customgame').attr('data-from');
@@ -659,6 +696,40 @@ function changeMap2(map) {
 	$('#map-info-options').text(maps[currentGame][map]);
 	$('.map-select2 .selection').removeClass('selected');
 	$("[data-map='" + map + "']").addClass('selected');
+}
+
+function changeType1(maintype) {
+	$('.type-select .selection').removeClass('selected');
+	$("[data-maintype='" + maintype + "']").addClass('selected');
+	$('.type-select').css({
+		"left": "100px"
+	});
+	$('#types-' + currentType.replace(/\s/g,"")).hide().css({
+		"left": "310px",
+		"opacity": 0
+	});
+	$('#types-' + maintype.replace(/\s/g,"")).css('display', 'block');
+	$('#types-' + maintype.replace(/\s/g,"")).animate({
+		"left": "360px",
+		"opacity": 1
+	}, anit / 8);
+	currentType = maintype;
+	$('#slide')[0].currentTime = 0;
+	$('#slide')[0].play();
+}
+
+function changeType2(type) {
+	$('#gametype-icon').css({
+		"background-image": "url('img/gametypes/" + currentType + ".png')"
+	});
+	$('#type-icon-options').css({
+		"background-image": "url('img/gametypes/" + currentType + ".png')"
+	});
+	$('#gametype-display').text(type.toUpperCase());
+	$('#type-name-options').text(type.toUpperCase());
+	$('#type-info-options').text(gametypes[currentType][type]);
+	$('.type-select2 .selection').removeClass('selected');
+	$("[data-type='" + type + "']").addClass('selected');
 }
 
 function clearAllCookies() {

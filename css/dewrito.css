@@ -183,6 +183,18 @@ audio {display: none;}
     border-radius: 4px;
 }
 
+#type-icon-options {
+    position: absolute;
+    top: 80px;
+    width: 450px;
+    height: 200px;
+    right: 150px;
+    background: url('../img/gametypes/Slayer.png') no-repeat center bottom/90px 90px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    opacity: 0.8;
+}
+
 #map-thumb {
     left: 100px;
     border: 1px solid rgba(0,0,0,1);
@@ -196,7 +208,7 @@ audio {display: none;}
     border: 2px solid rgba(255,255,255,1);
 }
 
-#map-name-options,#map-info-options {
+#map-name-options,#map-info-options, #type-name-options, #type-info-options {
     position: absolute;
     left: 680px;
     font-weight: 300;
@@ -205,13 +217,13 @@ audio {display: none;}
 }
 
 
-#map-name-options {
+#map-name-options, #type-name-options {
     top: 320px;
     font-size: 28px;
     opacity: 0.85;
 }
 
-#map-info-options {
+#map-info-options, #type-info-options {
     top: 380px;
     font-size: 18px;
     opacity: 0.7;
@@ -262,10 +274,11 @@ audio {display: none;}
 .select-main {position: absolute;top: 500px; left: 90px;width: 450px;}
 .options-select {position: absolute;top: 150px; left: 150px;width: 980px;}
 .map-select {position: absolute;top: 150px; left: 150px;width: 260px;}
+.type-select {position: absolute;top: 150px; left: 150px;width: 260px;}
 
 ::-webkit-scrollbar {display: none;}
 
-.map-select2 {
+.map-select2, .type-select2 {
     position: absolute;
     top: 150px; left: 310px;
     width: 260px;
@@ -277,7 +290,7 @@ audio {display: none;}
     opacity: 0;
 }
 
-.map-select .selection .label, .map-select2 .selection .label {
+.map-select .selection .label, .map-select2 .selection .label, .type-select .selection .label, .type-select2 .selection .label {
     text-align: left;
     display: table-cell;
     width: 260px;
@@ -286,7 +299,7 @@ audio {display: none;}
     height: 40px;
 }
 
-.map-select .selection, .map-select2 .selection {
+.map-select .selection, .map-select2 .selection, .type-select .selection, .type-select2 .selection {
     font-weight: 300;
     font-size: 25px;
     color: rgba(255,255,255,0.85);
@@ -300,7 +313,7 @@ audio {display: none;}
     transition: 0.5s;
 }
 
-.map-select .selection {background: url('../img/right.png') no-repeat 232px 8px/18px auto;}
+.map-select .selection, .type-select .selection {background: url('../img/right.png') no-repeat 232px 8px/18px auto;}
 
 .options-select .selection .value, #select .selection .value  {
     text-align: center;
@@ -411,9 +424,7 @@ audio {display: none;}
     color: rgba(255,255,255,0.95);
 }
 
-#currentmap {
-    text-transform: uppercase;
-}
+#currentmap {text-transform: uppercase;}
 
 #dewrito {
     position: absolute;
