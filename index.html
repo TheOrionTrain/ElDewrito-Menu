@@ -33,7 +33,7 @@
         <div id="subtitle"></div>
         <div id="line1"></div>
         <div id="select">
-            <div class="selection"><span class="label">GAME TYPE</span><span id="gametype-display" class="value">SLAYER</span></div>
+            <div data-action="menu" data-menu="custom-type" class="selection"><span class="label">GAME TYPE</span><span id="gametype-display" class="value">SLAYER</span></div>
             <div data-action="menu" data-menu="custom-map" class="selection"><span class="label">MAP</span><span id="currentmap" class="value">EDGE</span></div>
             <div data-action="menu" data-menu="custom-options" class="selection"><span class="label">GAME OPTIONS</span><span class="value">&nbsp;</span></div>
             <div class="selection" id="start"><span class="label">JOIN GAME</span><span class="value">&nbsp;</span></div>
@@ -67,6 +67,13 @@
             <div id="map-name-options">EDGE</div>
             <div id="map-info-options">The remote frontier world of Parition has provided this ancient databank with the safety of seclusion. 6-16 players.</div>
             <div class="map-select animated"></div>
+        </div>
+        <div class="options-section" id="choosetype">
+            <div class="options-title">SELECT GAMETYPE</div>
+            <div id="type-icon-options"></div>
+            <div id="type-name-options">SLAYER</div>
+            <div id="type-info-options">Free for all. 25 kills to win.</div>
+            <div class="type-select animated"></div>
         </div>
         <div class="options-section" id="customgame-options"><div class="options-title">GAME OPTIONS</div></div>
     </div>

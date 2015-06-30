@@ -220,59 +220,57 @@ settings = {
 
 gametypes = {
     "Slayer" : {
-        "Slayer" : "Description goes here.",
-        "Team Slayer" : "Description goes here.",
-        "Rockets" : "Description goes here.",
-        "Elimination" : "Description goes here.",
-        "Duel" : "Description goes here."
+        "Slayer" : "Free for all. 25 kills to win.",
+        "Team Slayer" : "Form teams for greater glory. 50 kills to win.",
+        "Rockets" : "Free for all, with nothing but rocket launchers. 25 kills to win.",
+        "Elimination" : "Highly tactical Team Slayer. 5 rounds, each to 5 kills. Be careful out there.",
+        "Duel" : "No camping! Free for all, but the leader cannot hide. 10 kills to win."
     },
     "Oddball" : {
-        "Oddball" : "Description goes here.",
-        "Team Oddball" : "Description goes here.",
-        "Lowball" : "Description goes here.",
-        "Ninjaball" : "Description goes here.",
-        "Rocketball" : "Description goes here."
+        "Oddball" : "Free for all. Hold the skull to earn points. 50 points to win.",
+        "Team Oddball" : "Form teams, protect your carrier. 100 points to win.",
+        "Lowball" : "Teamwork counts! Every member of your team must earn 25 points to win.",
+        "Ninjaball" : "The ball carrier is fast and agile, but vulnerable. 100 points to win.",
+        "Rocketball" : "You have no allies but your Rocket Launcher. 50 points to win."
     },
     "King of the Hill" : { //Dang it, Bobby
-        "King of the Hill" : "Description goes here.",
-        "Crazy King" : "Description goes here.",
-        "Team King" : "Description goes here.",
-        "Moshpit" : "Description goes here."
+        "Crazy King" : "Free for all. Gain points by contorlling the hill. 100 points to win.",
+        "Team King" : "Hold the Hill as a team. The hill must be uncontested. 150 points to win.",
+        "Moshpit" : "There is a single, unmoving hill. Everyone inside is tougher. 100 points to win."
     },
     "Capture the Flag" : {
-        "Capture the Flag" : "Description goes here.",
-        "Multi Flag" : "Description goes here.",
-        "One Flag" : "Description goes here.",
-        "Tank Flag" : "Description goes here.",
-        "Attrition CTF" : "Description goes here."
+        "Multi Flag" : "Every team has a flag, and may capture when it is away. 3 captures to win.",
+        "One Flag" : "Only one team has a flag. 4 rounds, and teams take turns defending the flag.",
+        "Tank Flag" : "A variation of Multi Flag where the carrier is ver tough, but very slow.",
+        "Attrition CTF" : "Highly tactical CTF. Very low respawns, but teams respawn on captures."
     },
     "Assault" : {
-        "Assault" : "Description goes here.",
-        "Neutral Bomb" : "Description goes here.",
-        "One Bomb" : "Description goes here.",
-        "Attrition Bomb" : "Description goes here."
+        "Assault" : "Every team has a bomb, and a base to defend. 3 detonations to win.",
+        "Neutral Bomb" : "All teams have a base to defend, but share a single bomb. 3 detonations to win.",
+        "One Bomb" : "Only one team has a base to defend. 4 rounds, and teams take turns defending.",
+        "Attrition Bomb" : "Highly tactical Assault. Neutral bomb, long respawns, but teams respawn on detonations."
     },
     "Territories" : {
-        "Territories" : "Description goes here.",
-        "Land Grab" : "Description goes here.",
-        "Flag Rally" : "Description goes here."
+        "Territories" : "One team must defend their territories. Other teams must take them. 4 rounds.",
+        "Land Grab" : "Every territory is up for grab. Once a territory is taken, it is locked. 3 rounds.",
+        "Flag Rally" : "Territories do not lock after capture. Hold what you can until the round ends."
     },
     "Juggernaut" : {
-        "Juggernaut" : "Description goes here.",
-        "Mad Dash" : "Description goes here.",
-        "Ninjanaut" : "Description goes here."
+        "Juggernaut" : "Kill the Juggernaut to become the Juggernaut and earn points. 10 points to win.",
+        "Mad Dash" : "Juggernaut scores point sby reaching the destination zones. 5 points to win.",
+        "Ninjanaut" : "The juggernaut is fast, stealthy, and deadly. 10 points to win."
     },
     "Infection" : {
-        "Infection" : "Description goes here.",
-        "Save One Bullet" : "Description goes here.",
-        "Alpha Zombie" : "Description goes here.",
-        "Hide and Seek" : "Description goes here."
+        "Infection" : "Some players start off as zombies and seek to devour humans. 3 rounds, most points wins.",
+        "Save One Bullet" : "The humans start off well armed, but ammunition is limited.",
+        "Alpha Zombie" : "Players who start the round as zombies are more powerful than those they infect.",
+        "Hide and Seek" : "Your only defense is stealth. Don't let the zombies find you!"
     },
     "VIP" : {
-        "VIP" : "Description goes here.",
-        "One Sided VIP" : "Description goes here.",
-        "Escort" : "Description goes here.",
-        "Influential VIP" : "Description goes here."
+        "VIP" : "Every team has a VIP. When your VIP dies, the next player to die becomes the new one. 10 points to win.",
+        "One Sided VIP" : "Only one team has a VIP. 4 rounds, and teams take turns defending their VIP.",
+        "Escort" : "Only one team has a VIP, who scores points by reaching a destination. If he dies, the round ends.",
+        "Influential VIP" : "Staying near your VIP makes you stronger, so move as a group. 10 points to win."
     }
 },
 
