@@ -647,12 +647,8 @@ function startgame(ip) {
 		$('#music')[0].play();
 	});
 	delay(function() {
-		var getLaunch = document.getElementById('launch');
-		getLaunch.href = "dorito:" + ip;
-		getLaunch.click();
-		console.log(ip);
-		//window.open("dorito:" + ip);
-	}, 3500);
+		callbacks.connect(ip);
+	}, 3600);
 }
 
 var delay = (function() {
