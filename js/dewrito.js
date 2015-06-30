@@ -472,6 +472,46 @@ function changeMenu(menu, details) {
 			"top": "720px"
 		});
 	}
+    if(menu == "main2-credits") {
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'credits-main2');
+		$('#credits').css({
+			"top": "0px"
+		});
+		$('#main2').css({
+			"top": "720px"
+		});
+		$('#dewrito').css({
+			"top": "50px",
+            "left": "265px",
+			"-webkit-transition-timing-function": "200ms",
+			"-webkit-transition-delay": "0ms"
+		});
+        $('#bg-cover').css({
+			"background": "rgba(0,0,0,0.5)"
+		});
+        $('#dewrito').css({'background':"url('img/Halo 3 CE.png') no-repeat 0 0/cover"});
+	}
+    if(menu == "credits-main2") {
+		$('#back').fadeOut(anit);
+		$('#credits').css({
+			"top": "-720px"
+		});
+		$('#main2').css({
+			"top": "0px"
+		});
+        $('#dewrito').css({
+			"top": "240px",
+            "left": "-10px",
+			"-webkit-transition-timing-function": "200ms",
+			"-webkit-transition-delay": "0ms"
+		});
+        $('#bg-cover').css({
+			"background": "rgba(0,0,0,0.25)"
+		});
+        var c = settings.logo.current;
+        $('#dewrito').css({'background':"url('img/"+settings.logo.labels[c]+".png') no-repeat 0 0/cover"});
+	}
 	if(menu == "main-main2") {
 		$('#back').fadeOut(anit);
 		$('#main').css({
