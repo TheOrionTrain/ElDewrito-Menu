@@ -302,7 +302,6 @@ function playersJoin(number, max, time, ip) {
 			$('#player' + i).css("display", "none");
 			$('#player' + i).delay(Math.floor(Math.random() * time)).fadeIn(anit, callback);
 		}
-
 		function callback() {
 			joined++;
 			$('#joined').text(joined);
@@ -313,7 +312,6 @@ function playersJoin(number, max, time, ip) {
 		});
 		$("#lobby tr").mouseover(function() {
 			var n = $(this).attr('id'),
-				//nn = parseInt(n.split("r")[1],10),
 				hexes = (n == "user") ? "#000000" : "#000000",
 				bright = brighter(hexes);
 			$(this).css("background-color", hexToRgb(bright, 0.75));
@@ -353,7 +351,8 @@ function changeMenu(menu, details) {
 		$('#main').css({
 			"top": "720px"
 		});
-		playersJoin(15, 16, 10000);
+        $('#lobby').empty();
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 	}
 	if(menu == "custom-main") {
 		$('#dewrito').css({
@@ -371,12 +370,14 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'main-main2');
 	}
 	if(menu == "serverbrowser-custom" && details) {
+        $('#lobby').empty();
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		var d = servers[details];
 		console.log(d.gametype);
 		if(d.players.current != d.players.max) {
 			changeMap2(d.map);
 			$('#subtitle').text(d.name + " : " + d.ip);
-			if(typeof d.gametype === "") {
+			if(d.gametype === "") {
 				d.gametype = "Slayer";
 			}
 			$('#gametype-display').text(d.gametype.toUpperCase());

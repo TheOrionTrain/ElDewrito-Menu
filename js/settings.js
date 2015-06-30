@@ -41,7 +41,6 @@ settings = {
                 $('#music')[0].loop = false;
                 var r = Math.floor(Math.random()*settings.musictrack.labels.length-1);
                 (r < 0) ? r=0 : r=r;
-                console.log(r);
                 $('#music').attr('src','audio/'+settings.musictrack.labels[r]+'.ogg');
                 $('#music')[0].addEventListener('ended', function(){
                     var r = Math.floor(Math.random()*settings.musictrack.labels.length-1);
@@ -219,7 +218,63 @@ settings = {
     }
 },
 
-gametypes = ["Slayer","Team Slayer","Capture the Flag","Oddball","Assault","Infection","Juggernaut","King of the Hill"],
+gametypes = {
+    "Slayer" : {
+        "Slayer" : "Description goes here.",
+        "Team Slayer" : "Description goes here.",
+        "Rockets" : "Description goes here.",
+        "Elimination" : "Description goes here.",
+        "Duel" : "Description goes here."
+    },
+    "Oddball" : {
+        "Oddball" : "Description goes here.",
+        "Team Oddball" : "Description goes here.",
+        "Lowball" : "Description goes here.",
+        "Ninjaball" : "Description goes here.",
+        "Rocketball" : "Description goes here."
+    },
+    "King of the Hill" : { //Dang it, Bobby
+        "King of the Hill" : "Description goes here.",
+        "Crazy King" : "Description goes here.",
+        "Team King" : "Description goes here.",
+        "Moshpit" : "Description goes here."
+    },
+    "Capture the Flag" : {
+        "Capture the Flag" : "Description goes here.",
+        "Multi Flag" : "Description goes here.",
+        "One Flag" : "Description goes here.",
+        "Tank Flag" : "Description goes here.",
+        "Attrition CTF" : "Description goes here."
+    },
+    "Assault" : {
+        "Assault" : "Description goes here.",
+        "Neutral Bomb" : "Description goes here.",
+        "One Bomb" : "Description goes here.",
+        "Attrition Bomb" : "Description goes here."
+    },
+    "Territories" : {
+        "Territories" : "Description goes here.",
+        "Land Grab" : "Description goes here.",
+        "Flag Rally" : "Description goes here."
+    },
+    "Juggernaut" : {
+        "Juggernaut" : "Description goes here.",
+        "Mad Dash" : "Description goes here.",
+        "Ninjanaut" : "Description goes here."
+    },
+    "Infection" : {
+        "Infection" : "Description goes here.",
+        "Save One Bullet" : "Description goes here.",
+        "Alpha Zombie" : "Description goes here.",
+        "Hide and Seek" : "Description goes here."
+    },
+    "VIP" : {
+        "VIP" : "Description goes here.",
+        "One Sided VIP" : "Description goes here.",
+        "Escort" : "Description goes here.",
+        "Influential VIP" : "Description goes here."
+    }
+},
 
 maps = {
     "HaloOnline" : {
