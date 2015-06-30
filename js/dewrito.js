@@ -425,7 +425,7 @@
 				if (typeof d.gametype === "") {
 					d.gametype = "Slayer";
 				}
-                $('#gametype-display').text(d.gametype);
+                $('#gametype-display').text(d.gametype.toUpperCase());
                 $('#gametype-icon').css('background',"url('img/gametypes/"+d.gametype+".png') no-repeat 0 0/cover");
                 $('#serverbrowser').css({"top":"720px"});
                 $('#customgame').css({"top":"0px"});
