@@ -158,7 +158,7 @@ audio {display: none;}
     height: 720px;
 }
 
-#main, #serverbrowser {top: -720px;}
+#main, #serverbrowser, #credits {top: -720px;}
 
 .animated {
     -webkit-transition: 400ms;
@@ -168,7 +168,6 @@ audio {display: none;}
     transition: 400ms;
     transition-timing-function: cubic-bezier(.55,0,.1,1);
 }
-
 
 
 #customgame {top: -720px; left: 0;}
@@ -181,6 +180,29 @@ audio {display: none;}
     height: 200px;
     background: url('../img/maps/EDGE.png') no-repeat 0 0/cover;
     border-radius: 4px;
+}
+
+#credits table {
+    width: 680px;
+    position: absolute;
+    left: 300px;
+    top: 280px;
+}
+
+#credits table td.label {
+    width: 540px;
+    text-align: left;
+    font-size: 32px;
+    color: #fff;
+    opacity: 0.9;
+}
+
+#credits table td.name {
+    width: 540px;
+    text-align: right;
+    font-size: 32px;
+    color: #fff;
+    opacity: 0.9;
 }
 
 #type-icon-options {
