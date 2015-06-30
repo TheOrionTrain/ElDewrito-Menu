@@ -117,6 +117,9 @@ function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status,
 }
 
 function initalize() {
+    if (window.location.protocol == "https:") {
+        alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
+    }
 	var set, b, g, i, e;
 	for(i = 0; i < Object.keys(settings).length; i++) {
 		set = Object.keys(settings)[i];
