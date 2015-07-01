@@ -279,8 +279,7 @@ $(document).ready(function() {
 	});
 	$('#back').click(function() {
 		changeMenu($(this).attr('data-action'));
-		loopPlayers = false;
-		loopServers = true;
+		console.log($(this).attr('data-action'));
 	});
 	$("#lobby-container").mousewheel(function(event, delta) {
 		this.scrollTop -= (delta * 34);
@@ -354,16 +353,16 @@ function playerLoop()
 		joined = 0;
 		$.getJSON("http://" + servers[selectedserver].ip, function(serverInfo) {
 			players = serverInfo.players;
-			console.log(servers[selectedserver].ip);
 			$('#lobby').empty();
 			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 			$('#joined').text(serverInfo.numPlayers);
 			$('#maxplayers').text(serverInfo.maxPlayers);
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
-				console.log(players[i].name);
-				$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-				$('#player' + i).css("display", "none");
-				$('#player' + i).fadeIn(anit, callback);
+				if(typeof players[i] !== 'undefined') {
+					$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+					$('#player' + i).css("display", "none");
+					$('#player' + i).fadeIn(anit, callback);
+				}
 			}
 
 			function callback() {
@@ -388,7 +387,7 @@ function playerLoop()
 					nn = "user",
 					hexes = (n == "user") ? "#000000" : "#000000",
 					bright = brighter(hexes);
-				changeMenu("custom-player", (n == "user") ? "user" : nn);
+				changeMenu("custom-player", e);
 				$('#lobby tr').each(function() {
 					var color = $(this).attr('data-color');
 					$(this).css('background', color);
@@ -440,7 +439,7 @@ function playersJoin(number, max, time, ip) {
 				nn = "user",
 				hexes = (n == "user") ? "#000000" : "#000000",
 				bright = brighter(hexes);
-			changeMenu("custom-player", (n == "user") ? "user" : nn);
+			changeMenu("custom-player", e);
 			$('#lobby tr').each(function() {
 				var color = $(this).attr('data-color');
 				$(this).css('background', color);
@@ -715,6 +714,7 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'player-custom');
 		$('#playermodel').css('background-image', "url('img/players/" + details + ".png')");
 		playerInfo(details);
+		console.log(details);
 		loopServers = false;
 	}
 	if (menu == "player-custom") {
@@ -751,21 +751,32 @@ var KDdata = [{
 	});
 
 function playerInfo(name) {
+	console.log(name);
 	if (name != "user") {
-		var info = players[name];
-		KDchart.segments[0].value = info.deaths;
-		KDchart.segments[1].value = info.kills;
-		KDchart.update();
-		$('#player-kd-display').text((info.kills / info.deaths).toFixed(2));
-		$('#player-name').text(info.name);
-		$('#player-level-display').text("Level " + info.rank);
-		$('#player-rank-display').css('background', "url('img/ranks/" + info.rank + ".png') no-repeat center center/72px 72px");
-		$('#player-armor').css('background', "url('img/players/" + info.color.split("#")[1] + ".png') no-repeat 0 -50px/320px 704px");
-		if (info.nameplate) {
-			$('#player-title').css('background-image', "url('img/" + info.nameplate + ".png')");
-		} else {
-			$('#player-title').css('background-image', "");
-		}
+		console.log(name);
+		$.getJSON("http://" + servers[selectedserver].ip, function(info) {
+			for (var i = 0; i < info.players.length; i++)
+			{
+				console.log(name);
+				if (info.players[i].name == name)
+				{
+					console.log(info.players[i]);
+					KDchart.segments[0].value = info.players[i].deaths;
+					KDchart.segments[1].value = info.players[i].kills;
+					KDchart.update();
+					$('#player-kd-display').text((info.players[i].kills / info.players[i].deaths).toFixed(2));
+					$('#player-name').text(name);
+					$('#player-level-display').text("Level 39");
+					$('#player-rank-display').css('background', "url('img/ranks/39.png') no-repeat center center/72px 72px");
+					$('#player-armor').css('background', "url('img/players/user.png') no-repeat 0 -50px/320px 704px");
+					if (info.nameplate) {
+						$('#player-title').css('background-image', "");
+					} else {
+						$('#player-title').css('background-image', "");
+					}
+				}
+			}
+		});
 	} else {
 		KDchart.segments[0].value = 1;
 		KDchart.segments[1].value = 1;
