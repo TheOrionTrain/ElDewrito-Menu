@@ -354,13 +354,13 @@ function playerLoop()
 		joined = 0;
 		$.getJSON("http://" + servers[selectedserver].ip, function(serverInfo) {
 			players = serverInfo.players;
-			console.log(players);
+			console.log(servers[selectedserver].ip);
 			$('#lobby').empty();
 			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 			$('#joined').text(serverInfo.numPlayers);
 			$('#maxplayers').text(serverInfo.maxPlayers);
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
-				if (players[i].name !== undefined)
+				if (players !== undefined)
 				$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				$('#player' + i).css("display", "none");
 				$('#player' + i).fadeIn(anit, callback);
