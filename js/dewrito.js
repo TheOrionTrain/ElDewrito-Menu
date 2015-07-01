@@ -11,6 +11,7 @@ var players = [],
 	currentType = "Slayer",
 	selectedserver,
 	loopPlayers,
+	host = 1,
 	servers;
 
 function isset(val, other) {
@@ -281,8 +282,6 @@ $(document).ready(function() {
 	});
 	$('#back').click(function() {
 		changeMenu($(this).attr('data-action'));
-		console.log("Servers: " + loopServers);
-		console.log("Players: " + loopPlayers);
 	});
 	$("#lobby-container").mousewheel(function(event, delta) {
 		this.scrollTop -= (delta * 34);
@@ -441,6 +440,7 @@ function playersJoin(number, max, time, ip) {
 function changeMenu(menu, details) {
 	var f;
 	if (menu == "main-custom") {
+		host = 1;
 		$('#customgame').attr('data-from', 'main');
 		$('#dewrito').css({
 			"opacity": 0,
@@ -476,6 +476,7 @@ function changeMenu(menu, details) {
 		loopServers = false;
 	}
 	if (menu == "serverbrowser-custom" && details) {
+		host = 0;
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		var d = servers[details];
@@ -615,46 +616,52 @@ function changeMenu(menu, details) {
 		loopServers = false;
 	}
 	if (menu == "custom-options") {
-		$('#customgame-options').show();
-		$('#back').attr('data-action', 'options-custom');
-		$('#customgame').fadeOut(anit);
-		$('#options').fadeIn(anit);
-		$('#dewrito').css('top', '400px');
-		$('#dewrito').css({
-			"opacity": 0.9,
-			"top": "400px",
-			"-webkit-transition-timing-function": "200ms",
-			"-webkit-transition-delay": "200ms"
-		});
-		loopServers = false;
+		if(host === 1) {
+			$('#customgame-options').show();
+			$('#back').attr('data-action', 'options-custom');
+			$('#customgame').fadeOut(anit);
+			$('#options').fadeIn(anit);
+			$('#dewrito').css('top', '400px');
+			$('#dewrito').css({
+				"opacity": 0.9,
+				"top": "400px",
+				"-webkit-transition-timing-function": "200ms",
+				"-webkit-transition-delay": "200ms"
+			});
+			loopServers = false;
+		}
 	}
 	if (menu == "custom-map") {
-		$('#choosemap').show();
-		$('#back').attr('data-action', 'options-custom');
-		$('#customgame').fadeOut(anit);
-		$('#options').fadeIn(anit);
-		$('#dewrito').css('top', '400px');
-		$('#dewrito').css({
-			"opacity": 0.9,
-			"top": "400px",
-			"-webkit-transition-timing-function": "200ms",
-			"-webkit-transition-delay": "200ms"
-		});
-		loopServers = false;
+		if(host === 1) {
+			$('#choosemap').show();
+			$('#back').attr('data-action', 'options-custom');
+			$('#customgame').fadeOut(anit);
+			$('#options').fadeIn(anit);
+			$('#dewrito').css('top', '400px');
+			$('#dewrito').css({
+				"opacity": 0.9,
+				"top": "400px",
+				"-webkit-transition-timing-function": "200ms",
+				"-webkit-transition-delay": "200ms"
+			});
+			loopServers = false;
+		}
 	}
 	if (menu == "custom-type") {
-		$('#choosetype').show();
-		$('#back').attr('data-action', 'options-custom');
-		$('#customgame').fadeOut(anit);
-		$('#options').fadeIn(anit);
-		$('#dewrito').css('top', '400px');
-		$('#dewrito').css({
-			"opacity": 0.9,
-			"top": "400px",
-			"-webkit-transition-timing-function": "200ms",
-			"-webkit-transition-delay": "200ms"
-		});
-		loopServers = false;
+		if(host === 1) {
+			$('#choosetype').show();
+			$('#back').attr('data-action', 'options-custom');
+			$('#customgame').fadeOut(anit);
+			$('#options').fadeIn(anit);
+			$('#dewrito').css('top', '400px');
+			$('#dewrito').css({
+				"opacity": 0.9,
+				"top": "400px",
+				"-webkit-transition-timing-function": "200ms",
+				"-webkit-transition-delay": "200ms"
+			});
+			loopServers = false;
+		}
 	}
 	if (menu == "options-custom") {
 		$('.options-section').hide();
