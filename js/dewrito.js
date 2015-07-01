@@ -10,7 +10,6 @@ var players = [],
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
 	selectedserver,
-	loopServers,
 	loopPlayers,
 	servers;
 
@@ -228,6 +227,9 @@ function changeSetting(s, by) {
 
 $(document).ready(function() {
 	initalize();
+	$('#refresh').click(function() {
+		loadServers();
+	});
 	$('#version').click(function() {
 		clearAllCookies();
 	});
@@ -337,15 +339,6 @@ function brighter(color) {
 		colorhex[i] = ((e > 255) ? 255 : e).toString(16);
 	}
 	return "#" + colorhex[0] + colorhex[1] + colorhex[2];
-}
-
-function serverLoop()
-{
-	delay(function() {
-		loadServers();
-		if (loopServers)
-			serverLoop();
-	}, 10000);
 }
 
 function playerLoop()
@@ -519,8 +512,6 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'serverbrowser-main');
 		$('#browser').empty();
 		loadServers();
-		serverLoop();
-		loopServers = true;
 		loopPlayers = false;
 	}
 	if (menu == "main-serverbrowser") {
@@ -538,8 +529,6 @@ function changeMenu(menu, details) {
 		});
 		$('#browser').empty();
 		loadServers();
-		serverLoop();
-		loopServers = true;
 		loopPlayers = false;
 	}
 	if (menu == "serverbrowser-main") {

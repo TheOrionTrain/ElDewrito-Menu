@@ -611,7 +611,7 @@ audio {display: none;}
     background-color: rgba(0, 0, 0, 0.67);
 }
 
-#back,#version {
+#back,#version,#refresh {
     position: absolute;
     cursor: pointer;
     z-index: 4;
@@ -625,7 +625,13 @@ audio {display: none;}
     opacity: 0.75;
     display: none;
     z-index: 999;
-    color: #fff;
+}
+
+#refresh {
+    right: 100px;
+    top: 170px;
+    font-size: 24px;
+    opacity: 0.85;
 }
 
 #version {
