@@ -107,6 +107,32 @@ settings = {
             $("[data-option='musicvolume']").children('.value').text(Math.round(c*100));
         }
     },
+    "background" : {
+        "typeof" : "select",
+        "name" : "BACKGROUND",
+        "current" : isset($.cookie('background',Number),0),
+        "min" : 0,
+        "max" : 9,
+        "default" : "Halo Reach.webm",
+        "labels" : [
+            "Halo Reach.webm",
+            "Halo CE.webm",
+            "Crash.webm",
+            "Waypoint.webm",
+            "Halo 4.webm",
+            "Halo Reach.mp4",
+            "Halo CE.mp4",
+            "Crash.mp4",
+            "Waypoint.mp4",
+            "Halo 4.mp4"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.background.current;
+            $('#bg').attr('src','video/'+settings.background.labels[c]);
+            $("[data-option='background']").children('.value').text(settings.background.labels[c]);
+        }
+    },
     "sfxvolume" : {
         "typeof" : "select",
         "name" : "EFFECTS VOLUME",
@@ -120,49 +146,6 @@ settings = {
             $('#click')[0].volume = c;
             $('#slide')[0].volume = (c*10 >= 1) ? 1 : c*10;
             $("[data-option='sfxvolume']").children('.value').text(Math.round(c*100));
-        }
-    },
-    "background" : {
-        "typeof" : "select",
-        "name" : "BACKGROUND",
-        "current" : isset($.cookie('background',Number),0),
-        "min" : 0,
-        "max" : 9,
-        "default" : "Halo Reach.webm",
-        "labels" : [
-            "Halo Reach.webm",
-			"Halo CE.webm",
-            "Crash.webm",
-            "Waypoint.webm",
-            "Halo 4.webm",
-            "Halo Reach.mp4",
-			"Halo CE.mp4",
-            "Crash.mp4",
-            "Waypoint.mp4",
-            "Halo 4.mp4"
-        ],
-        "increment" : 1,
-        "update" : function() {
-            var c = settings.background.current;
-            $('#bg').attr('src','video/'+settings.background.labels[c]);
-            $("[data-option='background']").children('.value').text(settings.background.labels[c]);
-        }
-    },
-    "rawmouse" : {
-        "typeof" : "select",
-        "name" : "RAW INPUT",
-        "current" : isset($.cookie('rawmouse',Number),0),
-        "min" : 0,
-        "max" : 1,
-        "default" : "TRUE",
-        "labels" : [
-            "TRUE",
-			"FALSE"
-        ],
-        "increment" : 1,
-        "update" : function() {
-            var c = settings.rawmouse.current;
-            $("[data-option='rawmouse']").children('.value').text(settings.rawmouse.labels[c]);
         }
     },
     "logo" : {
@@ -185,19 +168,6 @@ settings = {
             $("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
         }
     },
-    "fov" : {
-        "typeof" : "select",
-        "name" : "GAME FOV",
-        "current" : isset($.cookie('fov',Number),90),
-        "min" : 60,
-        "max" : 120,
-        "default" : 90,
-        "increment" : 5,
-        "update" : function() {
-            var c = settings.fov.current;
-            $("[data-option='fov']").children('.value').text(c);
-        }
-    },
     "username" : {
         "typeof" : "input",
         "name" : "USERNAME",
@@ -206,15 +176,6 @@ settings = {
             var c = settings.username.current;
             user.name = c;
             $("[data-option='username']").children('.input').children('input').val(c);
-        }
-    },
-    "color" : {
-        "typeof" : "color",
-        "name" : "COLOR",
-        "current" : isset($.cookie('color'),"#ff0000"),
-        "update" : function() {
-            var c = settings.color.current;
-            user.color = c;
         }
     }
 },
