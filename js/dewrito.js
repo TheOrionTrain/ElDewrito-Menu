@@ -10,6 +10,8 @@ var players = [],
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
 	selectedserver,
+	loopServers,
+	loopPlayers,
 	servers;
 
 function isset(val, other) {
@@ -79,7 +81,7 @@ function queryServer(serverIP, i) {
 		ip = serverIP.substring(0, serverIP.indexOf(':'));
 		$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().replace("Default", "").toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + serverInfo.variant + " on " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 		$('#server' + i).css("display", "none");
-		$('#server' + i).delay(Math.floor(Math.random() * 1000) + anit).fadeIn(anit);
+		$('#server' + i).fadeIn(anit);
 		$('.server').hover(function() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
@@ -277,6 +279,8 @@ $(document).ready(function() {
 	});
 	$('#back').click(function() {
 		changeMenu($(this).attr('data-action'));
+		loopPlayers = false;
+		loopServers = true;
 	});
 	$("#lobby-container").mousewheel(function(event, delta) {
 		this.scrollTop -= (delta * 34);
@@ -335,19 +339,82 @@ function brighter(color) {
 	return "#" + colorhex[0] + colorhex[1] + colorhex[2];
 }
 
+function serverLoop()
+{
+	delay(function() {
+		loadServers();
+		if (loopServers)
+			serverLoop();
+	}, 10000);
+}
+
+function playerLoop()
+{
+	delay(function() {
+		joined = 0;
+		$.getJSON("http://" + servers[selectedserver].ip, function(serverInfo) {
+			players = serverInfo.players;
+			console.log(players);
+			$('#lobby').empty();
+			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+			$('#joined').text(serverInfo.numPlayers);
+			$('#maxplayers').text(serverInfo.maxPlayers);
+			for (var i = 0; i < serverInfo.numPlayers; i++) {
+				if (players[i].name !== undefined)
+				$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+				$('#player' + i).css("display", "none");
+				$('#player' + i).fadeIn(anit, callback);
+			}
+
+			function callback() {
+				joined++;
+			}
+			$('#lobby tr').hover(function() {
+				$('#click')[0].currentTime = 0;
+				$('#click')[0].play();
+			});
+			$("#lobby tr").mouseover(function() {
+				var n = $(this).attr('id'),
+					hexes = (n == "user") ? "#000000" : "#000000",
+					bright = brighter(hexes);
+				$(this).css("background-color", hexToRgb(bright, 0.75));
+			}).mouseout(function() {
+				var n = $(this).attr('id');
+				$(this).css("background-color", (n == "user") ? hexToRgb("#000000", 0.5) : hexToRgb("#000000", 0.5));
+			});
+			$('#lobby tr').click(function() {
+				var e = $(this).children('.name').text(),
+					n = $(this).attr('id'),
+					nn = "user",
+					hexes = (n == "user") ? "#000000" : "#000000",
+					bright = brighter(hexes);
+				changeMenu("custom-player", (n == "user") ? "user" : nn);
+				$('#lobby tr').each(function() {
+					var color = $(this).attr('data-color');
+					$(this).css('background', color);
+				});
+				$(this).css("background-color", hexToRgb(bright, 0.75));
+			});
+			
+			if (loopPlayers)
+				playerLoop();
+		});
+	}, 3000);
+}
+
 function playersJoin(number, max, time, ip) {
 	joined = 0;
-	var players;
 	$.getJSON("http://" + ip, function(serverInfo) {
 		players = serverInfo.players;
 		console.log(players);
 		$('#lobby').empty();
-		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
-		$('#maxplayers').text(max);
-		for (var i = 0; i < number; i++) {
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
+		$('#maxplayers').text(serverInfo.maxPlayers);
+		for (var i = 0; i < serverInfo.numPlayers; i++) {
+			if (players[i].name !== undefined)
 			$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 			$('#player' + i).css("display", "none");
-			$('#player' + i).delay(Math.floor(Math.random() * time)).fadeIn(anit, callback);
+			$('#player' + i).fadeIn(anit, callback);
 		}
 
 		function callback() {
@@ -401,6 +468,8 @@ function changeMenu(menu, details) {
 		});
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		$('#start').children('.label').text("START GAME");
+		loopServers = false;
 	}
 	if (menu == "custom-main") {
 		$('#dewrito').css({
@@ -416,6 +485,7 @@ function changeMenu(menu, details) {
 			"top": "0px"
 		});
 		$('#back').attr('data-action', 'main-main2');
+		loopServers = false;
 	}
 	if (menu == "serverbrowser-custom" && details) {
 		$('#lobby').empty();
@@ -437,8 +507,12 @@ function changeMenu(menu, details) {
 			});
 			$('#back').attr('data-action', 'custom-serverbrowser');
 			$('#customgame').attr('data-from', 'serverbrowser');
-			playersJoin(d.players.current, d.players.max, 3000, d.ip);
+			playersJoin(d.players.current, d.players.max, 20, d.ip);
+			playerLoop();
+			loopPlayers = true;
+			loopServers = false;
 		}
+		$('#start').children('.label').text("JOIN GAME");
 	}
 	if (menu == "custom-serverbrowser") {
 		$('#customgame').css({
@@ -450,6 +524,8 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'serverbrowser-main');
 		$('#browser').empty();
 		loadServers();
+		serverLoop();
+		loopServers = true;
 	}
 	if (menu == "main-serverbrowser") {
 		$('#dewrito').css({
@@ -466,6 +542,8 @@ function changeMenu(menu, details) {
 		});
 		$('#browser').empty();
 		loadServers();
+		serverLoop();
+		loopServers = true;
 	}
 	if (menu == "serverbrowser-main") {
 		$('#dewrito').css({
@@ -481,6 +559,7 @@ function changeMenu(menu, details) {
 			"top": "0px"
 		});
 		$('#back').attr('data-action', 'main-main2');
+		loopServers = false;
 	}
 	if (menu == "main2-main") {
 		$('#back').fadeIn(anit);
@@ -491,6 +570,7 @@ function changeMenu(menu, details) {
 		$('#main2').css({
 			"top": "720px"
 		});
+		loopServers = false;
 	}
 	if (menu == "main2-credits") {
 		$('#back').fadeIn(anit);
@@ -513,6 +593,7 @@ function changeMenu(menu, details) {
 		$('#dewrito').css({
 			'background': "url('img/Halo 3 CE.png') no-repeat 0 0/cover"
 		});
+		loopServers = false;
 	}
 	if (menu == "credits-main2") {
 		$('#back').fadeOut(anit);
@@ -535,6 +616,7 @@ function changeMenu(menu, details) {
 		$('#dewrito').css({
 			'background': "url('img/" + settings.logo.labels[c] + ".png') no-repeat 0 0/cover"
 		});
+		loopServers = false;
 	}
 	if (menu == "main-main2") {
 		$('#back').fadeOut(anit);
@@ -544,6 +626,7 @@ function changeMenu(menu, details) {
 		$('#main2').css({
 			"top": "0px"
 		});
+		loopServers = false;
 	}
 	if (menu == "custom-options") {
 		$('#customgame-options').show();
@@ -557,6 +640,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "200ms"
 		});
+		loopServers = false;
 	}
 	if (menu == "custom-map") {
 		$('#choosemap').show();
@@ -570,6 +654,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "200ms"
 		});
+		loopServers = false;
 	}
 	if (menu == "custom-type") {
 		$('#choosetype').show();
@@ -583,6 +668,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "200ms"
 		});
+		loopServers = false;
 	}
 	if (menu == "options-custom") {
 		$('.options-section').hide();
@@ -596,6 +682,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
 		});
+		loopServers = false;
 	}
 	if (menu == "main-options") {
 		$('#dewrito-options').show();
@@ -616,6 +703,7 @@ function changeMenu(menu, details) {
 			"top": "240px",
 			"-webkit-transition-delay": "0ms"
 		});
+		loopServers = false;
 	}
 	if (menu == "custom-player") {
 		$('#customgame').css({
@@ -627,6 +715,7 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'player-custom');
 		$('#playermodel').css('background-image', "url('img/players/" + details + ".png')");
 		playerInfo(details);
+		loopServers = false;
 	}
 	if (menu == "player-custom") {
 		$('#customgame').css({
@@ -637,6 +726,7 @@ function changeMenu(menu, details) {
 		});
 		f = $('#customgame').attr('data-from');
 		$('#back').attr('data-action', 'custom-' + f);
+		loopServers = false;
 	}
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
@@ -715,7 +805,7 @@ function startgame(ip) {
 	});
 	delay(function() {
 		callbacks.connect(ip);
-	}, 3600);
+	}, 3700);
 }
 
 var delay = (function() {
