@@ -758,9 +758,10 @@ function playerInfo(name) {
 
 					if (kdr === "Infinity")
 						kdr = info.players[i].kills;
-					if (kdr === "NaN")
+					if (isNaN(kdr))
 						kdr = 0;
-					$('#player-kd-display').text((info.players[i].kills / info.players[i].deaths).toFixed(2));
+					console.log(isNaN(kdr));
+					$('#player-kd-display').text(kdr.toFixed(2));
 					$('#player-name').text(name);
 					$('#player-level-display').text("Level 39");
 					$('#player-rank-display').css('background', "url('img/ranks/39.png') no-repeat center center/72px 72px");
