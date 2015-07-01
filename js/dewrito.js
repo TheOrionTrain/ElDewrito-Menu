@@ -279,7 +279,8 @@ $(document).ready(function() {
 	});
 	$('#back').click(function() {
 		changeMenu($(this).attr('data-action'));
-		console.log($(this).attr('data-action'));
+		console.log("Servers: " + loopServers);
+		console.log("Players: " + loopPlayers);
 	});
 	$("#lobby-container").mousewheel(function(event, delta) {
 		this.scrollTop -= (delta * 34);
@@ -525,6 +526,7 @@ function changeMenu(menu, details) {
 		loadServers();
 		serverLoop();
 		loopServers = true;
+		loopPlayers = false;
 	}
 	if (menu == "main-serverbrowser") {
 		$('#dewrito').css({
@@ -543,6 +545,7 @@ function changeMenu(menu, details) {
 		loadServers();
 		serverLoop();
 		loopServers = true;
+		loopPlayers = false;
 	}
 	if (menu == "serverbrowser-main") {
 		$('#dewrito').css({
@@ -714,7 +717,6 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'player-custom');
 		$('#playermodel').css('background-image', "url('img/players/" + details + ".png')");
 		playerInfo(details);
-		console.log(details);
 		loopServers = false;
 	}
 	if (menu == "player-custom") {
@@ -751,13 +753,10 @@ var KDdata = [{
 	});
 
 function playerInfo(name) {
-	console.log(name);
 	if (name != "user") {
-		console.log(name);
 		$.getJSON("http://" + servers[selectedserver].ip, function(info) {
 			for (var i = 0; i < info.players.length; i++)
 			{
-				console.log(name);
 				if (info.players[i].name == name)
 				{
 					console.log(info.players[i]);
