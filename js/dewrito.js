@@ -361,13 +361,8 @@ function playerLoop()
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
 				if(typeof players[i] !== 'undefined') {
 					$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-					$('#player' + i).css("display", "none");
-					$('#player' + i).fadeIn(anit, callback);
+					joined++;
 				}
-			}
-
-			function callback() {
-				joined++;
 			}
 			$('#lobby tr').hover(function() {
 				$('#click')[0].currentTime = 0;
@@ -395,7 +390,7 @@ function playerLoop()
 				});
 				$(this).css("background-color", hexToRgb(bright, 0.75));
 			});
-			
+
 			if (loopPlayers)
 				playerLoop();
 		});
@@ -764,7 +759,7 @@ function playerInfo(name) {
 					KDchart.segments[1].value = info.players[i].kills > 0 ? info.players[i].kills : 1;
 					KDchart.update();
 					var kdr = info.players[i].kills / info.players[i].deaths;
-					
+
 					if (kdr === "Infinity")
 						kdr = info.players[i].kills;
 					if (kdr === "NaN")
