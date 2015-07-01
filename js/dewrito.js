@@ -760,9 +760,15 @@ function playerInfo(name) {
 				if (info.players[i].name == name)
 				{
 					console.log(info.players[i]);
-					KDchart.segments[0].value = info.players[i].deaths;
-					KDchart.segments[1].value = info.players[i].kills;
+					KDchart.segments[0].value = info.players[i].deaths > 0 ? info.players[i].deaths : 1;
+					KDchart.segments[1].value = info.players[i].kills > 0 ? info.players[i].kills : 1;
 					KDchart.update();
+					var kdr = info.players[i].kills / info.players[i].deaths;
+					
+					if (kdr === "Infinity")
+						kdr = info.players[i].kills;
+					if (kdr === "NaN")
+						kdr = 0;
 					$('#player-kd-display').text((info.players[i].kills / info.players[i].deaths).toFixed(2));
 					$('#player-name').text(name);
 					$('#player-level-display').text("Level 39");
