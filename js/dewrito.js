@@ -813,6 +813,8 @@ function startgame(ip) {
 	});
 	delay(function() {
 		callbacks.connect(ip);
+		loopPlayers = true;
+		playerLoop();
 	}, 3700);
 }
 
