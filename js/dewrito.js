@@ -9,6 +9,7 @@ var players = [],
 	anit = 400,
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
+	selectedserver,
 	servers;
 
 function isset(val, other) {
@@ -85,6 +86,7 @@ function queryServer(serverIP, i) {
 		});
 		$('.server').click(function() {
 			changeMenu("serverbrowser-custom", $(this).attr('data-server'));
+			selectedserver = $(this).attr('data-server');
 		});
 	});
 }
@@ -231,7 +233,7 @@ $(document).ready(function() {
 	$('#music')[0].volume = settings.musicvolume.current;
 	$('#click')[0].volume = settings.sfxvolume.current;
 	$('#start').click(function() {
-		startgame(servers[$(".server").data("server")].ip);
+		startgame(servers[selectedserver].ip);
 	});
 	$('.selection').hover(function() {
 		$('#click')[0].currentTime = 0;
@@ -314,6 +316,7 @@ function loadServers() {
 	});
 	$('.server').click(function() {
 		changeMenu("serverbrowser-custom", $(this).attr('data-server'));
+		selectedserver = $(this).attr('data-server');
 	});
 }
 
@@ -687,8 +690,8 @@ function playerInfo(name) {
 }
 
 function startgame(ip) {
-	if (servers[$(".server").data("server")].password !== undefined) {
-		var password = prompt(servers[$(".server").data("server")].name + " has a password, enter the password to join", "");
+	if (servers[selectedserver].password !== undefined) {
+		var password = prompt(servers[selectedserver].name + " has a password, enter the password to join", "");
 		if (password !== null) {
 			/*$('#beep')[0].play();
 			$('#music')[0].pause();
