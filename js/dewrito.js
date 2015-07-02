@@ -443,6 +443,7 @@ function changeMenu(menu, details) {
 	if (menu == "main-custom") {
 		host = 1; forge = 0;
 		$('#title').text('CUSTOM GAME');
+		$('#subtitle').text('');
 		$('#gametype-display').text('SLAYER');
 		currentType = "Slayer";
 		$('#gametype-icon').css({
@@ -469,6 +470,7 @@ function changeMenu(menu, details) {
 	if (menu == "main-forge") {
 		host = 1; forge = 1;
 		$('#title').text('FORGE');
+		$('#subtitle').text('');
 		$('#gametype-display').text('FORGE');
 		currentType = "Forge";
 		$('#gametype-icon').css({
