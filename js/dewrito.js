@@ -12,6 +12,7 @@ var players = [],
 	selectedserver,
 	loopPlayers,
 	host = 1,
+	forge = 0,
 	servers;
 
 function isset(val, other) {
@@ -440,7 +441,13 @@ function playersJoin(number, max, time, ip) {
 function changeMenu(menu, details) {
 	var f;
 	if (menu == "main-custom") {
-		host = 1;
+		host = 1; forge = 0;
+		$('#title').text('CUSTOM GAME');
+		$('#gametype-display').text('SLAYER');
+		currentType = "Slayer";
+		$('#gametype-icon').css({
+			"background-image": "url('img/gametypes/" + currentType + ".png')"
+		});
 		$('#customgame').attr('data-from', 'main');
 		$('#dewrito').css({
 			"opacity": 0,
@@ -455,7 +462,33 @@ function changeMenu(menu, details) {
 			"top": "720px"
 		});
 		$('#lobby').empty();
-		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
+		$('#start').children('.label').text("START GAME");
+		loopServers = false;
+	}
+	if (menu == "main-forge") {
+		host = 1; forge = 1;
+		$('#title').text('FORGE');
+		$('#gametype-display').text('FORGE');
+		currentType = "Forge";
+		$('#gametype-icon').css({
+			"background-image": "url('img/gametypes/" + currentType + ".png')"
+		});
+		$('#customgame').attr('data-from', 'main');
+		$('#dewrito').css({
+			"opacity": 0,
+			"top": "920px"
+		});
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'custom-main');
+		$('#customgame').css({
+			"top": "0px"
+		});
+		$('#main').css({
+			"top": "720px"
+		});
+		$('#lobby').empty();
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
 		$('#start').children('.label').text("START GAME");
 		loopServers = false;
 	}
@@ -648,7 +681,7 @@ function changeMenu(menu, details) {
 		}
 	}
 	if (menu == "custom-type") {
-		if(host === 1) {
+		if(host === 1 && forge === 0) {
 			$('#choosetype').show();
 			$('#back').attr('data-action', 'options-custom');
 			$('#customgame').fadeOut(anit);
