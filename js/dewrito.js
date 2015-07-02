@@ -13,8 +13,7 @@ var players = [],
 	loopPlayers,
 	host = 1,
 	forge = 0,
-	servers,
-	updateServer = "http://167.114.156.21:81/honline/update.json";
+	servers;
 
 function isset(val, other) {
 	return (val !== undefined) ? val : other;
@@ -340,12 +339,6 @@ function brighter(color) {
 		colorhex[i] = ((e > 255) ? 255 : e).toString(16);
 	}
 	return "#" + colorhex[0] + colorhex[1] + colorhex[2];
-}
-
-function getUpdate() {
-	$.getJSON(updateServer, function(json) {
-		console.log(json);
-	});
 }
 
 function playerLoop()
