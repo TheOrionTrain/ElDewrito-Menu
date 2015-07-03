@@ -16,6 +16,16 @@ html {background: #000;}
 
 #network-toggle {display: none;}
 
+#players-online {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    opacity: 0.8;
+    z-index: 10;
+    color: #fff;
+}
+
 #menu {
     position: absolute;
     top: 0px; left: 0;
