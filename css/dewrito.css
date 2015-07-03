@@ -36,7 +36,7 @@ html {background: #000;}
     width: 28px;
 }
 
-#browser-map, #browser-gametype, #refresh {
+#browser-map, #browser-gametype, #refresh, #clear {
     float: right;
     cursor: pointer;
     color: #fff;
@@ -48,6 +48,8 @@ html {background: #000;}
     max-width: 200px;
     box-sizing: border-box;
 }
+
+#clear {display: none;}
 
 @-webkit-keyframes rotating {
   from {
