@@ -14,7 +14,64 @@
 * {font-family: "TV Nord"; -webkit-user-select: none; user-select: none;}
 html {background: #000;}
 
+#browser-buttons {
+    width: 600px;
+    height: 28px;
+    position: absolute;
+    top: 115px;
+    right: 100px;
+}
+
 #network-toggle {display: none;}
+
+#refresh img {
+    margin: 0;
+    height: 28px;
+    width: 28px;
+}
+
+#browser-map, #browser-gametype, #refresh {
+    float: right;
+    cursor: pointer;
+    color: #fff;
+    top: 115px;
+    font-size: 24px;
+    opacity: 0.85;
+    z-index: 2;
+    margin: 0 20px;
+    max-width: 200px;
+    box-sizing: border-box;
+}
+
+@-webkit-keyframes rotating {
+  from {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
 
 #players-online {
     position: absolute;
@@ -626,7 +683,7 @@ audio {display: none;}
     background-color: rgba(0, 0, 0, 0.67);
 }
 
-#back,#version,#refresh {
+#back,#version {
     position: absolute;
     cursor: pointer;
     z-index: 4;
@@ -640,13 +697,6 @@ audio {display: none;}
     opacity: 0.75;
     display: none;
     z-index: 999;
-}
-
-#refresh {
-    right: 100px;
-    top: 120px;
-    font-size: 24px;
-    opacity: 0.85;
 }
 
 #version {
