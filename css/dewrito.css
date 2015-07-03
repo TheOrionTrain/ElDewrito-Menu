@@ -311,7 +311,9 @@ audio {display: none;}
 .map-select {position: absolute;top: 150px; left: 150px;width: 260px;}
 .type-select {position: absolute;top: 150px; left: 150px;width: 260px;}
 
-#menu ::-webkit-scrollbar {display: none;}
+::-webkit-scrollbar {width: 12px;}
+::-webkit-scrollbar-track {opacity: 0;}
+::-webkit-scrollbar-thumb {background: rgba(255,255,255,0.5);}
 
 .map-select2, .type-select2 {
     position: absolute;
