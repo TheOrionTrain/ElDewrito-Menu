@@ -38,7 +38,6 @@ html {background: #000;}
 
 #browser-map, #browser-gametype, #refresh, #clear {
     float: right;
-    cursor: pointer;
     color: #fff;
     top: 115px;
     font-size: 24px;
@@ -47,6 +46,14 @@ html {background: #000;}
     margin: 0 20px;
     max-width: 200px;
     box-sizing: border-box;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    transition: 0.4s;
+}
+
+#browser-map:hover, #browser-gametype:hover, #refresh:hover, #clear:hover {
+    opacity: 1;
+    cursor: pointer;
 }
 
 #clear {display: none;}
