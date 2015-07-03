@@ -13,7 +13,8 @@ var players = [],
 	loopPlayers,
 	host = 1,
 	forge = 0,
-	servers;
+	servers,
+	network = "offline";
 
 function isset(val, other) {
 	return (val !== undefined) ? val : other;
@@ -227,10 +228,21 @@ function changeSetting(s, by) {
 	$.cookie(s, e.current);
 }
 
+function toggleNetwork() {
+	if(network == "offline") network = "online";
+	else network = "offline";
+	$('#network').text(network.toUpperCase());
+	$('#click')[0].currentTime = 0;
+	$('#click')[0].play();
+}
+
 $(document).ready(function() {
 	initalize();
 	$('#refresh').click(function() {
 		loadServers();
+	});
+	$('#network-toggle').click(function() {
+		toggleNetwork();
 	});
 	$('#version').click(function() {
 		clearAllCookies();
@@ -444,7 +456,8 @@ function changeMenu(menu, details) {
 		host = 1; forge = 0;
 		$('#title').text('CUSTOM GAME');
 		$('#subtitle').text('');
-		$('#gametype-display').text('SLAYER');
+		$('#network-toggle').hide();
+		$('#type-selection').show();
 		currentType = "Slayer";
 		$('#gametype-icon').css({
 			"background-image": "url('img/gametypes/" + currentType + ".png')"
@@ -471,7 +484,8 @@ function changeMenu(menu, details) {
 		host = 1; forge = 1;
 		$('#title').text('FORGE');
 		$('#subtitle').text('');
-		$('#gametype-display').text('FORGE');
+		$('#network-toggle').show();
+		$('#type-selection').hide();
 		currentType = "Forge";
 		$('#gametype-icon').css({
 			"background-image": "url('img/gametypes/" + currentType + ".png')"
