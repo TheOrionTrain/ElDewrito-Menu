@@ -356,7 +356,6 @@ function brighter(color) {
 function playerLoop()
 {
 	delay(function() {
-		joined = 0;
 		$.getJSON("http://" + servers[selectedserver].ip, function(serverInfo) {
 			players = serverInfo.players;
 			$('#lobby').empty();
@@ -366,7 +365,6 @@ function playerLoop()
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
 				if(typeof players[i] !== 'undefined') {
 					$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-					joined++;
 				}
 			}
 			$('#lobby tr').hover(function() {
@@ -403,23 +401,18 @@ function playerLoop()
 }
 
 function playersJoin(number, max, time, ip) {
-	joined = 0;
 	$.getJSON("http://" + ip, function(serverInfo) {
 		players = serverInfo.players;
 		console.log(players);
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
+		$('#joined').text(serverInfo.numPlayers);
 		for (var i = 0; i < serverInfo.numPlayers; i++) {
 			if (players[i].name !== undefined)
 			$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 			$('#player' + i).css("display", "none");
-			$('#player' + i).fadeIn(anit, callback);
-		}
-
-		function callback() {
-			joined++;
-			$('#joined').text(joined);
+			$('#player' + i).fadeIn(anit);
 		}
 		$('#lobby tr').hover(function() {
 			$('#click')[0].currentTime = 0;
