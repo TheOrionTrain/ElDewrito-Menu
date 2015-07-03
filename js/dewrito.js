@@ -491,7 +491,7 @@ function changeMenu(menu, details) {
 		});
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
-		$('#start').children('.label').text("START GAME");
+		$('#start').children('.label').text("START FORGE");
 		loopServers = false;
 	}
 	if (menu == "custom-main") {
