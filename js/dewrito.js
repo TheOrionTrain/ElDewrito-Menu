@@ -422,7 +422,6 @@ function getTotalPlayers()
 			var serverIP = data.result.servers[i];
 			$.getJSON("http://" + serverIP, function(serverInfo) {
 				totalPlayers += serverInfo.numPlayers;
-				console.log(totalPlayers);
 				$('#players-online').text(totalPlayers + " Players Online");
 			});
 		}
