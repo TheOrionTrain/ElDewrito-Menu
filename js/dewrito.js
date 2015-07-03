@@ -61,6 +61,7 @@ function queryServer(serverIP, i) {
 					"ip": serverIP,
 					"name": "[PASSWORDED] " + serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
 					"gametype": serverInfo.variant,
+					"gameparent" : serverInfo.variantType,
 					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
@@ -73,6 +74,7 @@ function queryServer(serverIP, i) {
 					"ip": serverIP,
 					"name": serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
 					"gametype": serverInfo.variant,
+					"gameparent" : serverInfo.variantType,
 					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
@@ -354,7 +356,7 @@ function brighter(color) {
 	return "#" + colorhex[0] + colorhex[1] + colorhex[2];
 }
 
-function playerLoop()
+function lobbyLoop()
 {
 	delay(function() {
 		$.getJSON("http://" + servers[selectedserver].ip, function(serverInfo) {
@@ -362,6 +364,15 @@ function playerLoop()
 			$('#lobby').empty();
 			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 			$('#joined').text(serverInfo.numPlayers);
+			
+			changeMap2(getMapName(serverInfo.mapFile));
+			$('#subtitle').text(serverInfo.name + " : " + servers[selectedserver].ip);
+			if (serverInfo.variant === "") {
+				serverInfo.variant = "Slayer";
+			}
+			$('#gametype-display').text(serverInfo.variant.toUpperCase());
+			$('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType + ".png') no-repeat 0 0/cover");
+			
 			$('#maxplayers').text(serverInfo.maxPlayers);
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
 				if(typeof players[i] !== 'undefined') {
@@ -396,7 +407,7 @@ function playerLoop()
 			});
 
 			if (loopPlayers)
-				playerLoop();
+				lobbyLoop();
 		});
 	}, 3000);
 }
@@ -473,7 +484,7 @@ function changeMenu(menu, details) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
 		$('#start').children('.label').text("START GAME");
-		loopServers = false;
+		
 	}
 	if (menu == "main-forge") {
 		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Forge.webm');}
@@ -502,7 +513,7 @@ function changeMenu(menu, details) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
 		$('#start').children('.label').text("START FORGE");
-		loopServers = false;
+		
 	}
 	if (menu == "custom-main") {
 		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/Halo 3.webm');}
@@ -519,7 +530,7 @@ function changeMenu(menu, details) {
 			"top": "0px"
 		});
 		$('#back').attr('data-action', 'main-main2');
-		loopServers = false;
+		
 	}
 	if (menu == "serverbrowser-custom" && details) {
 		host = 0;
@@ -533,7 +544,7 @@ function changeMenu(menu, details) {
 				d.gametype = "Slayer";
 			}
 			$('#gametype-display').text(d.gametype.toUpperCase());
-			$('#gametype-icon').css('background', "url('img/gametypes/" + d.gametype + ".png') no-repeat 0 0/cover");
+			$('#gametype-icon').css('background', "url('img/gametypes/" + d.gameparent.toString().replace("%20", " ") + ".png') no-repeat 0 0/cover");
 			$('#serverbrowser').css({
 				"top": "720px"
 			});
@@ -543,9 +554,9 @@ function changeMenu(menu, details) {
 			$('#back').attr('data-action', 'custom-serverbrowser');
 			$('#customgame').attr('data-from', 'serverbrowser');
 			playersJoin(d.players.current, d.players.max, 20, d.ip);
-			playerLoop();
+			lobbyLoop();
 			loopPlayers = true;
-			loopServers = false;
+			
 		}
 		$('#start').children('.label').text("JOIN GAME");
 	}
@@ -595,7 +606,7 @@ function changeMenu(menu, details) {
 			"top": "0px"
 		});
 		$('#back').attr('data-action', 'main-main2');
-		loopServers = false;
+		
 	}
 	if (menu == "main2-main") {
 		$('#back').fadeIn(anit);
@@ -606,7 +617,7 @@ function changeMenu(menu, details) {
 		$('#main2').css({
 			"top": "720px"
 		});
-		loopServers = false;
+		
 	}
 	if (menu == "main2-credits") {
 		$('#back').fadeIn(anit);
@@ -629,7 +640,7 @@ function changeMenu(menu, details) {
 		$('#dewrito').css({
 			'background': "url('img/Halo 3 CE.png') no-repeat 0 0/cover"
 		});
-		loopServers = false;
+		
 	}
 	if (menu == "credits-main2") {
 		$('#back').fadeOut(anit);
@@ -652,7 +663,7 @@ function changeMenu(menu, details) {
 		$('#dewrito').css({
 			'background': "url('img/" + settings.logo.labels[c] + ".png') no-repeat 0 0/cover"
 		});
-		loopServers = false;
+		
 	}
 	if (menu == "main-main2") {
 		$('#back').fadeOut(anit);
@@ -662,7 +673,7 @@ function changeMenu(menu, details) {
 		$('#main2').css({
 			"top": "0px"
 		});
-		loopServers = false;
+		
 	}
 	if (menu == "custom-options") {
 		if(host === 1) {
@@ -677,7 +688,7 @@ function changeMenu(menu, details) {
 				"-webkit-transition-timing-function": "200ms",
 				"-webkit-transition-delay": "200ms"
 			});
-			loopServers = false;
+			
 		}
 	}
 	if (menu == "custom-map") {
@@ -693,7 +704,7 @@ function changeMenu(menu, details) {
 				"-webkit-transition-timing-function": "200ms",
 				"-webkit-transition-delay": "200ms"
 			});
-			loopServers = false;
+			
 		}
 	}
 	if (menu == "custom-type") {
@@ -709,7 +720,7 @@ function changeMenu(menu, details) {
 				"-webkit-transition-timing-function": "200ms",
 				"-webkit-transition-delay": "200ms"
 			});
-			loopServers = false;
+			
 		}
 	}
 	if (menu == "options-custom") {
@@ -724,7 +735,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
 		});
-		loopServers = false;
+		
 	}
 	if (menu == "main-options") {
 		$('#dewrito-options').show();
@@ -745,7 +756,7 @@ function changeMenu(menu, details) {
 			"top": "240px",
 			"-webkit-transition-delay": "0ms"
 		});
-		loopServers = false;
+		
 	}
 	if (menu == "custom-player") {
 		$('#customgame').css({
@@ -757,7 +768,7 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'player-custom');
 		$('#playermodel').css('background-image', "url('img/players/" + details + ".png')");
 		playerInfo(details);
-		loopServers = false;
+		
 	}
 	if (menu == "player-custom") {
 		$('#customgame').css({
@@ -768,7 +779,7 @@ function changeMenu(menu, details) {
 		});
 		f = $('#customgame').attr('data-from');
 		$('#back').attr('data-action', 'custom-' + f);
-		loopServers = false;
+		
 	}
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
@@ -863,7 +874,7 @@ function startgame(ip) {
 	delay(function() {
 		callbacks.connect(ip);
 		loopPlayers = true;
-		playerLoop();
+		lobbyLoop();
 	}, 3700);
 }
 
@@ -897,10 +908,10 @@ function changeMap1(game) {
 
 function changeMap2(map) {
 	$('#map-thumb').css({
-		"background-image": "url('img/maps/" + map.toString().replace("Default", "").toUpperCase() + ".png')"
+		"background-image": "url('img/maps/" + map.toUpperCase() + ".png')"
 	});
 	$('#map-thumb-options').css({
-		"background-image": "url('img/maps/" + map.toString().replace("Default", "").toUpperCase() + ".png')"
+		"background-image": "url('img/maps/" + map.toUpperCase() + ".png')"
 	});
 	$('#currentmap').text(map);
 	$('#map-name-options').text(map);
@@ -930,12 +941,23 @@ function changeType1(maintype) {
 }
 
 function changeType2(type) {
-	$('#gametype-icon').css({
+	if (currentType.contains(" ")) {
+		var reg = currentType.match(/\b(\w)/g);
+		var acronym = reg.join('');
+		$('#gametype-icon').css({
+		"background-image": "url('img/gametypes/" + acronym + ".png')"
+		});
+		$('#type-icon-options').css({
+			"background-image": "url('img/gametypes/" + acronym + ".png')"
+		});
+	} else {
+		$('#gametype-icon').css({
 		"background-image": "url('img/gametypes/" + currentType + ".png')"
-	});
-	$('#type-icon-options').css({
-		"background-image": "url('img/gametypes/" + currentType + ".png')"
-	});
+		});
+		$('#type-icon-options').css({
+			"background-image": "url('img/gametypes/" + currentType + ".png')"
+		});
+	}
 	$('#gametype-display').text(type.toUpperCase());
 	$('#type-name-options').text(type.toUpperCase());
 	$('#type-info-options').text(gametypes[currentType][type]);
