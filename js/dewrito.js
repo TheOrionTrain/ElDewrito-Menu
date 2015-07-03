@@ -14,7 +14,8 @@ var players = [],
 	host = 1,
 	forge = 0,
 	servers,
-	network = "offline";
+	network = "offline",
+	Halo3Index = 2;
 
 function isset(val, other) {
 	return (val !== undefined) ? val : other;
@@ -446,6 +447,7 @@ function playersJoin(number, max, time, ip) {
 function changeMenu(menu, details) {
 	var f;
 	if (menu == "main-custom") {
+		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Multiplayer.webm');}
 		host = 1; forge = 0;
 		$('#title').text('CUSTOM GAME');
 		$('#subtitle').text('');
@@ -474,6 +476,7 @@ function changeMenu(menu, details) {
 		loopServers = false;
 	}
 	if (menu == "main-forge") {
+		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Forge.webm');}
 		host = 1; forge = 1;
 		$('#title').text('FORGE');
 		$('#subtitle').text('');
@@ -502,6 +505,7 @@ function changeMenu(menu, details) {
 		loopServers = false;
 	}
 	if (menu == "custom-main") {
+		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/Halo 3.webm');}
 		$('#dewrito').css({
 			"opacity": 0.95,
 			"top": "240px",
@@ -546,6 +550,7 @@ function changeMenu(menu, details) {
 		$('#start').children('.label').text("JOIN GAME");
 	}
 	if (menu == "custom-serverbrowser") {
+		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Multiplayer.webm');}
 		$('#customgame').css({
 			"top": "-720px"
 		});
@@ -558,6 +563,7 @@ function changeMenu(menu, details) {
 		loopPlayers = false;
 	}
 	if (menu == "main-serverbrowser") {
+		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Multiplayer.webm');}
 		$('#dewrito').css({
 			"opacity": 0,
 			"top": "920px"
@@ -575,6 +581,7 @@ function changeMenu(menu, details) {
 		loopPlayers = false;
 	}
 	if (menu == "serverbrowser-main") {
+		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/Halo 3.webm');}
 		$('#dewrito').css({
 			"opacity": 0.95,
 			"top": "240px",
