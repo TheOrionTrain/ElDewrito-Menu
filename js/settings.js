@@ -112,11 +112,12 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 4,
+        "max" : 5,
         "default" : "Halo Reach",
         "labels" : [
             "Halo Reach",
             "Halo CE",
+            "Halo 3",
             "Halo 4",
             "Crash",
             "Waypoint"
@@ -126,6 +127,8 @@ settings = {
             var c = settings.background.current;
             $('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
+            if(c == Halo3Index) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
+            else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}
         }
     },
     "sfxvolume" : {
