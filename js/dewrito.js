@@ -379,6 +379,8 @@ function lobbyLoop() {
 				serverInfo.variant = "Slayer";
 			}
 			$('#gametype-display').text(serverInfo.variant.toUpperCase());
+			if (serverInfo.variantType === "none")
+				serverInfo.variantType = "slayer";
 			$('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType + ".png') no-repeat 0 0/cover");
 
 			$('#maxplayers').text(serverInfo.maxPlayers);
@@ -589,6 +591,8 @@ function changeMenu(menu, details) {
 				d.gametype = "Slayer";
 			}
 			$('#gametype-display').text(d.gametype.toUpperCase());
+			if (d.gameparent === "none")
+				d.gameparent = "Slayer";
 			$('#gametype-icon').css('background', "url('img/gametypes/" + d.gameparent.toString().replace("%20", " ") + ".png') no-repeat 0 0/cover");
 			$('#serverbrowser').css({
 				"top": "720px"
@@ -604,6 +608,9 @@ function changeMenu(menu, details) {
 
 		}
 		$('#start').children('.label').text("JOIN GAME");
+		$('#title').text('CUSTOM GAME');
+		$('#network-toggle').hide();
+		$('#type-selection').show();
 	}
 	if (menu == "custom-serverbrowser") {
 		browsing = 1;
