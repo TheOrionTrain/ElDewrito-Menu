@@ -63,7 +63,8 @@ html {background: #000;}
     padding: 2px;
     box-sizing: border-box;
     height: 360px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 #browser .server {

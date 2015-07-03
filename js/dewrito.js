@@ -305,10 +305,6 @@ $(document).ready(function() {
 		this.scrollTop -= (delta * 34);
 		event.preventDefault();
 	});
-	$("#browser").mousewheel(function(event, delta) {
-		this.scrollTop -= (delta * 70);
-		event.preventDefault();
-	});
 });
 
 String.prototype.toTitleCase = function() {
@@ -366,7 +362,7 @@ function lobbyLoop()
 			$('#lobby').empty();
 			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 			$('#joined').text(serverInfo.numPlayers);
-			
+
 			changeMap2(getMapName(serverInfo.mapFile));
 			$('#subtitle').text(serverInfo.name + " : " + servers[selectedserver].ip);
 			if (serverInfo.variant === "") {
@@ -374,7 +370,7 @@ function lobbyLoop()
 			}
 			$('#gametype-display').text(serverInfo.variant.toUpperCase());
 			$('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType + ".png') no-repeat 0 0/cover");
-			
+
 			$('#maxplayers').text(serverInfo.maxPlayers);
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
 				if(typeof players[i] !== 'undefined') {
@@ -516,7 +512,7 @@ function changeMenu(menu, details) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
 		$('#start').children('.label').text("START GAME");
-		
+
 	}
 	if (menu == "main-forge") {
 		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Forge.webm');}
@@ -545,7 +541,7 @@ function changeMenu(menu, details) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
 		$('#start').children('.label').text("START FORGE");
-		
+
 	}
 	if (menu == "custom-main") {
 		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/Halo 3.webm');}
@@ -562,7 +558,7 @@ function changeMenu(menu, details) {
 			"top": "0px"
 		});
 		$('#back').attr('data-action', 'main-main2');
-		
+
 	}
 	if (menu == "serverbrowser-custom" && details) {
 		host = 0;
@@ -588,7 +584,7 @@ function changeMenu(menu, details) {
 			playersJoin(d.players.current, d.players.max, 20, d.ip);
 			lobbyLoop();
 			loopPlayers = true;
-			
+
 		}
 		$('#start').children('.label').text("JOIN GAME");
 	}
@@ -638,7 +634,7 @@ function changeMenu(menu, details) {
 			"top": "0px"
 		});
 		$('#back').attr('data-action', 'main-main2');
-		
+
 	}
 	if (menu == "main2-main") {
 		$('#back').fadeIn(anit);
@@ -649,7 +645,7 @@ function changeMenu(menu, details) {
 		$('#main2').css({
 			"top": "720px"
 		});
-		
+
 	}
 	if (menu == "main2-credits") {
 		$('#back').fadeIn(anit);
@@ -672,7 +668,7 @@ function changeMenu(menu, details) {
 		$('#dewrito').css({
 			'background': "url('img/Halo 3 CE.png') no-repeat 0 0/cover"
 		});
-		
+
 	}
 	if (menu == "credits-main2") {
 		$('#back').fadeOut(anit);
@@ -695,7 +691,7 @@ function changeMenu(menu, details) {
 		$('#dewrito').css({
 			'background': "url('img/" + settings.logo.labels[c] + ".png') no-repeat 0 0/cover"
 		});
-		
+
 	}
 	if (menu == "main-main2") {
 		$('#back').fadeOut(anit);
@@ -705,7 +701,7 @@ function changeMenu(menu, details) {
 		$('#main2').css({
 			"top": "0px"
 		});
-		
+
 	}
 	if (menu == "custom-options") {
 		if(host === 1) {
@@ -720,7 +716,7 @@ function changeMenu(menu, details) {
 				"-webkit-transition-timing-function": "200ms",
 				"-webkit-transition-delay": "200ms"
 			});
-			
+
 		}
 	}
 	if (menu == "custom-map") {
@@ -736,7 +732,7 @@ function changeMenu(menu, details) {
 				"-webkit-transition-timing-function": "200ms",
 				"-webkit-transition-delay": "200ms"
 			});
-			
+
 		}
 	}
 	if (menu == "custom-type") {
@@ -752,7 +748,7 @@ function changeMenu(menu, details) {
 				"-webkit-transition-timing-function": "200ms",
 				"-webkit-transition-delay": "200ms"
 			});
-			
+
 		}
 	}
 	if (menu == "options-custom") {
@@ -767,7 +763,7 @@ function changeMenu(menu, details) {
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
 		});
-		
+
 	}
 	if (menu == "main-options") {
 		$('#dewrito-options').show();
@@ -788,7 +784,7 @@ function changeMenu(menu, details) {
 			"top": "240px",
 			"-webkit-transition-delay": "0ms"
 		});
-		
+
 	}
 	if (menu == "custom-player") {
 		$('#customgame').css({
@@ -800,7 +796,7 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'player-custom');
 		$('#playermodel').css('background-image', "url('img/players/" + details + ".png')");
 		playerInfo(details);
-		
+
 	}
 	if (menu == "player-custom") {
 		$('#customgame').css({
@@ -811,7 +807,7 @@ function changeMenu(menu, details) {
 		});
 		f = $('#customgame').attr('data-from');
 		$('#back').attr('data-action', 'custom-' + f);
-		
+
 	}
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
