@@ -242,7 +242,7 @@ maps = {
         "GUARDIAN" : "Millennia of tending has produced trees as ancient as the Forerunner structures they have grown around.",
         "ICEBOX" : "Though they dominate on the open terrain, many Scarabs have fallen victim to the narrow streets of Earth's cities.",
         "REACTOR" : "Being constructed just prior to the Invasion, its builders had to evacuate before it was completed.",
-        "RIVERWORLD" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."
+        "VALHALLA" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."
     },
     /*"HaloReach" : {
         "name": "HALO REACH",

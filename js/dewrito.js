@@ -98,6 +98,7 @@ function queryServer(serverIP, i) {
 			changeMenu("serverbrowser-custom", $(this).attr('data-server'));
 			selectedserver = $(this).attr('data-server');
 		});
+		filterServers();
 	});
 }
 
@@ -346,6 +347,7 @@ function loadServers() {
 		changeMenu("serverbrowser-custom", $(this).attr('data-server'));
 		selectedserver = $(this).attr('data-server');
 	});
+	filterServers();
 }
 
 function hexToRgb(hex, opacity) {
