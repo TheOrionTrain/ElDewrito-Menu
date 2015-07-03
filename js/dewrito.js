@@ -143,6 +143,8 @@ function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status,
 }
 
 function initalize() {
+	getTotalPlayers();
+	totalPlayersLoop();
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
@@ -412,10 +414,41 @@ function lobbyLoop()
 	}, 3000);
 }
 
+function getTotalPlayers()
+{
+	var totalPlayers = 0;
+	$.getJSON("http://192.99.124.162/list", function(data) {
+		for (var i = 0; i < data.result.servers.length; i++) {
+			var serverIP = data.result.servers[i];
+			$.getJSON("http://" + serverIP, function(serverInfo) {
+				totalPlayers += serverInfo.numPlayers;
+				console.log(totalPlayers);
+				$('#players-online').text(totalPlayers + " Players Online");
+			});
+		}
+	});
+}
+
+function totalPlayersLoop()
+{
+	delay(function() {
+		var totalPlayers = 0;
+		$.getJSON("http://192.99.124.162/list", function(data) {
+			for (var i = 0; i < data.result.servers.length; i++) {
+				var serverIP = data.result.servers[i];
+				$.getJSON("http://" + serverIP, function(serverInfo) {
+					totalPlayers += serverInfo.numPlayers;
+					$('#players-online').text(totalPlayers + " Players Online");
+				});
+			}
+		});
+		totalPlayersLoop();
+	}, 30000);
+}
+
 function playersJoin(number, max, time, ip) {
 	$.getJSON("http://" + ip, function(serverInfo) {
 		players = serverInfo.players;
-		console.log(players);
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
