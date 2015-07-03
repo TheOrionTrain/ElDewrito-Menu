@@ -11,7 +11,13 @@
   src: url("../fonts/TV Nord EF Cond Bold.woff") format('woff');
 }
 
-* {font-family: "TV Nord"; -webkit-user-select: none; user-select: none;}
+* {
+    font-family: "TV Nord";
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-font-smoothing:antialiased;
+}
+
 html {background: #000;}
 
 #browser-buttons {
