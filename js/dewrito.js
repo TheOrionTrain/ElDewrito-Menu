@@ -248,6 +248,7 @@ $(document).ready(function() {
 	initalize();
 	$('#refresh').click(function() {
 		loadServers();
+		filterServers();
 	});
 	$('#clear').click(function() {
 		clearFilters();
@@ -953,12 +954,28 @@ var delay = (function() {
 	};
 })();
 
+function filterServers() {
+	$('.server').each(function() {
+		$(this).hide();
+		var content = $(this).text(),
+			mapFilter = new RegExp(sortMap,"i"),
+			typeFilter = new RegExp(sortType,"i"),
+			isMap = content.match(mapFilter),
+			isType = content.match(typeFilter);
+		if(isMap && isType) {
+			$(this).show();
+		}
+	});
+}
+
 function clearFilters() {
 	sortMap = "";
 	sortType = "";
 	$('#browser-map').text("Choose map...");
 	$('#browser-gametype').text("Choose gametype...");
 	$('#clear').fadeOut(anit);
+	loadServers();
+	filterServers();
 }
 
 function changeMap1(game) {
@@ -998,6 +1015,7 @@ function changeMap2(map, click) {
 		changeMenu("options-serverbrowser");
 		sortMap = map;
 		$('#clear').show();
+		filterServers();
 	} else if (click === true) {
 		changeMenu("options-custom");
 	}
@@ -1051,6 +1069,7 @@ function changeType2(type, click) {
 		changeMenu("options-serverbrowser");
 		sortType = type;
 		$('#clear').show();
+		filterServers();
 	} else if (click === true) {
 		changeMenu("options-custom");
 	}
