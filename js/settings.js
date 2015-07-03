@@ -112,24 +112,19 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 9,
-        "default" : "Halo Reach.webm",
+        "max" : 4,
+        "default" : "Halo Reach",
         "labels" : [
-            "Halo Reach.webm",
-            "Halo CE.webm",
-            "Crash.webm",
-            "Waypoint.webm",
-            "Halo 4.webm",
-            "Halo Reach.mp4",
-            "Halo CE.mp4",
-            "Crash.mp4",
-            "Waypoint.mp4",
-            "Halo 4.mp4"
+            "Halo Reach",
+            "Halo CE",
+            "Halo 4",
+            "Crash",
+            "Waypoint"
         ],
         "increment" : 1,
         "update" : function() {
             var c = settings.background.current;
-            $('#bg').attr('src','video/'+settings.background.labels[c]);
+            $('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
         }
     },
