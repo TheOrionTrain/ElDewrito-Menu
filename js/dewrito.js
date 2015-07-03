@@ -15,6 +15,9 @@ var players = [],
 	forge = 0,
 	servers,
 	network = "offline",
+	browsing = 0,
+	sortMap,
+	sortType,
 	Halo3Index = 2;
 
 function isset(val, other) {
@@ -266,8 +269,7 @@ $(document).ready(function() {
 		changeMap1($(this).attr('data-game'));
 	});
 	$('.map-select2 .selection').click(function() {
-		changeMap2($(this).attr('data-map'), 0);
-		changeMenu("options-custom");
+		changeMap2($(this).attr('data-map'), true);
 	});
 	$('.map-select2 .selection').hover(function() {
 		changeMap2($(this).attr('data-map'));
@@ -276,8 +278,7 @@ $(document).ready(function() {
 		changeType1($(this).attr('data-maintype'));
 	});
 	$('.type-select2 .selection').click(function() {
-		changeType2($(this).attr('data-type'), 0);
-		changeMenu("options-custom");
+		changeType2($(this).attr('data-type'), true);
 	});
 	$('.type-select2 .selection').hover(function() {
 		changeType2($(this).attr('data-type'));
@@ -327,6 +328,10 @@ function acr(s) {
 }
 
 function loadServers() {
+	$('#refresh img').addClass('rotating');
+	setTimeout(function() {
+		$('#refresh img').removeClass('rotating');
+	},5000);
 	$('#browser').empty();
 	getServers();
 	$('.server').hover(function() {
@@ -561,7 +566,7 @@ function changeMenu(menu, details) {
 
 	}
 	if (menu == "serverbrowser-custom" && details) {
-		host = 0;
+		host = 0; browsing = 0;
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		var d = servers[details];
@@ -589,6 +594,7 @@ function changeMenu(menu, details) {
 		$('#start').children('.label').text("JOIN GAME");
 	}
 	if (menu == "custom-serverbrowser") {
+		browsing = 1;
 		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Multiplayer.webm');}
 		$('#customgame').css({
 			"top": "-720px"
@@ -602,6 +608,7 @@ function changeMenu(menu, details) {
 		loopPlayers = false;
 	}
 	if (menu == "main-serverbrowser") {
+		browsing = 1;
 		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/H3 Multiplayer.webm');}
 		$('#dewrito').css({
 			"opacity": 0,
@@ -620,6 +627,7 @@ function changeMenu(menu, details) {
 		loopPlayers = false;
 	}
 	if (menu == "serverbrowser-main") {
+		browsing = 0;
 		if(settings.background.current == Halo3Index) {$('#bg').attr('src','video/Halo 3.webm');}
 		$('#dewrito').css({
 			"opacity": 0.95,
@@ -718,6 +726,24 @@ function changeMenu(menu, details) {
 			});
 
 		}
+	}
+	if (menu == "serverbrowser-type") {
+		$('#choosetype').show();
+		$('#back').attr('data-action', 'options-serverbrowser');
+		$('#serverbrowser').fadeOut(anit);
+		$('#options').fadeIn(anit);
+	}
+	if (menu == "serverbrowser-map") {
+		$('#choosemap').show();
+		$('#back').attr('data-action', 'options-serverbrowser');
+		$('#serverbrowser').fadeOut(anit);
+		$('#options').fadeIn(anit);
+	}
+	if (menu == "options-serverbrowser") {
+		$('.options-section').hide();
+		$('#back').attr('data-action', 'serverbrowser-main');
+		$('#serverbrowser').fadeIn(anit);
+		$('#options').fadeOut(anit);
 	}
 	if (menu == "custom-map") {
 		if(host === 1) {
@@ -934,7 +960,7 @@ function changeMap1(game) {
 	$('#slide')[0].play();
 }
 
-function changeMap2(map) {
+function changeMap2(map,click) {
 	$('#map-thumb').css({
 		"background-image": "url('img/maps/" + map.toUpperCase() + ".png')"
 	});
@@ -946,6 +972,12 @@ function changeMap2(map) {
 	$('#map-info-options').text(maps[currentGame][map]);
 	$('.map-select2 .selection').removeClass('selected');
 	$("[data-map='" + map + "']").addClass('selected');
+	if(browsing === 1 && click === true) {
+		$('#browser-map').text(map.toUpperCase());
+		changeMenu("options-serverbrowser");
+		sortMap = map;
+	}
+	else if(click === true) {changeMenu("options-custom");}
 }
 
 function changeType1(maintype) {
@@ -968,7 +1000,7 @@ function changeType1(maintype) {
 	$('#slide')[0].play();
 }
 
-function changeType2(type) {
+function changeType2(type,click) {
 	if (currentType.contains(" ")) {
 		var reg = currentType.match(/\b(\w)/g);
 		var acronym = reg.join('');
@@ -991,6 +1023,12 @@ function changeType2(type) {
 	$('#type-info-options').text(gametypes[currentType][type]);
 	$('.type-select2 .selection').removeClass('selected');
 	$("[data-type='" + type + "']").addClass('selected');
+	if(browsing === 1 && click === true) {
+		$('#browser-gametype').text(type.toUpperCase());
+		changeMenu("options-serverbrowser");
+		sortType = type;
+	}
+	else if(click === true) {changeMenu("options-custom");}
 }
 
 function clearAllCookies() {
