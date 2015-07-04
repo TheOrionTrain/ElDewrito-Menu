@@ -2,6 +2,7 @@ var user = {
     "name" : isset($.cookie('username'),"Your Username"),
     "color" : isset($.cookie('color'),"#ff0000"),
     "rank" : 0,
+    "infsens" : 0,
     "armor" : {
         "helmet": "air_assault",
         "chest": "hoplite",
@@ -174,6 +175,75 @@ settings = {
             var c = settings.username.current;
             user.name = c;
             $("[data-option='username']").children('.input').children('input').val(c);
+        }
+    },
+    "infsens" : {
+        "typeof" : "input",
+        "name" : "INFANTRY SENSITIVITY",
+        "current" : isset($.cookie('infsens'),"50"),
+        "update" : function() {
+            var c = settings.infsens.current;
+            user.infsens = c;
+            $("[data-option='infsens']").children('.input').children('input').val(c);
+            console.log(settings.infsens.current);
+        }
+    },
+    "vehsens" : {
+        "typeof" : "input",
+        "name" : "VEHICLE SENSITIVITY",
+        "current" : isset($.cookie('vehsens'),"50"),
+        "update" : function() {
+            var c = settings.vehsens.current;
+            user.vehsens = c;
+            $("[data-option='vehsens']").children('.input').children('input').val(c);
+            console.log(settings.vehsens.current);
+        }
+    },
+    //Needs to be true/false, not sure how to do that -Orion
+    "togglecrouch" : {
+        "typeof" : "input",
+        "name" : "TOGGLE CROUCH",
+        "current" : isset($.cookie('togglecrouch'),"1"),
+        "update" : function() {
+            var c = settings.togglecrouch.current;
+            user.togglecrouch = c;
+            $("[data-option='togglecrouch']").children('.input').children('input').val(c);
+            console.log(settings.togglecrouch.current);
+        }
+    },
+    //Needs to be true/false but return 0 or 1 integer.
+    "centeredcrosshair" : {
+        "typeof" : "input",
+        "name" : "CENTERED CROSSHAIR",
+        "current" : isset($.cookie('centeredcrosshair'),"1"),
+        "update" : function() {
+            var c = settings.centeredcrosshair.current;
+            user.centeredcrosshair = c;
+            $("[data-option='centeredcrosshair']").children('.input').children('input').val(c);
+            console.log(settings.centeredcrosshair.current);
+        }
+    },
+    "mouseacceleration" : {
+        "typeof" : "input",
+        "name" : "MOUSE ACCELERATION",
+        "current" : isset($.cookie('mouseacceleration'),"50"),
+        "update" : function() {
+            var c = settings.mouseacceleration.current;
+            user.mouseacceleration = c;
+            $("[data-option='mouseacceleration']").children('.input').children('input').val(c);
+            console.log(settings.mouseacceleration.current);
+        }
+    },
+    //Needs to be true/false but return 0 or 1 integer.
+    "rawinput" : {
+        "typeof" : "input",
+        "name" : "RAW INPUT",
+        "current" : isset($.cookie('rawinput'),"0"),
+        "update" : function() {
+            var c = settings.rawinput.current;
+            user.rawinput = c;
+            $("[data-option='rawinput']").children('.input').children('input').val(c);
+            console.log(settings.rawinput.current);
         }
     }
 },

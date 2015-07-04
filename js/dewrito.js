@@ -147,6 +147,7 @@ function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status,
 }
 
 function initalize() {
+	console.log(settings.username.current);
 	getTotalPlayers();
 	totalPlayersLoop();
 	if (window.location.protocol == "https:") {
@@ -497,6 +498,7 @@ function playersJoin(number, max, time, ip) {
 
 function changeMenu(menu, details) {
 	var f;
+	//callbacks.playerName("\"" + settings.username.current + "\"");
 	if (menu == "main-custom") {
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
