@@ -87,9 +87,7 @@ function queryServer(serverIP, i) {
 			}
 		}
 		ip = serverIP.substring(0, serverIP.indexOf(':'));
-		$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().replace("Default", "").toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + serverInfo.variant + " on " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
-		$('#server' + i).css("display", "none");
-		$('#server' + i).fadeIn(anit);
+		$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().replace("Default", "").toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer.toString().replace(/<(?:.|\n)*?>/gm, '') + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + serverInfo.variant + " on " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 		$('.server').hover(function() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
@@ -334,8 +332,10 @@ function acr(s) {
 
 function loadServers() {
 	$('#refresh img').addClass('rotating');
+	$('#browser').hide();
 	setTimeout(function() {
 		$('#refresh img').removeClass('rotating');
+		$('#browser').fadeIn(anit);
 	}, 5000);
 	$('#browser').empty();
 	getServers();
@@ -1020,7 +1020,7 @@ function changeMap2(map, click) {
 	$('.map-select2 .selection').removeClass('selected');
 	$("[data-map='" + map + "']").addClass('selected');
 	if (browsing === 1 && click === true) {
-		$('#browser-map').text(map.toUpperCase());
+		$('#browser-map').text(map.toTitleCase());
 		changeMenu("options-serverbrowser");
 		sortMap = map;
 		$('#clear').show();
@@ -1074,7 +1074,7 @@ function changeType2(type, click) {
 	$('.type-select2 .selection').removeClass('selected');
 	$("[data-type='" + type + "']").addClass('selected');
 	if (browsing === 1 && click === true) {
-		$('#browser-gametype').text(type.toUpperCase());
+		$('#browser-gametype').text(type.toTitleCase());
 		changeMenu("options-serverbrowser");
 		sortType = type;
 		$('#clear').show();

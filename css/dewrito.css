@@ -195,9 +195,9 @@ html {background: #000;}
     padding: 15px 15px !important;
     font-weight: 300;
     font-size: 27px;
-    text-align: center;
+    text-align: left;
 	vertical-align: center;
-    width: 100px;
+    width: 600px;
 }
 
 #browser .server .thumb img {
@@ -206,7 +206,7 @@ html {background: #000;}
     height: 79px;
 }
 
-#browser .name, #browser .settings {display: block;}
+#browser .name, #browser .settings {display: block; overflow-x: hidden;}
 
 #thefeeltrain {
     position: relative;
