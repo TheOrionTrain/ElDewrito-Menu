@@ -87,7 +87,9 @@ function queryServer(serverIP, i) {
 			}
 		}
 		ip = serverIP.substring(0, serverIP.indexOf(':'));
-		$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().replace("Default", "").toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer.toString().replace(/<(?:.|\n)*?>/gm, '') + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + serverInfo.variant + " on " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+		var on = "on";
+		(serverInfo.variant == "") ? on = "" : on = "on";
+		$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().replace("Default", "").toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer.toString().replace(/<(?:.|\n)*?>/gm, '') + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + serverInfo.variant + " "+on+" " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 		$('.server').hover(function() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
@@ -980,8 +982,8 @@ function filterServers() {
 function clearFilters() {
 	sortMap = "";
 	sortType = "";
-	$('#browser-map').text("Choose map...");
-	$('#browser-gametype').text("Choose gametype...");
+	$('#browser-map').text("Choose Map...");
+	$('#browser-gametype').text("Choose Gametype...");
 	$('#clear').fadeOut(anit);
 	loadServers();
 	filterServers();
