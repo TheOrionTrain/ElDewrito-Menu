@@ -277,7 +277,7 @@ audio {display: none;}
 #credits table td.label {
     width: 540px;
     text-align: left;
-    font-size: 30px;
+    font-size: 24px;
     color: #fff;
     opacity: 0.9;
 }
@@ -285,7 +285,7 @@ audio {display: none;}
 #credits table td.name {
     width: 540px;
     text-align: right;
-    font-size: 30px;
+    font-size: 24px;
     color: #fff;
     opacity: 0.9;
 }
