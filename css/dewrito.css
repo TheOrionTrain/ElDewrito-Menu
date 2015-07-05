@@ -280,6 +280,7 @@ audio {display: none;}
     font-size: 24px;
     color: #fff;
     opacity: 0.9;
+    vertical-align: top;
 }
 
 #credits table td.name {
@@ -288,6 +289,7 @@ audio {display: none;}
     font-size: 24px;
     color: #fff;
     opacity: 0.9;
+    vertical-align: top;
 }
 
 #type-icon-options {

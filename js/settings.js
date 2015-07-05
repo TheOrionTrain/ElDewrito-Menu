@@ -213,8 +213,8 @@ settings = {
         "min" : 0,
         "max" : 1,
         "labels" : [
-            "FALSE",
-			"TRUE"
+            "OFF",
+            "ON"
         ],
         "increment" : 1,
         "update" : function() {
@@ -231,8 +231,8 @@ settings = {
         "min" : 0,
         "max" : 1,
         "labels" : [
-            "FALSE",
-            "TRUE"
+            "OFF",
+            "ON"
         ],
         "increment" : 1,
         "update" : function() {
@@ -249,8 +249,8 @@ settings = {
         "min" : 0,
         "max" : 1,
         "labels" : [
-            "FALSE",
-            "TRUE"
+            "OFF",
+            "ON"
         ],
         "increment" : 1,
         "update" : function() {
@@ -269,6 +269,120 @@ settings = {
         "update" : function() {
             var c = settings.mouseacceleration.current;
             $("[data-option='mouseacceleration']").children('.value').text(c);
+        }
+    },
+    "starttimer" : {
+        "typeof" : "select",
+        "category" : "host",
+        "name" : "START TIMER",
+        "current" : isset($.cookie('starttimer'),5),
+        "min" : 0,
+        "max" : 20,
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.starttimer.current;
+            $("[data-option='starttimer']").children('.value').text(c);
+        }
+    },
+    "maxplayers" : {
+        "typeof" : "select",
+        "category" : "host",
+        "name" : "MAX PLAYERS",
+        "current" : isset($.cookie('maxplayers'),16),
+        "min" : 1,
+        "max" : 16,
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.maxplayers.current;
+            $("[data-option='maxplayers']").children('.value').text(c);
+        }
+    },
+    "servername" : {
+        "typeof" : "input",
+        "category" : "host",
+        "name" : "SERVER NAME",
+        "current" : isset($.cookie('servername'),"Halo Online Server"),
+        "update" : function() {
+            var c = settings.servername.current;
+            $("[data-option='servername']").children('.input').children('input').val(c);
+        }
+    },
+    "serverpass" : {
+        "typeof" : "input",
+        "category" : "host",
+        "name" : "SERVER PASSWORD",
+        "current" : isset($.cookie('serverpass'),""),
+        "update" : function() {
+            var c = settings.serverpass.current;
+            $("[data-option='serverpass']").children('.input').children('input').val(c);
+        }
+    },
+    "vsync" : {
+        "typeof" : "select",
+        "category" : "launch",
+        "name" : "VSYNC",
+        "current" : isset($.cookie('vsync'),0),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "OFF",
+            "ON"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.vsync.current;
+            $("[data-option='vsync']").children('.value').text(settings.vsync.labels[c]);
+        }
+    },
+    "directx9ext" : {
+        "typeof" : "select",
+        "category" : "launch",
+        "name" : "DIRECTX 9.0 EXTENSIONS",
+        "current" : isset($.cookie('directx9ext'),0),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "OFF",
+            "ON"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.directx9ext.current;
+            $("[data-option='directx9ext']").children('.value').text(settings.directx9ext.labels[c]);
+        }
+    },
+    "showfps" : {
+        "typeof" : "select",
+        "category" : "launch",
+        "name" : "SHOW FPS COUNTER",
+        "current" : isset($.cookie('showfps'),0),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "OFF",
+            "ON"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.showfps.current;
+            $("[data-option='showfps']").children('.value').text(settings.showfps.labels[c]);
+        }
+    },
+    "introvideos" : {
+        "typeof" : "select",
+        "category" : "launch",
+        "name" : "DISABLE INTRO VIDEOS",
+        "current" : isset($.cookie('introvideos'),0),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "OFF",
+            "ON"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.introvideos.current;
+            $("[data-option='introvideos']").children('.value').text(settings.introvideos.labels[c]);
         }
     }
 },
