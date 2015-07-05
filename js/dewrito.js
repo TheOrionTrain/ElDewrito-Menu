@@ -62,9 +62,9 @@ function queryServer(serverIP, i) {
 			if (isPassworded) {
 				servers[i] = {
 					"ip": serverIP,
-					"name": "[PASSWORDED] " + serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
-					"gametype": serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''),
-					"gameparent": serverInfo.variantType.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"name": "[PASSWORDED] " + sanitizeString(serverInfo.name).substring(0,50),
+					"gametype": sanitizeString(serverInfo.variant).substring(0,50),
+					"gameparent": sanitizeString(serverInfo.variantType).substring(0,50),
 					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
@@ -75,9 +75,9 @@ function queryServer(serverIP, i) {
 			} else {
 				servers[i] = {
 					"ip": serverIP,
-					"name": serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
-					"gametype": serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''),
-					"gameparent": serverInfo.variantType.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"name": sanitizeString(serverInfo.name).substring(0,50),
+					"gametype": sanitizeString(serverInfo.variant).substring(0,50),
+					"gameparent": sanitizeString(serverInfo.variantType).substring(0,50),
 					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
@@ -100,6 +100,12 @@ function queryServer(serverIP, i) {
 		});
 		filterServers();
 	});
+}
+
+function sanitizeString(str){
+    str = str.toString();
+    if(str != null) str = str.replace(/(<([^>]+)>)/ig,"");
+    return str;
 }
 
 function getMapName(filename) {
