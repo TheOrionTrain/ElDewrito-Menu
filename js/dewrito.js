@@ -57,15 +57,16 @@ function queryServer(serverIP, i) {
 				endTime = (new Date()).getTime();
 			}
 		});
+		console.log(serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''));
 		var isPassworded = serverInfo.passworded !== undefined;
 		if (serverInfo.map !== "") {
 			if (isPassworded) {
 				servers[i] = {
 					"ip": serverIP,
-					"name": "[PASSWORDED] " + sanitizeString(serverInfo.name).substring(0,50),
-					"gametype": sanitizeString(serverInfo.variant).substring(0,50),
-					"gameparent": sanitizeString(serverInfo.variantType).substring(0,50),
-					"map": getMapName(sanitizeString(serverInfo.mapFile).substring(0,50)),
+					"name": "[PASSWORDED] " + serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"gametype": serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"gameparent": serverInfo.variantType.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -75,10 +76,10 @@ function queryServer(serverIP, i) {
 			} else {
 				servers[i] = {
 					"ip": serverIP,
-					"name": sanitizeString(serverInfo.name).substring(0,50),
-					"gametype": sanitizeString(serverInfo.variant).substring(0,50),
-					"gameparent": sanitizeString(serverInfo.variantType).substring(0,50),
-					"map": getMapName(sanitizeString(serverInfo.mapFile).substring(0,50)),
+					"name": serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"gametype": serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"gameparent": serverInfo.variantType.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -89,7 +90,7 @@ function queryServer(serverIP, i) {
 		ip = serverIP.substring(0, serverIP.indexOf(':'));
 		var on = "on";
 		(serverInfo.variant == "") ? on = "" : on = "on";
-		$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().replace("Default", "").toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer.toString().replace(/<(?:.|\n)*?>/gm, '') + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + serverInfo.variant + " "+on+" " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+		$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().replace("Default", "").toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer.toString().replace(/<(?:.|\n)*?>/gm, '') + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " "+on+" " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 		$('.server').hover(function() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
@@ -100,12 +101,6 @@ function queryServer(serverIP, i) {
 		});
 		filterServers();
 	});
-}
-
-function sanitizeString(str){
-    str = str.toString();
-    if(str != null) str = str.replace(/(<([^>]+)>)/ig,"");
-    return str;
 }
 
 function getMapName(filename) {
