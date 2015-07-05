@@ -40,7 +40,7 @@ html {background: #000;}
     float: right;
     color: #fff;
     top: 115px;
-    font-size: 24px;
+    font-size: 22px;
     opacity: 0.85;
     z-index: 2;
     margin: 0 20px;
@@ -92,7 +92,7 @@ html {background: #000;}
     position: absolute;
     top: 20px;
     left: 20px;
-    font-size: 24px;
+    font-size: 22px;
     opacity: 0.8;
     z-index: 10;
     color: #fff;
@@ -118,7 +118,7 @@ html {background: #000;}
     position: absolute;
     top: 60px; left: 100px;
     font-weight: 700;
-    font-size: 70px;
+    font-size: 68px;
     color: #fff;
     opacity: 0.85;
     background: -webkit-linear-gradient(#fff, #999);
@@ -144,7 +144,7 @@ html {background: #000;}
     height: 100px;
     box-sizing: border-box;
     font-weight: 300;
-    font-size: 22px;
+    font-size: 20px;
     color: rgba(255,255,255,0.85);
     border-left: 3px solid rgba(255,255,255,0);
     -webkit-transition: 0.5s;
@@ -158,7 +158,7 @@ html {background: #000;}
 .selection input[type="text"] {
     border: none;
     background: transparent;
-    font-size: 24px;
+    font-size: 22px;
     color: rgba(255,255,255,0.85);
     outline: none;
     text-align: center;
@@ -185,7 +185,7 @@ html {background: #000;}
     height: 100px;
 	text-align: right;
 	font-weight: 300;
-    font-size: 40px;
+    font-size: 38px;
     box-sizing: border-box;
 	white-space: nowrap;
     padding: 30px 40px !important;
@@ -194,7 +194,7 @@ html {background: #000;}
 .server .settings {
     padding: 15px 15px !important;
     font-weight: 300;
-    font-size: 27px;
+    font-size: 25px;
     text-align: left;
 	vertical-align: center;
     width: 600px;
@@ -277,7 +277,7 @@ audio {display: none;}
 #credits table td.label {
     width: 540px;
     text-align: left;
-    font-size: 32px;
+    font-size: 30px;
     color: #fff;
     opacity: 0.9;
 }
@@ -285,7 +285,7 @@ audio {display: none;}
 #credits table td.name {
     width: 540px;
     text-align: right;
-    font-size: 32px;
+    font-size: 30px;
     color: #fff;
     opacity: 0.9;
 }
@@ -326,13 +326,13 @@ audio {display: none;}
 
 #map-name-options, #type-name-options {
     top: 320px;
-    font-size: 28px;
+    font-size: 26px;
     opacity: 0.85;
 }
 
 #map-info-options, #type-info-options {
     top: 380px;
-    font-size: 18px;
+    font-size: 16px;
     opacity: 0.7;
 }
 
@@ -354,7 +354,7 @@ audio {display: none;}
 #title {
     top: 300px;
     font-weight: 700;
-    font-size: 70px;
+    font-size: 68px;
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -362,7 +362,7 @@ audio {display: none;}
 
 #subtitle {
     top: 390px;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 300;
 }
 
@@ -379,9 +379,59 @@ audio {display: none;}
 
 #select {position: absolute;top: 460px; left: 90px;width: 450px;}
 .select-main {position: absolute;top: 500px; left: 90px;width: 450px;}
-.options-select {position: absolute;top: 150px; left: 150px;width: 980px;}
-.map-select {position: absolute;top: 150px; left: 150px;width: 260px;}
-.type-select {position: absolute;top: 150px; left: 150px;width: 260px;}
+.map-select, .type-select, .options-select {position: absolute;top: 150px; left: 150px;width: 260px;}
+
+.map-select .selection, .type-select .selection {background: url('../img/right.png') no-repeat 232px 8px/18px auto;}
+
+.options-select2 .selection .value, #select .selection .value  {
+    text-align: center;
+    display: table-cell;
+    width: 270px;
+    padding: 7px 0px 0px 0px;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.options-select2 .selection .input {
+    text-align: center;
+    display: table-cell;
+    width: 270px;
+    padding: 0;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.options-select2 .selection .label, #select .selection .label {
+    text-align: left;
+    display: table-cell;
+    width: 400px;
+    padding: 7px 10px 0px 10px;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.options-select2 .selection {
+    font-weight: 300;
+    font-size: 23px;
+    color: rgba(255,255,255,0.85);
+    width: 670px;
+    height: 35px;
+    border-left: 3px solid rgba(255,255,255,0);
+    box-sizing: border-box;
+    line-height: 20px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.options-select2 {
+    position: absolute;
+    top: 150px; left: 310px;
+    width: 500px;
+    display: none;
+    height: 500px;
+    opacity: 0;
+}
 
 ::-webkit-scrollbar {width: 12px;}
 ::-webkit-scrollbar-track {opacity: 0;}
@@ -399,7 +449,7 @@ audio {display: none;}
     opacity: 0;
 }
 
-.map-select .selection .label, .map-select2 .selection .label, .type-select .selection .label, .type-select2 .selection .label {
+.map-select .selection .label, .map-select2 .selection .label, .type-select .selection .label, .type-select2 .selection .label, .options-select .selection .label {
     text-align: left;
     display: table-cell;
     width: 260px;
@@ -408,9 +458,9 @@ audio {display: none;}
     height: 40px;
 }
 
-.map-select .selection, .map-select2 .selection, .type-select .selection, .type-select2 .selection {
+.map-select .selection, .map-select2 .selection, .type-select .selection, .type-select2 .selection, .options-select .selection {
     font-weight: 300;
-    font-size: 25px;
+    font-size: 23px;
     color: rgba(255,255,255,0.85);
     width: 260px;
     height: 35px;
@@ -422,50 +472,7 @@ audio {display: none;}
     transition: 0.5s;
 }
 
-.map-select .selection, .type-select .selection {background: url('../img/right.png') no-repeat 232px 8px/18px auto;}
-
-.options-select .selection .value, #select .selection .value  {
-    text-align: center;
-    display: table-cell;
-    width: 210px;
-    padding: 7px 0px 0px 0px;
-    box-sizing: border-box;
-    height: 40px;
-}
-
-.options-select .selection .input {
-    text-align: center;
-    display: table-cell;
-    width: 250px;
-    padding: 0;
-    box-sizing: border-box;
-    height: 40px;
-}
-
-.options-select .selection .label, #select .selection .label {
-    text-align: left;
-    display: table-cell;
-    width: 220px;
-    padding: 7px 10px 0px 10px;
-    box-sizing: border-box;
-    height: 40px;
-}
-
-.options-select .selection {
-    font-weight: 300;
-    font-size: 25px;
-    color: rgba(255,255,255,0.85);
-    width: 430px;
-    height: 35px;
-    border-left: 3px solid rgba(255,255,255,0);
-    box-sizing: border-box;
-    line-height: 20px;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    transition: 0.5s;
-    display: inline-block;
-    margin-right: 60px;
-}
+.map-select .selection, .type-select .selection, .options-select .selection {background: url('../img/right.png') no-repeat 232px 8px/18px auto;}
 
 .left,.right {
     text-align: center;
@@ -487,7 +494,7 @@ audio {display: none;}
 
 #select .selection,.select-main .selection {
     font-weight: 300;
-    font-size: 22px;
+    font-size: 18px;
     color: rgba(255,255,255,0.85);
     width: 450px;
     height: 40px;
@@ -499,7 +506,7 @@ audio {display: none;}
     transition: 0.5s;
 }
 
-.select-main .selection {font-size: 24px;}
+.select-main .selection {font-size: 22px;}
 
 .select-main .selection .value, #select .selection .value  {
     text-align: right;
@@ -563,7 +570,7 @@ audio {display: none;}
 #lobby .top td.info {
     background: rgba(0,0,0,0.5);
     font-weight: 300;
-    font-size: 20px;
+    font-size: 18px;
     width: 300px;
     height: 32px;
     padding: 5px 10px;
@@ -587,7 +594,7 @@ audio {display: none;}
 
 #lobby td.name {
     font-weight: 300;
-    font-size: 20px;
+    font-size: 18px;
     width: 250px;
     padding: 0px 20px 2px 20px;
     background: no-repeat 160px 4px/58px 26px;
@@ -631,13 +638,13 @@ audio {display: none;}
 
 #player-name {
     display: block;
-    font-size: 24px;
+    font-size: 22px;
     margin: 10px 0;
 }
 
 #player-level-display {
     display: block;
-    font-size: 20px;
+    font-size: 18px;
     opacity: 0.8;
     margin: 0;
 }
@@ -680,7 +687,7 @@ audio {display: none;}
     top: 70px;
     text-align: center;
     z-index: 2;
-    font-size: 40px;
+    font-size: 38px;
     color: #fff;
     width: 100%;
 }
@@ -708,7 +715,7 @@ audio {display: none;}
 #back {
     left: 20px;
     bottom: 20px;
-    font-size: 20px;
+    font-size: 18px;
     opacity: 0.75;
     display: none;
     z-index: 999;
@@ -717,7 +724,7 @@ audio {display: none;}
 #version {
     right: 5px;
     bottom: 5px;
-    font-size: 16px;
+    font-size: 14px;
     opacity: 0.5;
 }
 
@@ -746,7 +753,7 @@ audio {display: none;}
     position: absolute;
     top: 60px; left: 150px;
     font-weight: 700;
-    font-size: 50px;
+    font-size: 48px;
     color: #fff;
     opacity: 0.9;
     z-index: 4;

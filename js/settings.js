@@ -17,11 +17,11 @@ var user = {
 settings = {
     "musictrack" : {
         "typeof" : "select",
+        "category" : "menu",
         "name" : "MENU MUSIC",
         "current" : isset($.cookie('musictrack',Number),6),
         "min" : 0,
         "max" : 11,
-        "default" : "Halo 3 Mythic",
         "labels" : [
             "Halo Reach",
             "Halo Reach Beta",
@@ -57,13 +57,42 @@ settings = {
             }
         }
     },
+    "musicvolume" : {
+        "typeof" : "select",
+        "category" : "menu",
+        "name" : "MUSIC VOLUME",
+        "current" : isset($.cookie('musicvolume',Number),0.25),
+        "min" : 0,
+        "max" : 1,
+        "increment" : 0.05,
+        "update" : function() {
+            var c = settings.musicvolume.current;
+            $('#music')[0].volume = c;
+            $("[data-option='musicvolume']").children('.value').text(Math.round(c*100));
+        }
+    },
+    "sfxvolume" : {
+        "typeof" : "select",
+        "category" : "menu",
+        "name" : "EFFECTS VOLUME",
+        "current" : isset($.cookie('sfxvolume',Number),0.05),
+        "min" : 0,
+        "max" : 1,
+        "increment" : 0.05,
+        "update" : function() {
+            var c = settings.sfxvolume.current;
+            $('#click')[0].volume = c;
+            $('#slide')[0].volume = (c*10 >= 1) ? 1 : c*10;
+            $("[data-option='sfxvolume']").children('.value').text(Math.round(c*100));
+        }
+    },
     "resolution" : {
         "typeof" : "select",
+        "category" : "menu",
         "name" : "RESOLUTION",
         "current" : isset($.cookie('resolution',Number),0),
         "min" : 0,
         "max" : 9,
-        "default" : "Auto",
         "labels" : [
             "Auto",
             "640x360",
@@ -94,27 +123,13 @@ settings = {
             }
         }
     },
-    "musicvolume" : {
-        "typeof" : "select",
-        "name" : "MUSIC VOLUME",
-        "current" : isset($.cookie('musicvolume',Number),0.25),
-        "min" : 0,
-        "max" : 1,
-        "default" : 25,
-        "increment" : 0.05,
-        "update" : function() {
-            var c = settings.musicvolume.current;
-            $('#music')[0].volume = c;
-            $("[data-option='musicvolume']").children('.value').text(Math.round(c*100));
-        }
-    },
     "background" : {
         "typeof" : "select",
+        "category" : "menu",
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
         "max" : 5,
-        "default" : "Halo Reach",
         "labels" : [
             "Halo Reach",
             "Halo CE",
@@ -132,28 +147,13 @@ settings = {
             else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}
         }
     },
-    "sfxvolume" : {
-        "typeof" : "select",
-        "name" : "EFFECTS VOLUME",
-        "current" : isset($.cookie('sfxvolume',Number),0.05),
-        "min" : 0,
-        "max" : 1,
-        "default" : 5,
-        "increment" : 0.05,
-        "update" : function() {
-            var c = settings.sfxvolume.current;
-            $('#click')[0].volume = c;
-            $('#slide')[0].volume = (c*10 >= 1) ? 1 : c*10;
-            $("[data-option='sfxvolume']").children('.value').text(Math.round(c*100));
-        }
-    },
     "logo" : {
         "typeof" : "select",
+        "category" : "menu",
         "name" : "LOGO",
         "current" : isset($.cookie('logo',Number),0),
         "min" : 0,
         "max" : 3,
-        "default" : "Halo 3 CE",
         "labels" : [
             "Halo 3 CE",
 			"ElDewrito",
@@ -169,6 +169,7 @@ settings = {
     },
     "username" : {
         "typeof" : "input",
+        "category" : "eldewrito",
         "name" : "USERNAME",
         "current" : isset($.cookie('username'),"Your Username"),
         "update" : function() {
@@ -178,65 +179,96 @@ settings = {
         }
     },
     "infsens" : {
-        "typeof" : "input",
+        "typeof" : "select",
+        "category" : "eldewrito",
         "name" : "INFANTRY SENSITIVITY",
-        "current" : isset($.cookie('infsens'),"50"),
+        "current" : isset($.cookie('infsens'),50),
+        "min" : 0,
+        "max" : 100,
+        "increment" : 5,
         "update" : function() {
             var c = settings.infsens.current;
-            user.infsens = c;
-            $("[data-option='infsens']").children('.input').children('input').val(c);
+            $("[data-option='infsens']").children('.value').text(c);
         }
     },
     "vehsens" : {
-        "typeof" : "input",
+        "typeof" : "select",
+        "category" : "eldewrito",
         "name" : "VEHICLE SENSITIVITY",
-        "current" : isset($.cookie('vehsens'),"50"),
+        "current" : isset($.cookie('vehsens'),50),
+        "min" : 0,
+        "max" : 100,
+        "increment" : 5,
         "update" : function() {
             var c = settings.vehsens.current;
-            user.vehsens = c;
-            $("[data-option='vehsens']").children('.input').children('input').val(c);
+            $("[data-option='vehsens']").children('.value').text(c);
         }
     },
     //Needs to be true/false, not sure how to do that -Orion
     "togglecrouch" : {
-        "typeof" : "input",
+        "typeof" : "select",
+        "category" : "eldewrito",
         "name" : "TOGGLE CROUCH",
-        "current" : isset($.cookie('togglecrouch'),"1"),
+        "current" : isset($.cookie('togglecrouch'),1),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "FALSE",
+			"TRUE"
+        ],
+        "increment" : 1,
         "update" : function() {
             var c = settings.togglecrouch.current;
-            user.togglecrouch = c;
-            $("[data-option='togglecrouch']").children('.input').children('input').val(c);
+            $("[data-option='togglecrouch']").children('.value').text(settings.togglecrouch.labels[c]);
         }
     },
     //Needs to be true/false but return 0 or 1 integer.
     "centeredcrosshair" : {
-        "typeof" : "input",
+        "typeof" : "select",
+        "category" : "eldewrito",
         "name" : "CENTERED CROSSHAIR",
-        "current" : isset($.cookie('centeredcrosshair'),"1"),
+        "current" : isset($.cookie('centeredcrosshair'),1),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "FALSE",
+            "TRUE"
+        ],
+        "increment" : 1,
         "update" : function() {
             var c = settings.centeredcrosshair.current;
-            user.centeredcrosshair = c;
-        }
-    },
-    "mouseacceleration" : {
-        "typeof" : "input",
-        "name" : "MOUSE ACCELERATION",
-        "current" : isset($.cookie('mouseacceleration'),"50"),
-        "update" : function() {
-            var c = settings.mouseacceleration.current;
-            user.mouseacceleration = c;
-            $("[data-option='mouseacceleration']").children('.input').children('input').val(c);
+            $("[data-option='centeredcrosshair']").children('.value').text(settings.centeredcrosshair.labels[c]);
         }
     },
     //Needs to be true/false but return 0 or 1 integer.
     "rawinput" : {
-        "typeof" : "input",
+        "typeof" : "select",
+        "category" : "eldewrito",
         "name" : "RAW INPUT",
-        "current" : isset($.cookie('rawinput'),"0"),
+        "current" : isset($.cookie('rawinput'),0),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "FALSE",
+            "TRUE"
+        ],
+        "increment" : 1,
         "update" : function() {
             var c = settings.rawinput.current;
-            user.rawinput = c;
-            $("[data-option='rawinput']").children('.input').children('input').val(c);
+            $("[data-option='rawinput']").children('.value').text(settings.rawinput.labels[c]);
+        }
+    },
+    "mouseacceleration" : {
+        "typeof" : "select",
+        "category" : "eldewrito",
+        "name" : "MOUSE ACCELERATION",
+        "current" : isset($.cookie('mouseacceleration'),50),
+        "min" : 0,
+        "max" : 100,
+        "increment" : 5,
+        "update" : function() {
+            var c = settings.mouseacceleration.current;
+            $("[data-option='mouseacceleration']").children('.value').text(c);
         }
     }
 },
