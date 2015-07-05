@@ -63,8 +63,8 @@ function queryServer(serverIP, i) {
 				servers[i] = {
 					"ip": serverIP,
 					"name": "[PASSWORDED] " + serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
-					"gametype": serverInfo.variant,
-					"gameparent": serverInfo.variantType,
+					"gametype": serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"gameparent": serverInfo.variantType.toString().replace(/<(?:.|\n)*?>/gm, ''),
 					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
@@ -76,8 +76,8 @@ function queryServer(serverIP, i) {
 				servers[i] = {
 					"ip": serverIP,
 					"name": serverInfo.name.toString().replace(/<(?:.|\n)*?>/gm, ''),
-					"gametype": serverInfo.variant,
-					"gameparent": serverInfo.variantType,
+					"gametype": serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''),
+					"gameparent": serverInfo.variantType.toString().replace(/<(?:.|\n)*?>/gm, ''),
 					"map": getMapName(serverInfo.mapFile),
 					"players": {
 						"max": serverInfo.maxPlayers,
