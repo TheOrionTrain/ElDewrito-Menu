@@ -65,7 +65,7 @@ function queryServer(serverIP, i) {
 					"name": "[PASSWORDED] " + sanitizeString(serverInfo.name).substring(0,50),
 					"gametype": sanitizeString(serverInfo.variant).substring(0,50),
 					"gameparent": sanitizeString(serverInfo.variantType).substring(0,50),
-					"map": getMapName(serverInfo.mapFile),
+					"map": getMapName(sanitizeString(serverInfo.mapFile).substring(0,50)),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -78,7 +78,7 @@ function queryServer(serverIP, i) {
 					"name": sanitizeString(serverInfo.name).substring(0,50),
 					"gametype": sanitizeString(serverInfo.variant).substring(0,50),
 					"gameparent": sanitizeString(serverInfo.variantType).substring(0,50),
-					"map": getMapName(serverInfo.mapFile),
+					"map": getMapName(sanitizeString(serverInfo.mapFile).substring(0,50)),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
