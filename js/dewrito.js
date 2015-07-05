@@ -246,8 +246,13 @@ function changeSetting(s, by) {
 }
 
 function toggleNetwork() {
-	if (network == "offline") network = "online";
-	else network = "offline";
+	if (network == "offline") {
+		network = "online";
+		//callbacks.networkType(1);
+	} else {
+		network = "offline";
+		//callbacks.networkType(2);
+	}
 	$('#network').text(network.toUpperCase());
 	$('#click')[0].currentTime = 0;
 	$('#click')[0].play();
@@ -273,8 +278,8 @@ $(document).ready(function() {
 	$('#click')[0].volume = settings.sfxvolume.current;
 	$('#start').click(function() {
 		var mode = $('#start').children('.label').text().toString().split(" ");
-		if (mode[1] === "FORGE")
-		startgame("127.0.0.1:11775", mode);
+		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
+			startgame("127.0.0.1:11775", mode);
 		else
 			startgame(servers[selectedserver].ip, mode);
 	});
@@ -514,7 +519,7 @@ function playersJoin(number, max, time, ip) {
 
 function changeMenu(menu, details) {
 	var f;
-	//callbacks.playerName("\"" + settings.username.current + "\"");
+	////callbacks.playerName("\"" + settings.username.current + "\"");
 	if (menu == "main-custom") {
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
@@ -907,7 +912,6 @@ function playerInfo(name) {
 		$.getJSON("http://" + servers[selectedserver].ip, function(info) {
 			for (var i = 0; i < info.players.length; i++) {
 				if (info.players[i].name == name) {
-					console.log(info.players[i]);
 					KDchart.segments[0].value = info.players[i].deaths > 0 ? info.players[i].deaths : 1;
 					KDchart.segments[1].value = info.players[i].kills > 0 ? info.players[i].kills : 1;
 					KDchart.update();
@@ -917,7 +921,6 @@ function playerInfo(name) {
 						kdr = info.players[i].kills;
 					if (isNaN(kdr))
 						kdr = 0;
-					console.log(isNaN(kdr));
 					$('#player-kd-display').text(kdr.toFixed(2));
 					$('#player-name').text(name);
 					$('#player-level-display').text("Level 39");
@@ -971,8 +974,13 @@ function startgame(ip, mode) {
 		$('#music')[0].play();
 	});
 	delay(function() {
-		//callbacks.connect(ip);
-		alert(mode[0] + " " + mode[1]);
+		if (mode[0] === "JOIN") {
+			//callbacks.connect(ip);
+		} else if (mode[1] === "FORGE") {
+			//callbacks.gameType(0, 0);
+		} else if (mode[0] === "START" && mode[1] === "GAME") {
+			//callbacks.gametype(0,0);
+		}
 		loopPlayers = true;
 		lobbyLoop(ip);
 	}, 3700);
@@ -1042,6 +1050,7 @@ function changeMap2(map, click) {
 	$('#map-info-options').text(maps[currentGame][map]);
 	$('.map-select2 .selection').removeClass('selected');
 	$("[data-map='" + map + "']").addClass('selected');
+	//callbacks.map(getMapId($('#currentmap').text()));
 	if (browsing === 1 && click === true) {
 		$('#browser-map').text(map.toTitleCase());
 		changeMenu("options-serverbrowser");
@@ -1050,6 +1059,21 @@ function changeMap2(map, click) {
 		filterServers();
 	} else if (click === true) {
 		changeMenu("options-custom");
+	}
+}
+
+function getMapId(map) {
+	switch (map.toString().toLowerCase()) {
+		case "diamondback":
+		return 0;
+		case "edge":
+		return 1;
+		case "icebox":
+		return 3;
+		case "reactor":
+		return 4;
+		case "valhalla":
+		return 5;
 	}
 }
 
