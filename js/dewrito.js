@@ -9,6 +9,7 @@ var players = [],
 	anit = 400,
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
+	currentSetting = "menu",
 	selectedserver,
 	loopPlayers,
 	host = 1,
@@ -87,8 +88,7 @@ function queryServer(serverIP, i) {
 		}
 		if (typeof servers[i] !== 'undefined') {
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
-			var on = "on";
-			(servers[i].gametype == "") ? on = "" : on = "on";
+			var on = (servers[i].gametype === "") ? "" : "on";
 			$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " "+on+" " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 			$('.server').hover(function() {
 				$('#click')[0].currentTime = 0;
@@ -154,7 +154,6 @@ function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status,
 }
 
 function initalize() {
-	console.log(settings.username.current);
 	getTotalPlayers();
 	totalPlayersLoop();
 	if (window.location.protocol == "https:") {
@@ -163,14 +162,15 @@ function initalize() {
 	var set, b, g, i, e;
 	for (i = 0; i < Object.keys(settings).length; i++) {
 		set = Object.keys(settings)[i];
+		var category = settings[set].category;
 		if (settings[set].typeof == "select") {
-			$('#dewrito-options').children('.options-select').append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
+			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
 		}
 		if (settings[set].typeof == "input") {
-			$('#dewrito-options').children('.options-select').append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=24 /></span></div>");
+			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=24 /></span></div>");
 		}
 		if (settings[set].typeof == "color") {
-			$('#dewrito-options').children('.options-select').append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
+			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
 			$('#option-' + set).spectrum({
 				color: settings[set].current,
 				preferredFormat: "hex",
@@ -289,6 +289,9 @@ $(document).ready(function() {
 	});
 	$('.map-select .selection').click(function() {
 		changeMap1($(this).attr('data-game'));
+	});
+	$('.options-select .selection').click(function() {
+		changeSettingsMenu($(this).attr('data-setting'));
 	});
 	$('.map-select2 .selection').click(function() {
 		changeMap2($(this).attr('data-map'), true);
@@ -1016,6 +1019,23 @@ function clearFilters() {
 	$('#clear').fadeOut(anit);
 	loadServers();
 	filterServers();
+}
+
+function changeSettingsMenu(setting) {
+	$('.options-select .selection').removeClass('selected');
+	$("[data-setting='" + setting + "']").addClass('selected');
+	$('#settings-' + currentSetting).hide().css({
+		"left": "310px",
+		"opacity": 0
+	});
+	$('#settings-' + setting).css('display', 'block');
+	$('#settings-' + setting).animate({
+		"left": "460px",
+		"opacity": 1
+	}, anit / 8);
+	currentSetting = setting;
+	$('#slide')[0].currentTime = 0;
+	$('#slide')[0].play();
 }
 
 function changeMap1(game) {
