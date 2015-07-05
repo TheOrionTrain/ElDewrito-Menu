@@ -185,7 +185,6 @@ settings = {
             var c = settings.infsens.current;
             user.infsens = c;
             $("[data-option='infsens']").children('.input').children('input').val(c);
-            console.log(settings.infsens.current);
         }
     },
     "vehsens" : {
@@ -196,7 +195,6 @@ settings = {
             var c = settings.vehsens.current;
             user.vehsens = c;
             $("[data-option='vehsens']").children('.input').children('input').val(c);
-            console.log(settings.vehsens.current);
         }
     },
     //Needs to be true/false, not sure how to do that -Orion
@@ -208,7 +206,6 @@ settings = {
             var c = settings.togglecrouch.current;
             user.togglecrouch = c;
             $("[data-option='togglecrouch']").children('.input').children('input').val(c);
-            console.log(settings.togglecrouch.current);
         }
     },
     //Needs to be true/false but return 0 or 1 integer.
@@ -219,8 +216,6 @@ settings = {
         "update" : function() {
             var c = settings.centeredcrosshair.current;
             user.centeredcrosshair = c;
-            $("[data-option='centeredcrosshair']").children('.input').children('input').val(c);
-            console.log(settings.centeredcrosshair.current);
         }
     },
     "mouseacceleration" : {
@@ -231,7 +226,6 @@ settings = {
             var c = settings.mouseacceleration.current;
             user.mouseacceleration = c;
             $("[data-option='mouseacceleration']").children('.input').children('input').val(c);
-            console.log(settings.mouseacceleration.current);
         }
     },
     //Needs to be true/false but return 0 or 1 integer.
@@ -243,7 +237,6 @@ settings = {
             var c = settings.rawinput.current;
             user.rawinput = c;
             $("[data-option='rawinput']").children('.input').children('input').val(c);
-            console.log(settings.rawinput.current);
         }
     }
 },
