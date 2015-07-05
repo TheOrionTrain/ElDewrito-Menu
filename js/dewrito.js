@@ -35,16 +35,15 @@ function getServers() {
 			alert("Error received from master: " + data.result.msg);
 			return;
 		}
-		console.log(data);
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
-			queryServer(serverIP, i);
+			if (!serverIP.toString().contains("?"))
+				queryServer(serverIP, i);
 		}
 	});
 }
 
 function queryServer(serverIP, i) {
-	console.log(serverIP);
 	$.getJSON("http://" + serverIP, function(serverInfo) {
 		var startTime = (new Date()).getTime(),
 			endTime;
@@ -57,7 +56,6 @@ function queryServer(serverIP, i) {
 				endTime = (new Date()).getTime();
 			}
 		});
-		console.log(serverInfo.variant.toString().replace(/<(?:.|\n)*?>/gm, ''));
 		var isPassworded = serverInfo.passworded !== undefined;
 		if (serverInfo.map !== "" && !invalidServer(serverInfo.name, serverInfo.variant, serverInfo.variantType, serverInfo.mapFile, serverInfo.maxPlayers, serverInfo.numPlayers, serverInfo.hostPlayer)) {
 			if (isPassworded) {
@@ -97,8 +95,8 @@ function queryServer(serverIP, i) {
 				$('#click')[0].play();
 			});
 			$('.server').click(function() {
-				changeMenu("serverbrowser-custom", $(this).attr('data-server'));
 				selectedserver = $(this).attr('data-server');
+				changeMenu("serverbrowser-custom", $(this).attr('data-server'));
 			});
 			filterServers();
 		}
@@ -274,7 +272,11 @@ $(document).ready(function() {
 	$('#music')[0].volume = settings.musicvolume.current;
 	$('#click')[0].volume = settings.sfxvolume.current;
 	$('#start').click(function() {
-		startgame(servers[selectedserver].ip);
+		var mode = $('#start').children('.label').text().toString().split(" ");
+		if (mode[1] === "FORGE")
+		startgame("127.0.0.1:11775", mode);
+		else
+			startgame(servers[selectedserver].ip, mode);
 	});
 	$('.selection').hover(function() {
 		$('#click')[0].currentTime = 0;
@@ -377,9 +379,9 @@ function brighter(color) {
 	return "#" + colorhex[0] + colorhex[1] + colorhex[2];
 }
 
-function lobbyLoop() {
+function lobbyLoop(ip) {
 	delay(function() {
-		$.getJSON("http://" + servers[selectedserver].ip, function(serverInfo) {
+		$.getJSON("http://" + ip, function(serverInfo) {
 			players = serverInfo.players;
 			$('#lobby').empty();
 			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
@@ -429,7 +431,7 @@ function lobbyLoop() {
 			});
 
 			if (loopPlayers)
-				lobbyLoop();
+				lobbyLoop(ip);
 		});
 	}, 3000);
 }
@@ -439,10 +441,12 @@ function getTotalPlayers() {
 	$.getJSON("http://192.99.124.162/list", function(data) {
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
-			$.getJSON("http://" + serverIP, function(serverInfo) {
-				totalPlayers += serverInfo.numPlayers;
-				$('#players-online').text(totalPlayers + " Players Online");
-			});
+			if (!serverIP.toString().contains("?")) {
+				$.getJSON("http://" + serverIP, function(serverInfo) {
+					totalPlayers += serverInfo.numPlayers;
+					$('#players-online').text(totalPlayers + " Players Online");
+				});
+			}
 		}
 	});
 }
@@ -453,10 +457,12 @@ function totalPlayersLoop() {
 		$.getJSON("http://192.99.124.162/list", function(data) {
 			for (var i = 0; i < data.result.servers.length; i++) {
 				var serverIP = data.result.servers[i];
-				$.getJSON("http://" + serverIP, function(serverInfo) {
-					totalPlayers += serverInfo.numPlayers;
-					$('#players-online').text(totalPlayers + " Players Online");
-				});
+				if (!serverIP.toString().contains("?")) {
+					$.getJSON("http://" + serverIP, function(serverInfo) {
+						totalPlayers += serverInfo.numPlayers;
+						$('#players-online').text(totalPlayers + " Players Online");
+					});
+				}
 			}
 		});
 		totalPlayersLoop();
@@ -465,6 +471,7 @@ function totalPlayersLoop() {
 
 function playersJoin(number, max, time, ip) {
 	$.getJSON("http://" + ip, function(serverInfo) {
+		console.log(ip);
 		players = serverInfo.players;
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
@@ -616,7 +623,7 @@ function changeMenu(menu, details) {
 			$('#back').attr('data-action', 'custom-serverbrowser');
 			$('#customgame').attr('data-from', 'serverbrowser');
 			playersJoin(d.players.current, d.players.max, 20, d.ip);
-			lobbyLoop();
+			lobbyLoop(servers[selectedserver].ip);
 			loopPlayers = true;
 
 		}
@@ -906,7 +913,7 @@ function playerInfo(name) {
 					KDchart.update();
 					var kdr = info.players[i].kills / info.players[i].deaths;
 
-					if (kdr === "Infinity")
+					if (!isFinite(kdr))
 						kdr = info.players[i].kills;
 					if (isNaN(kdr))
 						kdr = 0;
@@ -937,24 +944,26 @@ function playerInfo(name) {
 	}
 }
 
-function startgame(ip) {
-	if (servers[selectedserver].password !== undefined) {
-		var password = prompt(servers[selectedserver].name + " has a password, enter the password to join", "");
-		if (password !== null) {
+function startgame(ip, mode) {
+	if (mode[0] === "JOIN") {
+		if (servers[selectedserver].password !== undefined) {
+			var password = prompt(servers[selectedserver].name + " has a password, enter the password to join", "");
+			if (password !== null) {
+				/*$('#beep')[0].play();
+				$('#music')[0].pause();
+				$('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {$('#music')[0].play();});
+				delay(function(){
+					window.open("dorito:" + servers[$(".server").data("server")].ip + "/" + password);
+				}, 3500);*/
+			}
+		} else {
 			/*$('#beep')[0].play();
 			$('#music')[0].pause();
 			$('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {$('#music')[0].play();});
 			delay(function(){
-				window.open("dorito:" + servers[$(".server").data("server")].ip + "/" + password);
+				window.open("dorito:" + ip);
 			}, 3500);*/
 		}
-	} else {
-		/*$('#beep')[0].play();
-		$('#music')[0].pause();
-		$('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {$('#music')[0].play();});
-		delay(function(){
-			window.open("dorito:" + ip);
-		}, 3500);*/
 	}
 	$('#beep')[0].play();
 	$('#music')[0].pause();
@@ -962,9 +971,10 @@ function startgame(ip) {
 		$('#music')[0].play();
 	});
 	delay(function() {
-		callbacks.connect(ip);
+		//callbacks.connect(ip);
+		alert(mode[0] + " " + mode[1]);
 		loopPlayers = true;
-		lobbyLoop();
+		lobbyLoop(ip);
 	}, 3700);
 }
 
@@ -1022,10 +1032,10 @@ function changeMap1(game) {
 
 function changeMap2(map, click) {
 	$('#map-thumb').css({
-		"background-image": "url('img/maps/" + map.toUpperCase() + ".png')"
+		"background-image": "url('img/maps/" + map.toString().toUpperCase() + ".png')"
 	});
 	$('#map-thumb-options').css({
-		"background-image": "url('img/maps/" + map.toUpperCase() + ".png')"
+		"background-image": "url('img/maps/" + map.toString().toUpperCase() + ".png')"
 	});
 	$('#currentmap').text(map);
 	$('#map-name-options').text(map);
