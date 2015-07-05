@@ -167,7 +167,7 @@ function initalize() {
 			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
 		}
 		if (settings[set].typeof == "input") {
-			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=24 /></span></div>");
+			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=40 /></span></div>");
 		}
 		if (settings[set].typeof == "color") {
 			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
