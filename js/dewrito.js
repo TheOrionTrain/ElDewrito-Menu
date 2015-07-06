@@ -173,13 +173,13 @@ function initalize() {
 		set = Object.keys(settings)[i];
 		var category = settings[set].category;
 		if (settings[set].typeof == "select") {
-			$('#dewrito-options').children('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
+			$('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
 		}
 		if (settings[set].typeof == "input") {
-			$('#dewrito-options').children('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=40 /></span></div>");
+			$('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=40 /></span></div>");
 		}
 		if (settings[set].typeof == "color") {
-			$('#dewrito-options').children('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
+			$('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
 			$('#option-' + set).spectrum({
 				color: settings[set].current,
 				preferredFormat: "hex",
@@ -796,6 +796,16 @@ function changeMenu(menu, details) {
 			});
 
 		}
+	}
+	if (menu == "options-haloonline") {
+		$('#back').attr('data-action', 'haloonline-options');
+		$('#dewrito-options').hide();
+		$('#haloonline').fadeIn(anit);
+	}
+	if (menu == "haloonline-options") {
+		$('#back').attr('data-action', 'options-main');
+		$('#haloonline').hide();
+		$('#dewrito-options').fadeIn(anit);
 	}
 	if (menu == "serverbrowser-type") {
 		$('#choosetype').show();
