@@ -90,7 +90,7 @@ function queryServer(serverIP, i) {
 		if (typeof servers[i] !== 'undefined') {
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
 			var on = (servers[i].gametype === "") ? "" : "on";
-			$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " "+on+" " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+			$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 			$('.server').hover(function() {
 				$('#click')[0].currentTime = 0;
 				$('#click')[0].play();
@@ -106,15 +106,14 @@ function queryServer(serverIP, i) {
 
 function invalidServer(name, variant, variantType, map, maxPlayers, numPlayers, host) {
 	if (host.toString().match(/<(?:.|\n)*?>/gm) || name.toString().match(/<(?:.|\n)*?>/gm) || variant.toString().match(/<(?:.|\n)*?>/gm) || variantType.toString().match(/<(?:.|\n)*?>/gm) || map.toString().match(/<(?:.|\n)*?>/gm) || maxPlayers.toString().match(/<(?:.|\n)*?>/gm) || numPlayers.toString().match(/<(?:.|\n)*?>/gm)) {
-		console.log("Javascript/HTML found in one of the variables, skipping server \""+name+"\"");
+		console.log("Javascript/HTML found in one of the variables, skipping server \"" + name + "\"");
 		return true;
 	}
-	var smash = name+variant+variantType+map+maxPlayers+numPlayers+host;
-	if(smash.match("<script")) {
-		console.log("Javascript/HTML found in one of the variables, skipping server \""+name+"\"");
+	var smash = name + variant + variantType + map + maxPlayers + numPlayers + host;
+	if (smash.match("<script")) {
+		console.log("Javascript/HTML found in one of the variables, skipping server \"" + name + "\"");
 		return true;
-	}
-	else {
+	} else {
 		return false;
 	}
 }
@@ -174,13 +173,13 @@ function initalize() {
 		set = Object.keys(settings)[i];
 		var category = settings[set].category;
 		if (settings[set].typeof == "select") {
-			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
+			$('#dewrito-options').children('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
 		}
 		if (settings[set].typeof == "input") {
-			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=40 /></span></div>");
+			$('#dewrito-options').children('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=40 /></span></div>");
 		}
 		if (settings[set].typeof == "color") {
-			$('#dewrito-options').children('#settings-'+category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
+			$('#dewrito-options').children('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
 			$('#option-' + set).spectrum({
 				color: settings[set].current,
 				preferredFormat: "hex",
@@ -473,7 +472,7 @@ function getTotalPlayers() {
 function getCurrentVersion() {
 	$.getJSON("http://eriq.co/eldewrito/update", function(data) {
 		currentVersion = data.version.toString();
-		$('#version').text('eldewrito '+currentVersion);
+		$('#version').text('eldewrito ' + currentVersion);
 	});
 }
 
@@ -1019,11 +1018,11 @@ function filterServers() {
 	$('.server').each(function() {
 		$(this).hide();
 		var content = $(this).text(),
-			mapFilter = new RegExp(sortMap,"i"),
-			typeFilter = new RegExp(sortType,"i"),
+			mapFilter = new RegExp(sortMap, "i"),
+			typeFilter = new RegExp(sortType, "i"),
 			isMap = content.match(mapFilter),
 			isType = content.match(typeFilter);
-		if(isMap && isType) {
+		if (isMap && isType) {
 			$(this).show();
 		}
 	});
@@ -1103,15 +1102,15 @@ function changeMap2(map, click) {
 function getMapId(map) {
 	switch (map.toString().toLowerCase()) {
 		case "diamondback":
-		return 0;
+			return 0;
 		case "edge":
-		return 1;
+			return 1;
 		case "icebox":
-		return 3;
+			return 3;
 		case "reactor":
-		return 4;
+			return 4;
 		case "valhalla":
-		return 5;
+			return 5;
 	}
 }
 
