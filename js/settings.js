@@ -167,6 +167,8 @@ settings = {
             $("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
         }
     },
+    //TheFeelTrain you should add the eldewrito settings so it's ELDEWRITO SETTINGS > GAMEPLAY/CONTROLS/VIDEO/AUDIO > SETTINGS FOR SELECTED
+    //Since there's a lot of options we need to put into the menu.
     "username" : {
         "typeof" : "input",
         "category" : "eldewrito",
@@ -176,6 +178,23 @@ settings = {
             var c = settings.username.current;
             user.name = c;
             $("[data-option='username']").children('.input').children('input').val(c);
+        }
+    },
+    "keypad" : {
+        "typeof" : "select",
+        "category" : "eldewrito",
+        "name" : "CONTROLS METHOD",
+        "current" : isset($.cookie('keypad'),1),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "GAMEPAD",
+            "KEYBOARD"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.keypad.current;
+            $("[data-option='keypad']").children('.value').text(settings.keypad.labels[c]);
         }
     },
     "infsens" : {
@@ -202,6 +221,54 @@ settings = {
         "update" : function() {
             var c = settings.vehsens.current;
             $("[data-option='vehsens']").children('.value').text(c);
+        }
+    },
+    "mouseacceleration" : {
+        "typeof" : "select",
+        "category" : "eldewrito",
+        "name" : "MOUSE ACCELERATION",
+        "current" : isset($.cookie('mouseacceleration'),50),
+        "min" : 0,
+        "max" : 100,
+        "increment" : 5,
+        "update" : function() {
+            var c = settings.mouseacceleration.current;
+            $("[data-option='mouseacceleration']").children('.value').text(c);
+        }
+    },
+    //Needs to be true/false but return 0 or 1 integer.
+    "rawinput" : {
+        "typeof" : "select",
+        "category" : "eldewrito",
+        "name" : "RAW INPUT",
+        "current" : isset($.cookie('rawinput'),0),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "OFF",
+            "ON"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.rawinput.current;
+            $("[data-option='rawinput']").children('.value').text(settings.rawinput.labels[c]);
+        }
+    },
+    "invertmouse" : {
+        "typeof" : "select",
+        "category" : "eldewrito",
+        "name" : "INVERT MOUSE",
+        "current" : isset($.cookie('invertmouse'),0),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "OFF",
+            "ON"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.invertmouse.current;
+            $("[data-option='invertmouse']").children('.value').text(settings.invertmouse.labels[c]);
         }
     },
     //Needs to be true/false, not sure how to do that -Orion
@@ -240,12 +307,21 @@ settings = {
             $("[data-option='centeredcrosshair']").children('.value').text(settings.centeredcrosshair.labels[c]);
         }
     },
-    //Needs to be true/false but return 0 or 1 integer.
-    "rawinput" : {
+    "blank" : {
+        "typeof" : "input",
+        "category" : "eldewrito",
+        "name" : "",
+        "current" : isset($.cookie('blank'),""),
+        "update" : function() {
+            var c = settings.blank.current;
+            $("[data-option='blank']").children('.input').children('input').val(c);
+        }
+    },
+    "hudshake" : {
         "typeof" : "select",
         "category" : "eldewrito",
-        "name" : "RAW INPUT",
-        "current" : isset($.cookie('rawinput'),0),
+        "name" : "HUD SHAKE",
+        "current" : isset($.cookie('hudshake'),1),
         "min" : 0,
         "max" : 1,
         "labels" : [
@@ -254,21 +330,39 @@ settings = {
         ],
         "increment" : 1,
         "update" : function() {
-            var c = settings.rawinput.current;
-            $("[data-option='rawinput']").children('.value').text(settings.rawinput.labels[c]);
+            var c = settings.hudshake.current;
+            $("[data-option='hudshake']").children('.value').text(settings.hudshake.labels[c]);
         }
     },
-    "mouseacceleration" : {
+    "markercolours" : {
         "typeof" : "select",
         "category" : "eldewrito",
-        "name" : "MOUSE ACCELERATION",
-        "current" : isset($.cookie('mouseacceleration'),50),
+        "name" : "PLAYER MARKER COLORS",
+        "current" : isset($.cookie('markercolours'),0),
         "min" : 0,
-        "max" : 100,
+        "max" : 2,
+        "labels" : [
+            "DEFAULT",
+            "ALLY BLUE",
+            "ARMOR COLORS"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.markercolours.current;
+            $("[data-option='markercolours']").children('.value').text(settings.markercolours.labels[c]);
+        }
+    },
+    "fov" : {
+        "typeof" : "select",
+        "category" : "eldewrito",
+        "name" : "FOV",
+        "current" : isset($.cookie('fov'),90),
+        "min" : 0,
+        "max" : 90,
         "increment" : 5,
         "update" : function() {
-            var c = settings.mouseacceleration.current;
-            $("[data-option='mouseacceleration']").children('.value').text(c);
+            var c = settings.fov.current;
+            $("[data-option='fov']").children('.value').text(c);
         }
     },
     "starttimer" : {
