@@ -1,5 +1,5 @@
 /*
-    (c) 2015 Brayden Strasen
+    (c) 2015 Brayden Strasen & Ryan Palmer
     https://creativecommons.org/licenses/by-nc-sa/4.0/
 */
 var players = [],
