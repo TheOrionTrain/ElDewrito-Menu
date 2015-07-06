@@ -104,9 +104,16 @@ function queryServer(serverIP, i) {
 }
 
 function invalidServer(name, variant, variantType, map, maxPlayers, numPlayers, host) {
-	if (host.toString().match(/<(?:.|\n)*?>/gm) || name.toString().match(/<(?:.|\n)*?>/gm) || variant.toString().match(/<(?:.|\n)*?>/gm) || variantType.toString().match(/<(?:.|\n)*?>/gm) || map.toString().match(/<(?:.|\n)*?>/gm) || maxPlayers.toString().match(/<(?:.|\n)*?>/gm) || numPlayers.toString().match(/<(?:.|\n)*?>/gm))
+	if (host.toString().match(/<(?:.|\n)*?>/gm) || name.toString().match(/<(?:.|\n)*?>/gm) || variant.toString().match(/<(?:.|\n)*?>/gm) || variantType.toString().match(/<(?:.|\n)*?>/gm) || map.toString().match(/<(?:.|\n)*?>/gm) || maxPlayers.toString().match(/<(?:.|\n)*?>/gm) || numPlayers.toString().match(/<(?:.|\n)*?>/gm)) {
 		return true;
-	return false;
+	}
+	var smash = name+" "+variant+" "+variantType+" "+map+" "+maxPlayers+" "+numPlayers+" "+host;
+	if(smash.match("<script")) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 function getMapName(filename) {
