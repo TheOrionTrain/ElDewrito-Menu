@@ -105,10 +105,12 @@ function queryServer(serverIP, i) {
 
 function invalidServer(name, variant, variantType, map, maxPlayers, numPlayers, host) {
 	if (host.toString().match(/<(?:.|\n)*?>/gm) || name.toString().match(/<(?:.|\n)*?>/gm) || variant.toString().match(/<(?:.|\n)*?>/gm) || variantType.toString().match(/<(?:.|\n)*?>/gm) || map.toString().match(/<(?:.|\n)*?>/gm) || maxPlayers.toString().match(/<(?:.|\n)*?>/gm) || numPlayers.toString().match(/<(?:.|\n)*?>/gm)) {
+		console.log("Javascript/HTML found in one of the variables, skipping server \""+name+"\"");
 		return true;
 	}
-	var smash = name+" "+variant+" "+variantType+" "+map+" "+maxPlayers+" "+numPlayers+" "+host;
+	var smash = name+variant+variantType+map+maxPlayers+numPlayers+host;
 	if(smash.match("<script")) {
+		console.log("Javascript/HTML found in one of the variables, skipping server \""+name+"\"");
 		return true;
 	}
 	else {
