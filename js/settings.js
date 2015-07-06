@@ -167,8 +167,6 @@ settings = {
             $("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
         }
     },
-    //TheFeelTrain you should add the eldewrito settings so it's ELDEWRITO SETTINGS > GAMEPLAY/CONTROLS/VIDEO/AUDIO > SETTINGS FOR SELECTED
-    //Since there's a lot of options we need to put into the menu.
     "username" : {
         "typeof" : "input",
         "category" : "eldewrito",
@@ -182,7 +180,7 @@ settings = {
     },
     "keypad" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "controls",
         "name" : "CONTROLS METHOD",
         "current" : isset($.cookie('keypad'),1),
         "min" : 0,
@@ -199,7 +197,7 @@ settings = {
     },
     "infsens" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "controls",
         "name" : "INFANTRY SENSITIVITY",
         "current" : isset($.cookie('infsens'),50),
         "min" : 0,
@@ -212,7 +210,7 @@ settings = {
     },
     "vehsens" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "controls",
         "name" : "VEHICLE SENSITIVITY",
         "current" : isset($.cookie('vehsens'),50),
         "min" : 0,
@@ -225,7 +223,7 @@ settings = {
     },
     "mouseacceleration" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "controls",
         "name" : "MOUSE ACCELERATION",
         "current" : isset($.cookie('mouseacceleration'),50),
         "min" : 0,
@@ -256,7 +254,7 @@ settings = {
     },
     "invertmouse" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "controls",
         "name" : "INVERT MOUSE",
         "current" : isset($.cookie('invertmouse'),0),
         "min" : 0,
@@ -274,7 +272,7 @@ settings = {
     //Needs to be true/false, not sure how to do that -Orion
     "togglecrouch" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "controls",
         "name" : "TOGGLE CROUCH",
         "current" : isset($.cookie('togglecrouch'),1),
         "min" : 0,
@@ -307,19 +305,9 @@ settings = {
             $("[data-option='centeredcrosshair']").children('.value').text(settings.centeredcrosshair.labels[c]);
         }
     },
-    "blank" : {
-        "typeof" : "input",
-        "category" : "eldewrito",
-        "name" : "",
-        "current" : isset($.cookie('blank'),""),
-        "update" : function() {
-            var c = settings.blank.current;
-            $("[data-option='blank']").children('.input').children('input').val(c);
-        }
-    },
     "hudshake" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "gameplay",
         "name" : "HUD SHAKE",
         "current" : isset($.cookie('hudshake'),1),
         "min" : 0,
@@ -334,11 +322,11 @@ settings = {
             $("[data-option='hudshake']").children('.value').text(settings.hudshake.labels[c]);
         }
     },
-    "markercolours" : {
+    "markercolors" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "gameplay",
         "name" : "PLAYER MARKER COLORS",
-        "current" : isset($.cookie('markercolours'),0),
+        "current" : isset($.cookie('markercolors'),0),
         "min" : 0,
         "max" : 2,
         "labels" : [
@@ -348,17 +336,17 @@ settings = {
         ],
         "increment" : 1,
         "update" : function() {
-            var c = settings.markercolours.current;
-            $("[data-option='markercolours']").children('.value').text(settings.markercolours.labels[c]);
+            var c = settings.markercolors.current;
+            $("[data-option='markercolors']").children('.value').text(settings.markercolors.labels[c]);
         }
     },
     "fov" : {
         "typeof" : "select",
-        "category" : "eldewrito",
+        "category" : "gameplay",
         "name" : "FOV",
         "current" : isset($.cookie('fov'),90),
-        "min" : 0,
-        "max" : 90,
+        "min" : 40,
+        "max" : 150,
         "increment" : 5,
         "update" : function() {
             var c = settings.fov.current;
@@ -413,7 +401,7 @@ settings = {
     },
     "vsync" : {
         "typeof" : "select",
-        "category" : "launch",
+        "category" : "eldewrito",
         "name" : "VSYNC",
         "current" : isset($.cookie('vsync'),0),
         "min" : 0,
@@ -430,7 +418,7 @@ settings = {
     },
     "directx9ext" : {
         "typeof" : "select",
-        "category" : "launch",
+        "category" : "eldewrito",
         "name" : "DIRECTX 9.0 EXTENSIONS",
         "current" : isset($.cookie('directx9ext'),0),
         "min" : 0,
@@ -447,7 +435,7 @@ settings = {
     },
     "showfps" : {
         "typeof" : "select",
-        "category" : "launch",
+        "category" : "eldewrito",
         "name" : "SHOW FPS COUNTER",
         "current" : isset($.cookie('showfps'),0),
         "min" : 0,
@@ -464,7 +452,7 @@ settings = {
     },
     "introvideos" : {
         "typeof" : "select",
-        "category" : "launch",
+        "category" : "eldewrito",
         "name" : "DISABLE INTRO VIDEOS",
         "current" : isset($.cookie('introvideos'),0),
         "min" : 0,
@@ -477,6 +465,85 @@ settings = {
         "update" : function() {
             var c = settings.introvideos.current;
             $("[data-option='introvideos']").children('.value').text(settings.introvideos.labels[c]);
+        }
+    },
+    "quality" : {
+        "typeof" : "select",
+        "category" : "video",
+        "name" : "QUALITY PRESET",
+        "current" : isset($.cookie('quality'),1),
+        "min" : 0,
+        "max" : 2,
+        "labels" : [
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.quality.current;
+            $("[data-option='quality']").children('.value').text(settings.quality.labels[c]);
+        }
+    },
+    "brightness" : {
+        "typeof" : "select",
+        "category" : "video",
+        "name" : "BRIGHTNESS",
+        "current" : isset($.cookie('brightness'),50),
+        "min" : 0,
+        "max" : 100,
+        "increment" : 5,
+        "update" : function() {
+            var c = settings.brightness.current;
+            $("[data-option='brightness']").children('.value').text(c);
+        }
+    },
+    "fullscreen" : {
+        "typeof" : "select",
+        "category" : "video",
+        "name" : "FULLSCREEN",
+        "current" : isset($.cookie('quality'),0),
+        "min" : 0,
+        "max" : 2,
+        "labels" : [
+            "FULLSCREEN",
+            "WINDOWED",
+            "BORDERLESS"
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.fullscreen.current;
+            $("[data-option='fullscreen']").children('.value').text(settings.fullscreen.labels[c]);
+        }
+    },
+    "antialiasing" : {
+        "typeof" : "select",
+        "category" : "video",
+        "name" : "ANTI-ALIASING",
+        "current" : isset($.cookie('antialiasing'),1),
+        "min" : 0,
+        "max" : 1,
+        "labels" : [
+            "OFF",
+            "ON",
+        ],
+        "increment" : 1,
+        "update" : function() {
+            var c = settings.antialiasing.current;
+            $("[data-option='antialiasing']").children('.value').text(settings.antialiasing.labels[c]);
+        }
+    },
+    "mastervolume" : {
+        "typeof" : "select",
+        "category" : "video",
+        "name" : "MASTER VOLUME",
+        "current" : isset($.cookie('mastervolume'),100),
+        "min" : 0,
+        "max" : 100,
+        "increment" : 5,
+        "update" : function() {
+            var c = settings.mastervolume.current;
+            $("[data-option='mastervolume']").children('.value').text(c);
         }
     }
 },
