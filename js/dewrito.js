@@ -192,13 +192,14 @@ function initalize() {
 					["#ffdb41", "#2f703d", "#375799"],
 					["#41aaa9", "#d4d4d4", "#5a5a5a"]
 				],
-				change: function(color) {
-					changeSetting(set, color.toHexString());
-					console.log(color.toHexString());
-				}
+				change: callback(color)
 			});
 		}
 		settings[set].update();
+	}
+	function callback(color) {
+		changeSetting(set, color.toHexString());
+		console.log(color.toHexString());
 	}
 	for (i = 0; i < Object.keys(maps).length; i++) {
 		b = Object.keys(maps)[i];
@@ -461,11 +462,12 @@ function getTotalPlayers() {
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
 			if (!serverIP.toString().contains("?")) {
-				$.getJSON("http://" + serverIP, function(serverInfo) {
-					totalPlayers += serverInfo.numPlayers;
-					$('#players-online').text(totalPlayers + " Players Online");
-				});
+				$.getJSON("http://" + serverIP, callback(serverInfo));
 			}
+		}
+		function callback(serverInfo) {
+			totalPlayers += serverInfo.numPlayers;
+			$('#players-online').text(totalPlayers + " Players Online");
 		}
 	});
 }
@@ -484,11 +486,12 @@ function totalPlayersLoop() {
 			for (var i = 0; i < data.result.servers.length; i++) {
 				var serverIP = data.result.servers[i];
 				if (!serverIP.toString().contains("?")) {
-					$.getJSON("http://" + serverIP, function(serverInfo) {
-						totalPlayers += serverInfo.numPlayers;
-						$('#players-online').text(totalPlayers + " Players Online");
-					});
+					$.getJSON("http://" + serverIP, callback(serverInfo));
 				}
+			}
+			function callback(serverInfo) {
+				totalPlayers += serverInfo.numPlayers;
+				$('#players-online').text(totalPlayers + " Players Online");
 			}
 		});
 		totalPlayersLoop();
