@@ -535,7 +535,7 @@ settings = {
     },
     "mastervolume" : {
         "typeof" : "select",
-        "category" : "video",
+        "category" : "audio",
         "name" : "MASTER VOLUME",
         "current" : isset($.cookie('mastervolume'),100),
         "min" : 0,
