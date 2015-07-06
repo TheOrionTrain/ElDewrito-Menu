@@ -19,7 +19,8 @@ var players = [],
 	browsing = 0,
 	sortMap,
 	sortType,
-	Halo3Index = 2;
+	Halo3Index = 2,
+	currentVersion;
 
 function isset(val, other) {
 	return (val !== undefined) ? val : other;
@@ -269,6 +270,7 @@ function toggleNetwork() {
 
 $(document).ready(function() {
 	initalize();
+	getCurrentVersion();
 	$('#refresh').click(function() {
 		loadServers();
 		filterServers();
@@ -465,6 +467,13 @@ function getTotalPlayers() {
 				});
 			}
 		}
+	});
+}
+
+function getCurrentVersion() {
+	$.getJSON("http://eriq.co/eldewrito/update", function(data) {
+		currentVersion = data.version.toString();
+		$('#version').text('eldewrito '+currentVersion);
 	});
 }
 
