@@ -129,11 +129,12 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 5,
+        "max" : 6,
         "labels" : [
             "Halo Reach",
             "Halo CE",
             "Halo 3",
+            "Halo 3 ODST",
             "Halo 4",
             "Crash",
             "Waypoint"
@@ -141,9 +142,13 @@ settings = {
         "increment" : 1,
         "update" : function() {
             var c = settings.background.current;
-            $('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');
+            if(c === 0) {
+                $('#bg').attr('src','video/reach/mainmenu.webm');
+            } else {
+                $('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');
+            }
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
-            if(c == Halo3Index) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
+            if(c == Halo3Index || c == 3) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
             else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}
         }
     },
@@ -153,10 +158,11 @@ settings = {
         "name" : "LOGO",
         "current" : isset($.cookie('logo',Number),0),
         "min" : 0,
-        "max" : 3,
+        "max" : 4,
         "labels" : [
             "Halo 3 CE",
 			"ElDewrito",
+            "Halo",
             "Halo Online",
             "Halo ODST"
         ],
