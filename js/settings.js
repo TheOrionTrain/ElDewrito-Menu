@@ -206,12 +206,39 @@ settings = {
         "increment" : 1,
         "update" : function() {
             var c = settings.background.current;
-            if(c === 0) {$('#bg').attr('src','video/reach/mainmenu.webm');}
-            else if(c === 1) {$('#bg').attr('src','video/reach/campaign_act1.webm');}
-            else if(c === 2) {$('#bg').attr('src','video/reach/campaign_act2.webm');}
-            else if(c === 3) {$('#bg').attr('src','video/reach/campaign_act3.webm');}
-            else if(c === Halo3Index) {$('#bg').attr('src','video/halo3/mainmenu.webm');}
-            else {$('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');}
+            $('#videos').empty();
+
+            if(c === 0) {
+                $('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
+                $('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' loop preload type='video/webm'></video>");
+                $('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' loop preload type='video/webm'></video>");
+                $('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' loop preload type='video/webm'></video>");
+                $('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' loop preload type='video/webm'></video>");
+            }
+
+            else if(c === 1) {
+                $('#videos').append("<video id='bg1' src='video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
+            }
+
+            else if(c === 2) {
+                $('#videos').append("<video id='bg1' src='video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
+            }
+
+            else if(c === 3) {
+                $('#videos').append("<video id='bg1' src='video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
+            }
+
+            else if(c === Halo3Index) {
+                $('#videos').append("<video id='bg1' src='video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
+                $('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' loop autoplay type='video/webm'></video>");
+                $('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' loop autoplay type='video/webm'></video>");
+            }
+
+            else {
+                $('#videos').append("<video id='bg1' src='video/"+settings.background.labels[c]+".webm' loop autoplay type='video/webm'></video>");
+            }
+
+            $('#bg1').show();
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
             if(c == Halo3Index || c == 3) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
             else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}

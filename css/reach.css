@@ -237,14 +237,14 @@ html {background: #000;}
     cursor: pointer;
 }
 
-#bg,#bg-cover,#black {
+#videos video,#bg-cover,#black {
     position: absolute;
     top: 0; left: 0;
     width: 1280px;
     height: 720px;
 }
 
-#bg {z-index: -1;}
+#videos video {z-index: -1; display: none;}
 #bg-cover {z-index: 1;background: rgba(0,0,0,0.25);}
 #black {background: #000;z-index: 10;display: none;}
 
