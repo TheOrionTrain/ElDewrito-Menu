@@ -24,3 +24,4 @@ Possible replacement for Halo Online's UI heavily based on Halo: Reach.
 * <a href="http://reddit.com/user/RackJonan">/u/RackJonan</a> for the Halo CE background
 * <a href="http://reddit.com/user/rexadde">/u/rexadde</a> for the logo
 * Stephan Swinford for the "Crash" background
+* ImplodingExplosion for various fixes and cleaning

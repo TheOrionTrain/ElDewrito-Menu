@@ -2,6 +2,19 @@
     (c) 2015 Brayden Strasen & Ryan Palmer
     https://creativecommons.org/licenses/by-nc-sa/4.0/
 */
+
+if (!Date.now) Date.now = function() {
+	return new Date().getTime();
+};
+
+var delay = (function() {
+	var timer = 0;
+	return function(callback, ms) {
+		clearTimeout(timer);
+		timer = setTimeout(callback, ms);
+	};
+})();
+
 var players = [],
 	joined = 0,
 	track = 5,
@@ -20,7 +33,10 @@ var players = [],
 	sortMap,
 	sortType,
 	Halo3Index = 2,
-	currentVersion;
+	currentVersion,
+	KDdata,
+	ctx,
+	KDchart;
 
 function isset(val, other) {
 	return (val !== undefined) ? val : other;
@@ -39,79 +55,48 @@ function getServers() {
 		}
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
-			if (!serverIP.toString().contains("?"))
-				queryServer(serverIP, i);
+			queryServer(serverIP, i);
 		}
 	});
 }
 
 function queryServer(serverIP, i) {
+	if (!validateIP(serverIP)) return;
+	var startTime = Date.now(), endTime;
 	$.getJSON("http://" + serverIP, function(serverInfo) {
-		if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
-			return false;
-		}
-		var startTime = (new Date()).getTime(),
-			endTime;
-
-		$.ajax({
-			type: "GET",
-			url: "http://" + serverIP + "/",
-			async: false,
-			success: function() {
-				endTime = (new Date()).getTime();
-			}
-		});
-		var isPassworded = serverInfo.passworded !== undefined;
-		if (serverInfo.map !== "") {
-			if (isPassworded) {
-				servers[i] = {
-					"ip": removeTags(serverIP),
-					"name": "[PASSWORDED] " + removeTags(serverInfo.name),
-					"gametype": removeTags(serverInfo.variant),
-					"gameparent": removeTags(serverInfo.variantType),
-					"map": removeTags(getMapName(serverInfo.mapFile)),
-					"players": {
-						"max": serverInfo.maxPlayers,
-						"current": serverInfo.numPlayers
-					},
-					"password": true
-				};
-			} else {
-				servers[i] = {
-					"ip": removeTags(serverIP),
-					"name": removeTags(serverInfo.name),
-					"gametype": removeTags(serverInfo.variant),
-					"gameparent": removeTags(serverInfo.variantType),
-					"map": removeTags(getMapName(serverInfo.mapFile)),
-					"players": {
-						"max": serverInfo.maxPlayers,
-						"current": serverInfo.numPlayers
-					}
-				};
-			}
-		}
-		if (typeof servers[i] !== 'undefined') {
-			ip = serverIP.substring(0, serverIP.indexOf(':'));
-			$.getJSON("http://www.telize.com/geoip/" + ip,
-				function(result) {
-					var on = (servers[i].gametype === "") ? "" : "on";
-					$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + result.country_code + " " + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
-					$('.server').hover(function() {
-						$('#click')[0].currentTime = 0;
-						$('#click')[0].play();
-					});
-					$('.server').click(function() {
-						selectedserver = $(this).attr('data-server');
-						changeMenu("serverbrowser-custom", $(this).attr('data-server'));
-					});
-					filterServers();
-				}
-			);
+		endTime = Date.now();
+		var isPassworded = !!serverInfo.passworded;
+		if (serverInfo.map) {
+			servers[i] = {
+				"ip": serverIP,
+				"host": serverInfo.hostPlayer,
+				"name": (isPassworded ? "[PASSWORDED] " : '') + serverInfo.name,
+				"gametype": serverInfo.variant,
+				"gameparent": serverInfo.variantType,
+				"map": getMapName(serverInfo.mapFile),
+				"players": {
+					"max": parseInt(serverInfo.maxPlayers),
+					"current": parseInt(serverInfo.numPlayers)
+				},
+				"password": isPassworded,
+				"ping": endTime - startTime
+			};
+			$.ajax({
+                url: 'http://www.telize.com/geoip/' + serverIP.split(':')[0],
+                dataType: 'json',
+                timeout: 3000,
+                success: function (geoloc) {
+                    addServer(i, geoloc);
+                },
+                error: function () {
+                    addServer(i, null);
+                }
+            });
 		}
 	});
 }
 
-var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+/*var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
 
 var tagOrComment = new RegExp(
     '<(?:'
@@ -133,6 +118,29 @@ function removeTags(html) {
     html = html.replace(tagOrComment, '');
   } while (html !== oldHtml);
   return html.replace(/</g, '');
+}*/
+
+function sanitizeString(str) {
+    return String(str).replace(/&/g, '&amp;')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;')
+                      .replace(/'/g, '&#39;')
+                      .replace(/"/g, '&quot;');
+}
+
+function validateIP(str) {
+    if (str) {
+        str = String(str);
+		if(/^(?:(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)\.){3}(?:2[0-4]\d|25[0-5]|1\d{2}|[1-9]?\d)(?:\:(?:\d|[1-9]\d{1,3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5]))?$/i.test(str)) {
+			return true;
+		} else{
+			console.log(str + " is not a valid ip, skipping");
+			return false;
+		}
+	} else {
+    	console.log(str + " is not a valid ip, skipping");
+        return false;
+	}
 }
 
 function getMapName(filename) {
@@ -166,7 +174,7 @@ function promptPassword(i) {
 	}
 }
 
-function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status, numplayers, maxplayers) {
+/*function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status, numplayers, maxplayers) {
 	var servName = "<td><a href=\"dorito:" + ip + "\">" + name + " (" + host + ")</a></td>";
 	if (isPassworded)
 		servName = "<td><a href=\"#\" onclick=\"promptPassword('" + ip + "');\">[PASSWORDED] " + name + " (" + host + ")</a></td>";
@@ -177,6 +185,27 @@ function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status,
 	var servPlayers = "<td>" + numplayers + "/" + maxplayers + "</td>";
 
 	$('#serverlist tr:last').after("<tr>" + servName + servMap + servType + servStatus + servPlayers + "</tr>");
+}*/
+function addServer(i, geoloc) {
+	i = parseInt(i);
+	$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i
+		+ "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase()
+		+ ".png'></div><div class='info'><span class='name'>" + sanitizeString(servers[i].name)
+		+ " (" + sanitizeString(servers[i].host)
+		+ ")  [" + (geoloc && geoloc.country_code ? sanitizeString(geoloc.country_code)
+		+ (geoloc.region_code ? '-' + sanitizeString(geoloc.region_code) : '') + " " : '')
+		+ servers[i].ping + "ms]</span><span class='settings'>" + sanitizeString(servers[i].gametype) + " " + (servers[i].gametype ? 'on' : '')
+		+ " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max
+		+ "</div></div>");
+	$('.server').hover(function() {
+		$('#click')[0].currentTime = 0;
+		$('#click')[0].play();
+	});
+	$('.server').click(function() {
+		selectedserver = $(this).attr('data-server');
+		changeMenu("serverbrowser-custom", selectedserver);
+	});
+	filterServers();
 }
 
 function initalize() {
@@ -358,6 +387,23 @@ $(document).ready(function() {
 		this.scrollTop -= (delta * 34);
 		event.preventDefault();
 	});
+	KDdata = [{
+			value: 1,
+			color: "#cf3e3e",
+			highlight: "#ed5c5c",
+			label: "Deaths"
+		}, {
+			value: 1,
+			color: "#375799",
+			highlight: "#5575b7",
+			label: "Kills"
+		}];
+	ctx = $("#player-kd-chart")[0].getContext("2d");
+	KDchart = new Chart(ctx).Doughnut(KDdata, {
+		segmentShowStroke: false,
+		percentageInnerCutout: 75,
+		animationEasing: "easeInQuad"
+	});
 });
 
 String.prototype.toTitleCase = function() {
@@ -381,22 +427,13 @@ function acr(s) {
 
 function loadServers() {
 	$('#refresh img').addClass('rotating');
-	$('#browser').hide();
+	//$('#browser').hide();
 	setTimeout(function() {
 		$('#refresh img').removeClass('rotating');
-		$('#browser').fadeIn(anit);
+		//$('#browser').fadeIn(anit);
 	}, 5000);
 	$('#browser').empty();
 	getServers();
-	$('.server').hover(function() {
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
-	});
-	$('.server').click(function() {
-		changeMenu("serverbrowser-custom", $(this).attr('data-server'));
-		selectedserver = $(this).attr('data-server');
-	});
-	filterServers();
 }
 
 function hexToRgb(hex, opacity) {
@@ -468,8 +505,7 @@ function lobbyLoop(ip) {
 				$(this).css("background-color", hexToRgb(bright, 0.75));
 			});
 
-			if (loopPlayers)
-				lobbyLoop(ip);
+			if (loopPlayers) lobbyLoop(ip);
 		});
 	}, 3000);
 }
@@ -505,12 +541,11 @@ function totalPlayersLoop() {
 		$.getJSON("http://192.99.124.162/list", function(data) {
 			for (var i = 0; i < data.result.servers.length; i++) {
 				var serverIP = data.result.servers[i];
-				if (!serverIP.toString().contains("?")) {
+				if (validateIP(serverIP)) {
 					$.getJSON("http://" + serverIP, function(serverInfo) {
-						if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
-							return false;
-						}
-						totalPlayers += serverInfo.numPlayers;
+						var i = parseInt(serverInfo.numPlayers);
+						if (isNaN(i)) return;
+						totalPlayers += i;
 						$('#players-online').text(totalPlayers + " Players Online");
 					});
 				}
@@ -945,29 +980,13 @@ function changeMenu(menu, details) {
 	$('#slide')[0].play();
 }
 
-var KDdata = [{
-		value: 1,
-		color: "#cf3e3e",
-		highlight: "#ed5c5c",
-		label: "Deaths"
-	}, {
-		value: 1,
-		color: "#375799",
-		highlight: "#5575b7",
-		label: "Kills"
-	}],
-	ctx = $("#player-kd-chart")[0].getContext("2d"),
-	KDchart = new Chart(ctx).Doughnut(KDdata, {
-		segmentShowStroke: false,
-		percentageInnerCutout: 75,
-		animationEasing: "easeInQuad"
-	});
-
 function playerInfo(name) {
 	if (name != "user") {
 		$.getJSON("http://" + servers[selectedserver].ip, function(info) {
 			for (var i = 0; i < info.players.length; i++) {
 				if (info.players[i].name == name) {
+					info.players[i].deaths = parseInt(info.players[i].deaths);
+					info.players[i].kills = parseInt(info.players[i].kills);
 					KDchart.segments[0].value = info.players[i].deaths > 0 ? info.players[i].deaths : 1;
 					KDchart.segments[1].value = info.players[i].kills > 0 ? info.players[i].kills : 1;
 					KDchart.update();
@@ -1041,14 +1060,6 @@ function startgame(ip, mode) {
 		lobbyLoop(ip);
 	}, 3700);
 }
-
-var delay = (function() {
-	var timer = 0;
-	return function(callback, ms) {
-		clearTimeout(timer);
-		timer = setTimeout(callback, ms);
-	};
-})();
 
 function filterServers() {
 	$('.server').each(function() {
