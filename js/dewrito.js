@@ -19,7 +19,7 @@ var players = [],
 	browsing = 0,
 	sortMap,
 	sortType,
-	Halo3Index = 2,
+	Halo3Index = 5,
 	currentVersion;
 
 function isset(val, other) {
@@ -92,9 +92,12 @@ function queryServer(serverIP, i) {
 		}
 		if (typeof servers[i] !== 'undefined') {
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
-			$.getJSON("http://www.telize.com/geoip/" + ip,
-				function(result) {
-					var on = (servers[i].gametype === "") ? "" : "on";
+			$.ajax({
+            	url: 'http://www.telize.com/geoip/' + ip,
+            	dataType: 'json',
+            	timeout: 3000,
+                success: function (result) {
+                   var on = (servers[i].gametype === "") ? "" : "on";
 					$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + result.country_code + " " + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 					$('.server').hover(function() {
 						$('#click')[0].currentTime = 0;
@@ -105,8 +108,21 @@ function queryServer(serverIP, i) {
 						changeMenu("serverbrowser-custom", $(this).attr('data-server'));
 					});
 					filterServers();
-				}
-			);
+               },
+               error: function () {
+                  var on = (servers[i].gametype === "") ? "" : "on";
+					$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  ["+ (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+					$('.server').hover(function() {
+						$('#click')[0].currentTime = 0;
+						$('#click')[0].play();
+					});
+					$('.server').click(function() {
+						selectedserver = $(this).attr('data-server');
+						changeMenu("serverbrowser-custom", $(this).attr('data-server'));
+					});
+					filterServers();
+               }
+      		});
 		}
 	});
 }
@@ -570,7 +586,7 @@ function changeMenu(menu, details) {
 	////callbacks.playerName("\"" + settings.username.current + "\"");
 	if (menu == "main-custom") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
+			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/custom_games.webm');
@@ -606,7 +622,7 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "main-forge") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Forge.webm');
+			$('#bg').attr('src', 'video/halo3/forge.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/forge.webm');
@@ -642,7 +658,7 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "custom-main") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/Halo 3.webm');
+			$('#bg').attr('src', 'video/halo3/mainmenu.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/mainmenu.webm');
@@ -700,7 +716,7 @@ function changeMenu(menu, details) {
 	if (menu == "custom-serverbrowser") {
 		browsing = 1;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
+			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/matchmaking.webm');
@@ -719,7 +735,7 @@ function changeMenu(menu, details) {
 	if (menu == "main-serverbrowser") {
 		browsing = 1;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
+			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/matchmaking.webm');
@@ -743,7 +759,7 @@ function changeMenu(menu, details) {
 	if (menu == "serverbrowser-main") {
 		browsing = 0;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/Halo 3.webm');
+			$('#bg').attr('src', 'video/halo3/mainmenu.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/mainmenu.webm');

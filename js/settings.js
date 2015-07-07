@@ -201,9 +201,12 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 6,
+        "max" : 9,
         "labels" : [
             "Halo Reach",
+            "Reach Act 1",
+            "Reach Act 2",
+            "Reach Act 3",
             "Halo CE",
             "Halo 3",
             "Halo 3 ODST",
@@ -214,11 +217,12 @@ settings = {
         "increment" : 1,
         "update" : function() {
             var c = settings.background.current;
-            if(c === 0) {
-                $('#bg').attr('src','video/reach/mainmenu.webm');
-            } else {
-                $('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');
-            }
+            if(c === 0) {$('#bg').attr('src','video/reach/mainmenu.webm');}
+            else if(c === 1) {$('#bg').attr('src','video/reach/campaign_act1.webm');}
+            else if(c === 2) {$('#bg').attr('src','video/reach/campaign_act2.webm');}
+            else if(c === 3) {$('#bg').attr('src','video/reach/campaign_act3.webm');}
+            else if(c === Halo3Index) {$('#bg').attr('src','video/halo3/mainmenu.webm');}
+            else {$('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');}
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
             if(c == Halo3Index || c == 3) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
             else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}
