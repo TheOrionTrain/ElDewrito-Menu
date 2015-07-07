@@ -9,18 +9,15 @@ Possible replacement for Halo Online's UI heavily based on Halo: Reach.
 
 &nbsp;
 
-#### Find Me:
+#### Find Us:
 
-* Reddit:  <a href="http://reddit.com/user/GiveMeBTC">/u/GiveMeBTC</a> and <a href="http://reddit.com/user/thefeeltrain">/u/thefeeltrain</a>
+* Reddit:  <a href="http://reddit.com/user/GiveMeBTC">/u/GiveMeBTC</a>, <a href="http://reddit.com/user/thefeeltrain">/u/thefeeltrain</a>, and <a href="http://reddit.com/user/Shadowfita">/u/Shadowfita</a>
 * Website:  <a href="http://eriq.co">eriq.co</a>
-* Youtube: <a href="https://www.youtube.com/channel/UCKtnHACO0eB0cIlK9FlQZ5w">Brayden Strasen</a>
 
 &nbsp;
 
 #### Credits:
 * The <a href="https://github.com/FishPhd/DewritoLauncher">ElDewrito</a> developers for being awesome
 * Microsoft, 343 Industries, Bungie
-* <a href="http://reddit.com/user/Shadowfita">Shadowfita</a> for getting the server browser working
-* <a href="http://reddit.com/user/RackJonan">/u/RackJonan</a> for the Halo CE background
+* <a href="http://twitter.com/zeddikins">Lord Zedd</a> for the Halo 3, ODST, and Reach background videos
 * <a href="http://reddit.com/user/rexadde">/u/rexadde</a> for the logo
-* Stephan Swinford for the "Crash" background
