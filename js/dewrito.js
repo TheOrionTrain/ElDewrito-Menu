@@ -413,6 +413,9 @@ function brighter(color) {
 function lobbyLoop(ip) {
 	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
+			if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
+				return false;
+			}
 			players = serverInfo.players;
 			$('#lobby').empty();
 			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
