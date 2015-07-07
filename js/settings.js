@@ -210,10 +210,10 @@ settings = {
 
             if(c === 0) {
                 $('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
-                $('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' preload='false' loop type='video/webm'></video>");
-                $('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' preload='false' loop type='video/webm'></video>");
-                $('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' preload='false' loop type='video/webm'></video>");
-                $('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' preload='false' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' preload='none' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' preload='none' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' preload='none' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' preload='none' loop type='video/webm'></video>");
             }
 
             else if(c === 1) {
@@ -230,8 +230,8 @@ settings = {
 
             else if(c === Halo3Index) {
                 $('#videos').append("<video id='bg1' src='video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
-                $('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='false' loop type='video/webm'></video>");
-                $('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='false' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='none' loop type='video/webm'></video>");
             }
 
             else {
