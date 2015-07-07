@@ -210,10 +210,10 @@ settings = {
 
             if(c === 0) {
                 $('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
-                $('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' loop preload type='video/webm'></video>");
-                $('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' loop preload type='video/webm'></video>");
-                $('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' loop preload type='video/webm'></video>");
-                $('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' loop preload type='video/webm'></video>");
+                $('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' loop type='video/webm'></video>");
+                $('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' loop type='video/webm'></video>");
             }
 
             else if(c === 1) {
