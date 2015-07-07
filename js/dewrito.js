@@ -414,11 +414,9 @@ function acr(s) {
 function loadServers() {
 	if(browsing === 1) {
 		$('#refresh img').addClass('rotating');
-		$('#browser').hide();
 		setTimeout(function() {
 			$('#refresh img').removeClass('rotating');
-			$('#browser').fadeIn(anit);
-		}, 5000);
+		}, 4000);
 		$('#browser').empty();
 		getServers();
 		$('.server').hover(function() {
