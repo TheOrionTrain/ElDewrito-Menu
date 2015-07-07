@@ -308,6 +308,9 @@ $(document).ready(function() {
 		loadServers();
 		filterServers();
 	});
+	$('#direct-connect').click(function() {
+		directConnect();
+	});
 	$('#clear').click(function() {
 		clearFilters();
 	});
@@ -510,6 +513,11 @@ function getTotalPlayers() {
 			}
 		}
 	});
+}
+
+function directConnect() {
+	var ip = prompt("Enter IP Address:");
+	//connect function here
 }
 
 function getCurrentVersion() {
