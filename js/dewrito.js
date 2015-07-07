@@ -572,6 +572,10 @@ function changeMenu(menu, details) {
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
 		}
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/custom_games.webm');
+			$('#bg-cover').css('background','rgba(0,0,0,0)');
+		}
 		host = 1;
 		forge = 0;
 		$('#title').text('CUSTOM GAME');
@@ -604,6 +608,10 @@ function changeMenu(menu, details) {
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/H3 Forge.webm');
 		}
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/forge.webm');
+			$('#bg-cover').css('background','rgba(0,0,0,0)');
+		}
 		host = 1;
 		forge = 1;
 		$('#title').text('FORGE');
@@ -635,6 +643,10 @@ function changeMenu(menu, details) {
 	if (menu == "custom-main") {
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/Halo 3.webm');
+		}
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/mainmenu.webm');
+			$('#bg-cover').css('background','rgba(0,0,0,0.25)');
 		}
 		$('#dewrito').css({
 			"opacity": 0.95,
@@ -690,6 +702,9 @@ function changeMenu(menu, details) {
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
 		}
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/matchmaking.webm');
+		}
 		$('#customgame').css({
 			"top": "-720px"
 		});
@@ -705,6 +720,9 @@ function changeMenu(menu, details) {
 		browsing = 1;
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
+		}
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/matchmaking.webm');
 		}
 		$('#dewrito').css({
 			"opacity": 0,
@@ -726,6 +744,9 @@ function changeMenu(menu, details) {
 		browsing = 0;
 		if (settings.background.current == Halo3Index) {
 			$('#bg').attr('src', 'video/Halo 3.webm');
+		}
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/mainmenu.webm');
 		}
 		$('#dewrito').css({
 			"opacity": 0.95,
@@ -754,6 +775,9 @@ function changeMenu(menu, details) {
 
 	}
 	if (menu == "main2-credits") {
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/firefight.webm');
+		}
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', 'credits-main2');
 		$('#credits').css({
@@ -768,15 +792,15 @@ function changeMenu(menu, details) {
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
 		});
-		$('#bg-cover').css({
-			"background": "rgba(0,0,0,0.5)"
-		});
 		$('#dewrito').css({
 			'background': "url('img/Halo 3 CE.png') no-repeat 0 0/cover"
 		});
 
 	}
 	if (menu == "credits-main2") {
+		if (settings.background.current === 0) {
+			$('#bg').attr('src', 'video/reach/mainmenu.webm');
+		}
 		$('#back').fadeOut(anit);
 		$('#credits').css({
 			"top": "-720px"

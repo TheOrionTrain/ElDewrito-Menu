@@ -550,7 +550,7 @@ audio {display: none;}
     top: 240px;
     width: 750px;
     height: 267px;
-    opacity: 0.85;
+    opacity: 0.95;
     background: url('../img/Halo 3 CE.png') no-repeat 0 0/cover;
     z-index: 2;
 }
