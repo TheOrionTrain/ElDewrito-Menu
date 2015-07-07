@@ -151,9 +151,9 @@ settings = {
         "typeof" : "select",
         "category" : "menu",
         "name" : "RESOLUTION",
-        "current" : isset($.cookie('resolution',Number),0),
+        "current" : 0,
         "min" : 0,
-        "max" : 9,
+        "max" : 0,
         "labels" : [
             "Auto",
             "640x360",
