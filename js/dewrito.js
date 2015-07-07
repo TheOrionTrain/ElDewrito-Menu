@@ -47,6 +47,10 @@ function getServers() {
 
 function queryServer(serverIP, i) {
 	$.getJSON("http://" + serverIP, function(serverInfo) {
+		if(typeof serverInfo.maxPlayers != "number") {
+			console.log("FUCK OFF");
+			return false;
+		}
 		var startTime = (new Date()).getTime(),
 			endTime;
 
@@ -125,7 +129,7 @@ function removeTags(html) {
     oldHtml = html;
     html = html.replace(tagOrComment, '');
   } while (html !== oldHtml);
-  return html.replace(/</g, '&lt;');
+  return html.replace(/</g, '');
 }
 
 function getMapName(filename) {
