@@ -157,7 +157,7 @@ settings = {
         "labels" : [
             "Halo 3 CE",
 			"ElDewrito",
-            "Halo ElDewrito",
+            "Halo",
             "Halo Online",
             "Halo ODST"
         ],
