@@ -59,14 +59,14 @@ function queryServer(serverIP, i) {
 			}
 		});
 		var isPassworded = serverInfo.passworded !== undefined;
-		if (serverInfo.map !== "" && !invalidServer(serverInfo.name, serverInfo.variant, serverInfo.variantType, serverInfo.mapFile, serverInfo.maxPlayers, serverInfo.numPlayers, serverInfo.hostPlayer)) {
+		if (serverInfo.map !== "") {
 			if (isPassworded) {
 				servers[i] = {
-					"ip": serverIP,
-					"name": "[PASSWORDED] " + serverInfo.name,
-					"gametype": serverInfo.variant,
-					"gameparent": serverInfo.variantType,
-					"map": getMapName(serverInfo.mapFile),
+					"ip": removeTags(serverIP),
+					"name": "[PASSWORDED] " + removeTags(serverInfo.name),
+					"gametype": removeTags(serverInfo.variant),
+					"gameparent": removeTags(serverInfo.variantType),
+					"map": removeTags(getMapName(serverInfo.mapFile)),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -75,11 +75,11 @@ function queryServer(serverIP, i) {
 				};
 			} else {
 				servers[i] = {
-					"ip": serverIP,
-					"name": serverInfo.name,
-					"gametype": serverInfo.variant,
-					"gameparent": serverInfo.variantType,
-					"map": getMapName(serverInfo.mapFile),
+					"ip": removeTags(serverIP),
+					"name": removeTags(serverInfo.name),
+					"gametype": removeTags(serverInfo.variant),
+					"gameparent": removeTags(serverInfo.variantType),
+					"map": removeTags(getMapName(serverInfo.mapFile)),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -104,18 +104,28 @@ function queryServer(serverIP, i) {
 	});
 }
 
-function invalidServer(name, variant, variantType, map, maxPlayers, numPlayers, host) {
-	if (host.toString().match(/<(?:.|\n)*?>/gm) || name.toString().match(/<(?:.|\n)*?>/gm) || variant.toString().match(/<(?:.|\n)*?>/gm) || variantType.toString().match(/<(?:.|\n)*?>/gm) || map.toString().match(/<(?:.|\n)*?>/gm) || maxPlayers.toString().match(/<(?:.|\n)*?>/gm) || numPlayers.toString().match(/<(?:.|\n)*?>/gm)) {
-		console.log("Javascript/HTML found in one of the variables, skipping server \"" + name + "\"");
-		return true;
-	}
-	var smash = name + variant + variantType + map + maxPlayers + numPlayers + host;
-	if (smash.match("<script")) {
-		console.log("Javascript/HTML found in one of the variables, skipping server \"" + name + "\"");
-		return true;
-	} else {
-		return false;
-	}
+var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+
+var tagOrComment = new RegExp(
+    '<(?:'
+    // Comment body.
+    + '!--(?:(?:-*[^->])*--+|-?)'
+    // Special "raw text" elements whose content should be elided.
+    + '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
+    + '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
+    // Regular name
+    + '|/?[a-z]'
+    + tagBody
+    + ')>',
+    'gi');
+function removeTags(html) {
+	console.log("REMOVED TAGS");
+  var oldHtml;
+  do {
+    oldHtml = html;
+    html = html.replace(tagOrComment, '');
+  } while (html !== oldHtml);
+  return html.replace(/</g, '&lt;');
 }
 
 function getMapName(filename) {
