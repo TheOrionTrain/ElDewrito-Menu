@@ -1,0 +1,40 @@
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace.pace-inactive .pace-progress {
+  display: none;
+}
+
+.pace .pace-progress {
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  -ms-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.pace .pace-progress:after {
+  display: block;
+  position: relative;
+  top: 10rem;
+  margin: 0 auto;
+  width: 200px;
+  content: attr(data-progress-text);
+  font-family: "TV Nord", sans-serif;
+  font-weight: 100;
+  font-size: 6rem;
+  line-height: 1;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+}
