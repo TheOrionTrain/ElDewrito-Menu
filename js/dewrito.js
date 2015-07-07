@@ -91,6 +91,7 @@ function queryServer(serverIP, i) {
 			}
 		}
 		if (typeof servers[i] !== 'undefined') {
+			//Fuck off ImplodeExplode, I do what I want
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
 			$.ajax({
             	url: 'http://www.telize.com/geoip/' + ip,
@@ -493,7 +494,7 @@ function lobbyLoop(ip) {
 }
 
 function getTotalPlayers() {
-	var totalPlayers = 0;
+	var totalPlayers = 0, totalServers = 0;
 	$.getJSON("http://192.99.124.162/list", function(data) {
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
@@ -503,7 +504,8 @@ function getTotalPlayers() {
 						return false;
 					}
 					totalPlayers += serverInfo.numPlayers;
-					$('#players-online').text(totalPlayers + " Players Online");
+					++totalServers;
+					$('#players-online').text(totalPlayers + " Players on " + totalServers + " Servers");
 				});
 			}
 		}
@@ -519,7 +521,7 @@ function getCurrentVersion() {
 
 function totalPlayersLoop() {
 	delay(function() {
-		var totalPlayers = 0;
+		var totalPlayers = 0, totalServers = 0;
 		$.getJSON("http://192.99.124.162/list", function(data) {
 			for (var i = 0; i < data.result.servers.length; i++) {
 				var serverIP = data.result.servers[i];
@@ -529,7 +531,8 @@ function totalPlayersLoop() {
 							return false;
 						}
 						totalPlayers += serverInfo.numPlayers;
-						$('#players-online').text(totalPlayers + " Players Online");
+						++totalServers;
+						$('#players-online').text(totalPlayers + " Players on " + totalServers + " Servers");
 					});
 				}
 			}
@@ -956,7 +959,9 @@ function changeMenu(menu, details) {
 		$('#options').fadeOut(anit);
 		$('#dewrito').css({
 			"top": "240px",
-			"-webkit-transition-delay": "0ms"
+			"-webkit-transition-delay": "0ms",
+			"transition-delay": "0ms",
+			"-moz-transition-delay" : "0ms"
 		});
 
 	}
