@@ -47,8 +47,7 @@ function getServers() {
 
 function queryServer(serverIP, i) {
 	$.getJSON("http://" + serverIP, function(serverInfo) {
-		if(typeof serverInfo.maxPlayers != "number") {
-			console.log("FUCK OFF");
+		if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
 			return false;
 		}
 		var startTime = (new Date()).getTime(),
@@ -475,6 +474,9 @@ function getTotalPlayers() {
 			var serverIP = data.result.servers[i];
 			if (!serverIP.toString().contains("?")) {
 				$.getJSON("http://" + serverIP, function(serverInfo) {
+					if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
+						return false;
+					}
 					totalPlayers += serverInfo.numPlayers;
 					$('#players-online').text(totalPlayers + " Players Online");
 				});
@@ -498,6 +500,9 @@ function totalPlayersLoop() {
 				var serverIP = data.result.servers[i];
 				if (!serverIP.toString().contains("?")) {
 					$.getJSON("http://" + serverIP, function(serverInfo) {
+						if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
+							return false;
+						}
 						totalPlayers += serverInfo.numPlayers;
 						$('#players-online').text(totalPlayers + " Players Online");
 					});
