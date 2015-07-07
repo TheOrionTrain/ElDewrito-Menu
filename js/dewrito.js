@@ -92,17 +92,21 @@ function queryServer(serverIP, i) {
 		}
 		if (typeof servers[i] !== 'undefined') {
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
-			var on = (servers[i].gametype === "") ? "" : "on";
-			$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
-			$('.server').hover(function() {
-				$('#click')[0].currentTime = 0;
-				$('#click')[0].play();
-			});
-			$('.server').click(function() {
-				selectedserver = $(this).attr('data-server');
-				changeMenu("serverbrowser-custom", $(this).attr('data-server'));
-			});
-			filterServers();
+			$.getJSON("http://www.telize.com/geoip/" + ip,
+				function(result) {
+					var on = (servers[i].gametype === "") ? "" : "on";
+					$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + result.country_code + " " + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+					$('.server').hover(function() {
+						$('#click')[0].currentTime = 0;
+						$('#click')[0].play();
+					});
+					$('.server').click(function() {
+						selectedserver = $(this).attr('data-server');
+						changeMenu("serverbrowser-custom", $(this).attr('data-server'));
+					});
+					filterServers();
+				}
+			);
 		}
 	});
 }
