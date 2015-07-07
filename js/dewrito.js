@@ -30,6 +30,11 @@ function randomNum(n) {
 	return Math.floor(Math.random() * n);
 }
 
+(function() {
+	var e = (window.innerHeight-80)/2;
+	$('.pace .pace-progress:after').css('top',e);
+})();
+
 function getServers() {
 	servers = [];
 	$.getJSON("http://192.99.124.162/list", function(data) {

@@ -27,14 +27,19 @@
 .pace .pace-progress:after {
   display: block;
   position: relative;
-  top: 10rem;
+  top: calc(50% - 80px);
   margin: 0 auto;
-  width: 200px;
-  content: attr(data-progress-text);
+  width: 80px;
+  height: 80px;
+  content: "";
+  background: url('../img/loading.png');
   font-family: "TV Nord", sans-serif;
   font-weight: 100;
-  font-size: 6rem;
+  font-size: 4rem;
   line-height: 1;
   text-align: center;
   color: rgba(255, 255, 255, 0.4);
+  -webkit-animation: rotatingcw 2s linear infinite;
+  -moz-animation: rotatingcw 2s linear infinite;
+  animation: rotatingcw 2s linear infinite;
 }
