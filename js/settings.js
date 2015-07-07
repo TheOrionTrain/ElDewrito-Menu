@@ -28,7 +28,7 @@ settings = {
           "Halo 1",
           "Halo 2",
           "Halo 3",
-          "Halo ODST",
+          "Halo 3 ODST",
           "Halo 4"
       ],
       "increment" : 1,
@@ -47,7 +47,7 @@ settings = {
             break;
             case "Halo 1":
             settings.musictrack.current = 2;
-            settings.background.current = 1;
+            settings.background.current = 4;
             //setDefault
             break;
             case "Halo 2":
@@ -57,34 +57,23 @@ settings = {
             break;
             case "Halo 3":
             settings.musictrack.current = 5;
-            settings.background.current = 2;
+            settings.background.current = Halo3Index;
             //setDefault
             break;
-            case "Halo ODST":
+            case "Halo 3 ODST":
             settings.musictrack.current = 7;
-            settings.background.current = 3;
+            settings.background.current = 6;
             //setDefault
             break;
             case "Halo 4":
             settings.musictrack.current = 10;
-            settings.background.current = 4;
+            settings.background.current = 7;
             //setDefault
             break;
           }
           $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
-
-          $('#music')[0].loop = true;
-          $('#music').attr('src','audio/'+settings.musictrack.labels[settings.musictrack.current]+'.ogg');
-          $("[data-option='musictrack']").children('.value').text(settings.musictrack.labels[settings.musictrack.current]);
-
-          if(settings.background.current === 0) {
-              $('#bg').attr('src','video/reach/mainmenu.webm');
-          } else {
-              $('#bg').attr('src','video/'+settings.background.labels[settings.background.current]+'.webm');
-          }
-          $("[data-option='background']").children('.value').text(settings.background.labels[settings.background.current]);
-          if(c == Halo3Index || c == 3) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
-          else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}
+          settings.background.update();
+          settings.musictrack.update();
       }
   },
     "musictrack" : {
