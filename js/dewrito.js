@@ -604,10 +604,16 @@ function changeMenu(menu, details) {
 	////callbacks.playerName("\"" + settings.username.current + "\"");
 	if (menu == "main-custom") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-multiplayer').fadeIn(anit);
+			$('#bg-multiplayer')[0].play();
 		}
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/custom_games.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-custom_games').fadeIn(anit);
+			$('#bg-custom_games')[0].play();
 			$('#bg-cover').css('background','rgba(0,0,0,0)');
 		}
 		host = 1;
@@ -640,10 +646,16 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "main-forge") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/halo3/forge.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-forge').fadeIn(anit);
+			$('#bg-forge')[0].play();
 		}
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/forge.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-forge').fadeIn(anit);
+			$('#bg-forge')[0].play();
 			$('#bg-cover').css('background','rgba(0,0,0,0)');
 		}
 		host = 1;
@@ -676,10 +688,20 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "custom-main") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/halo3/mainmenu.webm');
+			$('#bg1').fadeIn(anit);
+			$('#bg1')[0].play();
+			$('#bg-forge').fadeOut(anit);
+			$('#bg-forge')[0].pause();
+			$('#bg-multiplayer').fadeOut(anit);
+			$('#bg-multiplayer')[0].pause();
 		}
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/mainmenu.webm');
+			$('#bg1').fadeIn(anit);
+			$('#bg1')[0].play();
+			$('#bg-forge').fadeOut(anit);
+			$('#bg-forge')[0].pause();
+			$('#bg-custom_games').fadeOut(anit);
+			$('#bg-custom_games')[0].pause();
 			$('#bg-cover').css('background','rgba(0,0,0,0.25)');
 		}
 		$('#dewrito').css({
@@ -734,10 +756,16 @@ function changeMenu(menu, details) {
 	if (menu == "custom-serverbrowser") {
 		browsing = 1;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-multiplayer').fadeIn(anit);
+			$('#bg-multiplayer')[0].play();
 		}
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/matchmaking.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-matchmaking').fadeIn(anit);
+			$('#bg-matchmaking')[0].play();
 		}
 		$('#customgame').css({
 			"top": "-720px"
@@ -753,10 +781,16 @@ function changeMenu(menu, details) {
 	if (menu == "main-serverbrowser") {
 		browsing = 1;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-multiplayer').fadeIn(anit);
+			$('#bg-multiplayer')[0].play();
 		}
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/matchmaking.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-matchmaking').fadeIn(anit);
+			$('#bg-matchmaking')[0].play();
 		}
 		$('#dewrito').css({
 			"opacity": 0,
@@ -777,10 +811,16 @@ function changeMenu(menu, details) {
 	if (menu == "serverbrowser-main") {
 		browsing = 0;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/halo3/mainmenu.webm');
+			$('#bg1').fadeIn(anit);
+			$('#bg1')[0].play();
+			$('#bg-multiplayer').fadeOut(anit);
+			$('#bg-multiplayer')[0].pause();
 		}
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/mainmenu.webm');
+			$('#bg1').fadeIn(anit);
+			$('#bg1')[0].play();
+			$('#bg-matchmaking').fadeOut(anit);
+			$('#bg-matchmaking')[0].pause();
 		}
 		$('#dewrito').css({
 			"opacity": 0.95,
@@ -810,7 +850,10 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "main2-credits") {
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/firefight.webm');
+			$('#bg1').fadeOut(anit);
+			$('#bg1')[0].pause();
+			$('#bg-firefight').fadeIn(anit);
+			$('#bg-firefight')[0].play();
 		}
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', 'credits-main2');
@@ -833,7 +876,10 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "credits-main2") {
 		if (settings.background.current === 0) {
-			$('#bg').attr('src', 'video/reach/mainmenu.webm');
+			$('#bg1').fadeIn(anit);
+			$('#bg1')[0].play();
+			$('#bg-firefight').fadeOut(anit);
+			$('#bg-firefight')[0].pause();
 		}
 		$('#back').fadeOut(anit);
 		$('#credits').css({
