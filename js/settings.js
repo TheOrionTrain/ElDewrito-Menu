@@ -15,6 +15,67 @@ var user = {
 },
 
 settings = {
+  "preset" : {
+      "typeof" : "select",
+      "category" : "menu",
+      "name" : "PRESET",
+      "current" : isset($.cookie('preset'),0),
+      "min" : 0,
+      "max" : 6,
+      "labels" : [
+          "Default",
+          "Halo Reach",
+          "Halo 1",
+          "Halo 2",
+          "Halo 3",
+          "Halo 3 ODST",
+          "Halo 4"
+      ],
+      "increment" : 1,
+      "update" : function() {
+          var c = settings.preset.current;
+          switch (settings.preset.labels[c]) {
+            case "Default":
+            settings.musictrack.current = 6;
+            settings.background.current = 0;
+            //setDefault
+            break;
+            case "Halo Reach":
+            settings.musictrack.current = 0;
+            settings.background.current = 0;
+            //setDefault
+            break;
+            case "Halo 1":
+            settings.musictrack.current = 2;
+            settings.background.current = 4;
+            //setDefault
+            break;
+            case "Halo 2":
+            settings.musictrack.current = 3;
+            settings.background.current = 0;
+            //setDefault
+            break;
+            case "Halo 3":
+            settings.musictrack.current = 5;
+            settings.background.current = Halo3Index;
+            //setDefault
+            break;
+            case "Halo 3 ODST":
+            settings.musictrack.current = 7;
+            settings.background.current = 6;
+            //setDefault
+            break;
+            case "Halo 4":
+            settings.musictrack.current = 10;
+            settings.background.current = 7;
+            //setDefault
+            break;
+          }
+          $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
+          settings.background.update();
+          settings.musictrack.update();
+      }
+  },
     "musictrack" : {
         "typeof" : "select",
         "category" : "menu",
@@ -129,9 +190,12 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 6,
+        "max" : 9,
         "labels" : [
             "Halo Reach",
+            "Reach Act 1",
+            "Reach Act 2",
+            "Reach Act 3",
             "Halo CE",
             "Halo 3",
             "Halo 3 ODST",
@@ -142,11 +206,12 @@ settings = {
         "increment" : 1,
         "update" : function() {
             var c = settings.background.current;
-            if(c === 0) {
-                $('#bg').attr('src','video/reach/mainmenu.webm');
-            } else {
-                $('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');
-            }
+            if(c === 0) {$('#bg').attr('src','video/reach/mainmenu.webm');}
+            else if(c === 1) {$('#bg').attr('src','video/reach/campaign_act1.webm');}
+            else if(c === 2) {$('#bg').attr('src','video/reach/campaign_act2.webm');}
+            else if(c === 3) {$('#bg').attr('src','video/reach/campaign_act3.webm');}
+            else if(c === Halo3Index) {$('#bg').attr('src','video/halo3/mainmenu.webm');}
+            else {$('#bg').attr('src','video/'+settings.background.labels[c]+'.webm');}
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
             if(c == Halo3Index || c == 3) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
             else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}

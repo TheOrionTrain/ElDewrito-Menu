@@ -32,7 +32,7 @@ var players = [],
 	browsing = 0,
 	sortMap,
 	sortType,
-	Halo3Index = 2,
+	Halo3Index = 5,
 	currentVersion,
 	KDdata,
 	ctx,
@@ -320,6 +320,9 @@ $(document).ready(function() {
 		loadServers();
 		filterServers();
 	});
+	$('#direct-connect').click(function() {
+		directConnect();
+	});
 	$('#clear').click(function() {
 		clearFilters();
 	});
@@ -513,7 +516,7 @@ function lobbyLoop(ip) {
 }
 
 function getTotalPlayers() {
-	var totalPlayers = 0;
+	var totalPlayers = 0, totalServers = 0;
 	$.getJSON("http://192.99.124.162/list", function(data) {
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
@@ -523,11 +526,17 @@ function getTotalPlayers() {
 						return false;
 					}
 					totalPlayers += serverInfo.numPlayers;
-					$('#players-online').text(totalPlayers + " Players Online");
+					++totalServers;
+					$('#players-online').text(totalPlayers + " Players on " + totalServers + " Servers");
 				});
 			}
 		}
 	});
+}
+
+function directConnect() {
+	var ip = prompt("Enter IP Address:");
+	//connect function here
 }
 
 function getCurrentVersion() {
@@ -539,7 +548,7 @@ function getCurrentVersion() {
 
 function totalPlayersLoop() {
 	delay(function() {
-		var totalPlayers = 0;
+		var totalPlayers = 0, totalServers = 0;
 		$.getJSON("http://192.99.124.162/list", function(data) {
 			for (var i = 0; i < data.result.servers.length; i++) {
 				var serverIP = data.result.servers[i];
@@ -605,7 +614,7 @@ function changeMenu(menu, details) {
 	////callbacks.playerName("\"" + settings.username.current + "\"");
 	if (menu == "main-custom") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
+			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/custom_games.webm');
@@ -641,7 +650,7 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "main-forge") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Forge.webm');
+			$('#bg').attr('src', 'video/halo3/forge.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/forge.webm');
@@ -677,7 +686,7 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "custom-main") {
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/Halo 3.webm');
+			$('#bg').attr('src', 'video/halo3/mainmenu.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/mainmenu.webm');
@@ -735,7 +744,7 @@ function changeMenu(menu, details) {
 	if (menu == "custom-serverbrowser") {
 		browsing = 1;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
+			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/matchmaking.webm');
@@ -754,7 +763,7 @@ function changeMenu(menu, details) {
 	if (menu == "main-serverbrowser") {
 		browsing = 1;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/H3 Multiplayer.webm');
+			$('#bg').attr('src', 'video/halo3/multiplayer.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/matchmaking.webm');
@@ -778,7 +787,7 @@ function changeMenu(menu, details) {
 	if (menu == "serverbrowser-main") {
 		browsing = 0;
 		if (settings.background.current == Halo3Index) {
-			$('#bg').attr('src', 'video/Halo 3.webm');
+			$('#bg').attr('src', 'video/halo3/mainmenu.webm');
 		}
 		if (settings.background.current === 0) {
 			$('#bg').attr('src', 'video/reach/mainmenu.webm');
@@ -975,7 +984,9 @@ function changeMenu(menu, details) {
 		$('#options').fadeOut(anit);
 		$('#dewrito').css({
 			"top": "240px",
-			"-webkit-transition-delay": "0ms"
+			"-webkit-transition-delay": "0ms",
+			"transition-delay": "0ms",
+			"-moz-transition-delay" : "0ms"
 		});
 
 	}

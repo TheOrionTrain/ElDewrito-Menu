@@ -36,6 +36,21 @@ html {background: #000;}
     width: 28px;
 }
 
+#direct-connect {
+    position: absolute;
+    color: #fff;
+    top: 20px;
+    right: 20px;
+    font-size: 22px;
+    opacity: 0.85;
+    z-index: 2;
+}
+
+#direct-connect:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
 #browser-map, #browser-gametype, #refresh, #clear {
     float: right;
     color: #fff;
