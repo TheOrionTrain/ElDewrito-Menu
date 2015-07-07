@@ -380,23 +380,25 @@ function acr(s) {
 }
 
 function loadServers() {
-	$('#refresh img').addClass('rotating');
-	$('#browser').hide();
-	setTimeout(function() {
-		$('#refresh img').removeClass('rotating');
-		$('#browser').fadeIn(anit);
-	}, 5000);
-	$('#browser').empty();
-	getServers();
-	$('.server').hover(function() {
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
-	});
-	$('.server').click(function() {
-		changeMenu("serverbrowser-custom", $(this).attr('data-server'));
-		selectedserver = $(this).attr('data-server');
-	});
-	filterServers();
+	if(browsing === 1) {
+		$('#refresh img').addClass('rotating');
+		$('#browser').hide();
+		setTimeout(function() {
+			$('#refresh img').removeClass('rotating');
+			$('#browser').fadeIn(anit);
+		}, 5000);
+		$('#browser').empty();
+		getServers();
+		$('.server').hover(function() {
+			$('#click')[0].currentTime = 0;
+			$('#click')[0].play();
+		});
+		$('.server').click(function() {
+			changeMenu("serverbrowser-custom", $(this).attr('data-server'));
+			selectedserver = $(this).attr('data-server');
+		});
+		filterServers();
+	}
 }
 
 function hexToRgb(hex, opacity) {
@@ -696,7 +698,7 @@ function changeMenu(menu, details) {
 		});
 		$('#back').attr('data-action', 'serverbrowser-main');
 		$('#browser').empty();
-		loadServers();
+		setTimeout(loadServers,1000);
 		loopPlayers = false;
 	}
 	if (menu == "main-serverbrowser") {
@@ -717,7 +719,7 @@ function changeMenu(menu, details) {
 			"top": "720px"
 		});
 		$('#browser').empty();
-		loadServers();
+		setTimeout(loadServers,1000);
 		loopPlayers = false;
 	}
 	if (menu == "serverbrowser-main") {
