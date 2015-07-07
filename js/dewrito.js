@@ -378,6 +378,13 @@ $(document).ready(function() {
 		this.scrollTop -= (delta * 34);
 		event.preventDefault();
 	});
+	$.srSmoothscroll({
+		step: 55,
+		speed: 400,
+		ease: 'linear',
+		target: $('.server'),
+		container: $('#browser')
+	});
 });
 
 String.prototype.toTitleCase = function() {
