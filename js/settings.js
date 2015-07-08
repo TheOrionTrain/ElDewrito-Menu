@@ -33,6 +33,7 @@ settings = {
       ],
       "increment" : 1,
       "update" : function() {
+        console.log(settings.preset.current);
           var c = settings.preset.current;
           switch (settings.preset.labels[c]) {
             case "Default":
