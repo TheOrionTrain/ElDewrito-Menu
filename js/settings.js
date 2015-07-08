@@ -45,10 +45,10 @@ settings = {
             }
           }
           for (var i = 0; i < settings.musictrack.labels.length; i++) {
-            if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
-              settings.musictrack.current = i;
-            } else if (settings.preset.labels[c] === "Halo 4") {
+            if (settings.preset.labels[c] === "Halo 4") {
               settings.musictrack.current = 11;
+            } else if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
+              settings.musictrack.current = i;
             }
           }
           $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
