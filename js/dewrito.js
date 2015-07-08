@@ -315,7 +315,7 @@ function toggleNetwork() {
 $(document).ready(function() {
     Mousetrap.bind('f11', function() {
         setTimeout(function() {
-            functidewRcon.send('game.togglemenu');
+            dewRcon.send('game.togglemenu');
         },1000);
     });
     initalize();
