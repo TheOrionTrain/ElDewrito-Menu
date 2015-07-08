@@ -37,7 +37,7 @@ function randomNum(n) {
 
 function getServers() {
 	servers = [];
-	$.getJSON("http://192.99.124.162/list", function(data) {
+	$.getJSON("http://eldewrito-masterserver-1-thetwist84.c9.io/list", function(data) {
 		if (data.result.code !== 0) {
 			alert("Error received from master: " + data.result.msg);
 			return;
@@ -52,45 +52,46 @@ function getServers() {
 
 function queryServer(serverIP, i) {
 	$.getJSON("http://" + serverIP, function(serverInfo) {
-		if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
+		if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
 			return false;
 		}
-		var startTime = (new Date()).getTime(),
+		var startTime = Date.now(),
 			endTime;
-
 		$.ajax({
 			type: "GET",
 			url: "http://" + serverIP + "/",
 			async: false,
 			success: function() {
-				endTime = (new Date()).getTime();
+				endTime = Date.now();
 			}
 		});
 		var isPassworded = serverInfo.passworded !== undefined;
-		if (serverInfo.map !== "") {
+		if (serverInfo.map) {
 			if (isPassworded) {
 				servers[i] = {
 					"ip": sanitizeString(serverIP),
+					"host" : sanitizeString(serverInfo.hostPlayer),
 					"name": "[PASSWORDED] " + sanitizeString(serverInfo.name),
 					"gametype": sanitizeString(serverInfo.variant),
 					"gameparent": sanitizeString(serverInfo.variantType),
 					"map": sanitizeString(getMapName(serverInfo.mapFile)),
 					"players": {
-						"max": serverInfo.maxPlayers,
-						"current": serverInfo.numPlayers
+						"max": parseInt(serverInfo.maxPlayers),
+						"current": parseInt(serverInfo.numPlayers)
 					},
 					"password": true
 				};
 			} else {
 				servers[i] = {
 					"ip": sanitizeString(serverIP),
+					"host" : sanitizeString(serverInfo.hostPlayer),
 					"name": sanitizeString(serverInfo.name),
 					"gametype": sanitizeString(serverInfo.variant),
 					"gameparent": sanitizeString(serverInfo.variantType),
 					"map": sanitizeString(getMapName(serverInfo.mapFile)),
 					"players": {
-						"max": serverInfo.maxPlayers,
-						"current": serverInfo.numPlayers
+						"max": parseInt(serverInfo.maxPlayers),
+						"current": parseInt(serverInfo.numPlayers)
 					}
 				};
 			}
@@ -99,36 +100,20 @@ function queryServer(serverIP, i) {
 			//Fuck off ImplodeExplode, I do what I want
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
 			$.ajax({
-            	url: 'http://www.telize.com/geoip/' + ip,
-            	dataType: 'json',
-            	timeout: 3000,
-                success: function (result) {
-                   var on = (servers[i].gametype === "") ? "" : "on";
-					$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  [" + result.country_code + " " + (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
-					$('.server').hover(function() {
-						$('#click')[0].currentTime = 0;
-						$('#click')[0].play();
-					});
-					$('.server').click(function() {
-						selectedserver = $(this).attr('data-server');
-						changeMenu("serverbrowser-custom", $(this).attr('data-server'));
-					});
-					filterServers();
-               },
-               error: function () {
-                  var on = (servers[i].gametype === "") ? "" : "on";
-					$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + serverInfo.hostPlayer + ")  ["+ (endTime - startTime) + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
-					$('.server').hover(function() {
-						$('#click')[0].currentTime = 0;
-						$('#click')[0].play();
-					});
-					$('.server').click(function() {
-						selectedserver = $(this).attr('data-server');
-						changeMenu("serverbrowser-custom", $(this).attr('data-server'));
-					});
-					filterServers();
-               }
-      		});
+				url: 'http://www.telize.com/geoip/' + serverIP.split(':')[0],
+				dataType: 'json',
+				timeout: 3000,
+				success: function(geoloc) {
+					endTime = (new Date()).getTime();
+					var ping = endTime - startTime;
+					addServer(i, geoloc,ping);
+				},
+				error: function() {
+					endTime = (new Date()).getTime();
+					var ping = endTime - startTime;
+					addServer(i, null,ping);
+				}
+			});
 		}
 	});
 }
@@ -168,17 +153,24 @@ function promptPassword(i) {
 	}
 }
 
-function addServer(ip, isPassworded, name, host, map, mapfile, gamemode, status, numplayers, maxplayers) {
-	var servName = "<td><a href=\"dorito:" + ip + "\">" + name + " (" + host + ")</a></td>";
-	if (isPassworded)
-		servName = "<td><a href=\"#\" onclick=\"promptPassword('" + ip + "');\">[PASSWORDED] " + name + " (" + host + ")</a></td>";
-
-	var servMap = "<td>" + map + " (" + mapfile + ")</td>";
-	var servType = "<td>" + gamemode + "</td>";
-	var servStatus = "<td>" + status + "</td>";
-	var servPlayers = "<td>" + numplayers + "/" + maxplayers + "</td>";
-
-	$('#serverlist tr:last').after("<tr>" + servName + servMap + servType + servStatus + servPlayers + "</tr>");
+function addServer(i, geoloc,ping) {
+	i = parseInt(i);
+	if(!geoloc) {
+		geoloc = {};
+		geoloc.country_code = "";
+	}
+	var on = (!servers[i].gametype) ? "" : "on";
+	$('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + servers[i].host + ")  [" + geoloc.country_code + " " + ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	console.log("APPENDED");
+	$('.server').hover(function() {
+		$('#click')[0].currentTime = 0;
+		$('#click')[0].play();
+	});
+	$('.server').click(function() {
+		selectedserver = $(this).attr('data-server');
+		changeMenu("serverbrowser-custom", selectedserver);
+	});
+	filterServers();
 }
 
 function initalize() {
@@ -488,7 +480,7 @@ function lobbyLoop(ip) {
 
 function getTotalPlayers() {
 	var totalPlayers = 0, totalServers = 0;
-	$.getJSON("http://192.99.124.162/list", function(data) {
+	$.getJSON("http://eldewrito-masterserver-1-thetwist84.c9.io/list", function(data) {
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
 			if (!serverIP.toString().contains("?")) {
@@ -520,7 +512,7 @@ function getCurrentVersion() {
 function totalPlayersLoop() {
 	delay(function() {
 		var totalPlayers = 0, totalServers = 0;
-		$.getJSON("http://192.99.124.162/list", function(data) {
+		$.getJSON("http://eldewrito-masterserver-1-thetwist84.c9.io/list", function(data) {
 			for (var i = 0; i < data.result.servers.length; i++) {
 				var serverIP = data.result.servers[i];
 				if (!serverIP.toString().contains("?")) {
