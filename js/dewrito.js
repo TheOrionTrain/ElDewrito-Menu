@@ -61,17 +61,24 @@ function getMasterServers(cb) {
 
 function getServers() {
     servers = [];
-    $.getJSON(masterServers[0].list, function(data) {
-        if (data.result.code !== 0) {
-            alert("Error received from master: " + data.result.msg);
-            return;
-        }
-        for (var i = 0; i < data.result.servers.length; i++) {
-            var serverIP = data.result.servers[i];
-            if (!serverIP.toString().contains("?"))
-                queryServer(serverIP, i);
-        }
-    });
+		var totalIps = [];
+		var ffs = 0;
+		for (var l = 0; l < masterServers.length; l++) {
+			$.getJSON(masterServers[l].list, function(data) {
+	        if (data.result.code !== 0) {
+	            alert("Error received from master: " + data.result.msg);
+	            return;
+	        }
+	        for (var i = 0; i < data.result.servers.length; i++) {
+	            var serverIP = data.result.servers[i];
+							if ($.inArray(serverIP, totalIps) === -1) {
+								totalIps.push(serverIP);
+								queryServer(serverIP, ffs);
+								ffs++;
+							}
+	        }
+	    });
+		}
 }
 
 function queryServer(serverIP, i) {
@@ -573,10 +580,11 @@ function playersJoin(number, max, time, ip) {
         $('#maxplayers').text(serverInfo.maxPlayers);
         $('#joined').text(serverInfo.numPlayers);
         for (var i = 0; i < serverInfo.numPlayers; i++) {
-            if (players[i].name !== undefined)
-                $('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-            $('#player' + i).css("display", "none");
-            $('#player' + i).fadeIn(anit);
+          	if (players[i].name !== undefined) {
+            	$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+            	$('#player' + i).css("display", "none");
+            	$('#player' + i).fadeIn(anit);
+						}
         }
         $('#lobby tr').hover(function() {
             $('#click')[0].currentTime = 0;
