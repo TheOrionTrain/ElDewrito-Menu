@@ -60,7 +60,7 @@ function queryServer(serverIP, i) {
 		$.ajax({
 			type: "GET",
 			url: "http://" + serverIP + "/",
-			async: false,
+			async: true,
 			success: function() {
 				endTime = Date.now();
 			}
