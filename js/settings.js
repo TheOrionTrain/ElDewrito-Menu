@@ -42,13 +42,13 @@ settings = {
           for (var i = 0; i < settings.background.labels.length; i++) {
             if (settings.background.labels[i] === settings.preset.labels[c]) {
               settings.background.current = i;
-            } else if (settings.preset.labels[c] === "Halo 4") {
-              settings.background.current = 11;
             }
           }
           for (var i = 0; i < settings.musictrack.labels.length; i++) {
             if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
               settings.musictrack.current = i;
+            } else if (settings.preset.labels[c] === "Halo 4") {
+              settings.musictrack.current = 11;
             }
           }
           $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
