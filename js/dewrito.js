@@ -909,7 +909,7 @@ function changeMenu(menu, details) {
             "-webkit-transition-delay": "0ms"
         });
         $('#dewrito').css({
-            'background': "url('img/Halo 3 CE.png') no-repeat 0 0/cover"
+            'background': "url('img/" + settings.logo.current.labels[settings.logo.current] + ".png') no-repeat 0 0/cover"
         });
 
     }
