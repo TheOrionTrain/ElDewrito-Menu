@@ -180,9 +180,11 @@ String.prototype.contains = function(it) {
 function promptPassword(i) {
     var password = prompt(servers[i].name + " has a password, enter the password to join", "");
     if (password !== null) {
-        window.open("dorito:" + servers[i].ip + "/" + password);
+       // window.open("dorito:" + servers[i].ip + "/" + password);
+        dewRcon.send('connect ' + servers[i].ip + ' ' + password);
     }
 }
+
 
 function addServer(i, geoloc, ping) {
     i = parseInt(i);
@@ -1175,6 +1177,7 @@ function startgame(ip, mode) {
     delay(function() {
         if (mode[0] === "JOIN") {
             //callbacks.connect(ip);
+            dewRcon.send('connect ' + ip);
         } else if (mode[1] === "FORGE") {
             //callbacks.gameType(0, 0);
         } else if (mode[0] === "START" && mode[1] === "GAME") {
