@@ -40,12 +40,16 @@ settings = {
             return;
           }*/
           for (var i = 0; i < settings.background.labels.length; i++) {
-            if (settings.backgrounds.labels[i] === settings.preset.labels[c])
+            if (settings.backgrounds.labels[i] === settings.preset.labels[c]) {
+              console.log(settings.backgrounds.labels[i]);
               isset($.cookie('background',Number),i);
+            }
           }
           for (var i = 0; i < settings.musictrack.labels.length; i++) {
-            if (settings.musictrack.labels[i] === settings.preset.labels[c])
+            if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
+              console.log(settings.musictrack.labels[i]);
               isset($.cookie('musictrack',Number),i);
+            }
           }
           /*switch (settings.preset.labels[c]) {
             case "Default":
