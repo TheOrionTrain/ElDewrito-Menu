@@ -19,7 +19,7 @@ var players = [],
 	browsing = 0,
 	sortMap,
 	sortType,
-	Halo3Index = 5,
+	Halo3Index = 6,
 	currentVersion;
 
 function isset(val, other) {

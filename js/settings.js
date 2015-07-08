@@ -52,7 +52,7 @@ settings = {
             break;
             case "Halo 2":
             settings.musictrack.current = 3;
-            settings.background.current = 0;
+            settings.background.current = 5;
             //setDefault
             break;
             case "Halo 3":
@@ -62,12 +62,12 @@ settings = {
             break;
             case "Halo 3 ODST":
             settings.musictrack.current = 7;
-            settings.background.current = 6;
+            settings.background.current = 7;
             //setDefault
             break;
             case "Halo 4":
             settings.musictrack.current = 10;
-            settings.background.current = 7;
+            settings.background.current = 8;
             //setDefault
             break;
           }
@@ -190,13 +190,14 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 9,
+        "max" : 10,
         "labels" : [
             "Halo Reach",
             "Reach Act 1",
             "Reach Act 2",
             "Reach Act 3",
             "Halo CE",
+            "Halo 2",
             "Halo 3",
             "Halo 3 ODST",
             "Halo 4",
