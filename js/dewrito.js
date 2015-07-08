@@ -22,57 +22,6 @@ var players = [],
 	Halo3Index = 6,
 	currentVersion;
 
-	var masterServers = [{
-	    "list": "http://192.99.124.162/list",
-	    "announce": "http://192.99.124.162/announce",
-	    "stats": "http://192.99.124.162/stats"
-	}, {
-	    "list": "http://eldewrito.red-m.net/list",
-	    "announce": "http://eldewrito.red-m.net/announce",
-	    "stats": "http://eldewrito.red-m.net/stats"
-	}, {
-	    "list": "http://samantha-master.halo.click/list",
-	    "announce": "http://samantha-master.halo.click/announce",
-	    "stats": "http://samantha-master.halo.click/stats"
-	}, {
-	    "list": "http://eldewrito-masterserver-thetwist84.c9.io/list",
-	    "announce": "http://eldewrito-masterserver-thetwist84.c9.io/announce",
-	    "stats": "http://eldewrito-masterserver-thetwist84.c9.io/stats"
-	}, {
-	    "list": "http://eldewrito-masterserver-1-thetwist84.c9.io/list",
-	    "announce": "http://eldewrito-masterserver-1-thetwist84.c9.io/announce",
-	    "stats": "http://eldewrito-masterserver-1-thetwist84.c9.io/stats"
-	}, {
-	    "list": "http://80.240.130.4:8117/list",
-	    "announce": "http://80.240.130.4:8117/announce",
-	    "stats": "http://80.240.130.4:8117/stats"
-	}, {
-	    "list": "http://eldewrito-masterserver-personality.c9.io/list",
-	    "announce": "http://eldewrito-masterserver-personality.c9.io/announce",
-	    "stats": "http://eldewrito-masterserver-personality.c9.io/stats"
-	}],
-	    currentMS = 0;
-
-	function getServerList(success, ms) {
-	    if (typeof ms !== 'number') ms = currentMS;
-	    ms = Math.min(Math.max(0, ms), masterServers.length);
-	    $.ajax({
-	        url: masterServers[ms].list,
-	        dataType: 'json',
-	        jsonp: false,
-	        success: function() {
-	            if (currentMS != ms) console.log('Now using ' + masterServers[ms].list);
-	            currentMS = ms;
-	            success.apply(null, arguments);
-	        },
-	        error: function() {
-	            ms = (ms + 1) % masterServers.length;
-	            if (ms != currentMS) getServerList(success, ms);
-	            else console.log('No master servers are available!'); //went full circle with no success
-	        }
-	    });
-	}
-
 function isset(val, other) {
 	return (val !== undefined) ? val : other;
 }
@@ -88,12 +37,11 @@ function randomNum(n) {
 
 function getServers() {
 	servers = [];
-	getServerList(function(data) {
-        if (data.result.code != 0) {
-            alert("Error received from master: " + data.result.msg);
-            return;
-        }
-        console.log(data);
+	$.getJSON("http://eldewrito-masterserver-1-thetwist84.c9.io/list", function(data) {
+		if (data.result.code !== 0) {
+			alert("Error received from master: " + data.result.msg);
+			return;
+		}
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
 			if (!serverIP.toString().contains("?"))
@@ -532,7 +480,7 @@ function lobbyLoop(ip) {
 
 function getTotalPlayers() {
 	var totalPlayers = 0, totalServers = 0;
-	$.getJSON(masterServers[currentMS].list, function(data) {
+	$.getJSON("http://eldewrito-masterserver-1-thetwist84.c9.io/list", function(data) {
 		for (var i = 0; i < data.result.servers.length; i++) {
 			var serverIP = data.result.servers[i];
 			if (!serverIP.toString().contains("?")) {
@@ -564,7 +512,7 @@ function getCurrentVersion() {
 function totalPlayersLoop() {
 	delay(function() {
 		var totalPlayers = 0, totalServers = 0;
-		$.getJSON(masterServers[currentMS].list, function(data) {
+		$.getJSON("http://eldewrito-masterserver-1-thetwist84.c9.io/list", function(data) {
 			for (var i = 0; i < data.result.servers.length; i++) {
 				var serverIP = data.result.servers[i];
 				if (!serverIP.toString().contains("?")) {
