@@ -40,8 +40,8 @@ settings = {
             return;
           }*/
           for (var i = 0; i < settings.background.labels.length; i++) {
-            if (settings.backgrounds.labels[i] === settings.preset.labels[c]) {
-              console.log(settings.backgrounds.labels[i]);
+            if (settings.background.labels[i] === settings.preset.labels[c]) {
+              console.log(settings.background.labels[i]);
               isset($.cookie('background',Number),i);
             }
           }
