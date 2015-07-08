@@ -49,7 +49,9 @@ function getMasterServers(cb) {
                     if (data.result['msg'] == "OK") {
                         console.log("Master server " + val['list'] + " is online and OK");
                         masterServers.push(val);
-                        cb();
+                        if (masterServers.length == 1) {
+                            cb();
+                        }
                     }
                 }
             });
