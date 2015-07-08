@@ -35,7 +35,7 @@ settings = {
       "update" : function() {
         console.log(settings.preset.current);
           var c = settings.preset.current;
-          if (settings.preset.labels[c] == "Default" && settings.background.current > 0 || settings.musictrack.current != 6) {
+          if (settings.preset.labels[c] == "Default" && (settings.background.current > 0 || settings.musictrack.current != 6)) {
             $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
             return;
           }
