@@ -46,7 +46,6 @@ settings = {
           }
           for (var i = 0; i < settings.musictrack.labels.length; i++) {
             if (settings.preset.labels[c] === "Halo 4") {
-              console.log('wat.');
               settings.musictrack.current = 10;
             } else if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
               settings.musictrack.current = i;
