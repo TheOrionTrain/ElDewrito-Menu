@@ -53,6 +53,7 @@ settings = {
               settings.musictrack.current = i;
             }
           }
+          if(c == 0) {settings.musictrack.current = 6;}
           $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
           settings.background.update();
           settings.musictrack.update();
