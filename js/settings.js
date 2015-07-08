@@ -35,11 +35,19 @@ settings = {
       "update" : function() {
         console.log(settings.preset.current);
           var c = settings.preset.current;
-          if (settings.preset.labels[c] == "Default" && settings.background.current > 0 || settings.musictrack.current != 6) {
+          /*if (settings.preset.labels[c] == "Default" && settings.background.current > 0 || settings.musictrack.current != 6) {
             $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
             return;
+          }*/
+          for (var i = 0; i < settings.background.labels.length; i++) {
+            if (settings.backgrounds.labels[i] === settings.preset.labels[c])
+              isset($.cookie('background',Number),i);
           }
-          switch (settings.preset.labels[c]) {
+          for (var i = 0; i < settings.musictrack.labels.length; i++) {
+            if (settings.musictrack.labels[i] === settings.preset.labels[c])
+              isset($.cookie('musictrack',Number),i);
+          }
+          /*switch (settings.preset.labels[c]) {
             case "Default":
             settings.musictrack.current = 6;
             settings.background.current = 0;
@@ -76,7 +84,7 @@ settings = {
             settings.background.current = 8;
             //setDefault
             break;
-          }
+          }*/
           $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
           settings.background.update();
           settings.musictrack.update();
