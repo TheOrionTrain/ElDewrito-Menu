@@ -35,6 +35,9 @@ settings = {
       "update" : function() {
         console.log(settings.preset.current);
           var c = settings.preset.current;
+          if (settings.preset.labels[c] == "Default" && settings.background.current > 0 && settings.musictrack.current != 6) {
+            return;
+          }
           switch (settings.preset.labels[c]) {
             case "Default":
             settings.musictrack.current = 6;
@@ -64,6 +67,7 @@ settings = {
             case "Halo 3 ODST":
             settings.musictrack.current = 7;
             settings.background.current = 7;
+            isset($.cookie('background',Number), 7);
             //setDefault
             break;
             case "Halo 4":
