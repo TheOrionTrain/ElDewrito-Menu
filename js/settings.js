@@ -172,7 +172,7 @@ settings = {
         "name" : "BACKGROUND",
         "current" : isset($.cookie('background',Number),0),
         "min" : 0,
-        "max" : 10,
+        "max" : 11,
         "labels" : [
             "Halo Reach",
             "Reach Act 1",
@@ -184,7 +184,8 @@ settings = {
             "Halo 3 ODST",
             "Halo 4",
             "Crash",
-            "Waypoint"
+            "Waypoint",
+            "Halo Reach Beta"
         ],
         "increment" : 1,
         "update" : function() {
@@ -215,6 +216,11 @@ settings = {
                 $('#videos').append("<video id='bg1' src='video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
                 $('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
                 $('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='none' loop type='video/webm'></video>");
+            }
+
+            else if(c === 11) {
+                $('#videos').append("<video id='bg1' src='video/reach/custom_games.webm' loop autoplay type='video/webm'></video>");
+                $('#bg-cover').css('background','rgba(0,0,0,0)');
             }
 
             else {
