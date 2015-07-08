@@ -35,10 +35,10 @@ settings = {
       "update" : function() {
         console.log(settings.preset.current);
           var c = settings.preset.current;
-          /*if (settings.preset.labels[c] == "Default" && settings.background.current > 0 || settings.musictrack.current != 6) {
+          if (settings.preset.labels[c] == "Default" && settings.background.current > 0 || settings.musictrack.current != 6) {
             $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
             return;
-          }*/
+          }
           for (var i = 0; i < settings.background.labels.length; i++) {
             if (settings.background.labels[i] === settings.preset.labels[c]) {
               settings.background.current = i;
@@ -49,44 +49,6 @@ settings = {
               settings.musictrack.current = i;
             }
           }
-          /*switch (settings.preset.labels[c]) {
-            case "Default":
-            settings.musictrack.current = 6;
-            settings.background.current = 0;
-            //setDefault
-            break;
-            case "Halo Reach":
-            settings.musictrack.current = 0;
-            settings.background.current = 0;
-            //setDefault
-            break;
-            case "Halo 1":
-            settings.musictrack.current = 2;
-            settings.background.current = 4;
-            //setDefault
-            break;
-            case "Halo 2":
-            settings.musictrack.current = 3;
-            settings.background.current = 5;
-            //setDefault
-            break;
-            case "Halo 3":
-            settings.musictrack.current = 5;
-            settings.background.current = Halo3Index;
-            //setDefault
-            break;
-            case "Halo 3 ODST":
-            settings.musictrack.current = 7;
-            settings.background.current = 7;
-            isset($.cookie('background',Number), 7);
-            //setDefault
-            break;
-            case "Halo 4":
-            settings.musictrack.current = 10;
-            settings.background.current = 8;
-            //setDefault
-            break;
-          }*/
           $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
           settings.background.update();
           settings.musictrack.update();
