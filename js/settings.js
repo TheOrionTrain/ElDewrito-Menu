@@ -25,7 +25,7 @@ settings = {
       "labels" : [
           "Default",
           "Halo Reach",
-          "Halo 1",
+          "Halo CE",
           "Halo 2",
           "Halo 3",
           "Halo 3 ODST",
@@ -34,23 +34,59 @@ settings = {
       "increment" : 1,
       "update" : function() {
         console.log(settings.preset.current);
-          var c = settings.preset.current;
+          var x = settings.preset.current;
           /*if (settings.preset.labels[c] == "Default" && settings.background.current > 0 || settings.musictrack.current != 6) {
             $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
             return;
           }*/
           for (var i = 0; i < settings.background.labels.length; i++) {
-            if (settings.background.labels[i] === settings.preset.labels[c]) {
-              console.log(settings.background.labels[i]);
-              console.log(i);
-              isset($.cookie('background',Number),i);
+            if (settings.background.labels[i] === settings.preset.labels[x]) {
+              settings.background.current = i;
+              var c = settings.background.current;
+              $('#videos').empty();
+
+              if(c === 0) {
+                  $('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
+                  $('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' preload='none' loop type='video/webm'></video>");
+                  $('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' preload='none' loop type='video/webm'></video>");
+                  $('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' preload='none' loop type='video/webm'></video>");
+                  $('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' preload='none' loop type='video/webm'></video>");
+              }
+
+              else if(c === 1) {
+                  $('#videos').append("<video id='bg1' src='video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
+              }
+
+              else if(c === 2) {
+                  $('#videos').append("<video id='bg1' src='video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
+              }
+
+              else if(c === 3) {
+                  $('#videos').append("<video id='bg1' src='video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
+              }
+
+              else if(c === Halo3Index) {
+                  $('#videos').append("<video id='bg1' src='video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
+                  $('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
+                  $('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='none' loop type='video/webm'></video>");
+              }
+
+              else {
+                  $('#videos').append("<video id='bg1' src='video/"+settings.background.labels[c]+".webm' loop autoplay type='video/webm'></video>");
+              }
+
+              $('#bg1').show();
+              $("[data-option='background']").children('.value').text(settings.background.labels[c]);
+              if(c == Halo3Index || c == 3 || c == 5) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
+              else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}
             }
           }
           for (var i = 0; i < settings.musictrack.labels.length; i++) {
-            if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
-              console.log(settings.musictrack.labels[i]);
-              console.log(i);
-              isset($.cookie('musictrack',Number),i);
+            if (settings.musictrack.labels[i] === settings.preset.labels[x]) {
+              settings.musictrack.current = i;
+              $('#music')[0].loop = true;
+              $('#music').attr('src','audio/'+settings.musictrack.labels[i]+'.ogg');
+              $("[data-option='musictrack']").children('.value').text(settings.musictrack.labels[i]);
             }
           }
           /*switch (settings.preset.labels[c]) {
@@ -91,7 +127,7 @@ settings = {
             //setDefault
             break;
           }*/
-          $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
+          $("[data-option='preset']").children('.value').text(settings.preset.labels[x]);
           settings.background.update();
           settings.musictrack.update();
       }
