@@ -46,7 +46,20 @@ html {background: #000;}
     z-index: 2;
 }
 
-#direct-connect:hover {
+#load-more {
+    position: absolute;
+    color: #fff;
+    bottom: 40px;
+    left: 490px;
+    font-size: 22px;
+    opacity: 0.85;
+    z-index: 2;
+    width: 300px;
+    display: block;
+    text-align: center;
+}
+
+#direct-connect:hover, #load-more:hover {
     opacity: 1;
     cursor: pointer;
 }
