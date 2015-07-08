@@ -241,7 +241,7 @@ settings = {
 
             $('#bg1').show();
             $("[data-option='background']").children('.value').text(settings.background.labels[c]);
-            if(c == Halo3Index || c == 3) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
+            if(c == Halo3Index || c == 3 || c == 5) {$('#bg-cover').css('background','rgba(0,0,0,0)');}
             else {$('#bg-cover').css('background','rgba(0,0,0,0.25)');}
         }
     },
