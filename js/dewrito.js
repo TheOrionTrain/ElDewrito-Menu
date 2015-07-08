@@ -548,8 +548,10 @@ function getTotalPlayers() {
 }
 
 function directConnect() {
-    var ip = prompt("Enter IP Address:");
+    var ip = prompt("Enter IP Address: ");
+		var pass = promt("Enter Password: ");
     //connect function here
+		dewRcon.send('connect ' + ip + ' ' + pass);
 }
 
 function getCurrentVersion() {
@@ -1153,6 +1155,7 @@ function startgame(ip, mode) {
         if (servers[selectedserver].password !== undefined) {
             var password = prompt(servers[selectedserver].name + " has a password, enter the password to join", "");
             if (password !== null) {
+							dewRcon.send('connect ' + servers[i].ip + ' ' + password);
                 /*$('#beep')[0].play();
                 $('#music')[0].pause();
                 $('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {$('#music')[0].play();});
