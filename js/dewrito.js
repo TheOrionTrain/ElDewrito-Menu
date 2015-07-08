@@ -316,7 +316,7 @@ $(document).ready(function() {
     Mousetrap.bind('f11', function() {
         setTimeout(function() {
             dewRcon.send('game.togglemenu');
-        },1000);
+        },anit);
     });
     initalize();
     getMasterServers(function() {
