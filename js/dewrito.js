@@ -1187,7 +1187,7 @@ function startgame(ip, mode) {
             //callbacks.gametype(0,0);
 						dewRcon.send('start');
 						delay(function() {
-							dewRcon.send('toggle_menu');
+							dewRcon.send('togglemenu');
 						}, 2500);
         }
         loopPlayers = true;
