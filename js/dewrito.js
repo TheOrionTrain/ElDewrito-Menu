@@ -679,7 +679,7 @@ function changeMenu(menu, details) {
         $('#lobby').empty();
         $('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
         $('#start').children('.label').text("START GAME");
-
+				playersJoin(1, 2, 20, "127.0.0.1:11775");
     }
     if (menu == "main-forge") {
         if (settings.background.current == Halo3Index) {
@@ -1182,6 +1182,7 @@ function startgame(ip, mode) {
             //callbacks.gameType(0, 0);
         } else if (mode[0] === "START" && mode[1] === "GAME") {
             //callbacks.gametype(0,0);
+						dewRcon.send('start');
         }
         loopPlayers = true;
         lobbyLoop(ip);
@@ -1257,6 +1258,28 @@ function changeMap1(game) {
     $('#slide')[0].play();
 }
 
+function getMapFile(name)
+{
+		if (typeof name != 'undefined') {
+		    switch (name.toString().toLowerCase())
+		    {
+		        case "guardian":
+		            return "guardian";
+		        case "valhalla":
+		            return "riverworld";
+		        case "diamondback":
+		            return "s3d_avalanche";
+		      	case "edge":
+		          	return "s3d_edge";
+		      	case "reactor":
+		            return "s3d_reactor";
+		        case "icebox":
+		            return "s3d_turf";
+		    }
+		    return "";
+		}
+}
+
 function changeMap2(map, click) {
     $('#map-thumb').css({
         "background-image": "url('img/maps/" + map.toString().toUpperCase() + ".png')"
@@ -1269,7 +1292,7 @@ function changeMap2(map, click) {
     $('#map-info-options').text(maps[currentGame][map]);
     $('.map-select2 .selection').removeClass('selected');
     $("[data-map='" + map + "']").addClass('selected');
-    //callbacks.map(getMapId($('#currentmap').text()));
+		dewRcon.send('map ' + getMapFile($('#currentmap').text()));
     if (browsing === 1 && click === true) {
         $('#browser-map').text(map.toTitleCase());
         changeMenu("options-serverbrowser");
@@ -1334,6 +1357,8 @@ function changeType2(type, click) {
             "background-image": "url('img/gametypes/" + currentType + ".png')"
         });
     }
+		console.log(type);
+		dewRcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
     $('#gametype-display').text(type.toUpperCase());
     $('#type-name-options').text(type.toUpperCase());
     $('#type-info-options').text(gametypes[currentType][type]);
