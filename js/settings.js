@@ -42,12 +42,14 @@ settings = {
           for (var i = 0; i < settings.background.labels.length; i++) {
             if (settings.background.labels[i] === settings.preset.labels[c]) {
               console.log(settings.background.labels[i]);
+              console.log(i);
               isset($.cookie('background',Number),i);
             }
           }
           for (var i = 0; i < settings.musictrack.labels.length; i++) {
             if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
               console.log(settings.musictrack.labels[i]);
+              console.log(i);
               isset($.cookie('musictrack',Number),i);
             }
           }
