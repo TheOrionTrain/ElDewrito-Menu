@@ -52,7 +52,7 @@ function getServers() {
 
 function queryServer(serverIP, i) {
 	$.getJSON("http://" + serverIP, function(serverInfo) {
-		if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
+		if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
 			return false;
 		}
 		var startTime = (new Date()).getTime(),
@@ -70,11 +70,11 @@ function queryServer(serverIP, i) {
 		if (serverInfo.map !== "") {
 			if (isPassworded) {
 				servers[i] = {
-					"ip": removeTags(serverIP),
-					"name": "[PASSWORDED] " + removeTags(serverInfo.name),
-					"gametype": removeTags(serverInfo.variant),
-					"gameparent": removeTags(serverInfo.variantType),
-					"map": removeTags(getMapName(serverInfo.mapFile)),
+					"ip": sanitizeString(serverIP),
+					"name": "[PASSWORDED] " + sanitizeString(serverInfo.name),
+					"gametype": sanitizeString(serverInfo.variant),
+					"gameparent": sanitizeString(serverInfo.variantType),
+					"map": sanitizeString(getMapName(serverInfo.mapFile)),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -83,11 +83,11 @@ function queryServer(serverIP, i) {
 				};
 			} else {
 				servers[i] = {
-					"ip": removeTags(serverIP),
-					"name": removeTags(serverInfo.name),
-					"gametype": removeTags(serverInfo.variant),
-					"gameparent": removeTags(serverInfo.variantType),
-					"map": removeTags(getMapName(serverInfo.mapFile)),
+					"ip": sanitizeString(serverIP),
+					"name": sanitizeString(serverInfo.name),
+					"gametype": sanitizeString(serverInfo.variant),
+					"gameparent": sanitizeString(serverInfo.variantType),
+					"map": sanitizeString(getMapName(serverInfo.mapFile)),
 					"players": {
 						"max": serverInfo.maxPlayers,
 						"current": serverInfo.numPlayers
@@ -133,28 +133,8 @@ function queryServer(serverIP, i) {
 	});
 }
 
-var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
-
-var tagOrComment = new RegExp(
-    '<(?:'
-    // Comment body.
-    + '!--(?:(?:-*[^->])*--+|-?)'
-    // Special "raw text" elements whose content should be elided.
-    + '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
-    + '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
-    // Regular name
-    + '|/?[a-z]'
-    + tagBody
-    + ')>',
-    'gi');
-function removeTags(html) {
-	console.log("REMOVED TAGS");
-  var oldHtml;
-  do {
-    oldHtml = html;
-    html = html.replace(tagOrComment, '');
-  } while (html !== oldHtml);
-  return html.replace(/</g, '');
+function sanitizeString(str) {
+    return String(str).replace(/(<([^>]+)>)/ig,"").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
 }
 
 function getMapName(filename) {
@@ -449,7 +429,7 @@ function brighter(color) {
 function lobbyLoop(ip) {
 	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
-			if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
+			if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
 				return false;
 			}
 			players = serverInfo.players;
@@ -513,7 +493,7 @@ function getTotalPlayers() {
 			var serverIP = data.result.servers[i];
 			if (!serverIP.toString().contains("?")) {
 				$.getJSON("http://" + serverIP, function(serverInfo) {
-					if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
+					if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
 						return false;
 					}
 					totalPlayers += serverInfo.numPlayers;
@@ -545,7 +525,7 @@ function totalPlayersLoop() {
 				var serverIP = data.result.servers[i];
 				if (!serverIP.toString().contains("?")) {
 					$.getJSON("http://" + serverIP, function(serverInfo) {
-						if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number") {
+						if(typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
 							return false;
 						}
 						totalPlayers += serverInfo.numPlayers;
