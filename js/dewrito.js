@@ -82,21 +82,23 @@ function getServers() {
 }
 
 function queryServer(serverIP, i) {
+	var startTime = Date.now(),
+		endTime,
+		ping;
+	$.ajax({
+		type: "GET",
+		url: "http://" + serverIP + "/",
+		async: true,
+		success: function() {
+			endTime = Date.now();
+			ping = endTime-startTime;
+		}
+	});
     $.getJSON("http://" + serverIP, function(serverInfo) {
         if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
             return false;
         }
-        var startTime = Date.now(),
-            endTime;
-        $.ajax({
-            type: "GET",
-            url: "http://" + serverIP + "/",
-            async: true,
-            success: function() {
-                endTime = Date.now();
-            }
-        });
-        var isPassworded = serverInfo.passworded !== undefined;
+		var isPassworded = serverInfo.passworded !== undefined;
         if (serverInfo.map) {
             if (isPassworded) {
                 servers[i] = {
@@ -106,6 +108,8 @@ function queryServer(serverIP, i) {
                     "gametype": sanitizeString(serverInfo.variant),
                     "gameparent": sanitizeString(serverInfo.variantType),
                     "map": sanitizeString(getMapName(serverInfo.mapFile)),
+					"file": sanitizeString(serverInfo.mapFile),
+					"ping": ping,
                     "players": {
                         "max": parseInt(serverInfo.maxPlayers),
                         "current": parseInt(serverInfo.numPlayers)
@@ -120,6 +124,8 @@ function queryServer(serverIP, i) {
                     "gametype": sanitizeString(serverInfo.variant),
                     "gameparent": sanitizeString(serverInfo.variantType),
                     "map": sanitizeString(getMapName(serverInfo.mapFile)),
+					"file": sanitizeString(serverInfo.mapFile),
+					"ping": ping,
                     "players": {
                         "max": parseInt(serverInfo.maxPlayers),
                         "current": parseInt(serverInfo.numPlayers)
@@ -135,14 +141,10 @@ function queryServer(serverIP, i) {
                 dataType: 'json',
                 timeout: 3000,
                 success: function(geoloc) {
-                    endTime = (new Date()).getTime();
-                    var ping = endTime - startTime;
-                    addServer(i, geoloc, ping);
+                    addServer(i, geoloc);
                 },
                 error: function() {
-                    endTime = (new Date()).getTime();
-                    var ping = endTime - startTime;
-                    addServer(i, null, ping);
+                    addServer(i, null);
                 }
             });
         }
@@ -167,6 +169,8 @@ function getMapName(filename) {
             return "Reactor";
         case "s3d_turf":
             return "Icebox";
+		case "mainmenu":
+			return "Edge";
     }
 }
 
@@ -186,15 +190,14 @@ function promptPassword(i) {
 }
 
 
-function addServer(i, geoloc, ping) {
+function addServer(i, geoloc) {
     i = parseInt(i);
     if (!geoloc) {
         geoloc = {};
         geoloc.country_code = "";
     }
     var on = (!servers[i].gametype) ? "" : "on";
-    $('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + servers[i].host + ")  [" + geoloc.country_code + " " + ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
-    console.log("APPENDED");
+    $('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + servers[i].host + ")  [" + geoloc.country_code + " " + servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
     $('.server').hover(function() {
         $('#click')[0].currentTime = 0;
         $('#click')[0].play();
