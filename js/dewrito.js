@@ -313,6 +313,7 @@ function toggleNetwork() {
 }
 
 $(document).ready(function() {
+Mousetrap.bind('f11', function() { dewRcon.send('game.togglemenu'); });
 initalize();
     getMasterServers(function() {
 				getTotalPlayers();
