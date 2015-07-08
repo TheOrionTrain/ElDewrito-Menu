@@ -1186,6 +1186,9 @@ function startgame(ip, mode) {
         } else if (mode[0] === "START" && mode[1] === "GAME") {
             //callbacks.gametype(0,0);
 						dewRcon.send('start');
+						delay(function() {
+							dewRcon.send('toggle_menu');
+						}, 2500);
         }
         loopPlayers = true;
         lobbyLoop(ip);
