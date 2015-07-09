@@ -62,7 +62,7 @@ function getMasterServers(cb) {
 }
 
 function getServers() {
-    servers = [];
+    servers = []; gp_servers = 0; gp_on = 0;
 		var totalIps = [];
 		var ffs = 0;
 		for (var l = 0; l < masterServers.length; l++) {
@@ -81,7 +81,7 @@ function getServers() {
 							}
 	        }
 	    });
-		}
+		};
 }
 
 function queryServer(serverIP, i) {
@@ -177,6 +177,8 @@ function promptPassword(i) {
     }
 }
 
+var gp_servers = 0;
+
 
 function addServer(i, geoloc) {
     var location_flag = "";
@@ -190,9 +192,9 @@ function addServer(i, geoloc) {
     } else {
         location_flag = "[<img src='img/flags/" + geoloc.country_code.toLowerCase() + ".png' title='"+ geoloc.country + "' alt='"+ geoloc.country + "' class='flag'/> ";
     }
-
+    ++gp_servers;
     var on = (!servers[i].gametype) ? "" : "on";
-    $('#browser').append("<div class='server"+ ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag +  servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+    $('#browser').append("<div data-gp='serverbrowser-"+gp_servers+"' class='server"+ ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag +  servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
     $('.server').hover(function() {
         $('#click')[0].currentTime = 0;
         $('#click')[0].play();
