@@ -1190,8 +1190,9 @@ function playerInfo(name) {
 }
 
 function startgame(ip, mode) {
+		var password;
 		if (mode[0] === "JOIN")
-			var password = servers[selectedserver].password == true ? prompt(servers[selectedserver].name + " has a password, enter the password to join", "") : "";
+				password = servers[selectedserver].password == true ? prompt(servers[selectedserver].name + " has a password, enter the password to join", "") : "";
     $('#beep')[0].play();
     $('#music')[0].pause();
     $('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {
@@ -1199,7 +1200,7 @@ function startgame(ip, mode) {
     });
     delay(function() {
         if (mode[0] === "JOIN") {
-            dewRcon.send('connect ' + ip);
+            dewRcon.send('connect ' + ip + ' ' + password);
 						//showloadingscreen
         } else if (mode[1] === "FORGE") {
 
