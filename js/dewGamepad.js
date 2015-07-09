@@ -17,14 +17,12 @@ function gamepadDeselect() {
 function gamepadLeft() {
     if(x_axis_function == "settings") {
         $('.gp-on').children('.left').trigger('click');
-        console.log('Stick Left');
     }
 }
 
 function gamepadRight() {
     if(x_axis_function == "settings") {
         $('.gp-on').children('.right').trigger('click');
-        console.log('Stick Right');
     }
 }
 

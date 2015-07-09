@@ -202,7 +202,7 @@ function addServer(i, geoloc) {
         geoloc = {};
         geoloc.country_code = "";
     } else {
-        location_flag = "[<img src='img/flags/" + geoloc.country_code + ".png' title='"+ geoloc.country + "' alt='"+ geoloc.country + "' class='flag'/>";
+        location_flag = "[<img src='img/flags/" + geoloc.country_code.toLowerCase() + ".png' title='"+ geoloc.country + "' alt='"+ geoloc.country + "' class='flag'/>";
     }
 
     var on = (!servers[i].gametype) ? "" : "on";
