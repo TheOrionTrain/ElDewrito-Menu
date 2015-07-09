@@ -28,6 +28,10 @@ function isset(val, other) {
     return (val !== undefined) ? val : other;
 }
 
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
+
 function randomNum(n) {
     return Math.floor(Math.random() * n);
 }
@@ -312,6 +316,10 @@ function toggleNetwork() {
 }
 
 $(document).ready(function() {
+    if(getURLParameter('css') == "halo3") {
+        $('#style').attr('href','css/halo3.css');
+        console.log("Using Halo 3 style.")
+    }
     gamepadBind();
     Mousetrap.bind('f11', function() {
         setTimeout(function() {
@@ -324,7 +332,6 @@ $(document).ready(function() {
 		    totalPlayersLoop();
         getCurrentVersion();
     });
-
     $('#refresh').click(function() {
         loadServers();
         filterServers();
