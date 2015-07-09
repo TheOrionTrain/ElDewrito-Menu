@@ -255,10 +255,6 @@ function initalize() {
         b = Object.keys(maps)[i];
         $('#choosemap').children('.map-select').append("<div data-game='" + b + "' class='selection'><span class='label'>" + maps[b].name + "</span></div>");
         $('#choosemap').append("<div class='map-select2 animated' id='maps-" + b + "'></div>");
-        $(".map-select2").mousewheel(function(event, delta) {
-            this.scrollTop -= (delta * 5);
-            event.preventDefault();
-        });
         for (e = 1; e < Object.keys(maps[b]).length; e++) {
             g = Object.keys(maps[b])[e];
             $('#maps-' + b).append("<div data-map='" + g + "' class='selection'><span class='label'>" + g + "</span></div>");
@@ -268,10 +264,6 @@ function initalize() {
         b = Object.keys(gametypes)[i];
         $('#choosetype').children('.type-select').append("<div data-maintype='" + b + "' class='selection'><span class='label'>" + b.toUpperCase() + "</span></div>");
         $('#choosetype').append("<div class='type-select2 animated' id='types-" + b.replace(/\s/g, "") + "'></div>");
-        $(".type-select2").mousewheel(function(event, delta) {
-            this.scrollTop -= (delta * 5);
-            event.preventDefault();
-        });
         for (e = 0; e < Object.keys(gametypes[b]).length; e++) {
             g = Object.keys(gametypes[b])[e];
             $('#types-' + b.replace(/\s/g, "")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
@@ -406,10 +398,6 @@ $(document).ready(function() {
             gp_on = p_gp_on;
             gamepadSelect(currentMenu+"-"+p_gp_on);
         }
-    });
-    $("#lobby-container").mousewheel(function(event, delta) {
-        this.scrollTop -= (delta * 34);
-        event.preventDefault();
     });
     $.srSmoothscroll({
         step: 55,
