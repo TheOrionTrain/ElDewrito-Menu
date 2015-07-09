@@ -210,6 +210,7 @@ function addServer(i, geoloc) {
 }
 
 function initalize() {
+    gamepadLoop();
     if (window.location.protocol == "https:") {
         alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
     }
