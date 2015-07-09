@@ -1185,7 +1185,7 @@ function playerInfo(name) {
 
 function startgame(ip, mode) {
     if (mode[0] === "JOIN") {
-        if (servers[selectedserver].password !== undefined) {
+        if (servers[selectedserver].password) {
             var password = prompt(servers[selectedserver].name + " has a password, enter the password to join", "");
             if (password !== null) {
 							dewRcon.send('connect ' + servers[i].ip + ' ' + password);
