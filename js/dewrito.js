@@ -1188,18 +1188,13 @@ function startgame(ip, mode) {
     });
     delay(function() {
         if (mode[0] === "JOIN") {
-            //callbacks.connect(ip);
             dewRcon.send('connect ' + ip);
-						dewRcon.send('game.togglemenu');
+						//showloadingscreen
         } else if (mode[1] === "FORGE") {
-            //callbacks.gameType(0, 0);
-						dewRcon.send('game.togglemenu');
+
         } else if (mode[0] === "START" && mode[1] === "GAME") {
-            //callbacks.gametype(0,0);
 						dewRcon.send('start');
-						dewRcon.send('game.togglemenu');
         }
-				console.log("heh");
         loopPlayers = true;
         lobbyLoop(ip);
     }, 3700);
