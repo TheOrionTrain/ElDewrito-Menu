@@ -89,24 +89,24 @@ function getServers() {
 
 function queryServer(serverIP, i) {
 
-	var startTime = Date.now(),
-		endTime,
-		ping;
-	$.ajax({
-		type: "GET",
-		url: "http://" + serverIP + "/",
-		async: true,
-		success: function() {
-			endTime = Date.now();
-			ping = endTime-startTime;
-		}
-	});
+		var startTime = Date.now(),
+			endTime,
+			ping;
+		$.ajax({
+			type: "GET",
+			url: "http://" + serverIP + "/",
+			async: true,
+			success: function() {
+				endTime = Date.now();
+				ping = endTime-startTime;
+			}
+		});
     $.getJSON("http://" + serverIP, function(serverInfo) {
         console.log(serverInfo);
         if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
             return false;
         }
-		var isPassworded = serverInfo.passworded !== undefined;
+				var isPassworded = serverInfo.passworded !== undefined;
         if (serverInfo.map) {
             servers[i] = {
                 "ip": sanitizeString(serverIP),
