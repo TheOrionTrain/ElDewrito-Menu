@@ -644,7 +644,7 @@ audio {display: none;}
     font-weight: 300;
     font-size: 18px;
     width: 300px;
-    height: 30px;
+    height: 32px;
     padding: 5px 10px;
     box-sizing: border-box;
     color: #fff;
@@ -659,7 +659,7 @@ audio {display: none;}
 #lobby td {
     box-sizing: border-box;
     margin-bottom: 3px;
-    height: 28px;
+    height: 32px;
     color: #fff;
     cursor: pointer;
 }
@@ -680,8 +680,8 @@ audio {display: none;}
 }
 
 #lobby td.rank img {
-    max-width: 26px;
-    max-height: 26px;
+    max-width: 30px;
+    max-height: 30px;
     margin-top: 0px;
     opacity: 0.9;
     box-sizing: border-box;
