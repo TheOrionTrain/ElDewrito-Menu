@@ -1269,6 +1269,7 @@ function clearFilters() {
 }
 
 function changeSettingsMenu(setting) {
+    x_axis_function = "settings";
     $('.options-select .selection').removeClass('selected');
     $("[data-setting='" + setting + "']").addClass('selected');
     $('#settings-' + currentSetting).hide().css({
@@ -1296,6 +1297,7 @@ function changeSettingsMenu(setting) {
 }
 
 function changeSettingsBack() {
+    x_axis_function = "";
     $('.options-select .selection').removeClass('selected');
     $('#settings-' + currentSetting).hide().css({
         "left": "310px",

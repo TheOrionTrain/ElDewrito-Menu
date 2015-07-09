@@ -3,7 +3,7 @@ var buttonMap = {
     "FACE_2" : "B",
     "FACE_3" : "X",
     "FACE_4" : "Y",
-}, gp_on = 1, p_gp_on = 0;
+}, gp_on = 1, p_gp_on = 0, x_axis_function;
 
 function gamepadSelect(id) {
     gamepadDeselect();
@@ -12,6 +12,20 @@ function gamepadSelect(id) {
 
 function gamepadDeselect() {
     $('*').removeClass('gp-on');
+}
+
+function gamepadLeft() {
+    if(x_axis_function == "settings") {
+        $('.gp-on').children('.left').trigger('click');
+        console.log('Stick Left');
+    }
+}
+
+function gamepadRight() {
+    if(x_axis_function == "settings") {
+        $('.gp-on').children('.right').trigger('click');
+        console.log('Stick Right');
+    }
 }
 
 function gamepadBind() {
@@ -95,6 +109,14 @@ function gamepadBind() {
             gamepadSelect(currentMenu+"-"+gp_on);
             $('#click')[0].currentTime = 0;
             $('#click')[0].play();
+        }
+        else if(e.axis == "LEFT_STICK_X" && e.value < -0.85) {
+            gp_last = Date.now();
+            gamepadLeft();
+        }
+        else if(e.axis == "LEFT_STICK_X" && e.value > 0.85) {
+            gp_last = Date.now();
+            gamepadRight();
         }
     });
 
