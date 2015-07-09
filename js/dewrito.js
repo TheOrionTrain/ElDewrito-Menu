@@ -227,13 +227,16 @@ function initalize() {
         set = Object.keys(settings)[i];
         var category = settings[set].category;
         if (settings[set].typeof == "select") {
-            $('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
+            ++catergories[category];
+            $('#settings-' + category).append("<div data-gp='settings-"+category+"-"+catergories[category]+"' data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='left'></span><span class='value'>...</span><span class='right'></span></div>");
         }
         if (settings[set].typeof == "input") {
-            $('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=40 /></span></div>");
+            ++catergories[category];
+            $('#settings-' + category).append("<div data-gp='settings-"+category+"-"+catergories[category]+"' data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input type='text' maxlength=40 /></span></div>");
         }
         if (settings[set].typeof == "color") {
-            $('#settings-' + category).append("<div data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
+            ++catergories[category];
+            $('#settings-' + category).append("<div data-gp='settings-"+category+"-"+catergories[category]+"' data-option='" + set + "' class='selection'><span class='label'>" + settings[set].name + "</span><span class='input'><input id='option-" + set + "'/></span></div>");
             $('#option-' + set).spectrum({
                 color: settings[set].current,
                 preferredFormat: "hex",
@@ -1120,6 +1123,9 @@ function changeMenu(menu, details) {
         $('#back').attr('data-action', 'custom-' + f);
         currentMenu = "customgame";
     }
+    if(menu == "setting-settings") {
+        changeSettingsBack();
+    }
     $('#slide')[0].currentTime = 0;
     $('#slide')[0].play();
     if(usingGamepad && details != 'back') {
@@ -1146,7 +1152,8 @@ var KDdata = [{
         segmentShowStroke: false,
         percentageInnerCutout: 75,
         animationEasing: "easeInQuad"
-    });
+    }),
+    last_back = "", last_menu = "";
 
 function playerInfo(name) {
     if (name != "user") {
@@ -1273,7 +1280,35 @@ function changeSettingsMenu(setting) {
         "left": "460px",
         "opacity": 1
     }, anit / 8);
+    last_back = $('#back').attr('data-action');
+    last_menu = currentMenu;
     currentSetting = setting;
+    currentMenu = "settings-"+setting;
+    if(usingGamepad) {
+        p_gp_on = gp_on;
+        gp_on = 1;
+        gamepadSelect(currentMenu+"-"+gp_on);
+    }
+    $('#back').attr('data-action', 'setting-settings');
+    console.log(currentMenu);
+    $('#slide')[0].currentTime = 0;
+    $('#slide')[0].play();
+}
+
+function changeSettingsBack() {
+    $('.options-select .selection').removeClass('selected');
+    $('#settings-' + currentSetting).hide().css({
+        "left": "310px",
+        "opacity": 0
+    });
+    currentSetting = "";
+    currentMenu = last_menu;
+    if(usingGamepad) {
+        gp_on = 1;
+        gamepadSelect(last_menu+"-"+gp_on);
+    }
+    $('#back').attr('data-action', last_back);
+    console.log(currentMenu);
     $('#slide')[0].currentTime = 0;
     $('#slide')[0].play();
 }
