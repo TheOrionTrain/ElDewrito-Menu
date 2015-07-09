@@ -499,13 +499,13 @@ function lobbyLoop(ip) {
             $('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType + ".png') no-repeat 0 0/cover");
 
             $('#maxplayers').text(serverInfo.maxPlayers);
-						if (serverInfo.passworded !== undefined) {
+						if (typeof serverInfo.passworded != 'undefined')
+							return;
 	            for (var i = 0; i < serverInfo.numPlayers; i++) {
 	                if (typeof players[i] !== 'undefined') {
 	                    $('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 	                }
 	            }
-						}
             $('#lobby tr').hover(function() {
                 $('#click')[0].currentTime = 0;
                 $('#click')[0].play();
@@ -624,7 +624,7 @@ function playersJoin(number, max, time, ip) {
         $('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
         $('#maxplayers').text(serverInfo.maxPlayers);
         $('#joined').text(serverInfo.numPlayers);
-				if (serverInfo.passworded !== undefined)
+				if (typeof serverInfo.passworded != 'undefined')
 					return;
         for (var i = 0; i < serverInfo.numPlayers; i++) {
           	if (players[i].name !== undefined) {
@@ -1350,7 +1350,8 @@ function changeMap2(map, click) {
     $('#map-info-options').text(maps[currentGame][map]);
     $('.map-select2 .selection').removeClass('selected');
     $("[data-map='" + map + "']").addClass('selected');
-		dewRcon.send('map ' + getMapFile($('#currentmap').text()));
+		if ($('#start').children('.label').text() != "JOIN GAME")
+			dewRcon.send('map ' + getMapFile($('#currentmap').text()));
     if (browsing === 1 && click === true) {
         $('#browser-map').text(map.toTitleCase());
         changeMenu("options-serverbrowser");
