@@ -115,8 +115,8 @@ function queryServer(serverIP, i) {
                 "gametype": sanitizeString(serverInfo.variant),
                 "gameparent": sanitizeString(serverInfo.variantType),
                 "map": sanitizeString(getMapName(serverInfo.mapFile)),
-				"file": sanitizeString(serverInfo.mapFile),
-				"ping": ping,
+								"file": sanitizeString(serverInfo.mapFile),
+								"ping": ping,
                 "players": {
                     "max": parseInt(serverInfo.maxPlayers),
                     "current": parseInt(serverInfo.numPlayers)
@@ -499,11 +499,13 @@ function lobbyLoop(ip) {
             $('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType + ".png') no-repeat 0 0/cover");
 
             $('#maxplayers').text(serverInfo.maxPlayers);
-            for (var i = 0; i < serverInfo.numPlayers; i++) {
-                if (typeof players[i] !== 'undefined') {
-                    $('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-                }
-            }
+						if (serverInfo.passworded !== undefined) {
+	            for (var i = 0; i < serverInfo.numPlayers; i++) {
+	                if (typeof players[i] !== 'undefined') {
+	                    $('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+	                }
+	            }
+						}
             $('#lobby tr').hover(function() {
                 $('#click')[0].currentTime = 0;
                 $('#click')[0].play();
@@ -622,6 +624,8 @@ function playersJoin(number, max, time, ip) {
         $('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
         $('#maxplayers').text(serverInfo.maxPlayers);
         $('#joined').text(serverInfo.numPlayers);
+				if (serverInfo.passworded !== undefined)
+					return;
         for (var i = 0; i < serverInfo.numPlayers; i++) {
           	if (players[i].name !== undefined) {
             	$('#lobby').append("<tr id='player" + i + "' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
@@ -1191,27 +1195,7 @@ function playerInfo(name) {
 }
 
 function startgame(ip, mode) {
-    if (mode[0] === "JOIN") {
-        if (servers[selectedserver].password) {
-            var password = prompt(servers[selectedserver].name + " has a password, enter the password to join", "");
-            if (password !== null) {
-							dewRcon.send('connect ' + servers[i].ip + ' ' + password);
-                /*$('#beep')[0].play();
-                $('#music')[0].pause();
-                $('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {$('#music')[0].play();});
-                delay(function(){
-                    window.open("dorito:" + servers[$(".server").data("server")].ip + "/" + password);
-                }, 3500);*/
-            }
-        } else {
-            /*$('#beep')[0].play();
-            $('#music')[0].pause();
-            $('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {$('#music')[0].play();});
-            delay(function(){
-                window.open("dorito:" + ip);
-            }, 3500);*/
-        }
-    }
+		var password = servers[selectedserver].password == true ? prompt(servers[selectedserver].name + " has a password, enter the password to join", "") : "";
     $('#beep')[0].play();
     $('#music')[0].pause();
     $('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {
