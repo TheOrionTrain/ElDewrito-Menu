@@ -6,6 +6,15 @@
         <title>Halo 3 Custom Edition</title>
         <link href="css/reach.css" rel="stylesheet" type="text/css">
         <link href="css/spectrum.css" rel="stylesheet" type="text/css">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <script src="js/jquery.mousewheel.min.js"></script>
+        <script src="js/jquery.simplr.smoothscroll.min.js"></script>
+        <script src="js/jquery.spectrum.min.js"></script>
+        <script src="js/Chart.min.js"></script>
+        <script src="js/mousetrap.min.js"></script>
+        <script src="js/gamepad.min.js"></script>
+        <script src="js/dewGamepad.js"></script>
     </head>
     <body>
     <script>
@@ -32,6 +41,7 @@
     </script>
         <a id="launch" style="visibility: hidden;"></a>
         <div id="menu">
+            <div id="popup"></div>
             <div id="players-online">0 Online</div>
             <div id="black"></div>
             <div id="back">Back</div>
@@ -83,9 +93,9 @@
             </div>
             <div class="menu-container animated" id="main2">
                 <div class="select-main">
-                    <div data-action="menu" data-menu="main2-main" class="selection"><span class="label">PLAY MULTIPLAYER</span><span class="value">&nbsp;</span></div>
-                    <div data-action="menu" data-menu="main-options" class="selection"><span class="label">SETTINGS</span><span class="value">&nbsp;</span></div>
-                    <div data-action="menu" data-menu="main2-credits" class="selection"><span class="label">CREDITS</span><span class="value">&nbsp;</span></div>
+                    <div data-gp="main2-1" data-action="menu" data-menu="main2-main" class="selection"><span class="label">PLAY MULTIPLAYER</span><span class="value">&nbsp;</span></div>
+                    <div data-gp="main2-2" data-action="menu" data-menu="main-options" class="selection"><span class="label">SETTINGS</span><span class="value">&nbsp;</span></div>
+                    <div data-gp="main2-3" data-action="menu" data-menu="main2-credits" class="selection"><span class="label">CREDITS</span><span class="value">&nbsp;</span></div>
                 </div>
             </div>
             <div class="menu-container animated" id="credits">
@@ -100,9 +110,9 @@
             </div>
             <div class="menu-container animated" id="main">
                 <div class="select-main">
-                    <div data-action="menu" data-menu="main-serverbrowser" class="selection"><span class="label">BROWSE SERVERS</span><span class="value">&nbsp;</span></div>
-                    <div data-action="menu" data-menu="main-custom" class="selection"><span class="label">CUSTOM GAMES</span><span class="value">&nbsp;</span></div>
-                    <div data-action="menu" data-menu="main-forge" class="selection"><span class="label">FORGE</span><span class="value">&nbsp;</span></div>
+                    <div data-gp="main-1" data-action="menu" data-menu="main-serverbrowser" class="selection"><span class="label">BROWSE SERVERS</span><span class="value">&nbsp;</span></div>
+                    <div data-gp="main-2" data-action="menu" data-menu="main-custom" class="selection"><span class="label">CUSTOM GAMES</span><span class="value">&nbsp;</span></div>
+                    <div data-gp="main-3" data-action="menu" data-menu="main-forge" class="selection"><span class="label">FORGE</span><span class="value">&nbsp;</span></div>
                 </div>
             </div>
             <div class="options-menu" id="options">
@@ -157,14 +167,6 @@
             <audio id="slide" src="audio/slide.ogg" type="audio/ogg"></audio>
         </div>
     </body>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
-    <script src="js/jquery.mousewheel.min.js"></script>
-    <script src="js/jquery.simplr.smoothscroll.min.js"></script>
-    <script src="js/jquery.spectrum.min.js"></script>
-    <script src="js/Chart.min.js"></script>
-    <script src="js/mousetrap.min.js"></script>
-    <script src="js/dewGamepad.js"></script>
     <script src="js/dewRcon.js"></script>
     <script src="js/dewrito.js"></script>
     <script src="js/settings.js"></script>
