@@ -1276,7 +1276,9 @@ function changeSettingsMenu(setting) {
         "left": "460px",
         "opacity": 1
     }, anit / 8);
-    last_back = $('#back').attr('data-action');
+    if($('#back').attr('data-action') != "setting-settings") {
+        last_back = $('#back').attr('data-action');
+    }
     last_menu = currentMenu;
     currentSetting = setting;
     currentMenu = "settings-"+setting;
