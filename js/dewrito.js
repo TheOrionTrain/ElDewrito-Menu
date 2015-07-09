@@ -62,6 +62,9 @@ function getMasterServers(cb) {
 }
 
 function getServers() {
+    if(usingGamepad) {
+        gamepadDeselect();
+    }
     servers = []; gp_servers = 0; gp_on = 0;
 		var totalIps = [];
 		var ffs = 0;
@@ -181,6 +184,7 @@ var gp_servers = 0;
 
 
 function addServer(i, geoloc) {
+
     var location_flag = "";
 
     i = parseInt(i);
@@ -204,6 +208,9 @@ function addServer(i, geoloc) {
         changeMenu("serverbrowser-custom", selectedserver);
     });
     filterServers();
+    if(usingGamepad && gp_servers == 1) {
+        gamepadSelect('serverbrowser-1');
+    }
 }
 
 function initalize() {
@@ -562,7 +569,7 @@ function getTotalPlayers() {
 
 function directConnect() {
     var ip = prompt("Enter IP Address: ");
-		var pass = promt("Enter Password: ");
+	var pass = prompt("Enter Password: ");
     //connect function here
 		dewRcon.send('connect ' + ip + ' ' + pass);
 }
