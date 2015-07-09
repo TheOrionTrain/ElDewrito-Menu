@@ -43,7 +43,6 @@ settings = {
       ],
       "increment" : 1,
       "update" : function() {
-        console.log(settings.preset.current);
           var c = settings.preset.current;
           if (settings.preset.labels[c] == "Default") {
             $("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
@@ -57,8 +56,6 @@ settings = {
           for (var i = 0; i < settings.musictrack.labels.length; i++) {
             if (settings.preset.labels[c] === "Halo 4") {
               settings.musictrack.current = 10;
-              console.log(settings.musictrack.current);
-              console.log(settings.musictrack.labels[settings.musictrack.current]);
             } else if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
               settings.musictrack.current = i;
             }
