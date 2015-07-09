@@ -20,7 +20,9 @@ var players = [],
     sortMap,
     sortType,
     Halo3Index = 6,
-    currentVersion;
+    currentVersion,
+    usingGamepad = false,
+    currentMenu = "main2";
 
 function isset(val, other) {
     return (val !== undefined) ? val : other;
@@ -210,7 +212,6 @@ function addServer(i, geoloc) {
 }
 
 function initalize() {
-    gamepadLoop();
     if (window.location.protocol == "https:") {
         alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
     }
@@ -314,6 +315,7 @@ function toggleNetwork() {
 }
 
 $(document).ready(function() {
+    gamepadBind();
     Mousetrap.bind('f11', function() {
         setTimeout(function() {
             dewRcon.send('game.togglemenu');
@@ -690,7 +692,8 @@ function changeMenu(menu, details) {
         $('#lobby').empty();
         $('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
         $('#start').children('.label').text("START GAME");
-				playersJoin(1, 2, 20, "127.0.0.1:11775");
+		playersJoin(1, 2, 20, "127.0.0.1:11775");
+        currentMenu = "customgame";
     }
     if (menu == "main-forge") {
         if (settings.background.current == Halo3Index) {
@@ -732,7 +735,7 @@ function changeMenu(menu, details) {
         $('#lobby').empty();
         $('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
         $('#start').children('.label').text("START FORGE");
-
+        currentMenu = "forge";
     }
     if (menu == "custom-main") {
         if (settings.background.current == Halo3Index) {
@@ -765,7 +768,7 @@ function changeMenu(menu, details) {
             "top": "0px"
         });
         $('#back').attr('data-action', 'main-main2');
-
+        currentMenu = "main";
     }
     if (menu == "serverbrowser-custom" && details) {
         host = 0;
@@ -800,6 +803,7 @@ function changeMenu(menu, details) {
         $('#title').text('CUSTOM GAME');
         $('#network-toggle').hide();
         $('#type-selection').show();
+        currentMenu = "customgame";
     }
     if (menu == "custom-serverbrowser") {
         browsing = 1;
@@ -825,6 +829,7 @@ function changeMenu(menu, details) {
         $('#browser').empty();
         setTimeout(loadServers, 1000);
         loopPlayers = false;
+        currentMenu = "serverbrowser";
     }
     if (menu == "main-serverbrowser") {
         browsing = 1;
@@ -855,6 +860,7 @@ function changeMenu(menu, details) {
         $('#browser').empty();
         setTimeout(loadServers, 1000);
         loopPlayers = false;
+        currentMenu = "serverbrowser";
     }
     if (menu == "serverbrowser-main") {
         browsing = 0;
@@ -883,7 +889,7 @@ function changeMenu(menu, details) {
             "top": "0px"
         });
         $('#back').attr('data-action', 'main-main2');
-
+        currentMenu = "main";
     }
     if (menu == "main2-main") {
         $('#back').fadeIn(anit);
@@ -894,7 +900,7 @@ function changeMenu(menu, details) {
         $('#main2').css({
             "top": "720px"
         });
-
+        currentMenu = "main";
     }
     if (menu == "main2-credits") {
         if (settings.background.current === 0) {
@@ -918,9 +924,9 @@ function changeMenu(menu, details) {
             "-webkit-transition-delay": "0ms"
         });
         $('#dewrito').css({
-            'background': "url('img/" + settings.logo.current.labels[settings.logo.current] + ".png') no-repeat 0 0/cover"
+            'background': "url('img/Halo 3 CE.png') no-repeat 0 0/cover"
         });
-
+        currentMenu = "credits";
     }
     if (menu == "credits-main2") {
         if (settings.background.current === 0) {
@@ -949,7 +955,7 @@ function changeMenu(menu, details) {
         $('#dewrito').css({
             'background': "url('img/" + settings.logo.labels[c] + ".png') no-repeat 0 0/cover"
         });
-
+        currentMenu = "main2";
     }
     if (menu == "main-main2") {
         $('#back').fadeOut(anit);
@@ -959,7 +965,7 @@ function changeMenu(menu, details) {
         $('#main2').css({
             "top": "0px"
         });
-
+        currentMenu = "main2";
     }
     if (menu == "custom-options") {
         if (host === 1) {
@@ -974,36 +980,41 @@ function changeMenu(menu, details) {
                 "-webkit-transition-timing-function": "200ms",
                 "-webkit-transition-delay": "200ms"
             });
-
+            currentMenu = "customgame-options";
         }
     }
     if (menu == "options-haloonline") {
         $('#back').attr('data-action', 'haloonline-options');
         $('#dewrito-options').hide();
         $('#haloonline').fadeIn(anit);
+        currentMenu = "haloonline";
     }
     if (menu == "haloonline-options") {
         $('#back').attr('data-action', 'options-main');
         $('#haloonline').hide();
         $('#dewrito-options').fadeIn(anit);
+        currentMenu = "dewrito-options";
     }
     if (menu == "serverbrowser-type") {
         $('#choosetype').show();
         $('#back').attr('data-action', 'options-serverbrowser');
         $('#serverbrowser').fadeOut(anit);
         $('#options').fadeIn(anit);
+        currentMenu = "choosetype";
     }
     if (menu == "serverbrowser-map") {
         $('#choosemap').show();
         $('#back').attr('data-action', 'options-serverbrowser');
         $('#serverbrowser').fadeOut(anit);
         $('#options').fadeIn(anit);
+        currentMenu = "choosemap";
     }
     if (menu == "options-serverbrowser") {
         $('.options-section').hide();
         $('#back').attr('data-action', 'serverbrowser-main');
         $('#serverbrowser').fadeIn(anit);
         $('#options').fadeOut(anit);
+        currentMenu = "serverbrowser";
     }
     if (menu == "custom-map") {
         if (host === 1) {
@@ -1018,7 +1029,7 @@ function changeMenu(menu, details) {
                 "-webkit-transition-timing-function": "200ms",
                 "-webkit-transition-delay": "200ms"
             });
-
+            currentMenu = "choosemap";
         }
     }
     if (menu == "custom-type") {
@@ -1034,7 +1045,7 @@ function changeMenu(menu, details) {
                 "-webkit-transition-timing-function": "200ms",
                 "-webkit-transition-delay": "200ms"
             });
-
+            currentMenu = "choosetype";
         }
     }
     if (menu == "options-custom") {
@@ -1049,7 +1060,7 @@ function changeMenu(menu, details) {
             "-webkit-transition-timing-function": "200ms",
             "-webkit-transition-delay": "0ms"
         });
-
+        currentMenu = "customgame";
     }
     if (menu == "main-options") {
         $('#dewrito-options').show();
@@ -1060,6 +1071,7 @@ function changeMenu(menu, details) {
         $('#dewrito').css({
             "top": "400px"
         });
+        currentMenu = "dewrito-options";
     }
     if (menu == "options-main") {
         $('.options-section').hide();
@@ -1072,7 +1084,7 @@ function changeMenu(menu, details) {
             "transition-delay": "0ms",
             "-moz-transition-delay": "0ms"
         });
-
+        currentMenu = "main2";
     }
     if (menu == "custom-player") {
         $('#customgame').css({
@@ -1084,7 +1096,7 @@ function changeMenu(menu, details) {
         $('#back').attr('data-action', 'player-custom');
         $('#playermodel').css('background-image', "url('img/players/" + details + ".png')");
         playerInfo(details);
-
+        currentMenu = "playerinfo";
     }
     if (menu == "player-custom") {
         $('#customgame').css({
@@ -1095,10 +1107,15 @@ function changeMenu(menu, details) {
         });
         f = $('#customgame').attr('data-from');
         $('#back').attr('data-action', 'custom-' + f);
-
+        currentMenu = "customgame";
     }
     $('#slide')[0].currentTime = 0;
     $('#slide')[0].play();
+    if(usingGamepad) {
+        gp_on = 1;
+        gamepadSelect(currentMenu+"-1");
+    }
+    console.log(currentMenu);
 }
 
 var KDdata = [{
@@ -1392,4 +1409,12 @@ function clearAllCookies() {
         $.removeCookie(set);
     }
     alert("All cookies reset.");
+}
+
+function popup(message) {
+    $('#popup').text(message);
+    $('#popup').fadeIn(anit);
+    setTimeout(function() {
+        $('#popup').fadeOut(anit);
+    },8000);
 }

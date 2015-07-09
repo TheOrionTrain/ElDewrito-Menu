@@ -18,6 +18,21 @@
     -webkit-font-smoothing:antialiased;
 }
 
+#popup {
+    position: fixed;
+    z-index: 3000;
+    top: 20px;
+    right: 20px;
+    max-width: 250px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #fff;
+    display: none;
+    background: rgba(0,0,0,0.66);
+    border-radius: 8px;
+}
+
 html {background: #000;}
 
 #browser-buttons {
@@ -581,7 +596,7 @@ audio {display: none;}
     height: 40px;
 }
 
-.selection:hover, .server:hover {
+.selection:hover, .server:hover, .selection.gp-on {
     border-left: 3px solid rgba(255,255,255,0.3) !important;
     background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
