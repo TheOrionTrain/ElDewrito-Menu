@@ -849,10 +849,11 @@ audio {display: none;}
 #browser .name { position: relative; padding-top: 12px;}
 #browser .flag {
     position: relative;
-    top: -2px;
+    top: 0px;
     display: inline-block;
     vertical-align: top;
     max-width: 30px;
+    max-height: 23px;
 }
 
 /* Clearfix */
