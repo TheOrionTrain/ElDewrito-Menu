@@ -569,7 +569,7 @@ function getTotalPlayers() {
 
 function directConnect() {
     var ip = prompt("Enter IP Address: ");
-		var pass = promt("Enter Password: ");
+	var pass = prompt("Enter Password: ");
     //connect function here
 		dewRcon.send('connect ' + ip + ' ' + pass);
 }
