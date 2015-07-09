@@ -345,7 +345,7 @@ audio {display: none;}
 }
 
 #credits table td.label {
-    width: 850px;
+    width: 540px;
     text-align: left;
     font-size: 24px;
     color: #fff;
@@ -659,7 +659,7 @@ audio {display: none;}
 #lobby td {
     box-sizing: border-box;
     margin-bottom: 3px;
-    height: 28px;
+    height: 30px;
     color: #fff;
     cursor: pointer;
 }
@@ -680,8 +680,8 @@ audio {display: none;}
 }
 
 #lobby td.rank img {
-    max-width: 26px;
-    max-height: 26px;
+    max-width: 28px;
+    max-height: 28px;
     margin-top: 0px;
     opacity: 0.9;
     box-sizing: border-box;
