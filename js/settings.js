@@ -14,6 +14,16 @@ var user = {
     }
 },
 
+catergories = {
+    "menu" : 0,
+    "eldewrito" : 0,
+    "controls" : 0,
+    "gameplay" : 0,
+    "audio" : 0,
+    "video" : 0,
+    "host" : 0
+},
+
 settings = {
   "preset" : {
       "typeof" : "select",
