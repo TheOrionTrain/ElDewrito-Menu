@@ -1199,6 +1199,7 @@ function startgame(ip, mode) {
 						dewRcon.send('start');
 						dewRcon.send('game.togglemenu');
         }
+				console.log("heh");
         loopPlayers = true;
         lobbyLoop(ip);
     }, 3700);

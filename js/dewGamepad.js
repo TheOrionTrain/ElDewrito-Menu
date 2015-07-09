@@ -169,7 +169,8 @@ var Gamepad = (function(self) {
 })(Gamepad || {});
 
 function isPressed(pad,button) {
-    return (pad.buttons[button].value == 1) ? true : false;
+    //return (pad.buttons[button].value == 1) ? true : false;
+    return false;
 }
 
 function gamepadLoop() {
