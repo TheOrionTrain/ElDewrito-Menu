@@ -396,7 +396,11 @@ $(document).ready(function() {
         changeMenu($(this).attr('data-menu'));
     });
     $('#back').click(function() {
-        changeMenu($(this).attr('data-action'));
+        changeMenu($(this).attr('data-action'),'back');
+        if(usingGamepad) {
+            gp_on = p_gp_on;
+            gamepadSelect(currentMenu+"-"+p_gp_on);
+        }
     });
     $("#lobby-container").mousewheel(function(event, delta) {
         this.scrollTop -= (delta * 34);
@@ -670,8 +674,8 @@ function changeMenu(menu, details) {
         forge = 0;
         $('#title').text('CUSTOM GAME');
         $('#subtitle').text('');
-        $('#network-toggle').hide();
-        $('#type-selection').show();
+        $('#network-toggle').attr('data-gp','customgame-x').hide();
+        $('#type-selection').attr('data-gp','customgame-1').show();
         currentType = "Slayer";
         $('#gametype-icon').css({
             "background-image": "url('img/gametypes/" + currentType + ".png')"
@@ -713,8 +717,8 @@ function changeMenu(menu, details) {
         forge = 1;
         $('#title').text('FORGE');
         $('#subtitle').text('');
-        $('#network-toggle').show();
-        $('#type-selection').hide();
+        $('#network-toggle').attr('data-gp','customgame-1').show();
+        $('#type-selection').attr('data-gp','customgame-x').hide();
         currentType = "Forge";
         $('#gametype-icon').css({
             "background-image": "url('img/gametypes/" + currentType + ".png')"
@@ -735,7 +739,7 @@ function changeMenu(menu, details) {
         $('#lobby').empty();
         $('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
         $('#start').children('.label').text("START FORGE");
-        currentMenu = "forge";
+        currentMenu = "customgame";
     }
     if (menu == "custom-main") {
         if (settings.background.current == Halo3Index) {
@@ -1111,9 +1115,10 @@ function changeMenu(menu, details) {
     }
     $('#slide')[0].currentTime = 0;
     $('#slide')[0].play();
-    if(usingGamepad) {
+    if(usingGamepad && details != 'back') {
+        p_gp_on = gp_on;
         gp_on = 1;
-        gamepadSelect(currentMenu+"-1");
+        gamepadSelect(currentMenu+"-"+gp_on);
     }
     console.log(currentMenu);
 }

@@ -3,7 +3,7 @@ var buttonMap = {
     "FACE_2" : "B",
     "FACE_3" : "X",
     "FACE_4" : "Y",
-}, gp_on = 1;
+}, gp_on = 1, p_gp_on = 0;
 
 function gamepadSelect(id) {
     gamepadDeselect();
@@ -66,7 +66,6 @@ function gamepadBind() {
     gamepad.bind(Gamepad.Event.BUTTON_UP, function(e) {
         if(buttonMap[e.control] == "A") {
             $("[data-gp='"+currentMenu+"-"+gp_on+"']").trigger('click');
-            gamepadDeselect();
         }
         if(buttonMap[e.control] == "B") {
             $("#back").trigger('click');
