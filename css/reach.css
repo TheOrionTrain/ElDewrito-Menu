@@ -598,7 +598,7 @@ audio {display: none;}
     height: 40px;
 }
 
-.selection:hover, .server:hover, .selection.gp-on {
+.selection:hover, .server:hover, .selection.gp-on, .server.gp-on {
     border-left: 3px solid rgba(255,255,255,0.3) !important;
     background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;

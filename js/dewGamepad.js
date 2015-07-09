@@ -86,7 +86,9 @@ function gamepadBind() {
             console.log("X");
         }
         if(buttonMap[e.control] == "Y") {
-            console.log("Y");
+            if(currentMenu == "serverbrowser") {
+                $('#refresh').trigger('click');
+            }
         }
     });
 
@@ -97,6 +99,11 @@ function gamepadBind() {
         else if(e.axis == "LEFT_STICK_Y" && e.value < -0.85) {
             gp_last = Date.now();
             if($("[data-gp='"+currentMenu+"-"+(gp_on-1)+"']").length > 0) {gp_on-=1;}
+            /*if(currentMenu == "serverbrowser") {
+                $('#browser').animate({
+                    scrollTop: $('.gp-on').offset().top + 'px'
+                }, 'fast');
+            }*/
             gamepadSelect(currentMenu+"-"+gp_on);
             $('#click')[0].currentTime = 0;
             $('#click')[0].play();
@@ -104,6 +111,11 @@ function gamepadBind() {
         else if(e.axis == "LEFT_STICK_Y" && e.value > 0.85) {
             gp_last = Date.now();
             if($("[data-gp='"+currentMenu+"-"+(gp_on+1)+"']").length > 0) {gp_on+=1;}
+            /*if(currentMenu == "serverbrowser") {
+                $('#browser').animate({
+                    scrollTop: $('.gp-on').offset().top + 'px'
+                }, 'fast');
+            }*/
             gamepadSelect(currentMenu+"-"+gp_on);
             $('#click')[0].currentTime = 0;
             $('#click')[0].play();
