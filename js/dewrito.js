@@ -202,11 +202,11 @@ function addServer(i, geoloc) {
         geoloc = {};
         geoloc.country_code = "";
     } else {
-        location_flag = "<img src='img/flags/" + geoloc.country_code.toLowerCase() + ".png' title='"+ geoloc.country + "' alt='"+ geoloc.country + "' class='flag'/>";
+        location_flag = "[<img src='img/flags/" + geoloc.country_code.toLowerCase() + ".png' title='"+ geoloc.country + "' alt='"+ geoloc.country + "' class='flag'/>";
     }
 
     var on = (!servers[i].gametype) ? "" : "on";
-    $('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + servers[i].host + ")  [" + location_flag + " " + servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+    $('#browser').append("<div class='server' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + servers[i].name + " (" + servers[i].host + ")  " + location_flag + " " + servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
     $('.server').hover(function() {
         $('#click')[0].currentTime = 0;
         $('#click')[0].play();
