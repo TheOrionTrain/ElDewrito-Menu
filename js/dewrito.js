@@ -483,10 +483,19 @@ function lobbyLoop(ip) {
 						teamGame = true;
 				}
 			}
+			$('#gametype-display').text(serverInfo.variant.toUpperCase());
+			if (serverInfo.variantType === "none")
+				serverInfo.variantType = "slayer";
+			$('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType + ".png') no-repeat 0 0/cover");
+
 			$('#lobby').empty();
 			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 			$('#maxplayers').text(serverInfo.maxPlayers);
 			$('#joined').text(serverInfo.numPlayers);
+
+			changeMap2(getMapName(serverInfo.mapFile));
+			$('#subtitle').text(serverInfo.name + " : " + servers[selectedserver].ip);
+
 			if (typeof serverInfo.passworded != 'undefined')
 				return;
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
