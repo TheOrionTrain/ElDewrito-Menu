@@ -409,13 +409,6 @@ $(document).ready(function() {
             gamepadSelect(currentMenu+"-"+p_gp_on);
         }
     });
-    $.srSmoothscroll({
-        step: 55,
-        speed: 400,
-        ease: 'linear',
-        target: $('.server'),
-        container: $('#browser')
-    });
 });
 
 String.prototype.toTitleCase = function() {
