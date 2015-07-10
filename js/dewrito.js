@@ -82,6 +82,7 @@ function getServers() {
 	        for (var i = 0; i < data.result.servers.length; i++) {
 	            var serverIP = data.result.servers[i];
 							if ($.inArray(serverIP, totalIps) === -1) {
+								console.log(ffs);
 								totalIps.push(serverIP);
 								queryServer(serverIP, ffs);
 								ffs++;
@@ -106,7 +107,7 @@ function queryServer(serverIP, i) {
 			}
 		});
     $.getJSON("http://" + serverIP, function(serverInfo) {
-        console.log(serverInfo);
+        console.log(serverInfo + " " + i);
         if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
             return false;
         }
@@ -218,6 +219,8 @@ function addServer(i, geoloc) {
 }
 
 function initalize() {
+	dewRcon('player.name');
+	console.log(dewRcon.lastMessage);
     if (window.location.protocol == "https:") {
         alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
     }
@@ -566,7 +569,7 @@ function getTotalPlayers() {
 
 function directConnect() {
     var ip = prompt("Enter IP Address: ");
-	var pass = prompt("Enter Password: ");
+		var pass = prompt("Enter Password: ");
     //connect function here
 		dewRcon.send('connect ' + ip + ' ' + pass);
 }
