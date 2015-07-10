@@ -219,7 +219,7 @@ function addServer(i, geoloc) {
 }
 
 function initalize() {
-		dewRcon.send('player.name');
+		//dewRcon.send('player.name');
 		console.log(dewRcon.lastMessage);
     if (window.location.protocol == "https:") {
         alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
