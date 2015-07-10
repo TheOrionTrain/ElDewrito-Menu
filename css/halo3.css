@@ -30,6 +30,27 @@
     -webkit-font-smoothing:antialiased;
 }
 
+#loadingMapImage
+{
+}
+
+#loadingBars
+{
+}
+
+#hoImage
+{
+}
+
+#edImage
+{
+}
+
+#mapOverlay
+{
+}
+
+
 #popup {
     position: fixed;
     z-index: 3000;
