@@ -476,7 +476,7 @@ function lobbyLoop(ip) {
 			var teamGame = false;
 			var colour = "#000000";
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
-				if (typeof players[i].name != 'undefined') {
+				if (typeof players[i] != 'undefined') {
 					if (parseInt(players[i].team) > 1)
 						teamGame = false;
 					else
@@ -490,7 +490,7 @@ function lobbyLoop(ip) {
 			if (typeof serverInfo.passworded != 'undefined')
 				return;
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
-				if (typeof players[i].name != 'undefined') {
+				if (typeof players[i] != 'undefined') {
 					if (teamGame)
 						colour = (parseInt(players[i].team) === 0) ? "#800000" : "#000080";
 					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
