@@ -318,7 +318,7 @@ function toggleNetwork() {
 $(document).ready(function() {
     if(getURLParameter('css') == "halo3") {
         $('#style').attr('href','css/halo3.css');
-        console.log("Using Halo 3 style.")
+        Halo3Convert();
     }
     gamepadBind();
     Mousetrap.bind('f11', function() {
