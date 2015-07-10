@@ -276,22 +276,6 @@ html {background: #000;}
 
 #browser .name, #browser .settings {display: block; overflow-x: hidden;}
 
-
-
-#thefeeltrain {
-    position: relative;
-    margin: 20px auto;
-    background: url('../img/thefeeltrain.png') no-repeat 0 0/cover;
-    width: 250px;
-    height: 35px;
-    opacity: 0.8;
-}
-
-#thefeeltrain:hover {
-    opacity: 1;
-    cursor: pointer;
-}
-
 #videos video,#bg-cover,#black {
     position: absolute;
     top: 0; left: 0;
