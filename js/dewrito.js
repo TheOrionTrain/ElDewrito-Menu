@@ -1198,6 +1198,8 @@ function startgame(ip, mode) {
 	delay(function() {
 		if (mode[0] === "JOIN") {
 			dewRcon.send('connect ' + ip + ' ' + password);
+			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
+			$('#loadingMapName').text(servers[selectedserver].map.toString().toUpperCase());
 			$('#loadingMapImage').css('background-image','url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '.png)');
 			$('#mapOverlay').css('background-image','url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '-overlay.png)');
 			$('#loading').show();
