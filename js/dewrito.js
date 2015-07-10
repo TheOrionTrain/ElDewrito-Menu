@@ -1196,9 +1196,11 @@ function startgame(ip, mode) {
 	$('#music')[0].pause();
 	$('#black').fadeIn(3000);
 	delay(function() {
-		$('#loading').show();
 		if (mode[0] === "JOIN") {
 			dewRcon.send('connect ' + ip + ' ' + password);
+			$('#loadingMapImage').css('background-image','url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '.png)');
+			$('#mapOverlay').css('background-image','url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '-overlay.png)');
+			$('#loading').show();
 			$('#back').remove();
 		} else if (mode[1] === "FORGE") {
 
