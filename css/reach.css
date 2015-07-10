@@ -617,7 +617,8 @@ audio {
     background: rgba(255, 255, 255, 0.5);
 }
 #choosemap ::-webkit-scrollbar,
-#choosetype ::-webkit-scrollbar {
+#choosetype ::-webkit-scrollbar,
+#customgame ::-webkit-scrollbar {
     display: none;
     width: 0px;
 }
@@ -762,7 +763,7 @@ audio {
     right: 100px;
     width: 300px;
     height: 612px;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 #lobby .top td.info {
     background: rgba(0, 0, 0, 0.5);
