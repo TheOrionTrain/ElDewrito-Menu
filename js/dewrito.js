@@ -1191,13 +1191,71 @@ function startgame(ip, mode) {
 				password = servers[selectedserver].password == true ? prompt(servers[selectedserver].name + " has a password, enter the password to join", "") : "";
     $('#beep')[0].play();
     $('#music')[0].pause();
-    $('#black').fadeIn(3500).delay(5000).fadeOut(1000, function() {
+    $('#black').fadeIn(3000).delay(5000).fadeOut(1000, function() {
         $('#music')[0].play();
     });
     delay(function() {
         if (mode[0] === "JOIN") {
             dewRcon.send('connect ' + ip + ' ' + password);
-						//showloadingscreen
+
+		$('#back').remove()
+
+        $('<div id="loadingMapImage"></div>').css({
+   			'background': 'url(./img/loading/maps/diamondback.png) no-repeat center',
+   			'z-index': 20,
+   			'background-size': 'contain',
+   			'position': 'absolute',
+   			'top': 0,
+   			'left': 0,
+   			'width': '100%',
+   			'height': '100%'
+		}).appendTo('#menu');
+
+        $('<div id="loadingBars"></div>').css({
+   			'background': 'url(./img/loading/bars.png) no-repeat center',
+   			'z-index': 22,
+   			'background-size': 'contain',
+   			'position': 'absolute',
+   			'top': 0,
+   			'left': 0,
+   			'width': '100%',
+   			'height': '100%'
+		}).appendTo('#menu');
+
+        $('<div id="hoImage"></div>').css({
+   			'background': 'url(./img/loading/ho.png) no-repeat',
+   			'z-index': 22,
+   			'background-size': 'contain',
+   			'position': 'absolute',
+   			'top': 10,
+   			'left': 15,
+   			'width': '20%',
+   			'height': '20%'
+		}).appendTo('#menu');
+
+        $('<div id="edImage"></div>').css({
+   			'background': 'url(./img/loading/ed.png) no-repeat',
+   			'z-index': 22,
+   			'background-size': 'contain',
+   			'position': 'absolute',
+   			'top': 635,
+   			'left': 110,
+   			'width': '10%',
+   			'height': '10%'
+		}).appendTo('#menu');
+
+
+        $('<div id="mapOverlay"></div>').css({
+   			'background': 'url(./img/loading/maps/db-overlay.png) no-repeat',
+   			'z-index': 22,
+   			'background-size': 'contain',
+   			'position': 'absolute',
+   			'top': 150,
+   			'left': 60,
+   			'width': '55%',
+   			'height': '60%'
+		}).appendTo('#menu');
+
         } else if (mode[1] === "FORGE") {
 
         } else if (mode[0] === "START" && mode[1] === "GAME") {
