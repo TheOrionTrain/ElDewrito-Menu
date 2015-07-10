@@ -489,7 +489,7 @@ function lobbyLoop(ip) {
 			$('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType.toString().capitalizeFirstLetter() + ".png') no-repeat 0 0/cover");
 
 			$('#lobby').empty();
-			$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
+			$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 			$('#maxplayers').text(serverInfo.maxPlayers);
 			$('#joined').text(serverInfo.numPlayers);
 
@@ -502,7 +502,7 @@ function lobbyLoop(ip) {
 				if (typeof players[i] != 'undefined') {
 					if (teamGame)
 						colour = (parseInt(players[i].team) === 0) ? "#800000" : "#000080";
-					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour='" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 					$('#player' + i).css("display", "none");
 					$('#player' + i).fadeIn(anit);
 				}
@@ -632,7 +632,7 @@ function playersJoin(number, max, time, ip) {
 			}
 		}
 		$('#lobby').empty();
-		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
+		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
 		$('#joined').text(serverInfo.numPlayers);
 		if (typeof serverInfo.passworded != 'undefined')
