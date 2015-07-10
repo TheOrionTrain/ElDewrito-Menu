@@ -10,6 +10,12 @@
   font-weight: 700;
   src: url("../fonts/TV Nord EF Cond Bold.woff") format('woff');
 }
+@font-face {
+  font-family: 'Conduit ITC';
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/Conduit ITC Light.woff") format('woff');
+}
 
 * {
     font-family: "TV Nord";
@@ -784,6 +790,8 @@ audio {display: none;}
     bottom: 5px;
     font-size: 14px;
     opacity: 0.5;
+    font-family: "Conduit ITC";
+    font-weight: 300;
 }
 
 .options-menu {
