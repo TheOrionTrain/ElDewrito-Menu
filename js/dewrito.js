@@ -458,18 +458,6 @@ function hexToRgb(hex, opacity) {
 	return "rgba(" + parseInt(result[1], 16) + "," + parseInt(result[2], 16) + "," + parseInt(result[3], 16) + "," + opacity + ")";
 }
 
-function rgbToHex(r, g, b) {
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-}
-
-function rgb2hex(rgb){
- rgb = rgb.match(/^rgb((d+),s*(d+),s*(d+))$/);
- return "#" +
-  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2);
-}
-
 function brighter(color) {
 	var colorhex = (color.split("#")[1]).match(/.{2}/g);
 	for (var i = 0; i < 3; i++) {
@@ -500,7 +488,7 @@ function lobbyLoop(ip) {
 			if (typeof serverInfo.passworded != 'undefined')
 				return;
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
-				if (players[i].name !== undefined) {
+				if (typeof players[i].name != 'undefined') {
 					if (teamGame)
 						colour = (parseInt(players[i].team) === 0) ? "#800000" : "#000080";
 					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
@@ -811,7 +799,7 @@ function changeMenu(menu, details) {
 			$('#gametype-display').text(d.gametype.toUpperCase());
 			if (d.gameparent === "none")
 				d.gameparent = "Slayer";
-			$('#gametype-icon').css('background', "url('img/gametypes/" + d.gameparent.toString().replace("%20", " ") + ".png') no-repeat 0 0/cover");
+			$('#gametype-icon').css('background', "url('img/gametypes/" + d.gameparent.toString().replace("%20", " ").capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 			$('#serverbrowser').css({
 				"top": "720px"
 			});
@@ -1428,10 +1416,10 @@ function changeType2(type, click) {
 		});
 	} else {
 		$('#gametype-icon').css({
-			"background-image": "url('img/gametypes/" + currentType + ".png')"
+			"background-image": "url('img/gametypes/" + currentType.toString().capitalizeFirstLetter + ".png')"
 		});
 		$('#type-icon-options').css({
-			"background-image": "url('img/gametypes/" + currentType + ".png')"
+			"background-image": "url('img/gametypes/" + currentType.toString().capitalizeFirstLetter + ".png')"
 		});
 	}
 	console.log(type);
