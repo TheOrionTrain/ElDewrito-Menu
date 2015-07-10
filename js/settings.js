@@ -396,6 +396,8 @@ settings = {
         "increment" : 1,
         "update" : function() {
             var c = settings.centeredcrosshair.current;
+            //dewRcon.send('camera.crosshair ' + settings.centeredcrosshair.labels[c] === "ON" ? '1' : '0');
+            //dewRcon.send('writeconfig');
             $("[data-option='centeredcrosshair']").children('.value').text(settings.centeredcrosshair.labels[c]);
         }
     },
