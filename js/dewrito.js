@@ -121,6 +121,7 @@ function queryServer(serverIP, i) {
 				"gameparent": sanitizeString(serverInfo.variantType),
 				"map": sanitizeString(getMapName(serverInfo.mapFile)),
 				"file": sanitizeString(serverInfo.mapFile),
+				"status": sanitizeString(serverInfo.status),
 				"ping": ping,
 				"players": {
 					"max": parseInt(serverInfo.maxPlayers),
@@ -203,7 +204,7 @@ function addServer(i, geoloc) {
 	}
 	++gp_servers;
 	var on = (!servers[i].gametype) ? "" : "on";
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag + servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].status + ")  " + location_flag + servers[i].ping + "ms] </span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -432,6 +433,7 @@ function acr(s) {
 
 
 function loadServers() {
+	dewRcon.send("player.name");
 	if (browsing === 1) {
 		$('#refresh img').addClass('rotating');
 		setTimeout(function() {
