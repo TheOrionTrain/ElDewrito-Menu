@@ -10,6 +10,8 @@ jQuery(function() {
 	};
 	dewRcon.dewWebSocket.onmessage = function(message) {
 		dewRcon.lastMessage = message.data;
+    console.log(dewRcon.lastMessage);
+    console.log(dewRcon.lastCommand);
 		/*
 		//We can display the latest messages from dew using the code below
 		console.log(message.data);
@@ -23,8 +25,10 @@ dewRconHelper = function() {
 	window.WebSocket = window.WebSocket || window.MozWebSocket;
 	this.dewWebSocket = new WebSocket('ws://127.0.0.1:11776', 'dew-rcon');
 	this.lastMessage = "";
-  
+  this.lastCommand = "";
+
 	this.send = function(command) {
 		this.dewWebSocket.send(command);
+    this.lastCommand = command;
 	}
 }
