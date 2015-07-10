@@ -615,10 +615,12 @@ function playersJoin(number, max, time, ip) {
 		var teamGame = false;
 		var colour = "#000000";
 		for (var i = 0; i < serverInfo.numPlayers; i++) {
-			if (parseInt(players[i].team) > 1)
-				teamGame = false;
-			else
-				teamGame = true;
+			if (typeof players[i] != 'undefined') {
+				if (parseInt(players[i].team) > 1)
+					teamGame = false;
+				else
+					teamGame = true;
+			}
 		}
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
@@ -627,7 +629,7 @@ function playersJoin(number, max, time, ip) {
 		if (typeof serverInfo.passworded != 'undefined')
 			return;
 		for (var i = 0; i < serverInfo.numPlayers; i++) {
-			if (players[i].name !== undefined) {
+			if (typeof players[i] != 'undefined') {
 				if (teamGame)
 					colour = (parseInt(players[i].team) === 0) ? "#800000" : "#000080";
 				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
