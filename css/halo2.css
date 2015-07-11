@@ -1,11 +1,11 @@
 @font-face {
-    font-family: 'DENMARK';
+    font-family: 'Denmark';
     font-style: normal;
     font-weight: 300;
-    src: url("../fonts/DENMARK.woff") format('woff');
+    src: url("../fonts/Denmark.woff") format('woff');
 }
 * {
-    font-family: "DENMARK";
+    font-family: "Denmark";
     -webkit-user-select: none;
     user-select: none;
     -webkit-font-smoothing: antialiased;
