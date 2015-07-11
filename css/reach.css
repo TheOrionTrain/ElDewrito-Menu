@@ -290,6 +290,10 @@ html {
     height: 70px;
     font-size: 18px;
 }
+#browser.list .server {
+    height: 40px;
+    font-size: 20px;
+}
 #browser .server {
     width: 1074px;
     box-sizing: border-box;
@@ -390,8 +394,62 @@ html {
     width: 210px;
     height: 60px;
 }
-#browser .name,
-#browser .settings {
+.list .server .thumb,
+.list .server .info {
+    display: inline-block;
+    width: 730px;
+    height: 40px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    padding: 2px 0px !important;
+    vertical-align: top;
+}
+.list .server .thumb {
+    text-align: center;
+    width: 100px;
+}
+.list .server .players {
+    display: inline-block;
+    width: 240px;
+    height: 40px;
+    text-align: right;
+    font-weight: 300;
+    font-size: 26px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    padding: 5px 30px !important;
+}
+.list .server .settings {
+    padding: 0 0px;
+    font-weight: 300;
+    font-size: 20px;
+    text-align: left;
+    vertical-align: center;
+    width: 600px;
+}
+#browser.list .server .thumb img {
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    width: 71px;
+    height: 32px;
+}
+
+.list .name {
+    width: 65%;
+    display: inline-block;
+    padding-top: 5px;
+    overflow-x: hidden;
+}
+.list .settings {
+    width: 35%;
+    display: inline-block;
+    padding-top: 5px;
+    overflow-x: hidden;
+}
+
+.regular .name,
+.regular .settings,
+.condensed .name,
+.condensed .settings {
     display: block;
     overflow-x: hidden;
 }
@@ -961,14 +1019,8 @@ audio {
 }
 .options-menu {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
-    /* FF3.6+ */
-
     background: -webkit-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
-    /* Chrome10+,Safari5.1+ */
-
     background: linear-gradient(to bottom, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
-    /* W3C */
-
     position: absolute;
     top: 0px;
     left: 0;
@@ -1010,6 +1062,14 @@ audio {
 }
 /* Country Flags */
 
+#browser.list .flag {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    vertical-align: top;
+    max-width: 30px;
+    max-height: 20px;
+}
 #browser.regular .name {
     position: relative;
     padding-top: 12px;
@@ -1062,6 +1122,19 @@ audio {
     margin: 0;
     position: absolute;
     top: 6px;
+    left: 15px;
+    background-size: 15%;
+}
+.list .server.passworded .thumb:before {
+    content: " ";
+    display: block;
+    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
+    width: 71px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 3px;
     left: 15px;
     background-size: 15%;
 }

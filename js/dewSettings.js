@@ -267,10 +267,11 @@ var user = {
 			"name": "SERVER BROWSER STYLE",
 			"current": isset($.cookie('browserstyle', Number), 0),
 			"min": 0,
-			"max": 1,
+			"max": 2,
 			"labels": [
             	"REGULAR",
-				"CONDENSED"
+				"CONDENSED",
+				"LIST"
         	],
 			"increment": 1,
 			"update": function() {
