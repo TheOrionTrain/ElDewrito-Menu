@@ -332,6 +332,10 @@ $(document).ready(function() {
                 Halo3Convert();
                 break;
 
+            case "halo3odst":
+                Halo3ODSTConvert();
+                break;
+
             default:
                 Halo3Convert();
                 break;
@@ -1453,7 +1457,6 @@ function popup(message) {
 
 /* Update Menus */
 function Halo1Convert() {
-    // Change videos
     setTimeout(function() {
         $("#bg1").attr("src", "video/Halo CE.webm");
 				settings.musictrack.current = 2;
@@ -1466,7 +1469,6 @@ function Halo1Convert() {
 
 
 function Halo2Convert() {
-    // Change videos
     setTimeout(function() {
         $("#bg1").attr("src", "video/Halo 2.webm");
 				settings.musictrack.current = 3;
@@ -1475,4 +1477,15 @@ function Halo2Convert() {
 				settings.background.update();
     }, 1000);
 
+}
+
+
+function Halo3ODSTConvert() {
+    setTimeout(function() {
+        $("#bg1").attr("src", "video/Halo 3 ODST.webm");
+                settings.musictrack.current = 3;
+                settings.musictrack.update();
+                settings.background.current = 7;
+                settings.background.update();
+    }, 1000);
 }
