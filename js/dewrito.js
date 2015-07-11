@@ -1482,10 +1482,9 @@ function Halo2Convert() {
 
 function Halo3ODSTConvert() {
     setTimeout(function() {
-        $("#bg1").attr("src", "video/Halo 3 ODST.webm");
-                settings.musictrack.current = 3;
-                settings.musictrack.update();
-                settings.background.current = 7;
-                settings.background.update();
+        settings.musictrack.current = 7;
+        settings.musictrack.update();
+        settings.background.current = 7;
+        settings.background.update();
     }, 1000);
 }
