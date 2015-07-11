@@ -319,7 +319,7 @@ function toggleNetwork() {
 	$('#click')[0].play();
 }
 
-$(document).ready(function() {\
+$(document).ready(function() {
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
 		$('#style').attr('href', 'css/'+CSSfile+'.css');
