@@ -512,11 +512,9 @@ audio {
 }
 .select-main {
     position: absolute;
-    bottom: 0px;
-    left: 90px;
-    width: 350px;
-    background: rgba(0, 0, 20, 0.8);
-    height: 300px;
+    left: 550px;
+    top: 350px;
+    width: 2px;
 }
 .map-select,
 .type-select,
@@ -668,8 +666,8 @@ audio {
     height: 35px;
     box-sizing: border-box;
     line-height: 20px;
-    border-top: 1px solid rgba(255, 110, 0, 0);
-    border-bottom: 1px solid rgba(255, 110, 0, 0);
+    border-top: 1px solid rgba(37, 175, 241, 0);
+    border-bottom: 1px solid rgba(37, 175, 241, 0);
 }
 .select-main .selection {
     font-size: 22px;
@@ -713,8 +711,8 @@ audio {
 }
 #dewrito {
     position: absolute;
-    right: -50px;
-    bottom: 50px;
+    right: 250px;
+    bottom: 370px;
     width: 750px;
     height: 267px;
     opacity: 0.95;
