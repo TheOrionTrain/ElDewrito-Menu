@@ -2,7 +2,7 @@
     font-family: 'Denmark';
     font-style: normal;
     font-weight: 300;
-    src: url("../fonts/denmark.woff") format('woff');
+    src: url("../fonts/Denmark.woff") format('woff');
 }
 * {
     font-family: "Denmark";
@@ -680,13 +680,13 @@ audio {
     margin: 0 auto;
     width: auto;
     padding: 10px 0;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     color: #636b82;
-    text-shadow: 1px 2px 1px rgb(60, 60, 60);
+    text-shadow: 1px 1px 1px rgb(60, 60, 60);
     height: auto;
     line-height: 1.1;
-    margin: 0;
-    padding: 5px 0;
+    margin-bottom: 9px;
+    padding: 3px 0;
 }
 .select-main .selection .value,
 #select .selection .value {
@@ -702,12 +702,9 @@ audio {
 #select .selection .label {
     text-align: center;
     padding: 7px 0;
-    /* box-sizing: border-box; */
-    /* height: 40px; */
-    /* z-index: 10; */
     width: auto;
     display: block;
-    text-shadow: 0 0 13px 0px rgba(79, 120, 197, 0.35);
+    padding: 0;
 }
 .selection:hover,
 .server:hover,
@@ -726,9 +723,9 @@ audio {
     z-index: -1;
     background: url(../img/halo2-select.png) no-repeat 0 0;
     width: 458px;
-    height: 74px;
+    height: 54px;
     padding: 0;
-    margin: -17px 0 0 -98px;
+    margin: -13px 0 0 -37px;
     opacity: 0.6;
     background-size: contain;
 }
