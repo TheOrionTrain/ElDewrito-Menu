@@ -24,18 +24,6 @@ var players = [],
 	usingGamepad = false,
 	currentMenu = "main2";
 
-function isset(val, other) {
-	return (val !== undefined) ? val : other;
-}
-
-function getURLParameter(name) {
-	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null
-}
-
-function randomNum(n) {
-	return Math.floor(Math.random() * n);
-}
-
 (function() {
 	var e = (window.innerHeight - 80) / 2;
 	$('.pace .pace-progress:after').css('top', e);
@@ -148,10 +136,6 @@ function queryServer(serverIP, i) {
 	});
 }
 
-function sanitizeString(str) {
-	return String(str).replace(/(<([^>]+)>)/ig, "").replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-}
-
 function getMapName(filename) {
 	switch (filename) {
 		case "guardian":
@@ -170,13 +154,6 @@ function getMapName(filename) {
 			return "Edge";
 	}
 }
-
-String.prototype.capitalizeFirstLetter = function() {
-	return this.charAt(0).toUpperCase() + this.slice(1);
-};
-String.prototype.contains = function(it) {
-	return this.indexOf(it) != -1;
-};
 
 function promptPassword(i) {
 	var password = prompt(servers[i].name + " has a password, enter the password to join", "");
@@ -428,25 +405,6 @@ $(document).ready(function() {
 	});
 });
 
-String.prototype.toTitleCase = function() {
-	return this.replace(/\w\S*/g, function(txt) {
-		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-	});
-};
-
-function acr(s) {
-	var words, acronym, nextWord;
-	words = s.split(' ');
-	acronym = "";
-	index = 0;
-	while (index < words.length) {
-		nextWord = words[index];
-		acronym = acronym + nextWord.charAt(0);
-		index = index + 1;
-	}
-	return acronym.toUpperCase();
-}
-
 
 function loadServers() {
 	dewRcon.send("player.name");
@@ -467,23 +425,6 @@ function loadServers() {
 		});
 		filterServers();
 	}
-}
-
-
-
-function hexToRgb(hex, opacity) {
-	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-	return "rgba(" + parseInt(result[1], 16) + "," + parseInt(result[2], 16) + "," + parseInt(result[3], 16) + "," + opacity + ")";
-}
-
-function brighter(color) {
-	var colorhex = (color.split("#")[1]).match(/.{2}/g);
-	for (var i = 0; i < 3; i++) {
-		var e = parseInt(colorhex[i], 16);
-		e += 30;
-		colorhex[i] = ((e > 255) ? 255 : e).toString(16);
-	}
-	return "#" + colorhex[0] + colorhex[1] + colorhex[2];
 }
 
 function lobbyLoop(ip) {
