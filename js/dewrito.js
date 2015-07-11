@@ -320,6 +320,10 @@ $(document).ready(function() {
 
 		switch (CSSfile) {
 
+            case "halo1":
+                Halo1Convert();
+                break;
+
             case "halo2":
                 Halo2Convert();
                 break;
@@ -1446,6 +1450,15 @@ function popup(message) {
 
 
 /* Update Menus */
+function Halo1Convert() {
+    // Change videos
+    setTimeout(function() {
+        $("#bg1").attr("src", "video/Halo CE.webm");
+    }, 1000);
+
+}
+
+
 function Halo2Convert() {
     // Change videos
     setTimeout(function() {
