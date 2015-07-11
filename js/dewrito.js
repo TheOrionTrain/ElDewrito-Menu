@@ -1424,10 +1424,10 @@ function changeType2(type, click) {
 		var reg = currentType.match(/\b(\w)/g);
 		var acronym = reg.join('');
 		$('#gametype-icon').css({
-			"background-image": "url('img/gametypes/" + acronym + ".png')"
+			"background-image": "url('img/gametypes/" + acronym.toString().toLowerCase() + ".png')"
 		});
 		$('#type-icon-options').css({
-			"background-image": "url('img/gametypes/" + acronym + ".png')"
+			"background-image": "url('img/gametypes/" + acronym.toString().toLowerCase() + ".png')"
 		});
 	} else {
 		$('#gametype-icon').css({
