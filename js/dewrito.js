@@ -59,7 +59,10 @@ function getMasterServers(cb) {
 							cb();
 						}
 					}
-				}
+				},
+                error: function() {
+                    console.error("Issue connecting to master server: " + val['list']);
+                }
 			});
 		});
 	});
