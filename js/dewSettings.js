@@ -261,6 +261,25 @@ var user = {
 				$("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
 			}
 		},
+		"browserstyle": {
+			"typeof": "select",
+			"category": "menu",
+			"name": "SERVER BROWSER STYLE",
+			"current": isset($.cookie('browserstyle', Number), 0),
+			"min": 0,
+			"max": 1,
+			"labels": [
+            	"REGULAR",
+				"CONDENSED"
+        	],
+			"increment": 1,
+			"update": function() {
+				var c = settings.browserstyle.current;
+				$('#browser').removeClass();
+				$('#browser').addClass(settings.browserstyle.labels[c].toLowerCase());
+				$("[data-option='browserstyle']").children('.value').text(settings.browserstyle.labels[c]);
+			}
+		},
 		"username": {
 			"typeof": "input",
 			"category": "eldewrito",
