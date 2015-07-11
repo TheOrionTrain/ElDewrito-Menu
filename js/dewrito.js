@@ -320,12 +320,25 @@ function toggleNetwork() {
 }
 
 $(document).ready(function() {
+
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
 		$('#style').attr('href', 'css/'+CSSfile+'.css');
-		if(CSSfile == "halo3") {
-			Halo3Convert();
-		}
+
+		switch (CSSfile) {
+
+            case "halo2":
+                Halo2Convert();
+                break;
+
+            case "halo3":
+                Halo3Convert();
+                break;
+
+            default:
+                break;
+        }
+      
 	}
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
@@ -1477,4 +1490,14 @@ function popup(message) {
 	setTimeout(function() {
 		$('#popup').fadeOut(anit);
 	}, 8000);
+}
+
+
+/* Update Menus */
+function Halo2Convert() {
+    // Change videos
+    setTimeout(function() {
+        $("#bg1").attr("src", "video/Halo 2.webm");
+    }, 1000);
+
 }
