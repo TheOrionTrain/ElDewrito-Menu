@@ -721,9 +721,6 @@ audio {
 
 .selection:hover:before, .server:hover:before, .selection.gp-on:before, .server.gp-on:before {
     content: " ";
-  
-  
-  
     display: inline-block;
     position: absolute;
     z-index: -1;
@@ -735,8 +732,6 @@ audio {
     opacity: 0.6;
     background-size: contain;
 }
-
-
 
 .selection.selected {
     border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
@@ -1024,7 +1019,7 @@ audio {
 /* close commented backslash hack */
 
 #dewrito {
-    background: url(../img/halo2logo.png) no-repeat 0 0 !important;
+    background: url(../img/Halo2Logo.png) no-repeat 0 0 !important;
     width: 339px;
     height: 45px;
     bottom: 400px;
