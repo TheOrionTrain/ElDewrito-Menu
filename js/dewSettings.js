@@ -160,7 +160,6 @@ var user = {
 				var c = settings.resolution.current,
 					l = settings.resolution.labels[c],
 					s = window.innerHeight / 720;
-				console.log(s);
 				if (c === 0) {
 					if (1280 * s > window.innerWidth) {
 						s = window.innerWidth / 1280;

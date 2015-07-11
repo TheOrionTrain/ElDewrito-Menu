@@ -3,6 +3,7 @@
     https://creativecommons.org/licenses/by-nc-sa/4.0/
 */
 var players = [],
+    masterServers = [],
 	joined = 0,
 	track = 5,
 	scale = 1,
@@ -22,26 +23,37 @@ var players = [],
 	Halo3Index = 6,
 	currentVersion,
 	usingGamepad = false,
-	currentMenu = "main2";
+	currentMenu = "main2",
+    debug = false;
 
 (function() {
 	var e = (window.innerHeight - 80) / 2;
 	$('.pace .pace-progress:after').css('top', e);
+
+    var d = getURLParameter('debug');
+    if (d !== undefined && d == "1") {
+        console.log("debug yes");
+    }
+
 })();
 
-var masterServers = [];
+function debugLog(val) {
+    if (!debug) return;
+
+    console.log(val);
+}
 
 function getMasterServers(cb) {
 	$.getJSON("https://raw.githubusercontent.com/ElDewrito/ElDorito/master/dewrito.json", function(data) {
 		$.each(data.masterServers, function(key, val) {
-			console.log("Trying master server: " + val['list']);
+			debugLog("Trying master server: " + val['list']);
 			$.ajax({
 				url: val['list'],
 				dataType: 'json',
 				jsonp: false,
 				success: function(data) {
 					if (data.result['msg'] == "OK") {
-						console.log("Master server " + val['list'] + " is online and OK");
+						debugLog("Master server " + val['list'] + " is online and OK");
 						masterServers.push(val);
 						if (masterServers.length == 1) {
 							cb();
@@ -198,7 +210,7 @@ function addServer(i, geoloc) {
 
 function initalize() {
 	//dewRcon.send('player.name');
-	console.log(dewRcon.lastMessage);
+	debugLog(dewRcon.lastMessage);
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
@@ -230,7 +242,7 @@ function initalize() {
                 ],
 				change: function(color) {
 					changeSetting(set, color.toHexString());
-					console.log(color.toHexString());
+					debugLog(color.toHexString());
 				}
 			});
 		}
@@ -579,7 +591,7 @@ function totalPlayersLoop() {
 
 function playersJoin(number, max, time, ip) {
 	$.getJSON("http://" + ip, function(serverInfo) {
-		console.log(ip);
+		debugLog(ip);
 		players = serverInfo.players;
 		var teamGame = false;
 		var colour = "#000000";
@@ -1107,7 +1119,7 @@ function changeMenu(menu, details) {
 		gp_on = 1;
 		gamepadSelect(currentMenu + "-" + gp_on);
 	}
-	console.log(currentMenu);
+	debugLog(currentMenu);
 }
 
 var KDdata = [{
@@ -1258,7 +1270,7 @@ function changeSettingsMenu(setting) {
 		gamepadSelect(currentMenu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', 'setting-settings');
-	console.log(currentMenu);
+	debugLog(currentMenu);
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
 }
@@ -1277,7 +1289,7 @@ function changeSettingsBack() {
 		gamepadSelect(last_menu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', last_back);
-	console.log(currentMenu);
+	debugLog(currentMenu);
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
 }
@@ -1400,7 +1412,7 @@ function changeType2(type, click) {
 			"background-image": "url('img/gametypes/" + currentType.toString().capitalizeFirstLetter + ".png')"
 		});
 	}
-	console.log(type);
+	debugLog(type);
 	dewRcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
 	$('#gametype-display').text(type.toUpperCase());
 	$('#type-name-options').text(type.toUpperCase());
@@ -1418,14 +1430,6 @@ function changeType2(type, click) {
 	}
 }
 
-function clearAllCookies() {
-	for (var i = 0; i < Object.keys(settings).length; i++) {
-		var set = Object.keys(settings)[i];
-		$.removeCookie(set);
-	}
-	alert("All cookies reset.");
-	window.location.reload();
-}
 
 function popup(message) {
 	$('#popup').text(message);
