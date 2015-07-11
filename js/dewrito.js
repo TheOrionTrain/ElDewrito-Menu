@@ -315,6 +315,7 @@ $(document).ready(function() {
 
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
+
 		$('#style').attr('href', 'css/'+CSSfile+'.css');
 
 		switch (CSSfile) {
@@ -328,6 +329,7 @@ $(document).ready(function() {
                 break;
 
             default:
+                Halo3Convert(); 
                 break;
         }
       
