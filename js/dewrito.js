@@ -333,10 +333,10 @@ $(document).ready(function() {
                 break;
 
             default:
-                Halo3Convert(); 
+                Halo3Convert();
                 break;
         }
-      
+
 	}
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
@@ -466,7 +466,7 @@ function lobbyLoop(ip) {
 			$('#gametype-display').text(serverInfo.variant.toUpperCase());
 			if (serverInfo.variantType === "none")
 				serverInfo.variantType = "slayer";
-			$('#gametype-icon').css('background', "url('img/gametypes/" + serverInfo.variantType.toString().capitalizeFirstLetter() + ".png') no-repeat 0 0/cover");
+			$('#gametype-icon').css('background', "url('img/gametypes/" + (serverInfo.variantType === "ctf" || serverInfo.variantType === "koth") ? serverInfo.variantType : serverInfo.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 
 			players.sort(function(a, b){return a.team-b.team});
 			$('#lobby').empty();
@@ -682,6 +682,8 @@ function changeMenu(menu, details) {
 		$('#network-toggle').attr('data-gp', 'customgame-x').hide();
 		$('#type-selection').attr('data-gp', 'customgame-1').show();
 		currentType = "Slayer";
+		if (currentType == "Ctf")
+			currentType = "ctf";
 		$('#gametype-icon').css({
 			"background-image": "url('img/gametypes/" + currentType + ".png')"
 		});
@@ -794,7 +796,7 @@ function changeMenu(menu, details) {
 			$('#gametype-display').text(d.gametype.toUpperCase());
 			if (d.gameparent === "none")
 				d.gameparent = "Slayer";
-			$('#gametype-icon').css('background', "url('img/gametypes/" + d.gameparent.toString().replace("%20", " ").capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
+			$('#gametype-icon').css('background', "url('img/gametypes/" + (d.gameparent === "ctf" || d.gameparent === "koth") ? d.gameparent : d.gameparent.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 			$('#serverbrowser').css({
 				"top": "720px"
 			});
@@ -1415,10 +1417,10 @@ function changeType2(type, click) {
 		});
 	} else {
 		$('#gametype-icon').css({
-			"background-image": "url('img/gametypes/" + currentType.toString().capitalizeFirstLetter + ".png')"
+			"background-image": "url('img/gametypes/" + (currentType === "ctf" || currentType === "koth") ? currentType : currentType.toString().capitalizeFirstLetter + ".png')"
 		});
 		$('#type-icon-options').css({
-			"background-image": "url('img/gametypes/" + currentType.toString().capitalizeFirstLetter + ".png')"
+			"background-image": "url('img/gametypes/" + (currentType === "ctf" || currentType === "koth") ? currentType : currentType.toString().capitalizeFirstLetter + ".png')"
 		});
 	}
 	debugLog(type);
@@ -1454,6 +1456,10 @@ function Halo1Convert() {
     // Change videos
     setTimeout(function() {
         $("#bg1").attr("src", "video/Halo CE.webm");
+				settings.musictrack.current = 2;
+				settings.musictrack.update();
+				settings.background.current = 4;
+				settings.background.update();
     }, 1000);
 
 }
@@ -1463,6 +1469,10 @@ function Halo2Convert() {
     // Change videos
     setTimeout(function() {
         $("#bg1").attr("src", "video/Halo 2.webm");
+				settings.musictrack.current = 3;
+				settings.musictrack.update();
+				settings.background.current = 5;
+				settings.background.update();
     }, 1000);
 
 }
