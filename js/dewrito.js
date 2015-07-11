@@ -317,30 +317,7 @@ $(document).ready(function() {
 	if (CSSfile) {
 
 		$('#style').attr('href', 'css/'+CSSfile+'.css');
-
-		switch (CSSfile) {
-
-            case "halo1":
-                Halo1Convert();
-                break;
-
-            case "halo2":
-                Halo2Convert();
-                break;
-
-            case "halo3":
-                Halo3Convert();
-                break;
-
-            case "halo3odst":
-                Halo3ODSTConvert();
-                break;
-
-            default:
-                Halo3Convert();
-                break;
-        }
-
+        menuConvert(CSSfile)
 	}
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
@@ -1452,39 +1429,4 @@ function popup(message) {
 	setTimeout(function() {
 		$('#popup').fadeOut(anit);
 	}, 8000);
-}
-
-
-/* Update Menus */
-function Halo1Convert() {
-    setTimeout(function() {
-        $("#bg1").attr("src", "video/Halo CE.webm");
-				settings.musictrack.current = 2;
-				settings.musictrack.update();
-				settings.background.current = 4;
-				settings.background.update();
-    }, 1000);
-
-}
-
-
-function Halo2Convert() {
-    setTimeout(function() {
-        $("#bg1").attr("src", "video/Halo 2.webm");
-				settings.musictrack.current = 3;
-				settings.musictrack.update();
-				settings.background.current = 5;
-				settings.background.update();
-    }, 1000);
-
-}
-
-
-function Halo3ODSTConvert() {
-    setTimeout(function() {
-        settings.musictrack.current = 7;
-        settings.musictrack.update();
-        settings.background.current = 7;
-        settings.background.update();
-    }, 1000);
 }

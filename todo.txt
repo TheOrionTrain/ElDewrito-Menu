@@ -19,8 +19,7 @@ Halo 3 Custom Edition To-Do List
 15. Add keyboard navigation, piggyback off of gamepad functions with Mousetrap.js
 16. Add controls to bottom of menu like Reach
 17. Remove unused code
-18. Combine global CSS into one file for reach, halo2, and halo3 to share to lower CSS filesizes
-19. Take suggestions from people in IRC for more additions/improvements/bug fixes
+18. Take suggestions from people in IRC for more additions/improvements/bug fixes
 
 
 Add any suggestions or things I may have missed to this list.
