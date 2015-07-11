@@ -319,10 +319,13 @@ function toggleNetwork() {
 	$('#click')[0].play();
 }
 
-$(document).ready(function() {
-	if (getURLParameter('css') == "halo3") {
-		$('#style').attr('href', 'css/halo3.css');
-		Halo3Convert();
+$(document).ready(function() {\
+	var CSSfile = getURLParameter('css');
+	if (CSSfile) {
+		$('#style').attr('href', 'css/'+CSSfile+'.css');
+		if(CSSfile == "halo3") {
+			Halo3Convert();
+		}
 	}
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
