@@ -256,7 +256,7 @@ audio {
 }
 .animated {
     -webkit-transition: 400ms;
-    -webkit-transition-timing-function: cubic-bezier(.55, 0, .1, 1);
+    -webkit-transition-timing-function: cubic-bezier(0.42, 0, 0.29, 0.85);
     -moz-transition: 400ms;
     -moz-transition-timing-function: cubic-bezier(.55, 0, .1, 1);
     transition: 400ms;
@@ -407,13 +407,22 @@ audio {
     left: 90px;
     width: 450px;
 }
+
+.select-main{
+    background: -webkit-linear-gradient(top, rgba(0, 0, 20, 1) 25%, rgba(0, 0, 25, 0.1) 100%); 
+    background-repeat:no-repeat;
+    background-size:100% 21.9%;
+    background-position:10% 100%;
+}
+
 .select-main {
     position: absolute;
     bottom: 0px;
     left: 90px;
     width: 350px;
-    background: rgba(0, 0, 20, 0.8);
+    background-color: rgba(0, 0, 25, 0.8);
     height: 300px;
+
 }
 .map-select,
 .type-select,
@@ -558,6 +567,9 @@ audio {
 .right {
     background-image: url('../img/right.png');
 }
+
+
+
 #select .selection,
 .select-main .selection {
     font-weight: 300;
@@ -570,6 +582,7 @@ audio {
     border-top: 1px solid rgba(255, 110, 0, 0);
     border-bottom: 1px solid rgba(255, 110, 0, 0);
     color: rgba(138, 155, 185, 1);
+
 }
 .select-main .selection {
     font-size: 22px;
