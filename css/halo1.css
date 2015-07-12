@@ -2,7 +2,7 @@
     font-family: 'Denmark';
     font-style: normal;
     font-weight: 300;
-    src: url("../fonts/denmark.woff") format('woff');
+    src: url("../fonts/Denmark.woff") format('woff');
 }
 * {
     font-family: "Denmark";
@@ -83,6 +83,8 @@ body {
 html {
     background: #000;
 }
+=======
+>>>>>>> 209cdbf6e52e3f19b958f1c8ce23fdcda99bce23
 #browser-buttons {
     width: 600px;
     height: 28px;
@@ -150,59 +152,6 @@ html {
 }
 #clear {
     display: none;
-}
-@-webkit-keyframes rotatingcw {
-    from {
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(-360deg);
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-@keyframes rotatingcw {
-    from {
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(360deg);
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-@-webkit-keyframes rotating {
-    from {
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(-360deg);
-        -webkit-transform: rotate(-360deg);
-        transform: rotate(-360deg);
-    }
-}
-@keyframes rotating {
-    from {
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(-360deg);
-        -webkit-transform: rotate(-360deg);
-        transform: rotate(-360deg);
-    }
-}
-.rotating {
-    -webkit-animation: rotating 2s linear infinite;
-    -moz-animation: rotating 2s linear infinite;
-    animation: rotating 2s linear infinite;
 }
 #players-online {
     position: absolute;
@@ -910,13 +859,6 @@ audio {
     display: none;
     z-index: 999;
 }
-#version {
-    right: 5px;
-    bottom: 5px;
-    font-size: 14px;
-    opacity: 0.5;
-    font-weight: 300;
-}
 .options-menu {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
     /* FF3.6+ */
@@ -966,61 +908,6 @@ audio {
     z-index: 3;
     opacity: 0.67;
 }
-/* Country Flags */
-
-#browser .name {
-    position: relative;
-    padding-top: 12px;
-}
-#browser .flag {
-    position: relative;
-    top: 0px;
-    display: inline-block;
-    vertical-align: top;
-    max-width: 30px;
-    max-height: 23px;
-}
-/* Passworded Image */
-
-.server.passworded {
-    position: relative;
-}
-.server.passworded .thumb:before {
-    content: " ";
-    display: block;
-    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
-    width: 210px;
-    height: 79px;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    top: 11px;
-    left: 15px;
-    background-size: 15%;
-}
-/* Clearfix */
-
-.cf:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-}
-.cf {
-    display: inline-block;
-}
-/* start commented backslash hack \*/
-
-* html .cf {
-    height: 1%;
-}
-.cf {
-    display: block;
-}
-/* close commented backslash hack */
-
 #dewrito {
     background: url(../img/halo-logo.png) no-repeat 0 0 !important;
     width: 400px;

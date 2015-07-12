@@ -1,0 +1,277 @@
+#donation {
+    font-family: "Conduit ITC";
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    position: absolute;
+    left: 300px;
+    bottom: 40px;
+    width: 680px;
+}
+
+.regular .elversion {
+    font-size: 15px;
+}
+.condensed .elversion {
+    font-size: 14px;
+}
+.list .elversion {
+    font-size: 15px;
+}
+.elversion {
+    vertical-align: middle;
+    padding-left: 10px;
+}
+#loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+#loadingMapImage {
+    z-index: 20;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: url('../img/loading/maps/diamondback.png') 50% 50% / contain no-repeat;
+}
+#loadingBars {
+    z-index: 22;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: url('../img/loading/bars.png') 50% 50% / contain no-repeat;
+}
+#hoImage {
+    z-index: 22;
+    position: absolute;
+    top: -20px;
+    left: 15px;
+    width: 20%;
+    height: 20%;
+    background: url('../img/loading/ho.png') 50% 50% / contain no-repeat;
+}
+#edImage {
+    z-index: 22;
+    position: absolute;
+    top: 635px;
+    left: 0px;
+    width: 10%;
+    height: 10%;
+    background: url('../img/loading/ed.png') 50% 50% / contain no-repeat;
+}
+#loadingGametypeImage {
+    z-index: 22;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 80px;
+    height: 80px;
+    background: url('../img/gametypes/Slayer.png') 0 0 / cover no-repeat;
+}
+#loadingMapName {
+    z-index: 22;
+    position: absolute;
+    bottom: 35px;
+    left: 8%;
+    font-family: "Conduit ITC";
+    font-weight: 300;
+    font-size: 30px;
+    color: #fff;
+}
+#mapOverlay {
+    z-index: 22;
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    width: 55%;
+    height: 60%;
+    background: url('../img/loading/maps/db-overlay.png') 50% 50% / contain no-repeat;
+}
+#popup {
+    position: fixed;
+    z-index: 3000;
+    top: 20px;
+    right: 20px;
+    max-width: 250px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #fff;
+    display: none;
+    background: rgba(0, 0, 0, 0.66);
+    border-radius: 8px;
+}
+html {
+    background: #000;
+}
+@-webkit-keyframes rotatingcw {
+    from {
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(-360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotatingcw {
+    from {
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes rotating {
+    from {
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(-360deg);
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+@keyframes rotating {
+    from {
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(-360deg);
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+.rotating {
+    -webkit-animation: rotating 2s linear infinite;
+    -moz-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+}
+#version {
+    right: 5px;
+    bottom: 5px;
+    font-size: 14px;
+    opacity: 0.5;
+    font-family: "Conduit ITC";
+    font-weight: 300;
+}
+#back,
+#version {
+    position: absolute;
+    cursor: pointer;
+    z-index: 4;
+    color: #fff;
+}
+#browser.list .flag {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    vertical-align: top;
+    max-width: 30px;
+    max-height: 20px;
+}
+#browser.regular .name {
+    position: relative;
+    padding-top: 12px;
+}
+#browser.regular .flag {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    vertical-align: top;
+    max-width: 30px;
+    max-height: 23px;
+}
+#browser.condensed .name {
+    position: relative;
+    padding-top: 6px;
+}
+#browser.condensed .flag {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    vertical-align: top;
+    max-width: 30px;
+    max-height: 18px;
+}
+.server.passworded {
+    position: relative;
+}
+.regular .server.passworded .thumb:before {
+    content: " ";
+    display: block;
+    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
+    width: 210px;
+    height: 79px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 11px;
+    left: 15px;
+    background-size: 15%;
+}
+.condensed .server.passworded .thumb:before {
+    content: " ";
+    display: block;
+    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
+    width: 210px;
+    height: 60px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 6px;
+    left: 15px;
+    background-size: 15%;
+}
+.list .server.passworded .thumb:before {
+    content: " ";
+    display: block;
+    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
+    width: 71px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 3px;
+    left: 15px;
+    background-size: 15%;
+}
+.cf:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+.cf {
+    display: inline-block;
+}
+/* start commented backslash hack \*/
+
+* html .cf {
+    height: 1%;
+}
+.cf {
+    display: block;
+}
+/* close commented backslash hack */

@@ -97,7 +97,6 @@ function getServers() {
 }
 
 function queryServer(serverIP, i) {
-
 	var startTime = Date.now(),
 		endTime,
 		ping;
@@ -107,7 +106,7 @@ function queryServer(serverIP, i) {
 		async: true,
 		success: function() {
 			endTime = Date.now();
-			ping = endTime - startTime;
+			ping = Math.round((endTime - startTime)/1.60); //Aproximate ping, may change from 1.75 later
 		}
 	});
 	$.getJSON("http://" + serverIP, function(serverInfo) {
@@ -125,6 +124,7 @@ function queryServer(serverIP, i) {
 				"map": sanitizeString(getMapName(serverInfo.mapFile)),
 				"file": sanitizeString(serverInfo.mapFile),
 				"status": sanitizeString(serverInfo.status),
+                "version": sanitizeString(serverInfo.eldewritoVersion),
 				"ping": ping,
 				"players": {
 					"max": parseInt(serverInfo.maxPlayers),
@@ -134,7 +134,6 @@ function queryServer(serverIP, i) {
 			};
 		}
 		if (typeof servers[i] !== 'undefined') {
-			//Fuck off ImplodeExplode, I do what I want
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
 			$.ajax({
 				url: 'http://www.telize.com/geoip/' + serverIP.split(':')[0],
@@ -182,11 +181,8 @@ var gp_servers = 0;
 
 
 function addServer(i, geoloc) {
-
 	var location_flag = "";
-
 	i = parseInt(i);
-
 	if (!geoloc) {
 		geoloc = {};
 		geoloc.country_code = "";
@@ -196,7 +192,7 @@ function addServer(i, geoloc) {
 	}
 	++gp_servers;
 	var on = (!servers[i].gametype) ? "" : "on";
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].status + ")  " + location_flag + servers[i].ping + "ms] </span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + "</span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + servers[i].map.toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].status + ")  " + location_flag + servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].version + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -212,8 +208,6 @@ function addServer(i, geoloc) {
 }
 
 function initalize() {
-	//dewRcon.send('player.name');
-	debugLog(dewRcon.lastMessage);
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
@@ -317,30 +311,7 @@ $(document).ready(function() {
 	if (CSSfile) {
 
 		$('#style').attr('href', 'css/'+CSSfile+'.css');
-
-		switch (CSSfile) {
-
-            case "halo1":
-                Halo1Convert();
-                break;
-
-            case "halo2":
-                Halo2Convert();
-                break;
-
-            case "halo3":
-                Halo3Convert();
-                break;
-
-            case "halo3odst":
-                Halo3ODSTConvert();
-                break;
-
-            default:
-                Halo3Convert();
-                break;
-        }
-
+        menuConvert(CSSfile)
 	}
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
@@ -432,7 +403,6 @@ $(document).ready(function() {
 
 
 function loadServers() {
-	dewRcon.send("player.name");
 	if (browsing === 1) {
 		$('#refresh img').addClass('rotating');
 		setTimeout(function() {
@@ -455,6 +425,7 @@ function loadServers() {
 function lobbyLoop(ip) {
 	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
+      console.log('loop');
 			players = serverInfo.players;
 			var teamGame = false;
 			var colour = "#000000";
@@ -486,7 +457,7 @@ function lobbyLoop(ip) {
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
 				if (typeof players[i] != 'undefined' && players[i].name != "") {
 					if (teamGame)
-						colour = (parseInt(players[i].team) === 0) ? "#800000" : "#000080";
+						colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
 					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 					$('#player' + i).css("display", "none");
 					$('#player' + i).fadeIn(anit);
@@ -626,7 +597,7 @@ function playersJoin(number, max, time, ip) {
 		for (var i = 0; i < serverInfo.numPlayers; i++) {
 			if (typeof players[i] != 'undefined' && players[i].name != "") {
 				if (teamGame)
-					colour = (parseInt(players[i].team) === 0) ? "#800000" : "#000080";
+					colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
 				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				$('#player' + i).css("display", "none");
 				$('#player' + i).fadeIn(anit);
@@ -663,8 +634,8 @@ function playersJoin(number, max, time, ip) {
 }
 
 function changeMenu(menu, details) {
-	var f;
-	////callbacks.playerName("\"" + settings.username.current + "\"");
+	var f, changes = menu.split("-"), f = changes[0], t = changes[1];
+    console.log("From " + f + " to " + t);
 	if (menu == "main-custom") {
 		if (settings.background.current == Halo3Index) {
 			$('#bg1').fadeOut(anit);
@@ -1139,12 +1110,12 @@ function changeMenu(menu, details) {
 
 var KDdata = [{
 		value: 1,
-		color: "#cf3e3e",
+		color: "#c02020",
 		highlight: "#ed5c5c",
 		label: "Deaths"
     }, {
 		value: 1,
-		color: "#375799",
+		color: "#214EC0",
 		highlight: "#5575b7",
 		label: "Kills"
     }],
@@ -1452,40 +1423,4 @@ function popup(message) {
 	setTimeout(function() {
 		$('#popup').fadeOut(anit);
 	}, 8000);
-}
-
-
-/* Update Menus */
-function Halo1Convert() {
-    setTimeout(function() {
-        $("#bg1").attr("src", "video/Halo CE.webm");
-				settings.musictrack.current = 2;
-				settings.musictrack.update();
-				settings.background.current = 4;
-				settings.background.update();
-    }, 1000);
-
-}
-
-
-function Halo2Convert() {
-    setTimeout(function() {
-        $("#bg1").attr("src", "video/Halo 2.webm");
-				settings.musictrack.current = 3;
-				settings.musictrack.update();
-				settings.background.current = 5;
-				settings.background.update();
-    }, 1000);
-
-}
-
-
-function Halo3ODSTConvert() {
-    setTimeout(function() {
-        $("#bg1").attr("src", "video/Halo 3 ODST.webm");
-                settings.musictrack.current = 3;
-                settings.musictrack.update();
-                settings.background.current = 7;
-                settings.background.update();
-    }, 1000);
 }
