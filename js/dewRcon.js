@@ -67,7 +67,7 @@ function loadSettings() {
 													dewRcon.send('server.password');
 													after(10, function() {
 															settings.serverpass.current = dewRcon.lastMessage;
-															settings.servername.update();
+															settings.serverpass.update();
 															dewRcon.send('input.rawinput');
 															after(10, function() {
 																	settings.rawinput.current = parseInt(dewRcon.lastMessage);

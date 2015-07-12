@@ -542,6 +542,10 @@ var user = {
 			"current": isset($.cookie('serverpass'), ""),
 			"update": function() {
 				var c = settings.serverpass.current;
+				if (dewRcon.open) {
+						dewRcon.send('server.password ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='serverpass']").children('.input').children('input').val(c);
 			}
 		},
