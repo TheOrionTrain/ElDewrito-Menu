@@ -111,7 +111,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "MUSIC VOLUME",
-			"current": isset($.cookie('musicvolume', Number), 0.25),
+			"current": isset($.cookie('musicvolume', Number), 0.0),
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
