@@ -106,7 +106,7 @@ function queryServer(serverIP, i) {
 		async: true,
 		success: function() {
 			endTime = Date.now();
-			ping = Math.round((endTime - startTime)/1.75); //Aproximate ping, may change from 1.75 later
+			ping = Math.round((endTime - startTime)/1.60); //Aproximate ping, may change from 1.75 later
 		}
 	});
 	$.getJSON("http://" + serverIP, function(serverInfo) {
