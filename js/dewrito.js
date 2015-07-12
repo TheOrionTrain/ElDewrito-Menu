@@ -464,7 +464,7 @@ function lobbyLoop(ip) {
 			for (var i = 0; i < serverInfo.numPlayers; i++) {
 				if (typeof players[i] != 'undefined' && players[i].name != "") {
 					if (teamGame)
-						colour = (parseInt(players[i].team) === 0) ? "#cf3e3e" : "#375799";
+						colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#4040c0";
 					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 					$('#player' + i).css("display", "none");
 					$('#player' + i).fadeIn(anit);
@@ -604,7 +604,7 @@ function playersJoin(number, max, time, ip) {
 		for (var i = 0; i < serverInfo.numPlayers; i++) {
 			if (typeof players[i] != 'undefined' && players[i].name != "") {
 				if (teamGame)
-					colour = (parseInt(players[i].team) === 0) ? "#cf3e3e" : "#375799";
+					colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#4040c0";
 				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				$('#player' + i).css("display", "none");
 				$('#player' + i).fadeIn(anit);
@@ -1117,12 +1117,12 @@ function changeMenu(menu, details) {
 
 var KDdata = [{
 		value: 1,
-		color: "#cf3e3e",
+		color: "#c02020",
 		highlight: "#ed5c5c",
 		label: "Deaths"
     }, {
 		value: 1,
-		color: "#375799",
+		color: "#4040c0",
 		highlight: "#5575b7",
 		label: "Kills"
     }],
