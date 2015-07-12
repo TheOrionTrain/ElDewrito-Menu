@@ -603,7 +603,7 @@ function playersJoin(number, max, time, ip) {
 		for (var i = 0; i < serverInfo.numPlayers; i++) {
 			if (typeof players[i] != 'undefined' && players[i].name != "") {
 				if (teamGame)
-					colour = (parseInt(players[i].team) === 0) ? "#800000" : "#000080";
+					colour = (parseInt(players[i].team) === 0) ? "#cf3e3e" : "#375799";
 				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				$('#player' + i).css("display", "none");
 				$('#player' + i).fadeIn(anit);
