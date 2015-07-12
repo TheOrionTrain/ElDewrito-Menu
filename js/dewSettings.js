@@ -289,6 +289,10 @@ var user = {
 			"update": function() {
 				var c = settings.username.current;
 				user.name = c;
+				if (dewRcon.open) {
+						dewRcon.send("player.name \"" + c + "\"");
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='username']").children('.input').children('input').val(c);
 			}
 		},
@@ -363,6 +367,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.rawinput.current;
+				if (dewRcon.open) {
+						dewRcon.send('input.rawinput ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='rawinput']").children('.value').text(settings.rawinput.labels[c]);
 			}
 		},
@@ -416,6 +424,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.centeredcrosshair.current;
+				if (dewRcon.open) {
+						dewRcon.send('camera.crosshair ' + c);
+						dewRcon.send('writeconfig');
+				}
 				//dewRcon.send('camera.crosshair ' + settings.centeredcrosshair.labels[c] === "ON" ? '1' : '0');
 				//dewRcon.send('writeconfig');
 				$("[data-option='centeredcrosshair']").children('.value').text(settings.centeredcrosshair.labels[c]);
@@ -466,6 +478,10 @@ var user = {
 			"increment": 5,
 			"update": function() {
 				var c = settings.fov.current;
+				if (dewRcon.open) {
+						dewRcon.send('camera.fov ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='fov']").children('.value').text(c);
 			}
 		},
@@ -479,6 +495,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.starttimer.current;
+				if (dewRcon.open) {
+						dewRcon.send('server.countdown ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='starttimer']").children('.value').text(c);
 			}
 		},
@@ -492,6 +512,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.maxplayers.current;
+				if (dewRcon.open) {
+						dewRcon.send('server.maxplayers ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='maxplayers']").children('.value').text(c);
 			}
 		},
@@ -502,6 +526,12 @@ var user = {
 			"current": isset($.cookie('servername'), "Halo Online Server"),
 			"update": function() {
 				var c = settings.servername.current;
+				if (dewRcon.open) {
+						console.log(c);
+						dewRcon.send("server.name \"" + c + "\"");
+						dewRcon.send('writeconfig');
+						console.log(c);
+				}
 				$("[data-option='servername']").children('.input').children('input').val(c);
 			}
 		},
