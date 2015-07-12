@@ -210,8 +210,6 @@ function addServer(i, geoloc) {
 }
 
 function initalize() {
-	//dewRcon.send('player.name');
-	debugLog(dewRcon.lastMessage);
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
@@ -407,7 +405,6 @@ $(document).ready(function() {
 
 
 function loadServers() {
-	dewRcon.send("player.name");
 	if (browsing === 1) {
 		$('#refresh img').addClass('rotating');
 		setTimeout(function() {
