@@ -320,7 +320,7 @@ $(document).ready(function() {
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
 		setTimeout(function() {
-			dewRcon.send('setenabled true');
+			dewRcon.send('game.togglemenu');
 		}, anit);
 	});
 	initalize();
@@ -1191,7 +1191,7 @@ function startgame(ip, mode) {
 				$('#loading').show();
 				$('#back').remove();
 			} else {
-				dewRcon.send('setenabled true');
+				dewRcon.send('game.togglemenu');
 			}
 		} else if (mode[1] === "FORGE") {
 
