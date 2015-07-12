@@ -66,8 +66,10 @@ function loadSettings() {
 													settings.maxplayers.update();
 													dewRcon.send('server.password');
 													after(10, function() {
-															settings.serverpass.current = dewRcon.lastMessage;
-															settings.serverpass.update();
+															if (isNaN(dewRcon.lastMessage)) {
+																	settings.serverpass.current = dewRcon.lastMessage;
+																	settings.serverpass.update();
+															}
 															dewRcon.send('input.rawinput');
 															after(10, function() {
 																	settings.rawinput.current = parseInt(dewRcon.lastMessage);
