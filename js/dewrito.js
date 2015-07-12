@@ -97,7 +97,6 @@ function getServers() {
 }
 
 function queryServer(serverIP, i) {
-
 	var startTime = Date.now(),
 		endTime,
 		ping;
@@ -107,7 +106,7 @@ function queryServer(serverIP, i) {
 		async: true,
 		success: function() {
 			endTime = Date.now();
-			ping = endTime - startTime;
+			ping = Math.round((endTime - startTime)/1.75); //Aproximate ping, may change from 1.75 later
 		}
 	});
 	$.getJSON("http://" + serverIP, function(serverInfo) {
@@ -135,7 +134,6 @@ function queryServer(serverIP, i) {
 			};
 		}
 		if (typeof servers[i] !== 'undefined') {
-			//Fuck off ImplodeExplode, I do what I want
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
 			$.ajax({
 				url: 'http://www.telize.com/geoip/' + serverIP.split(':')[0],
