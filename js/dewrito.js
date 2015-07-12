@@ -430,6 +430,7 @@ function loadServers() {
 function lobbyLoop(ip) {
 	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
+      console.log('loop');
 			players = serverInfo.players;
 			var teamGame = false;
 			var colour = "#000000";
