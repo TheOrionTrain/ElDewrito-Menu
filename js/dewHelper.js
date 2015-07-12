@@ -68,15 +68,13 @@ function clearAllCookies() {
 
 function checkFileExists(f) {
 	$.ajax({
-    url: f,
-    type:'HEAD',
-    error: function()
-    {
-       return false;
-    },
-    success: function()
-    {
-        return true;
-    }
-});
+    	url: f,
+    	type:'HEAD',
+    	error: function() {
+       	return false;
+    	},
+    	success: function() {
+        	return true;
+    	}
+	});
 }
