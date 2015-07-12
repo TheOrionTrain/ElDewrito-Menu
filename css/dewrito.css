@@ -1,3 +1,16 @@
+.regular .elversion {
+    font-size: 15px;
+}
+.condensed .elversion {
+    font-size: 14px;
+}
+.list .elversion {
+    font-size: 15px;
+}
+.elversion {
+    vertical-align: middle;
+    padding-left: 10px;
+}
 #loading {
     position: absolute;
     left: 0;
