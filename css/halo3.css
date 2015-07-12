@@ -566,6 +566,11 @@ audio {
     border-top: 1px solid rgba(255, 110, 0, 0);
     border-bottom: 1px solid rgba(255, 110, 0, 0);
 }
+.select-main .selection[data-gp$=main2-1] {
+    font-size: 22px;
+    border-top: 1px solid rgba(222, 222, 222, 0.30);
+    border-bottom: 1px solid rgba(222, 222, 222, 0.30);
+}
 .select-main .selection {
     font-size: 22px;
 }
@@ -591,9 +596,11 @@ audio {
 .server:hover,
 .selection.gp-on,
 .server.gp-on {
-    background: -webkit-linear-gradient(left, rgba(255, 110, 0, 0.85) 0%, rgba(255, 110, 0, 0.25) 100%);
-    border-top: 1px solid rgba(255, 110, 0, 0.85);
-    border-bottom: 1px solid rgba(255, 110, 0, 0.85);
+    transition-timing-function: ease-in-out;
+    background: -webkit-linear-gradient(left, rgba(199, 109, 41, 0.85) 0%, rgba(255, 110, 0, 0.25) 95%);
+    background-size: 100% 90%;
+    background-repeat:no-repeat;
+    background-position:100% 50%;
     cursor: pointer;
     color: rgba(235, 235, 255, 0.95);
 }
