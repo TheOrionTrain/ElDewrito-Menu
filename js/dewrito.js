@@ -352,8 +352,9 @@ $(document).ready(function() {
 		else
 			startgame(servers[selectedserver].ip, mode);
 	});
-    Mousetrap.bind('up up down down left right left right b a', function() {
-        window.location = "http://heyyeyaaeyaaaeyaeyaa.com/";
+    Mousetrap.bind('up up down down left right left right b a enter', function() {
+        settings.background.current = 9001;
+        settings.background.update();
     });
 	$('.selection').hover(function() {
 		$('#click')[0].currentTime = 0;
