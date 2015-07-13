@@ -904,7 +904,7 @@ function changeMenu(menu, details) {
 			"top": "720px"
 		});
 		$('#dewrito').css({
-			"top": "50px",
+			"top": "-30px",
 			"left": "265px",
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
@@ -1169,10 +1169,20 @@ function playerInfo(name) {
 }
 
 function startgame(ip, mode) {
+    loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
 		password = servers[selectedserver].password == true ? prompt(servers[selectedserver].name + " has a password, enter the password to join", "") : "";
 	$('#beep')[0].play();
+    setTimeout(function() {
+        $('#beep')[0].play();
+    },1000);
+    setTimeout(function() {
+        $('#beep')[0].play();
+    },2000);
+    setTimeout(function() {
+        $('#beeep')[0].play();
+    },3000);
 	$('#music')[0].pause();
 	$('#black').fadeIn(3000);
 	delay(function() {
@@ -1194,8 +1204,6 @@ function startgame(ip, mode) {
 		} else if (mode[0] === "START" && mode[1] === "GAME") {
 			dewRcon.send('start');
 		}
-		loopPlayers = true;
-		lobbyLoop(ip);
 	}, 3700);
 }
 

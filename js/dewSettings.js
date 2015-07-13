@@ -126,14 +126,14 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "EFFECTS VOLUME",
-			"current": isset($.cookie('sfxvolume', Number), 0.05),
+			"current": isset($.cookie('sfxvolume', Number), 0.25),
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.sfxvolume.current;
 				$('#click')[0].volume = c;
-				$('#slide')[0].volume = (c * 10 >= 1) ? 1 : c * 10;
+				$('#slide')[0].volume = c;
 				$("[data-option='sfxvolume']").children('.value').text(Math.round(c * 100));
 			}
 		},
