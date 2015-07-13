@@ -134,6 +134,7 @@ var user = {
 				var c = settings.sfxvolume.current;
 				$('#click')[0].volume = c;
 				$('#slide')[0].volume = c;
+				$('#notification')[0].volume = c;
 				$('#connectgamepad')[0].volume = c;
 				$("[data-option='sfxvolume']").children('.value').text(Math.round(c * 100));
 			}

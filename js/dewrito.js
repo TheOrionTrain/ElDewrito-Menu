@@ -345,6 +345,7 @@ $(document).ready(function() {
     $('#connectgamepad')[0].volume = settings.musicvolume.current;
 	$('#music')[0].volume = settings.musicvolume.current;
 	$('#click')[0].volume = settings.sfxvolume.current;
+    $('#notification')[0].volume = settings.sfxvolume.current;
 	$('#start').click(function() {
 		var mode = $('#start').children('.label').text().toString().split(" ");
 		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
@@ -1206,7 +1207,7 @@ function startgame(ip, mode) {
 				$('#loading').show();
 				$('#back').remove();
 			} else {
-				dewRcon.send('Game.SetMenuEnabled 0'); 
+				dewRcon.send('Game.SetMenuEnabled 0');
 			}
 		} else if (mode[1] === "FORGE") {
 

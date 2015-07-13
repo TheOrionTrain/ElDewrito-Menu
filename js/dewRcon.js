@@ -1,6 +1,8 @@
 //Coded by DARKC0DE
 var dewRcon,
-	dewRconConnected = false;
+	dewRconConnected = false,
+	snacking = 0,
+	played = 0;
 jQuery(function() {
     StartRconConnection();
     if (!dewRconConnected) {
@@ -10,14 +12,24 @@ jQuery(function() {
 StartRconConnection = function() {
     dewRcon = new dewRconHelper();
     dewRcon.dewWebSocket.onopen = function() {
-        //When we are connected do something
-        jQuery("#connectionStatus").text('Connected!');
-        myCodeMirror.replaceRange('Connected to Eldewrito!', CodeMirror.Pos(myCodeMirror.lastLine()));
+        $.snackbar({content:'Connected!'});
+		$('#notification')[0].currentTime = 0;
+		$('#notification')[0].play();
         dewRconConnected = true;
+		loadSettings();
     };
     dewRcon.dewWebSocket.onerror = function() {
-        //Something bad happened
-        jQuery("#connectionStatus").text('Not connected. Is the game running?!');
+		if(!snacking) {
+			$.snackbar({content:'Not connected. Is the game running?!'});
+			if(!played) {
+				$('#notification')[0].currentTime = 0;
+				$('#notification')[0].play();
+			}
+			snacking = 1;
+			setTimeout(function() {
+				snacking = 0;
+			},10000);
+		}
         dewRconConnected = false;
         StartRconConnection();
     };
@@ -25,10 +37,7 @@ StartRconConnection = function() {
         dewRcon.lastMessage = message.data;
         console.log(dewRcon.lastMessage);
         console.log(dewRcon.lastCommand);
-        //We can display the latest messages from dew using the code below
         console.log(message.data);
-
-        myCodeMirror.replaceRange(message.data, CodeMirror.Pos(myCodeMirror.lastLine()));
     };
 }
 dewRconHelper = function() {
@@ -37,7 +46,6 @@ dewRconHelper = function() {
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
-
     this.send = function(command) {
         this.dewWebSocket.send(command);
         this.lastCommand = command;
