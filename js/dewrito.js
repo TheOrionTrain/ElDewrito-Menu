@@ -342,6 +342,7 @@ $(document).ready(function() {
 		clearAllCookies();
 	});
 	var e = ((window.innerHeight - $('#menu').height()) / 2) - 40;
+    $('#connectgamepad')[0].volume = settings.musicvolume.current;
 	$('#music')[0].volume = settings.musicvolume.current;
 	$('#click')[0].volume = settings.sfxvolume.current;
 	$('#start').click(function() {
