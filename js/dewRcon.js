@@ -4,9 +4,7 @@ var dewRcon,
 	snacking = 0,
 	played = 0;
 jQuery(function() {
-    if(!dewRconConnected){
-    	setTimeout(StartRconConnection, 1000);
-    }
+	StartRconConnection();
 });
 StartRconConnection = function() {
     dewRcon = new dewRconHelper();
@@ -31,7 +29,9 @@ StartRconConnection = function() {
 			},9000);
 		}
         dewRconConnected = false;
-        StartRconConnection();
+        if(!dewRconConnected){
+    		setTimeout(StartRconConnection, 1000);
+	}
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
         dewRcon.lastMessage = message.data;
