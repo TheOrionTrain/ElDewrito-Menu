@@ -351,6 +351,9 @@ $(document).ready(function() {
 		else
 			startgame(servers[selectedserver].ip, mode);
 	});
+    Mousetrap.bind('up up down down left right left right b a', function() {
+        window.location = "http://heyyeyaaeyaaaeyaeyaa.com/";
+    });
 	$('.selection').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
