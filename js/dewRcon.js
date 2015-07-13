@@ -4,9 +4,8 @@ var dewRcon,
 	snacking = 0,
 	played = 0;
 jQuery(function() {
-    StartRconConnection();
-    if (!dewRconConnected) {
-        setTimeout(StartRconConnection, 2000);
+    if(!dewRconConnected){
+    	setTimeout(StartRconConnection, 1000);
     }
 });
 StartRconConnection = function() {
