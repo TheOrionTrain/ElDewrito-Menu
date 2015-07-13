@@ -46,6 +46,7 @@ function gamepadBind() {
 		gamepadSelect("main1");
 		usingGamepad = true;
 		popup("Controller connected! Use the left thumbstick to navigate the menu. Use the A and B buttons to go forwards and back.");
+		$('#connectgamepad')[0].play();
 	});
 
 	gamepad.bind(Gamepad.Event.DISCONNECTED, function(device) {
