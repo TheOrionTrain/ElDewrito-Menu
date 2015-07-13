@@ -306,8 +306,7 @@ function toggleNetwork() {
 }
 
 $(document).ready(function() {
-
-    if(window.location.contains("eldewrito.github.io")) {
+    if(window.location.toLowerCase().indexOf("eldewrito.github.io") >= 0)) {
         $('#donation').remove();
     }
 
