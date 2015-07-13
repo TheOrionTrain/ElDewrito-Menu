@@ -437,8 +437,10 @@ function loadServers() {
 }
 
 function lobbyLoop(ip) {
+  var success = false;
 	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
+      success = true;
       console.log('loop');
 			players = serverInfo.players;
 			var teamGame = false;
@@ -508,6 +510,16 @@ function lobbyLoop(ip) {
 				lobbyLoop(ip);
 		});
 	}, 3000);
+
+    setTimeout(function() {
+      if (!success)
+      {
+          // Handle error accordingly
+          debugLog("Failed to contact server, retrying.");
+          if (loopPlayers)
+    				lobbyLoop(ip);
+      }
+    }, 5000);
 }
 
 function getTotalPlayers() {
