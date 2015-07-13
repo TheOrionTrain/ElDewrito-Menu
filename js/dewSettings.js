@@ -640,7 +640,7 @@ var user = {
 			"current": isset($.cookie('red', Number), 1),
 			"min": 0,
 			"max": 1,
-			"increment": 0.1,
+			"increment": 0.05,
 			"update": function() {
 				var c = settings.red.current;
 				if (dewRcon.open) {
@@ -656,7 +656,7 @@ var user = {
 			"current": isset($.cookie('blue', Number), 1),
 			"min": 0,
 			"max": 1,
-			"increment": 0.1,
+			"increment": 0.05,
 			"update": function() {
 				var c = settings.blue.current;
 				if (dewRcon.open) {
@@ -672,7 +672,7 @@ var user = {
 			"current": isset($.cookie('green', Number), 1),
 			"min": 0,
 			"max": 1,
-			"increment": 0.1,
+			"increment": 0.05,
 			"update": function() {
 				var c = settings.green.current;
 				if (dewRcon.open) {
