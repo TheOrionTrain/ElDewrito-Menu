@@ -206,7 +206,12 @@ var user = {
 			"update": function() {
 				var c = settings.background.current;
 				$('#videos').empty();
-
+				if(c === 9001) {
+					$('#music')[0].pause();
+					$('#videos').append("<video id='bg1' src='video/Halo 5.webm' loop autoplay type='video/webm'></video>");
+					$('#menu').children().hide();
+					$('#videos').show();
+				}
 				if (c === 0) {
 					$('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
 					$('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' preload='none' loop type='video/webm'></video>");
