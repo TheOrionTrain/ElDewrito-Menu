@@ -307,6 +307,10 @@ function toggleNetwork() {
 
 $(document).ready(function() {
 
+    if(window.location.contains("eldewrito.github.io")) {
+        $('#donation').remove();
+    }
+
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
 
