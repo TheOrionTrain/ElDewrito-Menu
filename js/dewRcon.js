@@ -12,18 +12,11 @@ jQuery(function() {
 StartRconConnection = function() {
     dewRcon = new dewRconHelper();
     dewRcon.dewWebSocket.onopen = function() {
-<<<<<<< HEAD
         $.snackbar({content:'Connected!'});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         dewRconConnected = true;
 		loadSettings();
-=======
-        //When we are connected do something
-        jQuery("#connectionStatus").text('Connected!');
-        dewRconConnected = true;
-        loadSettings();
->>>>>>> origin/master
     };
     dewRcon.dewWebSocket.onerror = function() {
 		if(!snacking) {
@@ -31,11 +24,12 @@ StartRconConnection = function() {
 			if(!played) {
 				$('#notification')[0].currentTime = 0;
 				$('#notification')[0].play();
+				played = 1;
 			}
 			snacking = 1;
 			setTimeout(function() {
 				snacking = 0;
-			},10000);
+			},9000);
 		}
         dewRconConnected = false;
         StartRconConnection();
