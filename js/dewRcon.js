@@ -12,8 +12,8 @@ StartRconConnection = function() {
     dewRcon.dewWebSocket.onopen = function() {
         //When we are connected do something
         jQuery("#connectionStatus").text('Connected!');
-        myCodeMirror.replaceRange('Connected to Eldewrito!', CodeMirror.Pos(myCodeMirror.lastLine()));
         dewRconConnected = true;
+        loadSettings();
     };
     dewRcon.dewWebSocket.onerror = function() {
         //Something bad happened
@@ -27,8 +27,6 @@ StartRconConnection = function() {
         console.log(dewRcon.lastCommand);
         //We can display the latest messages from dew using the code below
         console.log(message.data);
-
-        myCodeMirror.replaceRange(message.data, CodeMirror.Pos(myCodeMirror.lastLine()));
     };
 }
 dewRconHelper = function() {
