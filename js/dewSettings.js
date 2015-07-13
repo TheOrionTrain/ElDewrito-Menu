@@ -617,6 +617,70 @@ var user = {
 				$("[data-option='introvideos']").children('.value').text(settings.introvideos.labels[c]);
 			}
 		},
+		"saturation": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "SATURATION",
+			"current": isset($.cookie('saturation', Number), 1),
+			"min": -10,
+			"max": 10,
+			"increment": 0.1,
+			"update": function() {
+				var c = settings.saturation.current;
+				if (dewRcon.open) {
+						dewRcon.send('graphics.saturation ' + c);
+				}
+				$("[data-option='saturation']").children('.value').text(c.toFixed(2));
+			}
+		},
+		"red": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "RED",
+			"current": isset($.cookie('red', Number), 1),
+			"min": 0,
+			"max": 1,
+			"increment": 0.1,
+			"update": function() {
+				var c = settings.red.current;
+				if (dewRcon.open) {
+						dewRcon.send('graphics.redhue ' + c);
+				}
+				$("[data-option='red']").children('.value').text(c.toFixed(2));
+			}
+		},
+		"blue": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "BLUE",
+			"current": isset($.cookie('blue', Number), 1),
+			"min": 0,
+			"max": 1,
+			"increment": 0.1,
+			"update": function() {
+				var c = settings.blue.current;
+				if (dewRcon.open) {
+						dewRcon.send('graphics.bluehue ' + c);
+				}
+				$("[data-option='blue']").children('.value').text(c.toFixed(2));
+			}
+		},
+		"green": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "GREEN",
+			"current": isset($.cookie('green', Number), 1),
+			"min": 0,
+			"max": 1,
+			"increment": 0.1,
+			"update": function() {
+				var c = settings.green.current;
+				if (dewRcon.open) {
+						dewRcon.send('graphics.greenhue ' + c);
+				}
+				$("[data-option='green']").children('.value').text(c.toFixed(2));
+			}
+		},
 		"quality": {
 			"typeof": "select",
 			"category": "video",
