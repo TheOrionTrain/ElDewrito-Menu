@@ -310,7 +310,6 @@ $(document).ready(function() {
     if(window.location.origin.toLowerCase().indexOf("eldewrito.github.io") >= 0) {
         $('#donation').remove();
     }
-
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
 
@@ -324,6 +323,9 @@ $(document).ready(function() {
 		}, anit);
 	});
 	initalize();
+    $.snackbar({content:'Menu loaded from '+ window.location.origin});
+    $('#notification')[0].currentTime = 0;
+    $('#notification')[0].play();
 	getMasterServers(function() {
 		getTotalPlayers();
 		totalPlayersLoop();
