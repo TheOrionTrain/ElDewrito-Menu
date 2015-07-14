@@ -118,10 +118,6 @@
     -moz-transform-origin: top left;
     transform-origin: top left;
     box-sizing: border-box;
-    -webkit-perspective: 150px;
-    -webkit-perspective-origin: 50% 50%;
-    perspective: 150px;
-    perspective-origin: 50% 50%;
 }
 #browser-title {
     position: absolute;
@@ -351,10 +347,7 @@ audio {
     width: 1280px;
     height: 720px;
 }
-#main{
-    top:-720px;
-    transform:translate(3.75%) rotate3D(0,1,0,1deg);
-}
+#main,
 #serverbrowser,
 #credits {
     top: -720px;
@@ -370,12 +363,10 @@ audio {
 #customgame {
     top: -720px;
     left: 0;
-    transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
 #main2 {
     top: 0px;
     left: 0;
-    transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
 #map-thumb,
 #map-thumb-options {
