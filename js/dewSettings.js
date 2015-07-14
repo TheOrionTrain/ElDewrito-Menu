@@ -29,7 +29,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "PRESET",
-			"current": isset($.cookie('preset'. Number), 0),
+			"current": isset($.cookie('preset'), 0),
 			"min": 0,
 			"max": 6,
 			"labels": [
