@@ -55,7 +55,7 @@ var user = {
 				}
 				for (var i = 0; i < settings.musictrack.labels.length; i++) {
 					if (settings.preset.labels[c] === "Halo 4") {
-						settings.musictrack.current = 10;
+						settings.musictrack.current = 11;
 					} else if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
 						settings.musictrack.current = i;
 					}
@@ -628,7 +628,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "SATURATION",
-			"current": isset($.cookie('saturation'), parseFloat(1)),
+			"current": isset($.cookie('saturation') Number, parseFloat(1)),
 			"min": -10,
 			"max": 10,
 			"increment": 0.1,
