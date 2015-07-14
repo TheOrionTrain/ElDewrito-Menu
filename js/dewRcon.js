@@ -58,7 +58,11 @@ function after(ms, fn){ setTimeout(fn, ms); }
 function loadSettings() {
 	dewRcon.send('player.name');
 	after(10, function() {
-			settings.username.current = dewRcon.lastMessage;
+			if (dewRcon.lastMessage.toString().toLowerCase() == "forgot") {
+				settings.username.current = "";
+			} else {
+				settings.username.current = dewRcon.lastMessage;
+			}
 			settings.username.update();
 			dewRcon.send('server.name');
 			after(10, function() {
@@ -90,7 +94,12 @@ function loadSettings() {
 															after(10, function() {
 																	settings.rawinput.current = parseInt(dewRcon.lastMessage);
 																	settings.rawinput.update();
-																	dewRcon.open = true;
+																	dewRcon.send('graphics.saturation');
+																	after(10, function() {
+																			settings.saturation.current = parseInt(dewRcon.lastMessage);
+																			settings.saturation.update();
+																			dewRcon.open = true;
+																	});
 															});
 													});
 											});

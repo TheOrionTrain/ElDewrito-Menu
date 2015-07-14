@@ -636,6 +636,7 @@ var user = {
 				var c = settings.saturation.current;
 				if (dewRcon.open) {
 						dewRcon.send('graphics.saturation ' + c);
+						dewRcon.send('writeconfig');
 				}
 				$("[data-option='saturation']").children('.value').text(c.toFixed(2));
 			}
