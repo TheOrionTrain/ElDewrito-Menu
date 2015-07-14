@@ -17,7 +17,7 @@ StartRconConnection = function() {
     };
     dewRcon.dewWebSocket.onerror = function() {
 		if(!snacking) {
-			$.snackbar({content:'Not connected. Is the game running?!'});
+			$.snackbar({content:'Not connected. Is the game running?'});
 			if(!played) {
 				$('#notification')[0].currentTime = 0;
 				$('#notification')[0].play();
