@@ -20,6 +20,8 @@ var players = [],
 	browsing = 0,
 	sortMap,
 	sortType,
+    sortFull = false,
+    sortLocked = false,
 	Halo3Index = 6,
 	currentVersion,
 	usingGamepad = false,
@@ -331,6 +333,26 @@ $(document).ready(function() {
 		totalPlayersLoop();
 		getCurrentVersion();
 	});
+    $('#browser-full').click(function() {
+		if(sortFull) {
+            sortFull = false;
+            $(this).text('Showing Full');
+        } else {
+            sortFull = true;
+            $(this).text('Hiding Full');
+        }
+        $('#refresh').trigger('click');
+	});
+    $('#browser-locked').click(function() {
+        if(sortLocked) {
+            sortLocked = false;
+            $(this).text('Showing Locked');
+        } else {
+            sortLocked = true;
+            $(this).text('Hiding Locked');
+        }
+        $('#refresh').trigger('click');
+    });
 	$('#refresh').click(function() {
 		loadServers();
 		filterServers();
@@ -1250,8 +1272,31 @@ function filterServers() {
 			mapFilter = new RegExp(sortMap, "i"),
 			typeFilter = new RegExp(sortType, "i"),
 			isMap = content.match(mapFilter),
-			isType = content.match(typeFilter);
-		if (isMap && isType) {
+			isType = content.match(typeFilter),
+			isFull,
+			isLocked;
+		if (sortFull) {
+			var full = $(this).children('.players').text(),
+				numbers = full.split("/");
+			if (parseInt(numbers[0]) >= parseInt(numbers[1])) {
+				isFull = true;
+			} else {
+				isFull = false;
+			}
+			console.log($(this).attr('id') + ": " + full);
+		} else {
+			isFull = false;
+		}
+        if(sortLocked) {
+            if($(this).hasClass('passworded')) {
+                isLocked = true;
+            } else {
+                isLocked = false;
+            }
+        } else {
+            isLocked = false;
+        }
+		if (isMap && isType && !isFull && !isLocked) {
 			$(this).show();
 		}
 	});
@@ -1260,8 +1305,8 @@ function filterServers() {
 function clearFilters() {
 	sortMap = "";
 	sortType = "";
-	$('#browser-map').text("Choose Map...");
-	$('#browser-gametype').text("Choose Gametype...");
+	$('#browser-map').text("Choose Map");
+	$('#browser-gametype').text("Choose Gametype");
 	$('#clear').fadeOut(anit);
 	loadServers();
 	filterServers();
