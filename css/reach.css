@@ -23,7 +23,7 @@
     -webkit-font-smoothing: antialiased;
 }
 #browser-buttons {
-    width: 650px;
+    width: 600px;
     height: 28px;
     position: absolute;
     top: 115px;
@@ -66,16 +66,14 @@
 #browser-map,
 #browser-gametype,
 #refresh,
-#clear,
-#browser-full,
-#browser-locked {
+#clear {
     float: right;
     color: #fff;
     top: 115px;
-    font-size: 18px;
+    font-size: 22px;
     opacity: 0.85;
     z-index: 2;
-    margin: 0 15px;
+    margin: 0 20px;
     max-width: 200px;
     box-sizing: border-box;
     -webkit-transition: 0.4s;
@@ -85,9 +83,7 @@
 #browser-map:hover,
 #browser-gametype:hover,
 #refresh:hover,
-#clear:hover,
-#browser-locked:hover,
-#browser-full:hover {
+#clear:hover {
     opacity: 1;
     cursor: pointer;
 }
@@ -118,6 +114,10 @@
     -moz-transform-origin: top left;
     transform-origin: top left;
     box-sizing: border-box;
+    -webkit-perspective: 150px;
+    -webkit-perspective-origin: 50% 50%;
+    perspective: 150px;
+    perspective-origin: 50% 50%;
 }
 #browser-title {
     position: absolute;
@@ -347,7 +347,10 @@ audio {
     width: 1280px;
     height: 720px;
 }
-#main,
+#main{
+    top:-720px;
+    transform:translate(3.75%) rotate3D(0,1,0,1deg);
+}
 #serverbrowser,
 #credits {
     top: -720px;
@@ -363,10 +366,12 @@ audio {
 #customgame {
     top: -720px;
     left: 0;
+    transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
 #main2 {
     top: 0px;
     left: 0;
+    transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
 #map-thumb,
 #map-thumb-options {
@@ -381,7 +386,7 @@ audio {
     width: 680px;
     position: absolute;
     left: 300px;
-    top: 200px;
+    top: 280px;
 }
 #credits table td.label {
     width: 540px;
