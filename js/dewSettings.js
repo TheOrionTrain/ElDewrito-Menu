@@ -63,7 +63,6 @@ var user = {
 				$("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
 				settings.background.update();
 				settings.musictrack.update();
-				settings.preset.update();
 			}
 		},
 		"musictrack": {
@@ -640,7 +639,6 @@ var user = {
 						dewRcon.send('writeconfig');
 				}
 				$("[data-option='saturation']").children('.value').text(c.toFixed(2));
-				settings.saturation.update();
 			}
 		},
 		"red": {
@@ -652,12 +650,11 @@ var user = {
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
-				var c = parseFloat(settings.red.current);
+				var c = settings.red.current;
 				if (dewRcon.open) {
 						dewRcon.send('graphics.redhue ' + c);
 				}
 				$("[data-option='red']").children('.value').text(c.toFixed(2));
-				settings.red.update();
 			}
 		},
 		"blue": {
@@ -669,12 +666,11 @@ var user = {
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
-				var c = parseFloat(settings.blue.current);
+				var c = settings.blue.current;
 				if (dewRcon.open) {
 						dewRcon.send('graphics.bluehue ' + c);
 				}
 				$("[data-option='blue']").children('.value').text(c.toFixed(2));
-				settings.blue.update();
 			}
 		},
 		"green": {
@@ -686,12 +682,11 @@ var user = {
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
-				var c = parseFloat(settings.green.current);
+				var c = settings.green.current;
 				if (dewRcon.open) {
 						dewRcon.send('graphics.greenhue ' + c);
 				}
 				$("[data-option='green']").children('.value').text(c.toFixed(2));
-				settings.green.update();
 			}
 		},
 		"quality": {
