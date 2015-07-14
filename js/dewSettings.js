@@ -633,7 +633,7 @@ var user = {
 			"max": 10,
 			"increment": 0.1,
 			"update": function() {
-				var c = settings.saturation.current;
+				var c = parseFloat(settings.saturation.current);
 				if (dewRcon.open) {
 						dewRcon.send('graphics.saturation ' + c);
 						dewRcon.send('writeconfig');
