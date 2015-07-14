@@ -96,7 +96,7 @@ function loadSettings() {
 																	settings.rawinput.update();
 																	dewRcon.send('graphics.saturation');
 																	after(10, function() {
-																			settings.saturation.current = dewRcon.lastMessage;
+																			settings.saturation.current = parseFloat(dewRcon.lastMessage);
 																			settings.saturation.update();
 																			dewRcon.open = true;
 																	});
