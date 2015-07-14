@@ -628,7 +628,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "SATURATION",
-			"current": isset($.cookie('saturation') Number, parseFloat(1)),
+			"current": isset($.cookie('saturation', Number), parseFloat(1)),
 			"min": -10,
 			"max": 10,
 			"increment": 0.1,
