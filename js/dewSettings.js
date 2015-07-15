@@ -233,6 +233,7 @@ var user = {
 					else {
 						$('#videos').append("<video id='bg1' src='video/" + settings.background.labels[r] + ".webm' autoplay type='video/webm'></video>");
 					}
+					$('#bg1').show();
 					$('#bg1')[0].addEventListener('ended', function() {
 						settings.background.current = 12;
 						settings.background.update();
