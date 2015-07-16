@@ -1,6 +1,6 @@
 /*
     (c) 2015 Brayden Strasen & Ryan Palmer
-    https://creativecommons.org/licenses/by-nc-sa/4.0/
+    http://creativecommons.org/licenses/by-nc-nd/4.0/
 */
 var players = [],
     masterServers = [],
@@ -20,6 +20,8 @@ var players = [],
 	browsing = 0,
 	sortMap,
 	sortType,
+    sortFull = false,
+    sortLocked = false,
 	Halo3Index = 6,
 	currentVersion,
 	usingGamepad = false,
@@ -97,7 +99,6 @@ function getServers() {
 }
 
 function queryServer(serverIP, i) {
-
 	var startTime = Date.now(),
 		endTime,
 		ping;
@@ -107,7 +108,7 @@ function queryServer(serverIP, i) {
 		async: true,
 		success: function() {
 			endTime = Date.now();
-			ping = endTime - startTime;
+			ping = Math.round((endTime - startTime)/1.60); //Aproximate ping, may change from 1.75 later
 		}
 	});
 	$.getJSON("http://" + serverIP, function(serverInfo) {
@@ -135,7 +136,6 @@ function queryServer(serverIP, i) {
 			};
 		}
 		if (typeof servers[i] !== 'undefined') {
-			//Fuck off ImplodeExplode, I do what I want
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
 			$.ajax({
 				url: 'http://www.telize.com/geoip/' + serverIP.split(':')[0],
@@ -210,8 +210,6 @@ function addServer(i, geoloc) {
 }
 
 function initalize() {
-	//dewRcon.send('player.name');
-	debugLog(dewRcon.lastMessage);
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
@@ -310,7 +308,10 @@ function toggleNetwork() {
 }
 
 $(document).ready(function() {
-
+    console.log(window.location.origin);
+    if(window.location.origin.toLowerCase().indexOf("eldewrito.github.io") >= 0) {
+        $('#donation').remove();
+    }
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
 
@@ -320,15 +321,38 @@ $(document).ready(function() {
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
 		setTimeout(function() {
-			dewRcon.send('game.togglemenu');
+			dewRcon.send('Game.SetMenuEnabled 0');
 		}, anit);
 	});
 	initalize();
+    $.snackbar({content:'Menu loaded from '+ window.location.origin});
+    $('#notification')[0].currentTime = 0;
+    $('#notification')[0].play();
 	getMasterServers(function() {
 		getTotalPlayers();
 		totalPlayersLoop();
 		getCurrentVersion();
 	});
+    $('#browser-full').click(function() {
+		if(sortFull) {
+            sortFull = false;
+            $(this).text('Showing Full');
+        } else {
+            sortFull = true;
+            $(this).text('Hiding Full');
+        }
+        $('#refresh').trigger('click');
+	});
+    $('#browser-locked').click(function() {
+        if(sortLocked) {
+            sortLocked = false;
+            $(this).text('Showing Locked');
+        } else {
+            sortLocked = true;
+            $(this).text('Hiding Locked');
+        }
+        $('#refresh').trigger('click');
+    });
 	$('#refresh').click(function() {
 		loadServers();
 		filterServers();
@@ -346,8 +370,10 @@ $(document).ready(function() {
 		clearAllCookies();
 	});
 	var e = ((window.innerHeight - $('#menu').height()) / 2) - 40;
+    $('#connectgamepad')[0].volume = settings.musicvolume.current;
 	$('#music')[0].volume = settings.musicvolume.current;
 	$('#click')[0].volume = settings.sfxvolume.current;
+    $('#notification')[0].volume = settings.sfxvolume.current;
 	$('#start').click(function() {
 		var mode = $('#start').children('.label').text().toString().split(" ");
 		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
@@ -355,6 +381,10 @@ $(document).ready(function() {
 		else
 			startgame(servers[selectedserver].ip, mode);
 	});
+    Mousetrap.bind('up up down down left right left right b a enter', function() {
+        settings.background.current = 9001;
+        settings.background.update();
+    });
 	$('.selection').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -403,11 +433,14 @@ $(document).ready(function() {
 			gamepadSelect(currentMenu + "-" + p_gp_on);
 		}
 	});
+    if(getURLParameter('browser')) {
+        changeMenu("main2-main");
+        changeMenu("main-serverbrowser");
+    }
 });
 
 
 function loadServers() {
-	dewRcon.send("player.name");
 	if (browsing === 1) {
 		$('#refresh img').addClass('rotating');
 		setTimeout(function() {
@@ -428,8 +461,11 @@ function loadServers() {
 }
 
 function lobbyLoop(ip) {
+  var success = false;
 	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
+      success = true;
+      console.log('loop');
 			players = serverInfo.players;
 			var teamGame = false;
 			var colour = "#000000";
@@ -498,6 +534,16 @@ function lobbyLoop(ip) {
 				lobbyLoop(ip);
 		});
 	}, 3000);
+
+    setTimeout(function() {
+      if (!success)
+      {
+          // Handle error accordingly
+          debugLog("Failed to contact server, retrying.");
+          if (loopPlayers)
+    				lobbyLoop(ip);
+      }
+    }, 5000);
 }
 
 function getTotalPlayers() {
@@ -908,7 +954,7 @@ function changeMenu(menu, details) {
 			"top": "720px"
 		});
 		$('#dewrito').css({
-			"top": "50px",
+			"top": "-30px",
 			"left": "265px",
 			"-webkit-transition-timing-function": "200ms",
 			"-webkit-transition-delay": "0ms"
@@ -1173,10 +1219,20 @@ function playerInfo(name) {
 }
 
 function startgame(ip, mode) {
+    loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
 		password = servers[selectedserver].password == true ? prompt(servers[selectedserver].name + " has a password, enter the password to join", "") : "";
 	$('#beep')[0].play();
+    setTimeout(function() {
+        $('#beep')[0].play();
+    },1000);
+    setTimeout(function() {
+        $('#beep')[0].play();
+    },2000);
+    setTimeout(function() {
+        $('#beeep')[0].play();
+    },3000);
 	$('#music')[0].pause();
 	$('#black').fadeIn(3000);
 	delay(function() {
@@ -1191,15 +1247,13 @@ function startgame(ip, mode) {
 				$('#loading').show();
 				$('#back').remove();
 			} else {
-				dewRcon.send('game.togglemenu');
+				dewRcon.send('Game.SetMenuEnabled 0');
 			}
 		} else if (mode[1] === "FORGE") {
 
 		} else if (mode[0] === "START" && mode[1] === "GAME") {
 			dewRcon.send('start');
 		}
-		loopPlayers = true;
-		lobbyLoop(ip);
 	}, 3700);
 }
 
@@ -1218,8 +1272,31 @@ function filterServers() {
 			mapFilter = new RegExp(sortMap, "i"),
 			typeFilter = new RegExp(sortType, "i"),
 			isMap = content.match(mapFilter),
-			isType = content.match(typeFilter);
-		if (isMap && isType) {
+			isType = content.match(typeFilter),
+			isFull,
+			isLocked;
+		if (sortFull) {
+			var full = $(this).children('.players').text(),
+				numbers = full.split("/");
+			if (parseInt(numbers[0]) >= parseInt(numbers[1])) {
+				isFull = true;
+			} else {
+				isFull = false;
+			}
+			console.log($(this).attr('id') + ": " + full);
+		} else {
+			isFull = false;
+		}
+        if(sortLocked) {
+            if($(this).hasClass('passworded')) {
+                isLocked = true;
+            } else {
+                isLocked = false;
+            }
+        } else {
+            isLocked = false;
+        }
+		if (isMap && isType && !isFull && !isLocked) {
 			$(this).show();
 		}
 	});
@@ -1228,8 +1305,8 @@ function filterServers() {
 function clearFilters() {
 	sortMap = "";
 	sortType = "";
-	$('#browser-map').text("Choose Map...");
-	$('#browser-gametype').text("Choose Gametype...");
+	$('#browser-map').text("Choose Map");
+	$('#browser-gametype').text("Choose Gametype");
 	$('#clear').fadeOut(anit);
 	loadServers();
 	filterServers();

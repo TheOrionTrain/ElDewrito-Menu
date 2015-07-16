@@ -29,7 +29,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "PRESET",
-			"current": isset($.cookie('preset'), 0),
+			"current": isset($.cookie('preset', Number), 0),
 			"min": 0,
 			"max": 6,
 			"labels": [
@@ -55,7 +55,7 @@ var user = {
 				}
 				for (var i = 0; i < settings.musictrack.labels.length; i++) {
 					if (settings.preset.labels[c] === "Halo 4") {
-						settings.musictrack.current = 10;
+						settings.musictrack.current = 11;
 					} else if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
 						settings.musictrack.current = i;
 					}
@@ -71,13 +71,14 @@ var user = {
 			"name": "MENU MUSIC",
 			"current": isset($.cookie('musictrack', Number), 6),
 			"min": 0,
-			"max": 11,
+			"max": 12,
 			"labels": [
             "Halo Reach",
             "Halo Reach Beta",
             "Halo CE",
             "Halo 2",
             "Halo 2 Guitar",
+						"Halo 2 Anniversary Guitar",
             "Halo 3",
             "Halo 3 Mythic",
             "Halo 3 ODST",
@@ -125,14 +126,16 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "EFFECTS VOLUME",
-			"current": isset($.cookie('sfxvolume', Number), 0.05),
+			"current": isset($.cookie('sfxvolume', Number), 0.25),
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.sfxvolume.current;
 				$('#click')[0].volume = c;
-				$('#slide')[0].volume = (c * 10 >= 1) ? 1 : c * 10;
+				$('#slide')[0].volume = c;
+				$('#notification')[0].volume = c;
+				$('#connectgamepad')[0].volume = c;
 				$("[data-option='sfxvolume']").children('.value').text(Math.round(c * 100));
 			}
 		},
@@ -185,7 +188,7 @@ var user = {
 			"name": "BACKGROUND",
 			"current": isset($.cookie('background', Number), 0),
 			"min": 0,
-			"max": 11,
+			"max": 12,
 			"labels": [
             "Halo Reach",
             "Reach Act 1",
@@ -198,42 +201,83 @@ var user = {
             "Halo 4",
             "Crash",
             "Waypoint",
-            "Halo Reach Beta"
+            "Halo Reach Beta",
+			"Random"
         ],
 			"increment": 1,
 			"update": function() {
-				var c = settings.background.current;
+				var c = settings.background.current,
+					l = settings.musictrack.labels[c];
 				$('#videos').empty();
-
-				if (c === 0) {
-					$('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
-					$('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' preload='none' loop type='video/webm'></video>");
-					$('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' preload='none' loop type='video/webm'></video>");
-					$('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' preload='none' loop type='video/webm'></video>");
-					$('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' preload='none' loop type='video/webm'></video>");
-				} else if (c === 1) {
-					$('#videos').append("<video id='bg1' src='video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
-				} else if (c === 2) {
-					$('#videos').append("<video id='bg1' src='video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
-				} else if (c === 3) {
-					$('#videos').append("<video id='bg1' src='video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
-				} else if (c === Halo3Index) {
-					$('#videos').append("<video id='bg1' src='video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
-					$('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
-					$('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='none' loop type='video/webm'></video>");
-				} else if (c === 11) {
-					$('#videos').append("<video id='bg1' src='video/reach/custom_games.webm' loop autoplay type='video/webm'></video>");
-					$('#bg-cover').css('background', 'rgba(0,0,0,0)');
-				} else {
-					$('#videos').append("<video id='bg1' src='video/" + settings.background.labels[c] + ".webm' loop autoplay type='video/webm'></video>");
+				if (l == "Random") {
+					var r = Math.floor(Math.random() * settings.background.labels.length - 1);
+					if(settings.background.labels[r] == "Halo Reach") {
+						var Reach = ["campaign_act1","campaign_act2","campaign_act3","custom_games","firefight","forge","mainmenu","matchmaking"];
+						r = Math.floor(Math.random() * Reach.length);
+						$('#videos').append("<video id='bg1' src='video/reach/"+Reach[r]+".webm' autoplay type='video/webm'></video>");
+					}
+					else if(settings.background.labels[r] == "Halo 3") {
+						var h3 = ["forge","mainmenu","multiplayer"];
+						r = Math.floor(Math.random() * h3.length);
+						$('#videos').append("<video id='bg1' src='video/reach/"+h3[r]+".webm' autoplay type='video/webm'></video>");
+					}
+					else if (r === 1) {
+						$('#videos').append("<video id='bg1' src='video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
+					}
+					else if (r === 2) {
+						$('#videos').append("<video id='bg1' src='video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
+					}
+					else if (r === 3) {
+						$('#videos').append("<video id='bg1' src='video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
+					}
+					else {
+						$('#videos').append("<video id='bg1' src='video/" + settings.background.labels[r] + ".webm' autoplay type='video/webm'></video>");
+					}
+					$('#bg1').show();
+					$('#bg1')[0].addEventListener('ended', function() {
+						settings.background.current = 12;
+						settings.background.update();
+					});
+					$("[data-option='background']").children('.value').text("Random");
+					$('#bg1')[0].play();
 				}
+				else {
+					if(c === 9001) {
+						$('#music')[0].pause();
+						$('#videos').append("<video id='bg1' src='video/Halo 5.webm' loop autoplay type='video/webm'></video>");
+						$('#menu').children().hide();
+						$('#videos').show();
+					}
+					if (c === 0) {
+						$('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' preload='none' loop type='video/webm'></video>");
+						$('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' preload='none' loop type='video/webm'></video>");
+						$('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' preload='none' loop type='video/webm'></video>");
+						$('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' preload='none' loop type='video/webm'></video>");
+					} else if (c === 1) {
+						$('#videos').append("<video id='bg1' src='video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
+					} else if (c === 2) {
+						$('#videos').append("<video id='bg1' src='video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
+					} else if (c === 3) {
+						$('#videos').append("<video id='bg1' src='video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
+					} else if (c === Halo3Index) {
+						$('#videos').append("<video id='bg1' src='video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
+						$('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='none' loop type='video/webm'></video>");
+					} else if (c === 11) {
+						$('#videos').append("<video id='bg1' src='video/reach/custom_games.webm' loop autoplay type='video/webm'></video>");
+						$('#bg-cover').css('background', 'rgba(0,0,0,0)');
+					} else {
+						$('#videos').append("<video id='bg1' src='video/" + settings.background.labels[c] + ".webm' loop autoplay type='video/webm'></video>");
+					}
 
-				$('#bg1').show();
-				$("[data-option='background']").children('.value').text(settings.background.labels[c]);
-				if (c == Halo3Index || c == 3 || c == 5) {
-					$('#bg-cover').css('background', 'rgba(0,0,0,0)');
-				} else {
-					$('#bg-cover').css('background', 'rgba(0,0,0,0.25)');
+					$('#bg1').show();
+					$("[data-option='background']").children('.value').text(settings.background.labels[c]);
+					if (c == Halo3Index || c == 3 || c == 5) {
+						$('#bg-cover').css('background', 'rgba(0,0,0,0)');
+					} else {
+						$('#bg-cover').css('background', 'rgba(0,0,0,0.25)');
+					}
 				}
 			}
 		},
@@ -288,6 +332,10 @@ var user = {
 			"update": function() {
 				var c = settings.username.current;
 				user.name = c;
+				if (dewRcon.open) {
+						dewRcon.send("player.name \"" + c + "\"");
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='username']").children('.input').children('input').val(c);
 			}
 		},
@@ -362,6 +410,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.rawinput.current;
+				if (dewRcon.open) {
+						dewRcon.send('input.rawinput ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='rawinput']").children('.value').text(settings.rawinput.labels[c]);
 			}
 		},
@@ -415,6 +467,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.centeredcrosshair.current;
+				if (dewRcon.open) {
+						dewRcon.send('camera.crosshair ' + c);
+						dewRcon.send('writeconfig');
+				}
 				//dewRcon.send('camera.crosshair ' + settings.centeredcrosshair.labels[c] === "ON" ? '1' : '0');
 				//dewRcon.send('writeconfig');
 				$("[data-option='centeredcrosshair']").children('.value').text(settings.centeredcrosshair.labels[c]);
@@ -465,6 +521,10 @@ var user = {
 			"increment": 5,
 			"update": function() {
 				var c = settings.fov.current;
+				if (dewRcon.open) {
+						dewRcon.send('camera.fov ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='fov']").children('.value').text(c);
 			}
 		},
@@ -478,6 +538,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.starttimer.current;
+				if (dewRcon.open) {
+						dewRcon.send('server.countdown ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='starttimer']").children('.value').text(c);
 			}
 		},
@@ -491,6 +555,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.maxplayers.current;
+				if (dewRcon.open) {
+						dewRcon.send('server.maxplayers ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='maxplayers']").children('.value').text(c);
 			}
 		},
@@ -501,6 +569,12 @@ var user = {
 			"current": isset($.cookie('servername'), "Halo Online Server"),
 			"update": function() {
 				var c = settings.servername.current;
+				if (dewRcon.open) {
+						console.log(c);
+						dewRcon.send("server.name \"" + c + "\"");
+						dewRcon.send('writeconfig');
+						console.log(c);
+				}
 				$("[data-option='servername']").children('.input').children('input').val(c);
 			}
 		},
@@ -511,6 +585,10 @@ var user = {
 			"current": isset($.cookie('serverpass'), ""),
 			"update": function() {
 				var c = settings.serverpass.current;
+				if (dewRcon.open) {
+						dewRcon.send('server.password ' + c);
+						dewRcon.send('writeconfig');
+				}
 				$("[data-option='serverpass']").children('.input').children('input').val(c);
 			}
 		},
@@ -580,6 +658,71 @@ var user = {
 			"update": function() {
 				var c = settings.introvideos.current;
 				$("[data-option='introvideos']").children('.value').text(settings.introvideos.labels[c]);
+			}
+		},
+		"saturation": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "SATURATION",
+			"current": isset($.cookie('saturation', Number), parseFloat(1)),
+			"min": -10,
+			"max": 10,
+			"increment": 0.1,
+			"update": function() {
+				var c = parseFloat(settings.saturation.current);
+				if (dewRcon.open) {
+						dewRcon.send('graphics.saturation ' + c);
+						dewRcon.send('writeconfig');
+				}
+				$("[data-option='saturation']").children('.value').text(c.toFixed(2));
+			}
+		},
+		"red": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "RED",
+			"current": isset($.cookie('red', Number), 1),
+			"min": 0,
+			"max": 1,
+			"increment": 0.05,
+			"update": function() {
+				var c = settings.red.current;
+				if (dewRcon.open) {
+						dewRcon.send('graphics.redhue ' + c);
+				}
+				$("[data-option='red']").children('.value').text(c.toFixed(2));
+			}
+		},
+		"blue": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "BLUE",
+			"current": isset($.cookie('blue', Number), 1),
+			"min": 0,
+			"max": 1,
+			"increment": 0.05,
+			"update": function() {
+				var c = settings.blue.current;
+				if (dewRcon.open) {
+						dewRcon.send('graphics.bluehue ' + c);
+				}
+				$("[data-option='blue']").children('.value').text(c.toFixed(2));
+			}
+		},
+		"green": {
+			"typeof": "select",
+			"category": "eldewrito",
+			"name": "GREEN",
+			"current": isset($.cookie('green', Number), 1),
+			"min": 0,
+			"max": 1,
+			"increment": 0.05,
+			"update": function() {
+				var c = settings.green.current;
+				if (dewRcon.open) {
+						dewRcon.send('graphics.greenhue ' + c);
+				}
+				$("[data-option='green']").children('.value').text(c.toFixed(2));
 			}
 		},
 		"quality": {
