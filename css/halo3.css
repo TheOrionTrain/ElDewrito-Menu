@@ -647,25 +647,13 @@ audio {
 #dewrito {
 
     position: absolute;
-    
-
     right: -50px;
-    
-
     bottom: 50px;
-    
-
     width: 750px;
     background: url('../img/Halo 3 CE.png') 0 0 no-repeat;
-    
-
     height: 267px;
-    
-
     opacity: 0.95;
-   	
-
-    z-index: 2;
+   	z-index: 2;
 }
 
 .animated[id$=dewrito],#dewrito {

@@ -10,6 +10,81 @@
     user-select: none;
     -webkit-font-smoothing: antialiased;
 }
+body {
+    cursor: url('../img/h-cursor.png'), auto;
+}
+#loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+#loadingMapImage {
+    z-index: 20;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: url('../img/loading/maps/diamondback.png') 50% 50% / contain no-repeat;
+}
+#loadingBars {
+    z-index: 22;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: url('../img/loading/bars.png') 50% 50% / contain no-repeat;
+}
+#hoImage {
+    z-index: 22;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    width: 20%;
+    height: 20%;
+    background: url('../img/loading/ho.png') no-repeat;
+}
+#edImage {
+    z-index: 22;
+    position: absolute;
+    top: 635px;
+    left: 110px;
+    width: 10%;
+    height: 10%;
+    background: url('../img/loading/ed.png') no-repeat;
+}
+#mapOverlay {
+    z-index: 22;
+    position: absolute;
+    top: 150px;
+    left: 60px;
+    width: 55%;
+    height: 60%;
+    background: url('../img/loading/maps/db-overlay.png') no-repeat;
+}
+#popup {
+    position: fixed;
+    z-index: 3000;
+    top: 20px;
+    right: 20px;
+    max-width: 250px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #fff;
+    display: none;
+    background: rgba(0, 0, 0, 0.66);
+    border-radius: 8px;
+}
+html {
+    background: #000;
+}
+=======
+>>>>>>> 209cdbf6e52e3f19b958f1c8ce23fdcda99bce23
 #browser-buttons {
     width: 600px;
     height: 28px;
@@ -49,7 +124,7 @@
 #direct-connect:hover,
 #load-more:hover {
     opacity: 1;
-    cursor: pointer;
+    cursor: url('../img/h-cursor.png'), auto;
 }
 #browser-map,
 #browser-gametype,
@@ -73,7 +148,7 @@
 #refresh:hover,
 #clear:hover {
     opacity: 1;
-    cursor: pointer;
+    cursor: url('../img/h-cursor.png'), auto;
 }
 #clear {
     display: none;
@@ -588,7 +663,7 @@ audio {
 .server:hover,
 .selection.gp-on,
 .server.gp-on {
-  cursor: pointer;
+  cursor: url('../img/h-cursor.png'), auto;
   position: relative;
   color: rgba(253, 255, 249, 0.7);
   text-shadow: 0px 0px 23px #1076B5;
@@ -613,7 +688,7 @@ audio {
 .selection.selected {
     border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
     background: rgba(255, 255, 255, 0.1);
-    cursor: pointer;
+    cursor: url('../img/h-cursor.png'), auto;
     color: rgba(255, 255, 255, 0.95);
 }
 #currentmap {
@@ -662,7 +737,7 @@ audio {
     margin-bottom: 3px;
     height: 30px;
     color: #fff;
-    cursor: pointer;
+    cursor: url('../img/h-cursor.png'), auto;
 }
 #lobby td.name {
     font-weight: 300;
@@ -768,6 +843,13 @@ audio {
     bottom: 120px;
     left: 10px;
     background-color: rgba(0, 0, 0, 0.67);
+}
+#back,
+#version {
+    position: absolute;
+    cursor: url('../img/h-cursor.png'), auto;
+    z-index: 4;
+    color: #fff;
 }
 #back {
     left: 20px;

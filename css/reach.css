@@ -23,7 +23,7 @@
     -webkit-font-smoothing: antialiased;
 }
 #browser-buttons {
-    width: 600px;
+    width: 650px;
     height: 28px;
     position: absolute;
     top: 115px;
@@ -66,14 +66,16 @@
 #browser-map,
 #browser-gametype,
 #refresh,
-#clear {
+#clear,
+#browser-full,
+#browser-locked {
     float: right;
     color: #fff;
     top: 115px;
-    font-size: 22px;
+    font-size: 18px;
     opacity: 0.85;
     z-index: 2;
-    margin: 0 20px;
+    margin: 0 15px;
     max-width: 200px;
     box-sizing: border-box;
     -webkit-transition: 0.4s;
@@ -83,7 +85,9 @@
 #browser-map:hover,
 #browser-gametype:hover,
 #refresh:hover,
-#clear:hover {
+#clear:hover,
+#browser-locked:hover,
+#browser-full:hover {
     opacity: 1;
     cursor: pointer;
 }
@@ -377,7 +381,7 @@ audio {
     width: 680px;
     position: absolute;
     left: 300px;
-    top: 280px;
+    top: 200px;
 }
 #credits table td.label {
     width: 540px;
