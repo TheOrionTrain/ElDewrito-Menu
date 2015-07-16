@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Halo 3 Custom Edition</title>
+	<link href="css/snackbar.min.css" rel="stylesheet" type="text/css">
 	<link href="css/dewrito.css" rel="stylesheet" type="text/css">
 	<link id="style" href="css/reach.css" rel="stylesheet" type="text/css">
 	<link href="css/spectrum.css" rel="stylesheet" type="text/css">
@@ -13,10 +14,20 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script>
 	<script src="js/gamepad.min.js"></script>
+	<script src="js/snackbar.js"></script>
     <script src="js/dewHelper.js"></script>
 	<script src="js/dewGamepad.js"></script>
 </head>
 <body>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-65066722-1', 'auto');
+		ga('send', 'pageview');
+	</script>
 	<script>
 		function clickIE4() {
 			if (event.button == 2) {
@@ -71,8 +82,10 @@
 			<div id="browser-title">SERVER BROWSER</div>
 			<div id="browser-buttons">
 				<div id="refresh"><img src="img/refresh.svg" /> </div>
-				<div data-action="menu" data-menu="serverbrowser-type" id="browser-gametype">Choose Gametype...</div>
-				<div data-action="menu" data-menu="serverbrowser-map" id="browser-map">Choose Map...</div>
+				<div data-action="menu" data-menu="serverbrowser-type" id="browser-gametype">Choose Gametype</div>
+				<div data-action="menu" data-menu="serverbrowser-map" id="browser-map">Choose Map</div>
+				<div id="browser-full">Showing Full</div>
+				<div id="browser-locked">Showing Locked</div>
 				<div id="clear">Reset</div>
 			</div>
 			<div id="line3"></div>
@@ -123,6 +136,10 @@
 				<tr class="credit">
 					<td class="label">Flags, Locks, &amp; Bug Fixes</td>
 					<td class="name">Limited</td>
+				</tr>
+				<tr class="credit">
+					<td class="label">UI Sound Effects</td>
+					<td class="name">Shad0wshayd3</td>
 				</tr>
 				<tr class="credit">
 					<td class="label">Loading Screens</td>
@@ -202,9 +219,12 @@
 		<div id="bg-cover" class="animated"></div>
 		<audio id="music" autoplay></audio>
 		<div id="videos"></div>
-		<audio id="beep" src="audio/beep.ogg" type="audio/ogg"></audio>
-		<audio id="click" src="audio/click.wav" type="audio/wav"></audio>
-		<audio id="slide" src="audio/slide.ogg" type="audio/ogg"></audio>
+		<audio id="connectgamepad" src="audio/halo3/loop.wav" type="audio/wav"></audio>
+		<audio id="notification" src="audio/odst/a_button.wav" type="audio/wav"></audio>
+		<audio id="beeep" src="audio/halo3/player_respawn.wav" type="audio/wav"></audio>
+		<audio id="beep" src="audio/halo3/countdown_for_respawn.wav" type="audio/wav"></audio>
+		<audio id="click" src="audio/halo3/cursor_horizontal.wav" type="audio/wav"></audio>
+		<audio id="slide" src="audio/halo3/a_button.wav" type="audio/wav"></audio>
 	</div>
 </body>
 <script src="js/dewMenu.js"></script>
