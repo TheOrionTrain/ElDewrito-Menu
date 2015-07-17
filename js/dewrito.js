@@ -211,6 +211,29 @@ function addServer(i, geoloc) {
 	}
 }
 
+var settingsToLoad = [['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation']];
+var loadedSettings = false;
+
+function loadSettings(i) {
+  setTimeout(function () {
+    for (var l = 0; l < settingsToLoad.length; l++) {
+      if (Object.keys(settings)[i] == settingsToLoad[l][0]) {
+          dewRcon.send(settingsToLoad[l][1]);
+      }
+      if (Object.keys(settings)[i+1] == settingsToLoad[l][0]) {
+          settings[Object.keys(settings)[i+1]].current = (Object.keys(settings)[i+1] == "serverpass" && (parseFloat(settings.saturation.current) == parseFloat(dewRcon.lastMessage))) ? "" : dewRcon.lastMessage;
+          settings[Object.keys(settings)[i+1]].update();
+          console.log(Object.keys(settings)[i+1] + ": " + settings[Object.keys(settings)[i+1]].current);
+          if (Object.keys(settings)[i+1] == 'username')
+            loadedSettings = true;
+      }
+    }
+    if (--i) {
+      loadSettings(i);
+    }
+  }, 5);
+}
+
 function initialize() {
     var set, b, g, i, e;
 	if (window.location.protocol == "https:") {
@@ -276,6 +299,7 @@ function initialize() {
 		}
 		settings[set].update();
 	}
+  loadSettings(Object.keys(settings).length);
 	for (i = 0; i < Object.keys(maps).length; i++) {
 		b = Object.keys(maps)[i];
 		$('#choosemap').children('.map-select').append("<div data-game='" + b + "' class='selection'><span class='label'>" + maps[b].name + "</span></div>");
@@ -336,10 +360,15 @@ function toggleNetwork() {
 	$('#click')[0].play();
 }
 
+var online = false;
+
 $(document).ready(function() {
     console.log(window.location.origin);
     if(window.location.origin.toLowerCase().indexOf("eldewrito.github.io") >= 0) {
         $('#donation').remove();
+    } else if (window.location.origin.toLowerCase() == "file://") {
+        online = navigator.onLine;
+        console.log(online);
     }
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
@@ -1524,6 +1553,8 @@ function changeType1(maintype) {
 
 function changeSong1(game) {
     console.log(game);
+    if (!online)
+      return;
 	$('.music-select .selection').removeClass('selected');
 	$("[data-game='" + game + "']").addClass('selected');
 	$('.music-select').css({
@@ -1547,6 +1578,8 @@ function changeSong1(game) {
 }
 
 function changeSong2(song) {
+  if (!online)
+    return;
 	$('.music-select2 .selection').removeClass('selected');
 	$("[data-song='" + song + "']").addClass('selected');
     $('#music').attr('src', 'http://eriq.co/eldewrito/music/' + currentAlbum + "/" + song + '.ogg');
