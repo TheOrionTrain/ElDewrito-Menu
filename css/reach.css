@@ -98,10 +98,11 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    font-size: 22px;
+    font-size: 44px;
     opacity: 0.8;
     z-index: 10;
     color: #fff;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #menu {
     position: absolute;
@@ -118,6 +119,10 @@
     -moz-transform-origin: top left;
     transform-origin: top left;
     box-sizing: border-box;
+    -webkit-perspective: 150px;
+    -webkit-perspective-origin: 50% 50%;
+    perspective: 150px;
+    perspective-origin: 50% 50%;
 }
 #browser-title {
     position: absolute;
@@ -347,7 +352,10 @@ audio {
     width: 1280px;
     height: 720px;
 }
-#main,
+#main{
+    top:-720px;
+    transform:translate(3.75%) rotate3D(0,1,0,1deg);
+}
 #serverbrowser,
 #credits {
     top: -720px;
@@ -363,10 +371,12 @@ audio {
 #customgame {
     top: -720px;
     left: 0;
+    transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
 #main2 {
     top: 0px;
     left: 0;
+    transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
 #map-thumb,
 #map-thumb-options {
@@ -472,15 +482,17 @@ audio {
 #title {
     top: 300px;
     font-weight: 700;
-    font-size: 68px;
+    font-size: 136px;
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #subtitle {
     top: 390px;
-    font-size: 22px;
+    font-size: 44px;
     font-weight: 300;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%);
 }
 #line1,
 #line2,
@@ -540,10 +552,11 @@ audio {
 #select .selection .value {
     text-align: center;
     display: table-cell;
-    width: 270px;
+    width: 540px;
     padding: 7px 0px 0px 0px;
     box-sizing: border-box;
     height: 40px;
+	transform: scale3d(1.0,0.5,1.0) translatey(-33%);
 }
 .options-select2 .selection .input {
     text-align: center;
@@ -557,23 +570,25 @@ audio {
 #select .selection .label {
     text-align: left;
     display: table-cell;
-    width: 400px;
+    width: 800px;
     padding: 7px 10px 0px 10px;
     box-sizing: border-box;
     height: 40px;
+	transform: scale3d(1.0,0.5,1.0) translatey(-33%);
 }
 .options-select2 .selection {
     font-weight: 300;
-    font-size: 23px;
+    font-size: 46px;
     color: rgba(255, 255, 255, 0.85);
-    width: 670px;
+    width: 1340px;
     height: 35px;
-    border-left: 3px solid rgba(255, 255, 255, 0);
+    border-left: 6px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
-    line-height: 20px;
+    line-height: 40px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
+	transform: scale3d(0.5,1.0,0.5) translatex(-33%);
 }
 .options-select2 {
     position: absolute;
@@ -642,10 +657,11 @@ audio {
 .options-select .selection .label {
     text-align: left;
     display: table-cell;
-    width: 260px;
-    padding: 7px 10px 0px 10px;
+    width: 520px;
+    padding: 14px 20px 0px 20px;
     box-sizing: border-box;
-    height: 40px;
+    height: 80px;
+	transform: scale3d(1.0,0.5,1.0) translatey(-33%);
 }
 
 .music-select .selection,
@@ -673,22 +689,23 @@ audio {
 .type-select2 .selection,
 .options-select .selection {
     font-weight: 300;
-    font-size: 23px;
+    font-size: 46px;
     color: rgba(255, 255, 255, 0.85);
-    width: 260px;
+    width: 520px;
     height: 35px;
-    border-left: 3px solid rgba(255, 255, 255, 0);
+    border-left: 6px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
+	transform: scale3d(0.5,1.0,0.5) translatex(-33%);
 }
 .map-select .selection,
 .music-select .selection,
 .type-select .selection,
 .options-select .selection {
-    background: url('../img/right.png') no-repeat 232px 8px/18px auto;
+    background: url('../img/right.png') no-repeat 464px 8px/18px auto;
 }
 .left,
 .right {
@@ -703,6 +720,7 @@ audio {
     opacity: 0.5;
     box-sizing: border-box;
     padding: 0;
+	transform: scale3d(2.0,1.0,2.0) translatey(-15%) translatex(-15%);
 }
 .left {
     background-image: url('../img/left.png');
@@ -713,37 +731,40 @@ audio {
 #select .selection,
 .select-main .selection {
     font-weight: 300;
-    font-size: 19px;
+    font-size: 38px;
     color: rgba(255, 255, 255, 0.85);
-    width: 450px;
+    width: 900px;
     height: 40px;
-    border-left: 3px solid rgba(255, 255, 255, 0);
+    border-left: 6px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
-    line-height: 20px;
+    line-height: 40px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
+	transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 .select-main .selection {
-    font-size: 22px;
+    font-size: 44px;
 }
 .select-main .selection .value,
 #select .selection .value {
     text-align: right;
     display: table-cell;
-    width: 225px;
-    padding: 10px 10px;
+    width: 450px;
+    padding: 20px 20px;
     box-sizing: border-box;
-    height: 40px;
+    height: 80px;
+	transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .select-main .selection .label,
 #select .selection .label {
     text-align: left;
     display: table-cell;
-    width: 225px;
-    padding: 10px 10px;
+    width: 450px;
+    padding: 20px 20px;
     box-sizing: border-box;
-    height: 40px;
+    height: 80px;
+	transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .selection:hover,
 .server:hover,
@@ -774,25 +795,26 @@ audio {
     z-index: 2;
 }
 #lobby {
-    width: 300px;
+    width: 600px;
     border-collapse: separate;
-    border-spacing: 0px 2px;
+    border-spacing: 0px 4px;
 }
 #lobby-container {
     position: absolute;
-    top: 50px;
-    right: 100px;
-    width: 300px;
-    height: 612px;
+    top: 100px;
+    right: 200px;
+    width: 600px;
+    height: 1024px;
     overflow-y: scroll;
+	transform: scale3d(0.5,0.5,0.5) translatex(83%) translatey(-60%);
 }
 #lobby .top td.info {
     background: rgba(0, 0, 0, 0.5);
     font-weight: 300;
-    font-size: 18px;
-    width: 300px;
-    height: 30px;
-    padding: 5px 10px;
+    font-size: 36px;
+    width: 600px;
+    height: 60px;
+    padding: 10px 20px;
     box-sizing: border-box;
     color: #fff;
 }
@@ -803,27 +825,27 @@ audio {
 }
 #lobby td {
     box-sizing: border-box;
-    margin-bottom: 3px;
-    height: 30px;
+    margin-bottom: 6px;
+    height: 60px;
     color: #fff;
     cursor: pointer;
 }
 #lobby td.name {
     font-weight: 300;
-    font-size: 18px;
-    width: 250px;
-    padding: 0px 20px 2px 20px;
-    background: no-repeat 160px 4px/58px 26px;
+    font-size: 36px;
+    width: 1000px;
+    padding: 4px 40px 4px 40px;
+    background: no-repeat 320px 8px/116px 52px;
 }
 #lobby td.rank {
-    width: 50px;
-    padding: 0px 10px 0px 10px;
+    width: 100px;
+    padding: 0px 20px 0px 20px;
     text-align: center;
     background: rgba(0, 0, 0, 0.15);
 }
 #lobby td.rank img {
-    max-width: 28px;
-    max-height: 28px;
+    max-width: 56px;
+    max-height: 56px;
     margin-top: 0px;
     opacity: 0.9;
     box-sizing: border-box;
@@ -916,10 +938,11 @@ audio {
 #back {
     left: 20px;
     bottom: 20px;
-    font-size: 18px;
+    font-size: 36px;
     opacity: 0.75;
     display: none;
     z-index: 999;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(50%);
 }
 .options-menu {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
@@ -946,13 +969,14 @@ audio {
     top: 60px;
     left: 150px;
     font-weight: 700;
-    font-size: 48px;
+    font-size: 96px;
     color: #fff;
     opacity: 0.9;
     z-index: 4;
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #dot {
     position: absolute;
@@ -963,4 +987,13 @@ audio {
     height: 90px;
     z-index: 3;
     opacity: 0.67;
+}
+#version {
+    right: 5px;
+	bottom: 5px;
+	font-size: 28px;
+	opacity: 0.5;
+	font-family: "Conduit ITC";
+	font-weight: 300;
+	transform: scale3d(0.5,0.5,0.5) translatex(50%) translatey(50%);
 }
