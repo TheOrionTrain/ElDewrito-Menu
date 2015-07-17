@@ -1,5 +1,5 @@
 function isset(val, other) {
-	return (val !== undefined) ? val : other;
+	return (val !== undefined && val !== null && val !== "") ? val : other;
 }
 
 function getURLParameter(name) {
@@ -59,10 +59,10 @@ function brighter(color) {
 function clearAllCookies() {
 	for (var i = 0; i < Object.keys(settings).length; i++) {
 		var set = Object.keys(settings)[i];
-		$.removeCookie(set);
+		localStorage.removeItem(set);
 	}
-	$.removeCookie('song');
-	$.removeCookie('album');
+	localStorage.removeItem('song');
+	localStorage.removeItem('album');
 	alert("All cookies reset.");
 	window.location.reload();
 }
