@@ -1,4 +1,3 @@
-//Coded by DARKC0DE
 var dewRcon,
 	dewRconConnected = false,
 	snacking = 0,
@@ -35,9 +34,6 @@ StartRconConnection = function() {
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
         dewRcon.lastMessage = message.data;
-        console.log(dewRcon.lastMessage);
-        console.log(dewRcon.lastCommand);
-        console.log(message.data);
     };
 }
 dewRconHelper = function() {
@@ -53,59 +49,3 @@ dewRconHelper = function() {
 }
 
 function after(ms, fn){ setTimeout(fn, ms); }
-
-//I know it's messy, don't judge me... :c will make it better later.
-function loadSettings() {
-	dewRcon.send('player.name');
-	after(10, function() {
-			if (dewRcon.lastMessage.toString().toLowerCase() == "forgot") {
-				settings.username.current = "";
-			} else {
-				settings.username.current = dewRcon.lastMessage;
-			}
-			settings.username.update();
-			dewRcon.send('server.name');
-			after(10, function() {
-					settings.servername.current = dewRcon.lastMessage;
-					settings.servername.update();
-					dewRcon.send('camera.crosshair');
-					after(10, function() {
-							settings.centeredcrosshair.current = parseInt(dewRcon.lastMessage);
-							settings.centeredcrosshair.update();
-							dewRcon.send('camera.fov');
-							after(10, function() {
-									settings.fov.current = parseInt(dewRcon.lastMessage);
-									settings.fov.update();
-									dewRcon.send('server.countdown');
-									after(10, function() {
-											settings.starttimer.current = parseInt(dewRcon.lastMessage);
-											settings.starttimer.update();
-											dewRcon.send('server.maxplayers');
-											after(10, function() {
-													settings.maxplayers.current = parseInt(dewRcon.lastMessage);
-													settings.maxplayers.update();
-													dewRcon.send('server.password');
-													after(10, function() {
-															if (isNaN(dewRcon.lastMessage)) {
-																	settings.serverpass.current = dewRcon.lastMessage;
-																	settings.serverpass.update();
-															}
-															dewRcon.send('input.rawinput');
-															after(10, function() {
-																	settings.rawinput.current = parseInt(dewRcon.lastMessage);
-																	settings.rawinput.update();
-																	dewRcon.send('graphics.saturation');
-																	after(10, function() {
-																			settings.saturation.current = parseFloat(dewRcon.lastMessage);
-																			settings.saturation.update();
-																			dewRcon.open = true;
-																	});
-															});
-													});
-											});
-									});
-							});
-					});
-			});
-	});
-}
