@@ -20,6 +20,9 @@ Halo 3 Custom Edition To-Do List
 16. Add controls to bottom of menu like Reach
 17. Remove unused code
 18. Take suggestions from people in IRC for more additions/improvements/bug fixes
+19. Make music shuffle through each game
+20. Intergrate in-game chat
+21. Don't load into game if in browser
 
 
 Add any suggestions or things I may have missed to this list.
