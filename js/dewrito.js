@@ -11,6 +11,7 @@ var players = [],
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
 	currentSetting = "menu",
+    currentAlbum = isset($.cookie('album'),"halo3"),
 	selectedserver,
 	loopPlayers,
 	host = 1,
@@ -26,7 +27,8 @@ var players = [],
 	currentVersion,
 	usingGamepad = false,
 	currentMenu = "main2",
-    debug = false;
+    debug = false,
+    songs;
 
 (function() {
 	var e = (window.innerHeight - 80) / 2;
@@ -209,11 +211,38 @@ function addServer(i, geoloc) {
 	}
 }
 
-function initalize() {
+function initialize() {
+    var set, b, g, i, e;
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
-	var set, b, g, i, e;
+    $.getJSON("music.json", function(j) {
+        songs = j;
+        for (i = 0; i < Object.keys(songs).length; i++) {
+    		b = Object.keys(songs)[i];
+    		$('#choosemusic').children('.music-select').append("<div data-game='" + b + "' class='selection'><span class='label'>" + getGame(b).toUpperCase() + "</span></div>");
+    		$('#choosemusic').append("<div class='music-select2 animated' id='songs-" + b + "'></div>");
+    		for (e = 0; e < Object.keys(songs[b]).length; e++) {
+    			g = songs[b][e];
+    			$('#songs-' + b).append("<div data-song='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
+    		}
+    	}
+        $('.music-select .selection').click(function() {
+    		changeSong1($(this).attr('data-game'));
+    	});
+    	$('.music-select2 .selection').click(function() {
+    		changeSong2($(this).attr('data-song'));
+    	});
+        $('.music-select .selection').hover(function() {
+            $('#click')[0].currentTime = 0;
+        	$('#click')[0].play();
+    	});
+        $('.music-select2 .selection').hover(function() {
+            $('#click')[0].currentTime = 0;
+        	$('#click')[0].play();
+    	});
+        changeSong2(isset($.cookie('song'),"Mythic Menu Theme"));
+    });
 	for (i = 0; i < Object.keys(settings).length; i++) {
 		set = Object.keys(settings)[i];
 		var category = settings[set].category;
@@ -314,7 +343,6 @@ $(document).ready(function() {
     }
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
-
 		$('#style').attr('href', 'css/'+CSSfile+'.css');
         menuConvert(CSSfile)
 	}
@@ -324,7 +352,7 @@ $(document).ready(function() {
 			dewRcon.send('Game.SetMenuEnabled 0');
 		}, anit);
 	});
-	initalize();
+	initialize();
     $.snackbar({content:'Menu loaded from '+ window.location.origin});
     $('#notification')[0].currentTime = 0;
     $('#notification')[0].play();
@@ -464,8 +492,8 @@ function lobbyLoop(ip) {
   var success = false;
 	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
-      success = true;
-      console.log('loop');
+            success = true;
+            console.log('loop');
 			players = serverInfo.players;
 			var teamGame = false;
 			var colour = "#000000";
@@ -1031,6 +1059,18 @@ function changeMenu(menu, details) {
 		$('#dewrito-options').fadeIn(anit);
 		currentMenu = "dewrito-options";
 	}
+    if (menu == "options-music") {
+		$('#back').attr('data-action', 'music-options');
+		$('#dewrito-options').hide();
+		$('#choosemusic').fadeIn(anit);
+		currentMenu = "music";
+	}
+	if (menu == "music-options") {
+		$('#back').attr('data-action', 'options-main');
+		$('#choosemusic').hide();
+		$('#dewrito-options').fadeIn(anit);
+		currentMenu = "dewrito-options";
+	}
 	if (menu == "serverbrowser-type") {
 		$('#choosetype').show();
 		$('#back').attr('data-action', 'options-serverbrowser');
@@ -1381,6 +1421,27 @@ function changeMap1(game) {
 	$('#slide')[0].play();
 }
 
+function getGame(game) {
+	switch (game) {
+		case "haloce":
+			return "Halo Combat Evolved";
+		case "hcea":
+			return "Halo Anniversary";
+		case "halo2":
+			return "Halo 2";
+		case "h2a":
+			return "Halo 2 Anniversary";
+		case "halo3":
+			return "Halo 3";
+		case "odst":
+			return "Halo 3 ODST";
+        case "reach":
+    		return "Halo Reach";
+        case "online":
+            return "Halo Online";
+	}
+}
+
 function getMapFile(name) {
 	if (typeof name != 'undefined') {
 		switch (name.toString().toLowerCase()) {
@@ -1459,6 +1520,38 @@ function changeType1(maintype) {
 	currentType = maintype;
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
+}
+
+function changeSong1(game) {
+    console.log(game);
+	$('.music-select .selection').removeClass('selected');
+	$("[data-game='" + game + "']").addClass('selected');
+	$('.music-select').css({
+		"left": "100px"
+	});
+	$('#songs-' + currentAlbum.replace(/\s/g, "")).hide().css({
+		"left": "310px",
+		"opacity": 0
+	});
+	$('#songs-' + game.replace(/\s/g, "")).css('display', 'block');
+	$('#songs-' + game.replace(/\s/g, "")).animate({
+		"left": "360px",
+		"opacity": 1
+	}, anit / 8);
+    $('#music-album-cover').css({
+        "background-image": "url('img/album/" + game + ".jpg')"
+    });
+	currentAlbum = game;
+	$('#slide')[0].currentTime = 0;
+	$('#slide')[0].play();
+}
+
+function changeSong2(song) {
+	$('.music-select2 .selection').removeClass('selected');
+	$("[data-song='" + song + "']").addClass('selected');
+    $('#music').attr('src', 'http://eriq.co/eldewrito/music/' + currentAlbum + "/" + song + '.ogg');
+    $.cookie('song', song);
+    $.cookie('album', currentAlbum);
 }
 
 function changeType2(type, click) {
