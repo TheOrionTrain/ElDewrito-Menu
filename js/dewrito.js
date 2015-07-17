@@ -1552,6 +1552,9 @@ function changeSong2(song) {
     $('#music').attr('src', 'http://eriq.co/eldewrito/music/' + currentAlbum + "/" + song + '.ogg');
     $.cookie('song', song);
     $.cookie('album', currentAlbum);
+    $.snackbar({content:'Now playing ' + song + ' from ' + getGame(currentAlbum) + '.'});
+    $('#notification')[0].currentTime = 0;
+    $('#notification')[0].play();
 }
 
 function changeType2(type, click) {
