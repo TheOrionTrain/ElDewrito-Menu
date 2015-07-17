@@ -289,7 +289,7 @@ var user = {
 			"update": function() {
 				var c = settings.username.current;
 				user.name = c;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send("player.name \"" + c + "\"");
 						dewRcon.send('writeconfig');
 				}
@@ -367,7 +367,7 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.rawinput.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('input.rawinput ' + c);
 						dewRcon.send('writeconfig');
 				}
@@ -424,7 +424,7 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.centeredcrosshair.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('camera.crosshair ' + c);
 						dewRcon.send('writeconfig');
 				}
@@ -478,7 +478,7 @@ var user = {
 			"increment": 5,
 			"update": function() {
 				var c = settings.fov.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('camera.fov ' + c);
 						dewRcon.send('writeconfig');
 				}
@@ -495,7 +495,7 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.starttimer.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('server.countdown ' + c);
 						dewRcon.send('writeconfig');
 				}
@@ -512,7 +512,7 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.maxplayers.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('server.maxplayers ' + c);
 						dewRcon.send('writeconfig');
 				}
@@ -526,7 +526,7 @@ var user = {
 			"current": parseInt(isset(localStorage.getItem('servername'), "Halo Online Server")),
 			"update": function() {
 				var c = settings.servername.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						console.log(c);
 						dewRcon.send("server.name \"" + c + "\"");
 						dewRcon.send('writeconfig');
@@ -542,7 +542,7 @@ var user = {
 			"current": parseInt(isset(localStorage.getItem('serverpass'), "")),
 			"update": function() {
 				var c = settings.serverpass.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('server.password ' + c);
 						dewRcon.send('writeconfig');
 				}
@@ -627,7 +627,7 @@ var user = {
 			"increment": 0.1,
 			"update": function() {
 				var c = parseFloat(settings.saturation.current);
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.saturation ' + c);
 						dewRcon.send('writeconfig');
 				}
@@ -644,7 +644,7 @@ var user = {
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.red.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.redhue ' + c);
 				}
 				$("[data-option='red']").children('.value').text(c.toFixed(2));
@@ -660,7 +660,7 @@ var user = {
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.blue.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.bluehue ' + c);
 				}
 				$("[data-option='blue']").children('.value').text(c.toFixed(2));
@@ -676,7 +676,7 @@ var user = {
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.green.current;
-				if (dewRcon.open) {
+				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.greenhue ' + c);
 				}
 				$("[data-option='green']").children('.value').text(c.toFixed(2));
