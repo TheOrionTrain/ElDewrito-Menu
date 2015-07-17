@@ -23,28 +23,30 @@
     -webkit-font-smoothing: antialiased;
 }
 #browser-buttons {
-    width: 650px;
-    height: 28px;
+    width: 1300px;
+    height: 56px;
     position: absolute;
-    top: 115px;
+    top: 120px;
     right: 100px;
+    transform: scale3d(0.5,0.5,0.5) translatex(50%) translatey(-50%);
 }
 #network-toggle {
     display: none;
 }
 #refresh img {
     margin: 0;
-    height: 28px;
-    width: 28px;
+    height: 56px;
+    width: 56px;
 }
 #direct-connect {
     position: absolute;
     color: #fff;
     top: 20px;
     right: 20px;
-    font-size: 22px;
+    font-size: 44px;
     opacity: 0.85;
     z-index: 2;
+    transform: scale3d(0.5,0.5,0.5);
 }
 #load-more {
     position: absolute;
@@ -72,11 +74,11 @@
     float: right;
     color: #fff;
     top: 115px;
-    font-size: 18px;
+    font-size: 36px;
     opacity: 0.85;
     z-index: 2;
-    margin: 0 15px;
-    max-width: 200px;
+    margin: 0 30px;
+    max-width: 400px;
     box-sizing: border-box;
     -webkit-transition: 0.4s;
     -moz-transition: 0.4s;
@@ -102,7 +104,7 @@
     opacity: 0.8;
     z-index: 10;
     color: #fff;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
+    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #menu {
     position: absolute;
@@ -129,12 +131,13 @@
     top: 60px;
     left: 100px;
     font-weight: 700;
-    font-size: 68px;
+    font-size: 136px;
     color: #fff;
     opacity: 0.85;
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #browser {
     position: absolute;
@@ -151,7 +154,8 @@
 }
 #browser.regular .server {
     height: 100px;
-    font-size: 20px;
+    font-size: 40px;
+    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 #browser.condensed .server {
     height: 70px;
@@ -162,11 +166,11 @@
     font-size: 20px;
 }
 #browser .server {
-    width: 1074px;
+    width: 2148px;
     box-sizing: border-box;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.85);
-    border-left: 3px solid rgba(255, 255, 255, 0);
+    border-left: 6px solid rgba(255, 255, 255, 0);
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
@@ -174,54 +178,74 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#browser.regular .flag {
+    position: relative;
+    top: 0px;
+    display: inline-block;
+    vertical-align: top;
+    max-width:60px;
+    max-height:46px;
+}
 .selection input[type="text"] {
     border: none;
     background: transparent;
-    font-size: 22px;
+    font-size: 44px;
     color: rgba(255, 255, 255, 0.85);
     outline: none;
     text-align: center;
     box-sizing: border-box;
     width: 100%;
-    height: 34px;
+    height: 68px;
 }
 .regular .server .thumb,
 .regular .server .info {
     display: inline-block;
-    width: 590px;
-    height: 100px;
+    width: 1180px;
+    height: 200px;
     box-sizing: border-box;
     white-space: nowrap;
-    padding: 10px 0px !important;
+    padding: 20px 0px !important;
     vertical-align: top;
+    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .regular .server .thumb {
     text-align: center;
-    width: 240px;
+    width: 480px;
 }
 .regular .server .players {
     display: inline-block;
-    width: 240px;
-    height: 100px;
+    width: 480px;
+    height: 200px;
     text-align: right;
     font-weight: 300;
-    font-size: 38px;
+    font-size: 76px;
     box-sizing: border-box;
     white-space: nowrap;
-    padding: 30px 40px !important;
+    padding: 60px 80px !important;
+    transform: scale3d(1.0,0.5,1.0) translatey(-50%)
 }
 .regular .server .settings {
     padding: 0 0px;
     font-weight: 300;
-    font-size: 25px;
+    font-size: 50px;
     text-align: left;
     vertical-align: center;
     width: 600px;
 }
 #browser.regular .server .thumb img {
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    width: 210px;
-    height: 79px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    width: 420px;
+    height: 158px;
+}
+.regular .server.passworded .thumb:before{
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    width: 420px;
+    height: 158px;
+    left: 28px;
+    top: 20px;
+}
+.regular .elversion {
+    font-size: 30px;
 }
 .condensed .server .thumb,
 .condensed .server .info {
@@ -232,6 +256,7 @@
     white-space: nowrap;
     padding: 5px 0px !important;
     vertical-align: top;
+    transform: scale3d(1.0,0.5,1.0);
 }
 .condensed .server .thumb {
     text-align: center;
@@ -247,6 +272,7 @@
     box-sizing: border-box;
     white-space: nowrap;
     padding: 15px 30px !important;
+    transform: scale3d(1.0,0.5,1.0);
 }
 .condensed .server .settings {
     padding: 0 0px;
@@ -312,7 +338,11 @@
     padding-top: 5px;
     overflow-x: hidden;
 }
-
+#browser.regular .name
+{
+    position: relative;
+    padding-top: 24px;
+}
 .regular .name,
 .regular .settings,
 .condensed .name,
@@ -359,6 +389,7 @@ audio {
 #serverbrowser,
 #credits {
     top: -720px;
+    transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
 .animated {
     -webkit-transition: 400ms;
@@ -486,13 +517,13 @@ audio {
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
+    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #subtitle {
     top: 390px;
     font-size: 44px;
     font-weight: 300;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%);
+    transform: scale3d(0.5,0.5,0.5) translatex(-50%);
 }
 #line1,
 #line2,
@@ -553,28 +584,29 @@ audio {
     text-align: center;
     display: table-cell;
     width: 540px;
-    padding: 7px 0px 0px 0px;
+    padding: 14px 0px 0px 0px;
     box-sizing: border-box;
     height: 40px;
-	transform: scale3d(1.0,0.5,1.0) translatey(-33%);
+    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .options-select2 .selection .input {
     text-align: center;
     display: table-cell;
-    width: 270px;
+    width: 560px;
     padding: 0;
     box-sizing: border-box;
     height: 40px;
+	transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .options-select2 .selection .label,
 #select .selection .label {
     text-align: left;
     display: table-cell;
     width: 800px;
-    padding: 7px 10px 0px 10px;
+    padding: 14px 20px 0px 14px;
     box-sizing: border-box;
     height: 40px;
-	transform: scale3d(1.0,0.5,1.0) translatey(-33%);
+    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .options-select2 .selection {
     font-weight: 300;
@@ -588,7 +620,7 @@ audio {
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-	transform: scale3d(0.5,1.0,0.5) translatex(-33%);
+    transform: scale3d(0.5,1.0,0.5) translatex(-33%);
 }
 .options-select2 {
     position: absolute;
@@ -661,7 +693,7 @@ audio {
     padding: 14px 20px 0px 20px;
     box-sizing: border-box;
     height: 80px;
-	transform: scale3d(1.0,0.5,1.0) translatey(-33%);
+    transform: scale3d(1.0,0.5,1.0) translatey(-33%);
 }
 
 .music-select .selection,
@@ -699,7 +731,7 @@ audio {
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-	transform: scale3d(0.5,1.0,0.5) translatex(-33%);
+    transform: scale3d(0.5,1.0,0.5) translatex(-33%);
 }
 .map-select .selection,
 .music-select .selection,
@@ -720,7 +752,7 @@ audio {
     opacity: 0.5;
     box-sizing: border-box;
     padding: 0;
-	transform: scale3d(2.0,1.0,2.0) translatey(-15%) translatex(-15%);
+    transform: scale3d(2.0,1.0,2.0) translatey(-15%) translatex(-15%);
 }
 .left {
     background-image: url('../img/left.png');
@@ -741,7 +773,7 @@ audio {
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-	transform: scale3d(0.5,1.0,0.5) translatex(-50%);
+    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 .select-main .selection {
     font-size: 44px;
@@ -754,7 +786,7 @@ audio {
     padding: 20px 20px;
     box-sizing: border-box;
     height: 80px;
-	transform: scale3d(1.0,0.5,1.0) translatey(-50%);
+    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .select-main .selection .label,
 #select .selection .label {
@@ -764,7 +796,7 @@ audio {
     padding: 20px 20px;
     box-sizing: border-box;
     height: 80px;
-	transform: scale3d(1.0,0.5,1.0) translatey(-50%);
+    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .selection:hover,
 .server:hover,
@@ -806,7 +838,7 @@ audio {
     width: 600px;
     height: 1024px;
     overflow-y: scroll;
-	transform: scale3d(0.5,0.5,0.5) translatex(83%) translatey(-60%);
+    transform: scale3d(0.5,0.5,0.5) translatex(83%) translatey(-60%);
 }
 #lobby .top td.info {
     background: rgba(0, 0, 0, 0.5);
@@ -942,7 +974,7 @@ audio {
     opacity: 0.75;
     display: none;
     z-index: 999;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(50%);
+    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(50%);
 }
 .options-menu {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
@@ -976,7 +1008,7 @@ audio {
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
+    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #dot {
     position: absolute;
@@ -990,10 +1022,10 @@ audio {
 }
 #version {
     right: 5px;
-	bottom: 5px;
-	font-size: 28px;
-	opacity: 0.5;
-	font-family: "Conduit ITC";
-	font-weight: 300;
-	transform: scale3d(0.5,0.5,0.5) translatex(50%) translatey(50%);
+    bottom: 5px;
+    font-size: 28px;
+    opacity: 0.5;
+    font-family: "Conduit ITC";
+    font-weight: 300;
+    transform: scale3d(0.5,0.5,0.5) translatex(50%) translatey(50%);
 }
