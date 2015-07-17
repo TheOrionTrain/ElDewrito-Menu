@@ -25,7 +25,7 @@ var user = {
 	},
 
 	settings = {
-		"preset": {
+		/*"preset": {
 			"typeof": "select",
 			"category": "menu",
 			"name": "PRESET",
@@ -64,50 +64,7 @@ var user = {
 				settings.background.update();
 				settings.musictrack.update();
 			}
-		},
-		"musictrack": {
-			"typeof": "select",
-			"category": "menu",
-			"name": "MENU MUSIC",
-			"current": isset($.cookie('musictrack', Number), 6),
-			"min": 0,
-			"max": 12,
-			"labels": [
-            "Halo Reach",
-            "Halo Reach Beta",
-            "Halo CE",
-            "Halo 2",
-            "Halo 2 Guitar",
-						"Halo 2 Anniversary Guitar",
-            "Halo 3",
-            "Halo 3 Mythic",
-            "Halo 3 ODST",
-            "Halo MCC",
-            "ElDewrito",
-            "Halo Online",
-            "Random"
-        ],
-			"increment": 1,
-			"update": function() {
-				var c = settings.musictrack.current,
-					l = settings.musictrack.labels[c];
-				if (l == "Random") {
-					$('#music')[0].loop = false;
-					var r = Math.floor(Math.random() * settings.musictrack.labels.length - 1);
-					(r < 0) ? r = 0: r = r;
-					$('#music').attr('src', 'audio/' + settings.musictrack.labels[r] + '.ogg');
-					$('#music')[0].addEventListener('ended', function() {
-						var r = Math.floor(Math.random() * settings.musictrack.labels.length - 1);
-						$('#music').attr('src', 'audio/' + settings.musictrack.labels[r] + '.ogg');
-					});
-					$("[data-option='musictrack']").children('.value').text("Random");
-				} else {
-					$('#music')[0].loop = true;
-					$('#music').attr('src', 'audio/' + settings.musictrack.labels[c] + '.ogg');
-					$("[data-option='musictrack']").children('.value').text(settings.musictrack.labels[c]);
-				}
-			}
-		},
+		},*/
 		"musicvolume": {
 			"typeof": "select",
 			"category": "menu",
@@ -207,7 +164,7 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.background.current,
-					l = settings.musictrack.labels[c];
+					l = settings.background.labels[c];
 				$('#videos').empty();
 				if (l == "Random") {
 					var r = Math.floor(Math.random() * settings.background.labels.length - 1);

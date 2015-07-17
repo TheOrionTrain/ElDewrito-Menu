@@ -61,6 +61,8 @@ function clearAllCookies() {
 		var set = Object.keys(settings)[i];
 		$.removeCookie(set);
 	}
+	$.removeCookie('song');
+	$.removeCookie('album');
 	alert("All cookies reset.");
 	window.location.reload();
 }
