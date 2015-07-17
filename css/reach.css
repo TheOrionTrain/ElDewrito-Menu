@@ -386,10 +386,12 @@ audio {
     top:-720px;
     transform:translate(3.75%) rotate3D(0,1,0,1deg);
 }
-#serverbrowser,
-#credits {
+#serverbrowser{
     top: -720px;
     transform:translate(3.75%) rotate3D(0,1,0,1deg);
+}
+#credits {
+    top: -720px;
 }
 .animated {
     -webkit-transition: 400ms;
@@ -428,23 +430,24 @@ audio {
     right: 120px;
 }
 #credits table {
-    width: 680px;
+    width: 1360px;
     position: absolute;
     left: 300px;
     top: 200px;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #credits table td.label {
-    width: 540px;
+    width: 1080px;
     text-align: left;
-    font-size: 24px;
+    font-size: 48px;
     color: #fff;
     opacity: 0.9;
     vertical-align: top;
 }
 #credits table td.name {
-    width: 540px;
+    width: 1080px;
     text-align: right;
-    font-size: 24px;
+    font-size: 48px;
     color: #fff;
     opacity: 0.9;
     vertical-align: top;
@@ -486,14 +489,16 @@ audio {
 #music-game,
 #type-name-options {
     top: 320px;
-    font-size: 26px;
+    font-size: 52px;
     opacity: 0.85;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%);
 }
 #map-info-options,
 #type-info-options {
     top: 380px;
-    font-size: 16px;
+    font-size: 32px;
     opacity: 0.7;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%);
 }
 #gametype-icon {
     position: absolute;
@@ -893,6 +898,7 @@ audio {
     overflow: hidden;
     opacity: 0.9;
     background: rgba(0, 0, 0, 0.45);
+	transform: rotate3D(0,1,0,-1deg)
 }
 #player-rank-display {
     position: absolute;
@@ -904,12 +910,12 @@ audio {
 }
 #player-name {
     display: block;
-    font-size: 22px;
-    margin: 10px 0;
+    font-size: 44px;
+    margin: 20px 0;
 }
 #player-level-display {
     display: block;
-    font-size: 18px;
+    font-size: 36px;
     opacity: 0.8;
     margin: 0;
 }
@@ -920,6 +926,7 @@ audio {
     width: 536px;
     height: 100px;
     color: #fff;
+	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #player-kd-chart {
     position: relative;
@@ -950,9 +957,10 @@ audio {
     top: 70px;
     text-align: center;
     z-index: 2;
-    font-size: 38px;
+    font-size: 76px;
     color: #fff;
     width: 100%;
+	transform: scale3d(0.5,0.5,0.5) translatey(-50%);
 }
 #player-armor {
     position: absolute;
