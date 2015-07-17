@@ -11,7 +11,7 @@ var players = [],
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
 	currentSetting = "menu",
-    currentAlbum = isset($.cookie('album'),"halo3"),
+    currentAlbum = isset(localStorage.getItem('album'),"halo3"),
 	selectedserver,
 	loopPlayers,
 	host = 1,
@@ -241,7 +241,7 @@ function initialize() {
             $('#click')[0].currentTime = 0;
         	$('#click')[0].play();
     	});
-        changeSong2(isset($.cookie('song'),"Mythic Menu Theme"));
+        changeSong2(isset(localStorage.getItem('song'),"Mythic Menu Theme"));
     });
 	for (i = 0; i < Object.keys(settings).length; i++) {
 		set = Object.keys(settings)[i];
@@ -320,7 +320,7 @@ function changeSetting(s, by) {
 	}
 	settings[s] = e;
 	e.update();
-	$.cookie(s, e.current);
+	localStorage.setItem(s, e.current);
 }
 
 function toggleNetwork() {
@@ -1550,8 +1550,8 @@ function changeSong2(song) {
 	$('.music-select2 .selection').removeClass('selected');
 	$("[data-song='" + song + "']").addClass('selected');
     $('#music').attr('src', 'http://eriq.co/eldewrito/music/' + currentAlbum + "/" + song + '.ogg');
-    $.cookie('song', song);
-    $.cookie('album', currentAlbum);
+    localStorage.setItem('song', song);
+    localStorage.setItem('album', currentAlbum);
     $.snackbar({content:'Now playing ' + song + ' from ' + getGame(currentAlbum) + '.'});
     $('#notification')[0].currentTime = 0;
     $('#notification')[0].play();
