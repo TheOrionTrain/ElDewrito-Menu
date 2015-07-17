@@ -384,11 +384,11 @@ audio {
 }
 #main{
     top:-720px;
-    transform:translate(3.75%) rotate3D(0,1,0,1deg);
+    transform:translate(3.75%) rotate3D(0,0.5,0,0.5deg);
 }
 #serverbrowser{
     top: -720px;
-    transform:translate(3.75%) rotate3D(0,1,0,1deg);
+    transform:translate(3.75%) rotate3D(0,0.5,0,0.5deg);
 }
 #credits {
     top: -720px;
@@ -404,12 +404,12 @@ audio {
 #customgame {
     top: -720px;
     left: 0;
-    transform:translate(3.75%) rotate3D(0,1,0,1deg);
+    transform:translate(3.75%) rotate3D(0,0.5,0,0.5deg);
 }
 #main2 {
     top: 0px;
     left: 0;
-    transform:translate(3.75%) rotate3D(0,1,0,1deg);
+    transform:translate(3.75%) rotate3D(0,0.5,0,0.5deg);
 }
 #map-thumb,
 #map-thumb-options {
