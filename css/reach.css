@@ -244,6 +244,9 @@
     left: 28px;
     top: 20px;
 }
+#options, #choosemusic, #choosemap, #choosetype {
+    transform:translate(0%) rotate3D(0,0,0,0deg);
+}
 .regular .elversion {
     font-size: 30px;
 }
