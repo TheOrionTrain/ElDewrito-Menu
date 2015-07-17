@@ -1,6 +1,6 @@
 var user = {
-		"name": isset($.cookie('username'), "Your Username"),
-		"color": isset($.cookie('color'), "#ff0000"),
+		"name": isset(localStorage.getItem('username'), "Your Username"),
+		"color": isset(localStorage.getItem('color'), "#ff0000"),
 		"rank": 0,
 		"infsens": 0,
 		"armor": {
@@ -29,7 +29,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "PRESET",
-			"current": isset($.cookie('preset', Number), 0),
+			"current": parseInt(isset(localStorage.getItem('preset'), 0),
 			"min": 0,
 			"max": 6,
 			"labels": [
@@ -69,31 +69,31 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "MUSIC VOLUME",
-			"current": isset($.cookie('musicvolume', Number), 0.25),
+			"current": parseInt(isset(localStorage.getItem('musicvolume'), 25)),
 			"min": 0,
-			"max": 1,
-			"increment": 0.05,
+			"max": 100,
+			"increment": 5,
 			"update": function() {
 				var c = settings.musicvolume.current;
-				$('#music')[0].volume = c;
-				$("[data-option='musicvolume']").children('.value').text(Math.round(c * 100));
+				$('#music')[0].volume = c*0.01;
+				$("[data-option='musicvolume']").children('.value').text(c);
 			}
 		},
 		"sfxvolume": {
 			"typeof": "select",
 			"category": "menu",
 			"name": "EFFECTS VOLUME",
-			"current": isset($.cookie('sfxvolume', Number), 0.25),
+			"current": parseInt(isset(localStorage.getItem('sfxvolume'), 25)),
 			"min": 0,
-			"max": 1,
-			"increment": 0.05,
+			"max": 100,
+			"increment": 5,
 			"update": function() {
 				var c = settings.sfxvolume.current;
-				$('#click')[0].volume = c;
-				$('#slide')[0].volume = c;
-				$('#notification')[0].volume = c;
-				$('#connectgamepad')[0].volume = c;
-				$("[data-option='sfxvolume']").children('.value').text(Math.round(c * 100));
+				$('#click')[0].volume = c*0.01;
+				$('#slide')[0].volume = c*0.01;
+				$('#notification')[0].volume = c*0.01;
+				$('#connectgamepad')[0].volume = c*0.01;
+				$("[data-option='sfxvolume']").children('.value').text(c);
 			}
 		},
 		"resolution": {
@@ -143,7 +143,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "BACKGROUND",
-			"current": isset($.cookie('background', Number), 0),
+			"current": parseInt(isset(localStorage.getItem('background'), 0)),
 			"min": 0,
 			"max": 12,
 			"labels": [
@@ -242,7 +242,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "LOGO",
-			"current": isset($.cookie('logo', Number), 0),
+			"current": parseInt(isset(localStorage.getItem('logo'), 0)),
 			"min": 0,
 			"max": 4,
 			"labels": [
@@ -265,7 +265,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "SERVER BROWSER STYLE",
-			"current": isset($.cookie('browserstyle', Number), 0),
+			"current": parseInt(isset(localStorage.getItem('browserstyle'), 0)),
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -285,7 +285,7 @@ var user = {
 			"typeof": "input",
 			"category": "eldewrito",
 			"name": "USERNAME",
-			"current": isset($.cookie('username'), "Your Username"),
+			"current": parseInt(isset(localStorage.getItem('username'), "Your Username")),
 			"update": function() {
 				var c = settings.username.current;
 				user.name = c;
@@ -300,7 +300,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "CONTROLS METHOD",
-			"current": isset($.cookie('keypad'), 1),
+			"current": parseInt(isset(localStorage.getItem('keypad'), 1)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -317,7 +317,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "INFANTRY SENSITIVITY",
-			"current": isset($.cookie('infsens'), 50),
+			"current": parseInt(isset(localStorage.getItem('infsens'), 50)),
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -330,7 +330,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "VEHICLE SENSITIVITY",
-			"current": isset($.cookie('vehsens'), 50),
+			"current": parseInt(isset(localStorage.getItem('vehsens'), 50)),
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -343,7 +343,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "MOUSE ACCELERATION",
-			"current": isset($.cookie('mouseacceleration'), 50),
+			"current": parseInt(isset(localStorage.getItem('mouseacceleration'), 50)),
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -357,7 +357,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "RAW INPUT",
-			"current": isset($.cookie('rawinput'), 0),
+			"current": parseInt(isset(localStorage.getItem('rawinput'), 0)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -378,7 +378,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "INVERT MOUSE",
-			"current": isset($.cookie('invertmouse'), 0),
+			"current": parseInt(isset(localStorage.getItem('invertmouse'), 0)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -396,7 +396,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "TOGGLE CROUCH",
-			"current": isset($.cookie('togglecrouch'), 1),
+			"current": parseInt(isset(localStorage.getItem('togglecrouch'), 1)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -414,7 +414,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "CENTERED CROSSHAIR",
-			"current": isset($.cookie('centeredcrosshair'), 1),
+			"current": parseInt(isset(localStorage.getItem('centeredcrosshair'), 1)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -437,7 +437,7 @@ var user = {
 			"typeof": "select",
 			"category": "gameplay",
 			"name": "HUD SHAKE",
-			"current": isset($.cookie('hudshake'), 1),
+			"current": parseInt(isset(localStorage.getItem('hudshake'), 1)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -454,7 +454,7 @@ var user = {
 			"typeof": "select",
 			"category": "gameplay",
 			"name": "PLAYER MARKER COLORS",
-			"current": isset($.cookie('markercolors'), 0),
+			"current": parseInt(isset(localStorage.getItem('markercolors'), 0)),
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -472,7 +472,7 @@ var user = {
 			"typeof": "select",
 			"category": "gameplay",
 			"name": "FOV",
-			"current": isset($.cookie('fov'), 90),
+			"current": parseInt(isset(localStorage.getItem('fov'), 90)),
 			"min": 40,
 			"max": 150,
 			"increment": 5,
@@ -489,7 +489,7 @@ var user = {
 			"typeof": "select",
 			"category": "host",
 			"name": "START TIMER",
-			"current": isset($.cookie('starttimer'), 5),
+			"current": parseInt(isset(localStorage.getItem('starttimer'), 5)),
 			"min": 0,
 			"max": 20,
 			"increment": 1,
@@ -506,7 +506,7 @@ var user = {
 			"typeof": "select",
 			"category": "host",
 			"name": "MAX PLAYERS",
-			"current": isset($.cookie('maxplayers'), 16),
+			"current": parseInt(isset(localStorage.getItem('maxplayers'), 16)),
 			"min": 1,
 			"max": 16,
 			"increment": 1,
@@ -523,7 +523,7 @@ var user = {
 			"typeof": "input",
 			"category": "host",
 			"name": "SERVER NAME",
-			"current": isset($.cookie('servername'), "Halo Online Server"),
+			"current": parseInt(isset(localStorage.getItem('servername'), "Halo Online Server")),
 			"update": function() {
 				var c = settings.servername.current;
 				if (dewRcon.open) {
@@ -539,7 +539,7 @@ var user = {
 			"typeof": "input",
 			"category": "host",
 			"name": "SERVER PASSWORD",
-			"current": isset($.cookie('serverpass'), ""),
+			"current": parseInt(isset(localStorage.getItem('serverpass'), "")),
 			"update": function() {
 				var c = settings.serverpass.current;
 				if (dewRcon.open) {
@@ -553,7 +553,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "VSYNC",
-			"current": isset($.cookie('vsync'), 0),
+			"current": parseInt(isset(localStorage.getItem('vsync'), 0)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -570,7 +570,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "DIRECTX 9.0 EXTENSIONS",
-			"current": isset($.cookie('directx9ext'), 0),
+			"current": parseInt(isset(localStorage.getItem('directx9ext'), 0)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -587,7 +587,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "SHOW FPS COUNTER",
-			"current": isset($.cookie('showfps'), 0),
+			"current": parseInt(isset(localStorage.getItem('showfps'), 0)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -604,7 +604,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "DISABLE INTRO VIDEOS",
-			"current": isset($.cookie('introvideos'), 0),
+			"current": parseInt(isset(localStorage.getItem('introvideos'), 0)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -621,7 +621,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "SATURATION",
-			"current": isset($.cookie('saturation', Number), parseFloat(1)),
+			"current": parseInt(isset(localStorage.getItem('saturation'), parseFloat(1))),
 			"min": -10,
 			"max": 10,
 			"increment": 0.1,
@@ -638,7 +638,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "RED",
-			"current": isset($.cookie('red', Number), 1),
+			"current": parseInt(isset(localStorage.getItem('red'), 1)),
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
@@ -654,7 +654,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "BLUE",
-			"current": isset($.cookie('blue', Number), 1),
+			"current": parseInt(isset(localStorage.getItem('blue'), 1)),
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
@@ -670,7 +670,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "GREEN",
-			"current": isset($.cookie('green', Number), 1),
+			"current": parseInt(isset(localStorage.getItem('green'), 1)),
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
@@ -686,7 +686,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "QUALITY PRESET",
-			"current": isset($.cookie('quality'), 1),
+			"current": parseInt(isset(localStorage.getItem('quality'), 1)),
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -704,7 +704,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "BRIGHTNESS",
-			"current": isset($.cookie('brightness'), 50),
+			"current": parseInt(isset(localStorage.getItem('brightness'), 50)),
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -717,7 +717,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "FULLSCREEN",
-			"current": isset($.cookie('quality'), 0),
+			"current": parseInt(isset(localStorage.getItem('quality'), 0)),
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -735,7 +735,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "ANTI-ALIASING",
-			"current": isset($.cookie('antialiasing'), 1),
+			"current": parseInt(isset(localStorage.getItem('antialiasing'), 1)),
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -752,7 +752,7 @@ var user = {
 			"typeof": "select",
 			"category": "audio",
 			"name": "MASTER VOLUME",
-			"current": isset($.cookie('mastervolume'), 100),
+			"current": parseInt(isset(localStorage.getItem('mastervolume'), 100)),
 			"min": 0,
 			"max": 100,
 			"increment": 5,
