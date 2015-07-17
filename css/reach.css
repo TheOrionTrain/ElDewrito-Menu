@@ -843,7 +843,7 @@ audio {
     top: 100px;
     right: 200px;
     width: 600px;
-    height: 1024px;
+    height: 1088px;
     overflow-y: scroll;
     transform: scale3d(0.5,0.5,0.5) translatex(83%) translatey(-60%);
 }
