@@ -398,10 +398,10 @@ $(document).ready(function() {
 		clearAllCookies();
 	});
 	var e = ((window.innerHeight - $('#menu').height()) / 2) - 40;
-    $('#connectgamepad')[0].volume = settings.musicvolume.current;
-	$('#music')[0].volume = settings.musicvolume.current;
-	$('#click')[0].volume = settings.sfxvolume.current;
-    $('#notification')[0].volume = settings.sfxvolume.current;
+    $('#connectgamepad')[0].volume = settings.musicvolume.current*0.01;
+	$('#music')[0].volume = settings.musicvolume.current*0.01;
+	$('#click')[0].volume = settings.sfxvolume.current*0.01;
+    $('#notification')[0].volume = settings.sfxvolume.current*0.01;
 	$('#start').click(function() {
 		var mode = $('#start').children('.label').text().toString().split(" ");
 		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
