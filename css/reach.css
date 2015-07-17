@@ -651,6 +651,9 @@ audio {
 #customgame ::-webkit-scrollbar {
     width: 4px;
 }
+#lobby-container::-webkit-scrollbar{
+	width: 0px;
+}
 .map-select2,
 .type-select2 {
     position: absolute;
