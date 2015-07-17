@@ -639,18 +639,17 @@ audio {
 #serverbrowser ::-webkit-scrollbar {
     width: 12px;
 }
-#serverbrowser ::-webkit-scrollbar-track {
+* ::-webkit-scrollbar-track {
     opacity: 0;
 }
-#serverbrowser ::-webkit-scrollbar-thumb {
+* ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.5);
 }
 #choosemap ::-webkit-scrollbar,
 #choosemusic ::-webkit-scrollbar,
 #choosetype ::-webkit-scrollbar,
 #customgame ::-webkit-scrollbar {
-    display: none;
-    width: 0px;
+    width: 4px;
 }
 .map-select2,
 .type-select2 {
@@ -661,7 +660,7 @@ audio {
     display: none;
     height: 500px;
     overflow-y: scroll;
-    overflow-x: visible;
+    overflow-x: hidden;
     opacity: 0;
 }
 
