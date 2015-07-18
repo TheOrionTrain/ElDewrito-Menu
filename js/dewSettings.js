@@ -96,6 +96,23 @@ var user = {
 				$("[data-option='sfxvolume']").children('.value').text(c);
 			}
 		},
+		"shufflemusic": {
+			"typeof": "select",
+			"category": "menu",
+			"name": "SHUFFLE MUSIC",
+			"current": parseInt(isset(localStorage.getItem('shufflemusic'), 0)),
+			"min": 0,
+			"max": 1,
+			"labels": [
+            "OFF",
+            "ON"
+        ],
+			"increment": 1,
+			"update": function() {
+				var c = settings.shufflemusic.current;
+				$("[data-option='shufflemusic']").children('.value').text(settings.shufflemusic.labels[c]);
+			}
+		},
 		"resolution": {
 			"typeof": "select",
 			"category": "menu",
