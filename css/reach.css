@@ -391,7 +391,6 @@ audio {
 }
 #serverbrowser{
     top: -720px;
-    transform:translate(1.5%) rotate3D(0,0.5,0,0.5deg);
 }
 #credits {
     top: -720px;
