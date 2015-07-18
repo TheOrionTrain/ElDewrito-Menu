@@ -171,24 +171,24 @@ var user = {
 					if(settings.background.labels[r] == "Halo Reach") {
 						var Reach = ["campaign_act1","campaign_act2","campaign_act3","custom_games","firefight","forge","mainmenu","matchmaking"];
 						r = Math.floor(Math.random() * Reach.length);
-						$('#videos').append("<video id='bg1' src='video/reach/"+Reach[r]+".webm' autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/"+Reach[r]+".webm' autoplay type='video/webm'></video>");
 					}
 					else if(settings.background.labels[r] == "Halo 3") {
 						var h3 = ["forge","mainmenu","multiplayer"];
 						r = Math.floor(Math.random() * h3.length);
-						$('#videos').append("<video id='bg1' src='video/reach/"+h3[r]+".webm' autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/"+h3[r]+".webm' autoplay type='video/webm'></video>");
 					}
 					else if (r === 1) {
-						$('#videos').append("<video id='bg1' src='video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
 					}
 					else if (r === 2) {
-						$('#videos').append("<video id='bg1' src='video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
 					}
 					else if (r === 3) {
-						$('#videos').append("<video id='bg1' src='video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
 					}
 					else {
-						$('#videos').append("<video id='bg1' src='video/" + settings.background.labels[r] + ".webm' autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/" + settings.background.labels[r] + ".webm' autoplay type='video/webm'></video>");
 					}
 					$('#bg1').show();
 					$('#bg1')[0].addEventListener('ended', function() {
@@ -201,31 +201,31 @@ var user = {
 				else {
 					if(c === 9001) {
 						$('#music')[0].pause();
-						$('#videos').append("<video id='bg1' src='video/Halo 5.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/Halo 5.webm' loop autoplay type='video/webm'></video>");
 						$('#menu').children().hide();
 						$('#videos').show();
 					}
 					if (c === 0) {
-						$('#videos').append("<video id='bg1' src='video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/mainmenu.webm' loop autoplay type='video/webm'></video>");
 						$('#videos').append("<video id='bg-matchmaking' src='video/reach/matchmaking.webm' preload='none' loop type='video/webm'></video>");
 						$('#videos').append("<video id='bg-custom_games' src='video/reach/custom_games.webm' preload='none' loop type='video/webm'></video>");
 						$('#videos').append("<video id='bg-forge' src='video/reach/forge.webm' preload='none' loop type='video/webm'></video>");
 						$('#videos').append("<video id='bg-firefight' src='video/reach/firefight.webm' preload='none' loop type='video/webm'></video>");
 					} else if (c === 1) {
-						$('#videos').append("<video id='bg1' src='video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/campaign_act1.webm' loop autoplay type='video/webm'></video>");
 					} else if (c === 2) {
-						$('#videos').append("<video id='bg1' src='video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
 					} else if (c === 3) {
-						$('#videos').append("<video id='bg1' src='video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
 					} else if (c === Halo3Index) {
-						$('#videos').append("<video id='bg1' src='video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
 						$('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
 						$('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='none' loop type='video/webm'></video>");
 					} else if (c === 11) {
-						$('#videos').append("<video id='bg1' src='video/reach/custom_games.webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/reach/custom_games.webm' loop autoplay type='video/webm'></video>");
 						$('#bg-cover').css('background', 'rgba(0,0,0,0)');
 					} else {
-						$('#videos').append("<video id='bg1' src='video/" + settings.background.labels[c] + ".webm' loop autoplay type='video/webm'></video>");
+						$('#videos').append("<video id='bg1' src='http://192.99.124.166/video/" + settings.background.labels[c] + ".webm' loop autoplay type='video/webm'></video>");
 					}
 
 					$('#bg1').show();
