@@ -585,7 +585,7 @@ audio {
 .map-select .selection,
 .music-select .selection,
 .type-select .selection {
-    background: url('../img/right.png') no-repeat 232px 8px/18px auto;
+    background: url('../img/right.png') no-repeat 232px 8px/36px 18px;
 }
 .options-select2 .selection .value,
 #select .selection .value {
@@ -747,7 +747,10 @@ audio {
 .music-select .selection,
 .type-select .selection,
 .options-select .selection {
-    background: url('../img/right.png') no-repeat 464px 8px/18px auto;
+    background: url('../img/right.png') no-repeat 464px 8px/36px 18px;
+}
+.music-select .selection {
+    background: url('../img/right.png') no-repeat 230px 8px/18px 18px;
 }
 .left,
 .right {
