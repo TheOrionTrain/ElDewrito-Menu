@@ -360,7 +360,7 @@ function toggleNetwork() {
 	$('#click')[0].play();
 }
 
-var online = false;
+var online = true;
 
 $(document).ready(function() {
     console.log(window.location.origin);
