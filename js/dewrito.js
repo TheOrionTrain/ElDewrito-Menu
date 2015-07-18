@@ -1290,6 +1290,12 @@ function playerInfo(name) {
 }
 
 function startgame(ip, mode) {
+    if(!dewRconConnected) {
+        $.snackbar({content:'You must be connected to the game to join or start a server.'});
+        $('#notification')[0].currentTime = 0;
+        $('#notification')[0].play();
+        return;
+    }
     loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
@@ -1505,7 +1511,7 @@ function changeMap2(map, click) {
 	$('#map-info-options').text(maps[currentGame][map]);
 	$('.map-select2 .selection').removeClass('selected');
 	$("[data-map='" + map + "']").addClass('selected');
-	if ($('#start').children('.label').text() != "JOIN GAME")
+	if ($('#start').children('.label').text() != "JOIN GAME" && dewRconConnected)
 		dewRcon.send('map ' + getMapFile($('#currentmap').text()));
 	if (browsing === 1 && click === true) {
 		$('#browser-map').text(map.toTitleCase());
@@ -1611,7 +1617,9 @@ function changeType2(type, click) {
 		});
 	}
 	debugLog(type);
-	dewRcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
+    if(dewRconConnected) {
+        dewRcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
+    }
 	$('#gametype-display').text(type.toUpperCase());
 	$('#type-name-options').text(type.toUpperCase());
 	$('#type-info-options').text(gametypes[currentType][type]);
