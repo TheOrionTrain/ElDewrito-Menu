@@ -921,39 +921,31 @@ var user = {
 		    "WATERWORKS" : "While the Forerunners excelled at mimicking natural beauty, the machinery in this cavern exemplifies their true genius.",
 		    "ZANZIBAR" : "Wind Power Station 7 sits as a mute reminder of the EAP's late 25th-century attempt at re-nationalization."
 		},
-		*/
 		"Halo3": {
 			"name": "HALO 3",
-			/*
-			        "ASSEMBLY" : "The Covenant war machine continues its march to conquest; even with its head severed it is still dangerous",
-			        "AVALANCHE" : "“Freezing winds scour blasted terrain, and ancient battle scars are a grim reminder that this is a precious prize.",
-			        "BLACKOUT" : "Bathed in frozen moonlight, this abandoned drilling platform is now a monument to human frailty.",
-			        "CITADEL" : "In the heart of this Forerunner structure, far above the troubled surface of the Ark, another battle rages.",
-			        "COLD STORAGE" : "Deep in the bowels of Installation 05 things have gotten a little out of hand. I hope you packed extra underwear.",
-			        "CONSTRUCT" : "Vast quantities of water and other raw materials are consumed in creating even the smallest orbital installations.",
-			        "EPITAPH" : "Some believe the Forerunner preferred desolate places. Others suggest that few other sites survived the Flood.",
-			        "FOUNDRY" : "After the orbital elevator fell, supply warehouses sending munitions to space were soon abandoned.",
-			        "GHOST TOWN" : "These fractured remains near Voi remind us that brave souls died here to buy our salvation.",
-			        */
+			"ASSEMBLY" : "The Covenant war machine continues its march to conquest; even with its head severed it is still dangerous",
+			"AVALANCHE" : "“Freezing winds scour blasted terrain, and ancient battle scars are a grim reminder that this is a precious prize.",
+			"BLACKOUT" : "Bathed in frozen moonlight, this abandoned drilling platform is now a monument to human frailty.",
+			"CITADEL" : "In the heart of this Forerunner structure, far above the troubled surface of the Ark, another battle rages.",
+			"COLD STORAGE" : "Deep in the bowels of Installation 05 things have gotten a little out of hand. I hope you packed extra underwear.",
+			"CONSTRUCT" : "Vast quantities of water and other raw materials are consumed in creating even the smallest orbital installations.",
+			"EPITAPH" : "Some believe the Forerunner preferred desolate places. Others suggest that few other sites survived the Flood.",
+			"FOUNDRY" : "After the orbital elevator fell, supply warehouses sending munitions to space were soon abandoned.",
+			"GHOST TOWN" : "These fractured remains near Voi remind us that brave souls died here to buy our salvation.",
 			"GUARDIAN": "Millennia of tending has produced trees as ancient as the Forerunner structures they have grown around.",
-			/*
-			        "HERETIC" : "Because of its speed and luxury the Pious Inquisitor has become an irresistible prize during these dark times.",
-			        "HIGH GROUND" : "A relic of older conflicts, this base was reactivated after the New Mombasa Slipspace Event.",
-			        "ISOLATION" : "Containment protocols are almost impervious to pre-Gravemind infestations. What could possibly go wrong?",
-			        "LAST RESORT" : "Remote industrial sites like this one are routinely requisitioned and used as part of Spartan training exercises.",
-			        "LONGSHORE" : "Abandoned during the invasion of Earth, the Mombasa Quays are now bereft of commerce, but rife with danger.",
-			        */
+			"HERETIC" : "Because of its speed and luxury the Pious Inquisitor has become an irresistible prize during these dark times.",
+			"HIGH GROUND" : "A relic of older conflicts, this base was reactivated after the New Mombasa Slipspace Event.",
+			"ISOLATION" : "Containment protocols are almost impervious to pre-Gravemind infestations. What could possibly go wrong?",
+			"LAST RESORT" : "Remote industrial sites like this one are routinely requisitioned and used as part of Spartan training exercises.",
+			"LONGSHORE" : "Abandoned during the invasion of Earth, the Mombasa Quays are now bereft of commerce, but rife with danger.",
 			"NARROWS": "Without cooling systems such as these, excess heat from the Ark's forges would render the construct uninhabitable.",
-			/*
-			        "ORBITAL" : "With a lot of situational awareness, and a little luck, hopefully the only thing you will lose is your luggage.",
-			        "RAT NEST" : "Snowmelt from Kilimanjaro feeds reservoirs every bit as vital as the fuel and ammunition stores.",
-			        "SANDBOX" : "This endless wasteland still holds many secrets. Some of them are held more deeply than others.",
-			        "SANDTRAP" : "Although the Brute occupiers have been driven from this ancient structure, they left plenty to remember them by.",
-			        "SNOWBOUND" : "Hostile conditions did not prevent the Covenant from seeking salvage on this buried Forerunner construct.",
-			        */
+			"ORBITAL" : "With a lot of situational awareness, and a little luck, hopefully the only thing you will lose is your luggage.",
+			"RAT NEST" : "Snowmelt from Kilimanjaro feeds reservoirs every bit as vital as the fuel and ammunition stores.",
+			"SANDBOX" : "This endless wasteland still holds many secrets. Some of them are held more deeply than others.",
+			"SANDTRAP" : "Although the Brute occupiers have been driven from this ancient structure, they left plenty to remember them by.",
+			"SNOWBOUND" : "Hostile conditions did not prevent the Covenant from seeking salvage on this buried Forerunner construct.",
 			"STANDOFF": "Once, nearby telescopes listened for a message from the stars. Now, these silos contain our prepared response.",
 			"THE PIT": "Software simulations are held in contempt by the veteran instructors who run these training facilities.",
-			/*
-			        "VALHALLA" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."*/
-		}
+			"VALHALLA" : "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."
+		}*/
 	};
