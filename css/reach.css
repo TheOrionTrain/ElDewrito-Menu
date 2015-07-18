@@ -244,7 +244,7 @@
     left: 28px;
     top: 20px;
 }
-#options, #choosemusic, #choosemap, #choosetype {
+#options, #choosemusic, #choosemap, #choosetype, #serverbrowser, #browser {
     transform:translate(0%) rotate3D(0,0,0,0deg);
 }
 .regular .elversion {
@@ -259,7 +259,6 @@
     white-space: nowrap;
     padding: 5px 0px !important;
     vertical-align: top;
-    transform: scale3d(1.0,0.5,1.0);
 }
 .condensed .server .thumb {
     text-align: center;
@@ -275,7 +274,6 @@
     box-sizing: border-box;
     white-space: nowrap;
     padding: 15px 30px !important;
-    transform: scale3d(1.0,0.5,1.0);
 }
 .condensed .server .settings {
     padding: 0 0px;
@@ -391,6 +389,7 @@ audio {
 }
 #serverbrowser{
     top: -720px;
+    background: rgba(0,0,0,0.25);
 }
 #credits {
     top: -720px;
