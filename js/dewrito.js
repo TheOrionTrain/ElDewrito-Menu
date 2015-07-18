@@ -28,7 +28,8 @@ var players = [],
 	usingGamepad = false,
 	currentMenu = "main2",
     debug = false,
-    songs;
+    songs,
+    localBackground = isset(localStorage.getItem('localbackground'),0);
 
 (function() {
 	var e = (window.innerHeight - 80) / 2;
