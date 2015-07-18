@@ -626,7 +626,7 @@ audio {
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-    transform: scale3d(0.5,1.0,0.5) translatex(-33%);
+    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 .options-select2 {
     position: absolute;
@@ -739,7 +739,7 @@ audio {
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-    transform: scale3d(0.5,1.0,0.5) translatex(-33%);
+    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 .map-select .selection,
 .music-select .selection,
