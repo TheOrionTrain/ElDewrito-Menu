@@ -365,8 +365,9 @@ var online = true;
 
 $(document).ready(function() {
     console.log(window.location.origin);
-    if(window.location.origin.toLowerCase().indexOf("eldewrito.github.io") >= 0) {
-        $('#donation').remove();
+    if(window.location.origin.toLowerCase().indexOf("no1dead.github.io") >= 0) {
+        changeMenu("main2-main");
+        changeMenu("main-serverbrowser");
     } else if (window.location.origin.toLowerCase() == "file://") {
         online = navigator.onLine;
         console.log(online);
