@@ -29,6 +29,9 @@ var players = [],
 	currentMenu = "main2",
     debug = false,
     songs,
+    thisSong,
+    nextSong,
+    songIndex,
     localBackground = isset(localStorage.getItem('localbackground'),0);
 
 (function() {
@@ -392,6 +395,13 @@ $(document).ready(function() {
 		totalPlayersLoop();
 		getCurrentVersion();
 	});
+    $('#music')[0].addEventListener('ended', function() {
+        if(settings.shufflemusic.current === 1) {
+            changeSong2(nextSong);
+        } else {
+            changeSong2(thisSong);
+        }
+    });
     $('#browser-full').click(function() {
 		if(sortFull) {
             sortFull = false;
@@ -1586,8 +1596,13 @@ function changeSong1(game) {
 }
 
 function changeSong2(song) {
-  if (!online)
-    return;
+    if (!online) {return;}
+    songIndex = songs[currentAlbum].indexOf(song);
+    thisSong = songs[currentAlbum][songIndex];
+    nextSong = songs[currentAlbum][songIndex+1];
+    if(songIndex+1 >= songs[currentAlbum].length) {
+        nextSong = songs[currentAlbum][0];
+    }
 	$('.music-select2 .selection').removeClass('selected');
 	$("[data-song='" + song + "']").addClass('selected');
     $('#music').attr('src', 'http://eriq.co/eldewrito/music/' + currentAlbum + "/" + song + '.ogg');

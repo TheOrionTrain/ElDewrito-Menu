@@ -6,23 +6,20 @@ Halo 3 Custom Edition To-Do List
 2. Pull player armor colors and display them in-lobby
 3. Finish controller support and add Playstation layout (DO THIS SOON)
 4. Rebuild the changeMenu function to be less messy and bloated
-5. Work on Halo 2 and 3 CSS (Low priority)
-6. Move helper functions to dewHelper.js file
-7. Add more server browser filters like ping, location, etc.
-8. Optimize network functions to help performance, maybe offload to a separate server? (Orion's VPS or ERIQ.CO server)
-9. Cleaup and further optimize current code
-10. Compress videos more or work out better loading method to help bandwidth and load times
-11. Finish loading screen
-12. Remake settings to be less bloated and messy (Add return variable, remove changing text from update functions)
-13. Add spartan customization (How do we show armor?)
-14. Get player stats showing and working correctly in lobbies
-15. Add keyboard navigation, piggyback off of gamepad functions with Mousetrap.js
-16. Add controls to bottom of menu like Reach
-17. Remove unused code
-18. Take suggestions from people in IRC for more additions/improvements/bug fixes
-19. Make music shuffle through each game
-20. Intergrate in-game chat
-21. Don't load into game if in browser
+5. Work on CSS for other game styles (Low priority)
+6. Add more server browser filters like ping, location, etc.
+7. Cleanup and further optimize current code
+8. Compress videos more or work out better loading method to help bandwidth and load times
+9. Finish loading screen
+10. Remake settings to be less bloated and messy (Add return variable, remove changing text from update functions)
+11. Add Spartan customization (How do we show armor?)
+12. Get player stats showing and working correctly in lobbies
+13. Add keyboard navigation, piggyback off of gamepad functions with Mousetrap.js
+14. Add controls to bottom of menu like Reach
+15. Remove unused code
+16. Take suggestions from people in IRC for more additions/improvements/bug fixes
+17. Make music shuffle through each game
+18. Integrate in-game chat
 
 
 Add any suggestions or things I may have missed to this list.
