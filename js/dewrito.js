@@ -51,8 +51,12 @@ function debugLog(val) {
     console.log(val);
 }
 
-function getMasterServers(cb) {
+var checked = 0;
+var masters = 0;
+
+function getMasterServers() {
 	$.getJSON("https://raw.githubusercontent.com/ElDewrito/ElDorito/master/dewrito.json", function(data) {
+    masters = data.masterServers.length;
 		$.each(data.masterServers, function(key, val) {
 			debugLog("Trying master server: " + val['list']);
 			$.ajax({
@@ -63,20 +67,31 @@ function getMasterServers(cb) {
 					if (data.result['msg'] == "OK") {
 						debugLog("Master server " + val['list'] + " is online and OK");
 						masterServers.push(val);
-						if (masterServers.length == 1) {
-							cb();
-						}
+            checked++;
+            if (checked == masters) {
+                getServers(false);
+                getTotalPlayers();
+            		totalPlayersLoop();
+            		getCurrentVersion();
+            }
 					}
 				},
-                error: function() {
-                    console.error("Issue connecting to master server: " + val['list']);
-                }
+        error: function() {
+            console.error("Issue connecting to master server: " + val['list']);
+            checked++;
+            if (checked == masters) {
+                getServers(false);
+                getTotalPlayers();
+            		totalPlayersLoop();
+            		getCurrentVersion();
+            }
+        }
 			});
 		});
 	});
 }
 
-function getServers() {
+function getServers(browser) {
 	if (usingGamepad) {
 		gamepadDeselect();
 	}
@@ -96,7 +111,7 @@ function getServers() {
 				var serverIP = data.result.servers[i];
 				if ($.inArray(serverIP, totalIps) === -1) {
 					totalIps.push(serverIP);
-					queryServer(serverIP, ffs);
+					queryServer(serverIP, ffs, browser);
 					ffs++;
 				}
 			}
@@ -104,7 +119,7 @@ function getServers() {
 	};
 }
 
-function queryServer(serverIP, i) {
+function queryServer(serverIP, i, browser) {
 	var startTime = Date.now(),
 		endTime,
 		ping;
@@ -132,7 +147,7 @@ function queryServer(serverIP, i) {
 				"map": sanitizeString(getMapName(serverInfo.mapFile)),
 				"file": sanitizeString(serverInfo.mapFile),
 				"status": sanitizeString(serverInfo.status),
-                "version": sanitizeString(serverInfo.eldewritoVersion),
+        "version": sanitizeString(serverInfo.eldewritoVersion),
 				"ping": ping,
 				"players": {
 					"max": parseInt(serverInfo.maxPlayers),
@@ -141,7 +156,7 @@ function queryServer(serverIP, i) {
 				"password": isPassworded
 			};
 		}
-		if (typeof servers[i] !== 'undefined') {
+		if (typeof servers[i] !== 'undefined' && browser) {
 			ip = serverIP.substring(0, serverIP.indexOf(':'));
 			$.ajax({
 				url: 'http://www.telize.com/geoip/' + serverIP.split(':')[0],
@@ -240,9 +255,10 @@ function loadSettings(i) {
 
 function initialize() {
     var set, b, g, i, e;
-	if (window.location.protocol == "https:") {
-		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
-	}
+  	if (window.location.protocol == "https:") {
+  		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
+  	}
+    $.snackbar({content:'Quick join is experimental.'});
     $.getJSON("music.json", function(j) {
         songs = j;
         for (i = 0; i < Object.keys(songs).length; i++) {
@@ -390,11 +406,7 @@ $(document).ready(function() {
     $.snackbar({content:'Menu loaded from '+ window.location.origin});
     $('#notification')[0].currentTime = 0;
     $('#notification')[0].play();
-	getMasterServers(function() {
-		getTotalPlayers();
-		totalPlayersLoop();
-		getCurrentVersion();
-	});
+	getMasterServers();
     $('#music')[0].addEventListener('ended', function() {
         if(settings.shufflemusic.current === 1) {
             changeSong2(nextSong);
@@ -516,7 +528,7 @@ function loadServers() {
 			$('#refresh img').removeClass('rotating');
 		}, 4000);
 		$('#browser').empty();
-		getServers();
+		getServers(true);
 		$('.server').hover(function() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
@@ -875,6 +887,25 @@ function changeMenu(menu, details) {
 		$('#back').attr('data-action', 'main-main2');
 		currentMenu = "main";
 	}
+  if (menu == "main-quickjoin") {
+      var lowestPing = 5000;
+      for (var i = 0; i < servers.length; i++) {
+          if (typeof servers[i] != 'undefined') {
+              if (servers[i].ping < lowestPing && (parseInt(servers[i].players.current) < parseInt(servers[i].players.max)) && !servers[i].password) {
+                lowestPing = parseInt(servers[i].ping);
+                selectedserver = i;
+              }
+          }
+          if (i == servers.length-1) {
+              changeMenu('main-serverbrowser');
+              changeMenu('serverbrowser-custom', selectedserver);
+              console.log(servers[selectedserver].ip);
+              setTimeout(function() {
+                  startgame(servers[selectedserver].ip, 'JOIN GAME'.split(' '));
+              }, 500);
+          }
+      }
+  }
 	if (menu == "serverbrowser-custom" && details) {
 		host = 0;
 		browsing = 0;
