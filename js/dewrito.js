@@ -803,8 +803,8 @@ function changeMenu(menu, details) {
 		$('#customgame').css({
 			"top": "0px"
 		});
-		$('#main').css({
-			"top": "720px"
+		$('#main3').css({
+			"top": "-720px"
 		});
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
@@ -846,8 +846,8 @@ function changeMenu(menu, details) {
 		$('#customgame').css({
 			"top": "0px"
 		});
-		$('#main').css({
-			"top": "720px"
+		$('#main3').css({
+			"top": "-720px"
 		});
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
@@ -1037,6 +1037,28 @@ function changeMenu(menu, details) {
 			"top": "720px"
 		});
 		currentMenu = "main";
+	}
+    if (menu == "main-main3") {
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'main3-main');
+		$('#main3').css({
+			"top": "0px"
+		});
+		$('#main').css({
+			"top": "720px"
+		});
+		currentMenu = "main3";
+	}
+    if (menu == "main3-main") {
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'main-main2');
+		$('#main3').css({
+			"top": "-720px"
+		});
+		$('#main').css({
+			"top": "0px"
+		});
+		currentMenu = "main3";
 	}
 	if (menu == "main2-credits") {
 		if (settings.background.current === 0) {
