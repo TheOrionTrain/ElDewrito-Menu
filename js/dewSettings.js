@@ -514,12 +514,12 @@ var user = {
 			"max": 150,
 			"increment": 5,
 			"update": function() {
-				var c = settings.fov.current;
+				var c = parseFloat(settings.fov.current);
 				if (dewRconConnected && loadedSettings) {
 						dewRcon.send('camera.fov ' + c);
 						dewRcon.send('writeconfig');
 				}
-				$("[data-option='fov']").children('.value').text(c);
+				$("[data-option='fov']").children('.value').text(c.toFixed(2));
 			}
 		},
 		"starttimer": {
