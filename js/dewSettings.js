@@ -169,6 +169,7 @@ var user = {
             "Reach Act 2",
             "Reach Act 3",
             "Halo CE",
+						"Halo CEA",
             "Halo 2",
             "Halo 3",
             "Halo 3 ODST",

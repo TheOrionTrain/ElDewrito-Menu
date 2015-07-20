@@ -369,7 +369,7 @@ function changeSetting(s, by) {
 
 function toggleNetwork() {
 	if (network == "offline") {
-		network = "online";
+		//network = "online";
 		//callbacks.networkType(1);
 	} else {
 		network = "offline";
@@ -1390,7 +1390,13 @@ function startgame(ip, mode) {
 				dewRcon.send('Game.SetMenuEnabled 0');
 			}
 		} else if (mode[1] === "FORGE") {
-
+      dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
+      $('#loadingMapName').text(servers[selectedserver].map.toString().toUpperCase());
+      $('#loadingMapImage').css('background-image','url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '.png)');
+      $('#loadingGametypeImage').css('background-image','url(./img/gametypes/' + servers[selectedserver].gameparent.toString().capitalizeFirstLetter() + '.png)');
+      $('#mapOverlay').css('background-image','url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '-overlay.png)');
+      $('#loading').show();
+      $('#back').remove();
 		} else if (mode[0] === "START" && mode[1] === "GAME") {
 			dewRcon.send('start');
 		}
