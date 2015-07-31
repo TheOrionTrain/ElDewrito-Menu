@@ -115,7 +115,7 @@ function queryServer(serverInfo, i, browser) {
 		success: function() {
 			endTime = Date.now();
 			ping = Math.round((endTime - startTime)/1.60); //Aproximate ping, may change from 1.75 later
-      console.log(ping);
+            $('#ping-'+i).text(ping);
 		}
 	});
 		if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
@@ -132,7 +132,7 @@ function queryServer(serverInfo, i, browser) {
 				"map": sanitizeString(serverInfo.map),
 				"file": sanitizeString(serverInfo.mapFile),
 				"status": sanitizeString(serverInfo.status),
-        "version": sanitizeString(serverInfo.eldewritoVersion),
+                "version": sanitizeString(serverInfo.eldewritoVersion),
 				"ping": ping,
 				"players": {
 					"max": parseInt(serverInfo.maxPlayers),
@@ -199,7 +199,7 @@ function addServer(i, geoloc) {
 	}
 	++gp_servers;
 	var on = (!servers[i].gametype) ? "" : "on";
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag + servers[i].ping + "ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].version + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag +"<span id='ping-"+i+"'>0</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].version + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
