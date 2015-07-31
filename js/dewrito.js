@@ -4,6 +4,7 @@
 */
 var players = [],
     masterServers = [],
+  serverz = [],
 	joined = 0,
 	track = 5,
 	scale = 1,
@@ -98,48 +99,32 @@ function getServers(browser) {
 	servers = [];
 	gp_servers = 0;
 	gp_on = 0;
-	var totalIps = [];
-	var ffs = 0;
-	for (var l = 0; l < masterServers.length; l++) {
-		$.getJSON(masterServers[l].list, function(data) {
-			if (data.result.code !== 0) {
-				alert("Error received from master: " + data.result.msg);
-				return;
-			}
-
-			for (var i = 0; i < data.result.servers.length; i++) {
-				var serverIP = data.result.servers[i];
-				if ($.inArray(serverIP, totalIps) === -1) {
-					totalIps.push(serverIP);
-					queryServer(serverIP, ffs, browser);
-					ffs++;
-				}
-			}
-		});
-	};
+    for (var i = 0; i < serverz.length; i++) {
+        queryServer(serverz[i], i, browser);
+    }
 }
 
-function queryServer(serverIP, i, browser) {
+function queryServer(serverInfo, i, browser) {
 	var startTime = Date.now(),
 		endTime,
 		ping;
 	$.ajax({
 		type: "GET",
-		url: "http://" + serverIP + "/",
+		url: "http://" + serverInfo.address + "/",
 		async: true,
 		success: function() {
 			endTime = Date.now();
 			ping = Math.round((endTime - startTime)/1.60); //Aproximate ping, may change from 1.75 later
+      console.log(ping);
 		}
 	});
-	$.getJSON("http://" + serverIP, function(serverInfo) {
 		if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
 			return false;
 		}
 		var isPassworded = serverInfo.passworded !== undefined;
 		if (serverInfo.map) {
 			servers[i] = {
-				"ip": sanitizeString(serverIP),
+				"ip": sanitizeString(serverInfo.address),
 				"host": sanitizeString(serverInfo.hostPlayer),
 				"name": sanitizeString(serverInfo.name),
 				"gametype": sanitizeString(serverInfo.variant),
@@ -157,9 +142,9 @@ function queryServer(serverIP, i, browser) {
 			};
 		}
 		if (typeof servers[i] !== 'undefined' && browser) {
-			ip = serverIP.substring(0, serverIP.indexOf(':'));
+			ip = serverInfo.address.substring(0, serverInfo.address.indexOf(':'));
 			$.ajax({
-				url: 'http://www.telize.com/geoip/' + serverIP.split(':')[0],
+				url: 'http://www.telize.com/geoip/' + serverInfo.address.split(':')[0],
 				dataType: 'json',
 				timeout: 3000,
 				success: function(geoloc) {
@@ -170,7 +155,6 @@ function queryServer(serverIP, i, browser) {
 				}
 			});
 		}
-	});
 }
 
 function getMapName(filename) {
@@ -187,8 +171,8 @@ function getMapName(filename) {
 			return "Reactor";
 		case "s3d_turf":
 			return "Icebox";
-		case "mainmenu":
-			return "Edge";
+    default:
+      return "Edge";
 	}
 }
 
@@ -406,7 +390,9 @@ $(document).ready(function() {
     $.snackbar({content:'Menu loaded from '+ window.location.origin});
     $('#notification')[0].currentTime = 0;
     $('#notification')[0].play();
-	getMasterServers();
+	  //getMasterServers();
+    //getTotalPlayers();
+    totalPlayersLoop();
     $('#music')[0].addEventListener('ended', function() {
         if(settings.shufflemusic.current === 1) {
             changeSong2(nextSong);
@@ -543,7 +529,6 @@ function loadServers() {
 
 function lobbyLoop(ip) {
   var success = false;
-	delay(function() {
 		$.getJSON("http://" + ip, function(serverInfo) {
             success = true;
             console.log('loop');
@@ -612,9 +597,8 @@ function lobbyLoop(ip) {
 				$(this).css("background-color", hexToRgb(bright, 0.75));
 			});
 			if (loopPlayers)
-				lobbyLoop(ip);
+				  setTimeout(lobbyLoop(ip), 3000);
 		});
-	}, 3000);
 
     setTimeout(function() {
       if (!success)
@@ -622,39 +606,15 @@ function lobbyLoop(ip) {
           // Handle error accordingly
           debugLog("Failed to contact server, retrying.");
           if (loopPlayers)
-    				lobbyLoop(ip);
+    				  setTimeout(lobbyLoop(ip), 3000);
       }
     }, 5000);
 }
 
 function getTotalPlayers() {
-	var totalIps = [];
-	var totalPlayers = 0,
-		totalServers = 0;
-	for (var l = 0; l < masterServers.length; l++) {
-		$.getJSON(masterServers[l].list, function(data) {
-			if (data.result.code !== 0) {
-				alert("Error received from master: " + data.result.msg);
-				return;
-			}
-			for (var i = 0; i < data.result.servers.length; i++) {
-				var serverIP = data.result.servers[i];
-				if ($.inArray(serverIP, totalIps) === -1) {
-					totalIps.push(serverIP);
-					if (!serverIP.toString().contains("?")) {
-						$.getJSON("http://" + serverIP, function(serverInfo) {
-							if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
-								return false;
-							}
-							totalPlayers += serverInfo.numPlayers;
-							++totalServers;
-							$('#players-online').text(totalPlayers + " Players on " + totalServers + " Servers");
-						});
-					}
-				}
-			}
-		});
-	}
+    $.getJSON("http://192.99.124.166:8080/count", function(data) {
+        $('#players-online').text(data.result);
+    });
 }
 
 function directConnect() {
@@ -672,36 +632,13 @@ function getCurrentVersion() {
 }
 
 function totalPlayersLoop() {
-	delay(function() {
-		var totalIps = [];
-		var totalPlayers = 0,
-			totalServers = 0;
-		for (var l = 0; l < masterServers.length; l++) {
-			$.getJSON(masterServers[l].list, function(data) {
-				if (data.result.code !== 0) {
-					alert("Error received from master: " + data.result.msg);
-					return;
-				}
-				for (var i = 0; i < data.result.servers.length; i++) {
-					var serverIP = data.result.servers[i];
-					if ($.inArray(serverIP, totalIps) === -1) {
-						totalIps.push(serverIP);
-						if (!serverIP.toString().contains("?")) {
-							$.getJSON("http://" + serverIP, function(serverInfo) {
-								if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
-									return false;
-								}
-								totalPlayers += serverInfo.numPlayers;
-								++totalServers;
-								$('#players-online').text(totalPlayers + " Players on " + totalServers + " Servers");
-							});
-						}
-					}
-				}
-			});
-		}
-		totalPlayersLoop();
-	}, 30000);
+    $.getJSON("http://192.99.124.166:8080/count", function(data) {
+        $('#players-online').text(data.result);
+    });
+    $.getJSON("http://192.99.124.166:8080", function(data) {
+        serverz = data;
+    });
+	  setTimeout(totalPlayersLoop, 10000);
 }
 
 function playersJoin(number, max, time, ip) {
