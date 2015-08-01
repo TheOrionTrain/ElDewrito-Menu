@@ -363,9 +363,25 @@ function toggleNetwork() {
 	$('#click')[0].play();
 }
 
+function loadFriends() {
+	var friends = {	//Temporary list of friends for testing, will load from localStorage later
+		"emoose" : 0,
+		"no1dead" : 1,
+		"Orion" : 1,
+		"Personality" : 0,
+		"TheFeelTrain" : 1
+	},
+	f = Object.keys(friends);
+	for(var i=0; i < f.length; i++) {
+		var o = (friends[f[i]]) ? "online" : "offline";
+		$('#friends').append("<div class='friend "+o+"'>"+f[i]+"</div>");
+	}
+}
+
 var online = true;
 
 $(document).ready(function() {
+	loadFriends();
 	console.log(window.location.origin);
 	if (window.location.origin.toLowerCase().indexOf("no1dead.github.io") >= 0) {
 		changeMenu("main2-main");
