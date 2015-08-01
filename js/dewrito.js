@@ -410,6 +410,7 @@ $(document).ready(function() {
 	});
 	$('#friends-online').click(function() {
 		$('#friendslist').css('right','0px');
+		$('#friends-online').fadeOut(anit);
 	});
 	$('#browser-locked').click(function() {
 		if (sortLocked) {
