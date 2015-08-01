@@ -3,7 +3,9 @@ var dewRcon,
 	snacking = 0,
 	played = 0;
 jQuery(function() {
-	StartRconConnection();
+	if(getURLParameter('offline') !== "1") {
+		StartRconConnection();
+	}
 });
 StartRconConnection = function() {
     dewRcon = new dewRconHelper();
