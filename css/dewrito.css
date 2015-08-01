@@ -12,7 +12,14 @@
     top: 100px;
     left: 25px;
     width: 200px;
-    height: 600px;
+    height: 540px;
+    overflow-y: scroll;
+}
+.nofriends {
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
 }
 .friends-title {
     font-size: 26px;
@@ -32,7 +39,8 @@
     -moz-transition: 0.5s;
     transition: 0.5s;
 }
-.friend:hover {
+.friend:hover,
+#friend-button:hover {
     color: rgba(255, 255, 255, 1);
     background: rgba(100,100,100,0.9);
     cursor: pointer;
@@ -54,6 +62,45 @@
     border-radius: 8px;
     float: right;
     margin: 5px;
+}
+#addfriend {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    width: 200px;
+}
+#friend-input {
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.9);
+    background: rgba(255,255,255,0.9);
+    border-radius: 4px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+    border: 0;
+    outline: 0;
+    margin: 0;
+    width: 141px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+#friend-button {
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(50,50,50,0.9);
+    border-radius: 4px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+    margin: 0 0 0 10px;
+    width: 45px;
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;
 }
 .regular .elversion {
     font-size: 15px;
