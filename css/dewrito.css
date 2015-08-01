@@ -1,16 +1,26 @@
-#donation {
-    font-family: "Conduit ITC";
-    font-size: 18px;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-    text-align: center;
+#friendslist {
     position: absolute;
-    left: 300px;
-    bottom: 40px;
-    width: 680px;
+    top: 0px;
+    right: -300px;
+    z-index: 10;
+    width: 300px;
+    height: 720px;
+    background: rgba(0,0,0,0.8);
 }
-
+#friends {
+    position: absolute;
+    top: 50px;
+    left: 25px;
+    width: 250px;
+    height: 600px;
+}
+.friend {
+    padding: 12px 10px;
+    font-size: 15px;
+    font-weight: 300;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
 .regular .elversion {
     font-size: 15px;
 }
