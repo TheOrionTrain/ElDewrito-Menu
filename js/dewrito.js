@@ -363,25 +363,46 @@ function toggleNetwork() {
 	$('#click')[0].play();
 }
 
+var friends = [];
+
 function loadFriends() {
-	var friends = {	//Temporary list of friends for testing, will load from localStorage later
-		"emoose" : 0,
-		"no1dead" : 1,
-		"Orion" : 1,
-		"Personality" : 0,
-		"TheFeelTrain" : 1
-	},
-	f = Object.keys(friends);
-	for(var i=0; i < f.length; i++) {
-		var o = (friends[f[i]]) ? "online" : "offline";
-		$('#friends').append("<div class='friend "+o+"'>"+f[i]+"</div>");
+	friends = JSON.parse(localStorage.getItem("friends"));
+	if(!friends) {
+		friends = [];
+		$('#friends').append("<div class='nofriends'>You have no friends :(</div>");
+		return false;
 	}
+	$('#friends').empty();
+	for(var i=0; i < friends.length; i++) {
+		var o = (isOnline(friends[i])) ? "online" : "offline";
+		$('#friends').append("<div class='friend "+o+"'>"+friends[i]+"</div>");
+	}
+}
+
+function addFriend() {
+	var name = $('#friend-input').val();
+	console.log(name);
+	if(name !== null || name !== "" || name !== undefined) {
+		$('#friend-input').val("");
+		friends.push(name);
+		localStorage.setItem("friends", JSON.stringify(friends));
+		loadFriends();
+	}
+}
+
+function isOnline(friend) {
+	return Math.floor((Math.random()*2)); //Orion, check if friend is online or not here
 }
 
 var online = true;
 
 $(document).ready(function() {
 	loadFriends();
+	$('#friend-button').click(function() {
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
+		addFriend();
+	});
 	console.log(window.location.origin);
 	if (window.location.origin.toLowerCase().indexOf("no1dead.github.io") >= 0) {
 		changeMenu("main2-main");
