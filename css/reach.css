@@ -41,12 +41,14 @@
 #direct-connect {
     position: absolute;
     color: #fff;
-    top: 20px;
-    right: 20px;
+    bottom: 30px;
+    right: 490px;
     font-size: 44px;
     opacity: 0.85;
     z-index: 2;
     transform: scale3d(0.5,0.5,0.5);
+    text-align: center;
+    width: 300px;
 }
 #load-more {
     position: absolute;
