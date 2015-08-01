@@ -63,7 +63,8 @@
     text-align: center;
 }
 #direct-connect:hover,
-#load-more:hover {
+#load-more:hover,
+#friends-online:hover {
     opacity: 1;
     cursor: pointer;
 }
@@ -102,6 +103,16 @@
     position: absolute;
     top: 20px;
     left: 20px;
+    font-size: 44px;
+    opacity: 0.8;
+    z-index: 10;
+    color: #fff;
+    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
+}
+#friends-online {
+    position: absolute;
+    top: 20px;
+    right: -90px;
     font-size: 44px;
     opacity: 0.8;
     z-index: 10;

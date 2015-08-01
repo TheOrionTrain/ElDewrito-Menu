@@ -408,6 +408,9 @@ $(document).ready(function() {
 		}
 		$('#refresh').trigger('click');
 	});
+	$('#friends-online').click(function() {
+		$('#friendslist').fadeIn(anit);
+	});
 	$('#browser-locked').click(function() {
 		if (sortLocked) {
 			sortLocked = false;
