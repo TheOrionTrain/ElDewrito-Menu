@@ -237,6 +237,7 @@ function loadSettings(i) {
 }
 
 function initialize() {
+	getCurrentVersion();
 	var set, b, g, i, e;
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
