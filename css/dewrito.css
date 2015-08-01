@@ -1,25 +1,59 @@
 #friendslist {
     position: absolute;
     top: 0px;
-    right: -300px;
+    right: -250px;
     z-index: 10;
-    width: 300px;
+    width: 250px;
     height: 720px;
     background: rgba(0,0,0,0.8);
 }
 #friends {
     position: absolute;
-    top: 50px;
+    top: 100px;
     left: 25px;
-    width: 250px;
+    width: 200px;
     height: 600px;
 }
-.friend {
-    padding: 12px 10px;
-    font-size: 15px;
+.friends-title {
+    font-size: 26px;
     font-weight: 300;
-    color: #fff;
-    border-bottom: 1px solid #fff;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 25px 25px 50px 25px;
+}
+.friend {
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(50,50,50,0.9);
+    border-radius: 4px;
+    margin: 5px 0;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+}
+.friend:hover {
+    color: rgba(255, 255, 255, 1);
+    background: rgba(100,100,100,0.9);
+    cursor: pointer;
+}
+.friend.online:after {
+    content: " ";
+    background: rgba(0,255,55,0.66);
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    float: right;
+    margin: 5px;
+}
+.friend.offline:after {
+    content: " ";
+    background: rgba(255,0,55,0.66);
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    float: right;
+    margin: 5px;
 }
 .regular .elversion {
     font-size: 15px;
