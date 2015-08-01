@@ -241,9 +241,6 @@ function initialize() {
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
-	$.snackbar({
-		content: 'Quick join is experimental.'
-	});
 	$.getJSON("music.json", function(j) {
 		songs = j;
 		for (i = 0; i < Object.keys(songs).length; i++) {
@@ -388,9 +385,6 @@ $(document).ready(function() {
 		}, anit);
 	});
 	initialize();
-	$.snackbar({
-		content: 'Menu loaded from ' + window.location.origin
-	});
 	$('#notification')[0].currentTime = 0;
 	$('#notification')[0].play();
 	//getMasterServers();
