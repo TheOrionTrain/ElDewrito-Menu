@@ -366,6 +366,7 @@ function toggleNetwork() {
 var friends = [], friends_online;
 
 function loadFriends() {
+	$('#friends').empty();
 	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
 	if(!friends || friends.length < 1) {
@@ -374,7 +375,6 @@ function loadFriends() {
 		$('#friends').append("<div class='nofriends'>You have no friends :(<br/>Add some below</div>");
 		return false;
 	}
-	$('#friends').empty();
 	for(var i=0; i < friends.length; i++) {
 		var o = (isOnline(friends[i])) ? "online" : "offline";
 		$('#friends').append("<div class='friend "+o+"'>"+friends[i]+"</div>");
