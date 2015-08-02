@@ -99,8 +99,8 @@ function getServers(browser) {
 	servers = [];
 	gp_servers = 0;
 	gp_on = 0;
-	for (var i = 0; i < serverz.length; i++) {
-		queryServer(serverz[i], i, browser);
+	for (var i = 0; i < serverz.servers.length; i++) {
+		queryServer(serverz.servers[i], i, browser);
 	}
 }
 
@@ -412,13 +412,12 @@ function removeFriend() {
 }
 
 function isOnline(friend) {
-	return Math.floor((Math.random()*2)); //Orion, check if friend is online or not here
+	return typeof serverz.players[friend] == 'undefined' ? 0 : 1; //Orion, check if friend is online or not here
 }
 
 var online = true;
 
 $(document).ready(function() {
-	loadFriends();
 	$('#friend-add').click(function() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
@@ -705,12 +704,17 @@ function getCurrentVersion() {
 }
 
 function totalPlayersLoop() {
-	$.getJSON("http://192.99.124.166:8080/count", function(data) {
+	$.getJSON("http://192.99.124.166:8080/all", function(data) {
+		serverz = data;
+		$('#players-online').text(serverz.count);
+		loadFriends();
+	});
+	/*$.getJSON("http://192.99.124.166:8080/count", function(data) {
 		$('#players-online').text(data.result);
 	});
 	$.getJSON("http://192.99.124.166:8080", function(data) {
 		serverz = data;
-	});
+	});*/
 	setTimeout(totalPlayersLoop, 10000);
 }
 
