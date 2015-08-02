@@ -383,6 +383,10 @@ function loadFriends() {
 		}
 	}
 	$('#friends-online').text(friends_online+" Friends Online");
+	$('.friend,#friend-add,#friend-remove').hover(function() {
+		$('#click')[0].currentTime = 0;
+		$('#click')[0].play();
+	});
 }
 
 function addFriend() {
@@ -470,6 +474,14 @@ $(document).ready(function() {
 	$('#friends-online').click(function() {
 		$('#friendslist').css('right','0px');
 		$('#friends-online').fadeOut(anit);
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
+	});
+	$('#friends-close').click(function() {
+		$('#friendslist').css('right','-250px');
+		$('#friends-online').fadeIn(anit);
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
 	});
 	$('#browser-locked').click(function() {
 		if (sortLocked) {
