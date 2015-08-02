@@ -17,7 +17,7 @@
 }
 .nofriends {
     padding: 8px 10px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.9);
 }
@@ -39,8 +39,7 @@
     -moz-transition: 0.5s;
     transition: 0.5s;
 }
-.friend:hover,
-#friend-button:hover {
+.friend:hover {
     color: rgba(255, 255, 255, 1);
     background: rgba(100,100,100,0.9);
     cursor: pointer;
@@ -82,25 +81,37 @@
     border: 0;
     outline: 0;
     margin: 0;
-    width: 141px;
+    width: 126px;
     display: inline-block;
     box-sizing: border-box;
 }
-#friend-button {
+#friend-add, #friend-remove {
     padding: 8px 10px;
     font-size: 16px;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.9);
-    background: rgba(50,50,50,0.9);
+    margin: 0 0 0 5px;
     border-radius: 4px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-    margin: 0 0 0 10px;
-    width: 45px;
+    width: 28px;
     display: inline-block;
     text-align: center;
     box-sizing: border-box;
+    cursor: pointer;
+}
+#friend-add {
+    background: rgba(0,160,25,0.9);
+}
+#friend-remove {
+    background: rgba(160,0,25,0.9);
+}
+#friend-add:hover {
+    background: rgba(0,255,55,0.9);
+}
+#friend-remove:hover {
+    background: rgba(255,0,55,0.9);
 }
 .regular .elversion {
     font-size: 15px;

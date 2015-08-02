@@ -363,28 +363,45 @@ function toggleNetwork() {
 	$('#click')[0].play();
 }
 
-var friends = [];
+var friends = [], friends_online;
 
 function loadFriends() {
+	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
-	if(!friends) {
+	if(!friends || friends.length < 1) {
 		friends = [];
-		$('#friends').append("<div class='nofriends'>You have no friends :(</div>");
+		localStorage.setItem("friends", JSON.stringify(friends));
+		$('#friends').append("<div class='nofriends'>You have no friends :(<br/>Add some below</div>");
 		return false;
 	}
 	$('#friends').empty();
 	for(var i=0; i < friends.length; i++) {
 		var o = (isOnline(friends[i])) ? "online" : "offline";
 		$('#friends').append("<div class='friend "+o+"'>"+friends[i]+"</div>");
+		if(o == "online") {
+			friends_online++;
+		}
 	}
+	$('#friends-online').text(friends_online+" Friends Online");
 }
 
 function addFriend() {
 	var name = $('#friend-input').val();
-	console.log(name);
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
-		friends.push(name);
+		if(friends.indexOf(name) == -1) {
+			friends.push(name);
+		}
+		localStorage.setItem("friends", JSON.stringify(friends));
+		loadFriends();
+	}
+}
+
+function removeFriend() {
+	var name = $('#friend-input').val();
+	if(name !== null || name !== "" || name !== undefined) {
+		$('#friend-input').val("");
+		friends.remove(name);
 		localStorage.setItem("friends", JSON.stringify(friends));
 		loadFriends();
 	}
@@ -398,10 +415,15 @@ var online = true;
 
 $(document).ready(function() {
 	loadFriends();
-	$('#friend-button').click(function() {
+	$('#friend-add').click(function() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
 		addFriend();
+	});
+	$('#friend-remove').click(function() {
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
+		removeFriend();
 	});
 	console.log(window.location.origin);
 	if (window.location.origin.toLowerCase().indexOf("no1dead.github.io") >= 0) {
