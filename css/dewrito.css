@@ -15,6 +15,19 @@
     height: 540px;
     overflow-y: scroll;
 }
+#friends-close {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: url('../img/x.png') no-repeat 0px 0px/14px 14px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+#friends-close:hover {
+    opacity: 1;
+}
 .nofriends {
     padding: 8px 10px;
     font-size: 18px;
