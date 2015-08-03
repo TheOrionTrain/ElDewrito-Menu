@@ -557,7 +557,7 @@ $(document).ready(function() {
 		var c = $(this).parent('.selection').attr('data-option');
 		changeSetting(c, 0);
 	});
-	$('input').focusout(function() {
+	$('.input input').focusout(function() {
 		var c = $(this).parent('.input').parent('.selection').attr('data-option'),
 			val = $(this).val();
 		changeSetting(c, val);
