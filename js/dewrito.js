@@ -105,6 +105,8 @@ function getServers(browser) {
 	}
 }
 
+var pings = [];
+
 function queryServer(serverInfo, i, browser) {
 	var startTime = Date.now(),
 		endTime,
@@ -116,7 +118,9 @@ function queryServer(serverInfo, i, browser) {
 		success: function() {
 			endTime = Date.now();
 			ping = Math.round((endTime - startTime) / 1.60); //Aproximate ping, may change from 1.75 later
-			$('#ping-' + i).text(ping);
+			pings[i] = ping;
+			$('#ping-' + i).text(pings[i]);
+			console.log(i+": "+pings[i]);
 		}
 	});
 	if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
@@ -134,7 +138,6 @@ function queryServer(serverInfo, i, browser) {
 			"file": sanitizeString(serverInfo.mapFile),
 			"status": sanitizeString(serverInfo.status),
 			"version": sanitizeString(serverInfo.eldewritoVersion),
-			"ping": ping,
 			"players": {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
@@ -188,6 +191,7 @@ function promptPassword(i) {
 var gp_servers = 0;
 
 function addServer(i, geoloc) {
+	if(!pings[i]) {pings[i] = 0;}
 	var location_flag = "";
 	i = parseInt(i);
 	if (!geoloc) {
@@ -199,7 +203,7 @@ function addServer(i, geoloc) {
 	}
 	++gp_servers;
 	var on = (!servers[i].gametype) ? "" : "on";
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag + "<span id='ping-" + i + "'>0</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].version + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag + "<span id='ping-" + i + "'>"+pings[i]+"</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].version + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -634,6 +638,7 @@ $(document).ready(function() {
 
 function loadServers() {
 	if (browsing === 1) {
+		pings = [];
 		$('#refresh img').addClass('rotating');
 		setTimeout(function() {
 			$('#refresh img').removeClass('rotating');
