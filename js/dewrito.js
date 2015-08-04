@@ -373,7 +373,7 @@ function loadFriends() {
 	if(!friends || friends.length < 1) {
 		friends = [];
 		localStorage.setItem("friends", JSON.stringify(friends));
-		$('#friends-online').text("You have no friends :(");
+		$('#friends-online').text("0 Friends Online");
 		$('#friends').append("<div class='nofriends'>You have no friends :(<br/>Add some below</div>");
 		return false;
 	}
