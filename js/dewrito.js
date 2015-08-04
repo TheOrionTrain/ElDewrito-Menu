@@ -387,6 +387,51 @@ function loadFriends() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
 	});
+	$('.friend.online').click(function() {
+		host = 0;
+		browsing = 0;
+		$('#lobby').empty();
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		var d = serverz.players[$(this).text()];
+		if(d.numPlayers >= d.maxPlayers) {
+			$.snackbar({
+				content: "Your friend's game is full. Unable to join."
+			});
+			$('#notification')[0].currentTime = 0;
+			$('#notification')[0].play();
+			return;
+		}
+		changeMap2(d.map);
+		$('#subtitle').text(d.name + " : " + d.ip);
+		if (d.variant === "") {
+			d.variant = "Slayer";
+		}
+		$('#gametype-display').text(d.variant.toUpperCase());
+		if (d.variantType === "none")
+			d.variantType = "Slayer";
+		$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
+		$('#dewrito').css({
+			"opacity": 0,
+			"top": "920px"
+		});
+		$('.menu-container').css({
+			"top": "720px"
+		});
+		$('#customgame').css({
+			"top": "0px"
+		});
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'custom-serverbrowser');
+		$('#customgame').attr('data-from', 'serverbrowser');
+		playersJoin(d.numPlayers, d.maxPlayers, 20, d.ip);
+		lobbyLoop(d.ip);
+		loopPlayers = true;
+		$('#start').children('.label').text("JOIN GAME");
+		$('#title').text('CUSTOM GAME');
+		$('#network-toggle').hide();
+		$('#type-selection').show();
+		currentMenu = "customgame";
+	});
 }
 
 function addFriend() {
