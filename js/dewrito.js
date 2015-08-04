@@ -13,6 +13,7 @@ var players = [],
 	currentType = "Slayer",
 	currentSetting = "menu",
 	currentAlbum = isset(localStorage.getItem('album'), "halo3"),
+	currentServer,
 	selectedserver,
 	loopPlayers,
 	host = 1,
@@ -393,7 +394,7 @@ function loadFriends() {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		var d = serverz.players[$(this).text()];
-		if(d.numPlayers >= d.maxPlayers) {
+		if(d.numPlayers == d.maxPlayers) {
 			$.snackbar({
 				content: "Your friend's game is full. Unable to join."
 			});
@@ -424,6 +425,7 @@ function loadFriends() {
 		$('#back').attr('data-action', 'custom-serverbrowser');
 		$('#customgame').attr('data-from', 'serverbrowser');
 		playersJoin(d.numPlayers, d.maxPlayers, 20, d.ip);
+		currentServer = d;
 		lobbyLoop(d.ip);
 		loopPlayers = true;
 		$('#start').children('.label').text("JOIN GAME");
@@ -431,6 +433,9 @@ function loadFriends() {
 		$('#network-toggle').hide();
 		$('#type-selection').show();
 		currentMenu = "customgame";
+		$('#friendslist').css('right','-250px');
+		$('.options-section').hide();
+		$('#options').fadeOut(anit);
 	});
 }
 
@@ -563,7 +568,7 @@ $(document).ready(function() {
 		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
 			startgame("127.0.0.1:11775", mode);
 		else
-			startgame(servers[selectedserver].ip, mode);
+			startgame(currentServer.ip, mode);
 	});
 	Mousetrap.bind('up up down down left right left right b a enter', function() {
 		settings.background.current = 9001;
@@ -651,12 +656,14 @@ function lobbyLoop(ip) {
 		players = serverInfo.players;
 		var teamGame = false;
 		var colour = "#000000";
-		for (var i = 0; i < serverInfo.numPlayers; i++) {
-			if (typeof players[i] != 'undefined') {
-				if (parseInt(players[i].team) > 1)
-					teamGame = false;
-				else
-					teamGame = true;
+		if (typeof serverInfo.passworded == 'undefined') {
+			for (var i = 0; i < players.length; i++) {
+				if (typeof players[i] != 'undefined') {
+					if (parseInt(players[i].team) > 1)
+						teamGame = false;
+					else
+						teamGame = true;
+				}
 			}
 		}
 
@@ -665,65 +672,67 @@ function lobbyLoop(ip) {
 			serverInfo.variantType = "slayer";
 		$('#gametype-icon').css('background', "url('img/gametypes/" + (serverInfo.variantType === "ctf" || serverInfo.variantType === "koth") ? serverInfo.variantType : serverInfo.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 
-		players.sort(function(a, b) {
-			return a.team - b.team
-		});
+		if (typeof serverInfo.passworded == 'undefined') {
+			players.sort(function(a, b) {
+				return a.team - b.team
+			});
+		}
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
 		$('#joined').text(serverInfo.numPlayers);
 
 		changeMap2(getMapName(serverInfo.mapFile));
-		$('#subtitle').text(serverInfo.name + " : " + servers[selectedserver].ip);
+		$('#subtitle').text(serverInfo.name + " : " + ip);
 
-		if (typeof serverInfo.passworded != 'undefined')
-			return;
-		for (var i = 0; i < serverInfo.numPlayers; i++) {
-			if (typeof players[i] != 'undefined' && players[i].name != "") {
-				if (teamGame)
-					colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
-				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-				$('#player' + i).css("display", "none");
-				$('#player' + i).fadeIn(anit);
+		if (typeof serverInfo.passworded == 'undefined') {
+			for (var i = 0; i < players.length; i++) {
+				if (typeof players[i] != 'undefined' && players[i].name != "") {
+					if (teamGame)
+						colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
+					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+					$('#player' + i).css("display", "none");
+					$('#player' + i).fadeIn(anit);
+				}
 			}
-		}
-		$('#lobby tr').hover(function() {
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
-		});
-		$("#lobby tr").mouseover(function() {
-			var n = $(this).attr('id'),
-				col = $(this).attr('hex-colour'),
-				bright = brighter(col);
-			$(this).css("background-color", hexToRgb(bright, 0.75));
-		}).mouseout(function() {
-			var n = $(this).attr('id'),
-				col = $(this).attr('hex-colour');
-			$(this).css("background-color", hexToRgb(col, 0.5));
-		});
-		$('#lobby tr').click(function() {
-			var e = $(this).children('.name').text(),
-				n = $(this).attr('id'),
-				nn = "user",
-				col = $(this).attr('hex-colour'),
-				bright = brighter(col);
-			changeMenu("custom-player", e);
-			$('#lobby tr').each(function() {
-				var color = $(this).attr('data-color');
-				$(this).css('background', color);
+			$('#lobby tr').hover(function() {
+				$('#click')[0].currentTime = 0;
+				$('#click')[0].play();
 			});
-			$(this).css("background-color", hexToRgb(bright, 0.75));
-		});
+			$("#lobby tr").mouseover(function() {
+				var n = $(this).attr('id'),
+					col = $(this).attr('hex-colour'),
+					bright = brighter(col);
+				$(this).css("background-color", hexToRgb(bright, 0.75));
+			}).mouseout(function() {
+				var n = $(this).attr('id'),
+					col = $(this).attr('hex-colour');
+				$(this).css("background-color", hexToRgb(col, 0.5));
+			});
+			$('#lobby tr').click(function() {
+				var e = $(this).children('.name').text(),
+					n = $(this).attr('id'),
+					nn = "user",
+					col = $(this).attr('hex-colour'),
+					bright = brighter(col);
+				changeMenu("custom-player", e);
+				$('#lobby tr').each(function() {
+					var color = $(this).attr('data-color');
+					$(this).css('background', color);
+				});
+				$(this).css("background-color", hexToRgb(bright, 0.75));
+			});
+		}
 		if (loopPlayers)
-			setTimeout(lobbyLoop(ip), 3000);
+			setTimeout(function() { lobbyLoop(ip); }, 3000);
 	});
 
 	setTimeout(function() {
 		if (!success) {
 			// Handle error accordingly
-			debugLog("Failed to contact server, retrying.");
+			console.log("Failed to contact server, retrying.");
 			if (loopPlayers)
-				setTimeout(lobbyLoop(ip), 3000);
+				setTimeout(function() { lobbyLoop(ip); }, 3000);
 		}
 	}, 5000);
 }
@@ -769,24 +778,28 @@ function playersJoin(number, max, time, ip) {
 		players = serverInfo.players;
 		var teamGame = false;
 		var colour = "#000000";
-		for (var i = 0; i < serverInfo.numPlayers; i++) {
-			if (typeof players[i] != 'undefined') {
-				if (parseInt(players[i].team) > 1)
-					teamGame = false;
-				else
-					teamGame = true;
+		if (typeof serverInfo.passworded == 'undefined') {
+			for (var i = 0; i < players.length; i++) {
+				if (typeof players[i] != 'undefined') {
+					if (parseInt(players[i].team) > 1)
+						teamGame = false;
+					else
+						teamGame = true;
+				}
 			}
 		}
-		players.sort(function(a, b) {
-			return a.team - b.team
-		});
+		if (typeof serverInfo.passworded == 'undefined') {
+			players.sort(function(a, b) {
+				return a.team - b.team
+			});
+		}
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
 		$('#joined').text(serverInfo.numPlayers);
 		if (typeof serverInfo.passworded != 'undefined')
 			return;
-		for (var i = 0; i < serverInfo.numPlayers; i++) {
+		for (var i = 0; i < players.length; i++) {
 			if (typeof players[i] != 'undefined' && players[i].name != "") {
 				if (teamGame)
 					colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
@@ -994,6 +1007,7 @@ function changeMenu(menu, details) {
 			$('#back').attr('data-action', 'custom-serverbrowser');
 			$('#customgame').attr('data-from', 'serverbrowser');
 			playersJoin(d.players.current, d.players.max, 20, d.ip);
+			currentServer = d;
 			lobbyLoop(servers[selectedserver].ip);
 			loopPlayers = true;
 
@@ -1427,7 +1441,7 @@ function startgame(ip, mode) {
 	loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
-		password = servers[selectedserver].password == true ? prompt(servers[selectedserver].name + " has a password, enter the password to join", "") : "";
+		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
 	$('#beep')[0].play();
 	setTimeout(function() {
 		$('#beep')[0].play();
@@ -1444,11 +1458,11 @@ function startgame(ip, mode) {
 		if (mode[0] === "JOIN") {
 			dewRcon.send('connect ' + ip + ' ' + password);
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
-			if (servers[selectedserver].status != "InLobby") {
-				$('#loadingMapName').text(servers[selectedserver].map.toString().toUpperCase());
-				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '.png)');
-				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + servers[selectedserver].gameparent.toString().capitalizeFirstLetter() + '.png)');
-				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '-overlay.png)');
+			if (currentServer.status != "InLobby") {
+				$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
+				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '.png)');
+				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
+				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 				$('#loading').show();
 				$('#back').remove();
 			} else {
@@ -1456,10 +1470,10 @@ function startgame(ip, mode) {
 			}
 		} else if (mode[1] === "FORGE") {
 			dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
-			$('#loadingMapName').text(servers[selectedserver].map.toString().toUpperCase());
-			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '.png)');
-			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + servers[selectedserver].gameparent.toString().capitalizeFirstLetter() + '.png)');
-			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + servers[selectedserver].map.toString().toLowerCase() + '-overlay.png)');
+			$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
+			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '.png)');
+			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.gameparent.toString().capitalizeFirstLetter() + '.png)');
+			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 			$('#loading').show();
 			$('#back').remove();
 		} else if (mode[0] === "START" && mode[1] === "GAME") {
