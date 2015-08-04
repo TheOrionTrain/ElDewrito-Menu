@@ -176,7 +176,7 @@ function getMapName(filename) {
 		case "s3d_turf":
 			return "Icebox";
 		default:
-			return filename.toUpperCase().replace("_", " ");
+			return filename.toUpperCase();
 	}
 }
 
