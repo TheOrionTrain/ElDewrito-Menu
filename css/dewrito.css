@@ -1,16 +1,131 @@
-#donation {
-    font-family: "Conduit ITC";
-    font-size: 18px;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-    text-align: center;
+#friendslist {
     position: absolute;
-    left: 300px;
-    bottom: 40px;
-    width: 680px;
+    top: 0px;
+    right: -250px;
+    z-index: 10;
+    width: 250px;
+    height: 720px;
+    background: rgba(0,0,0,0.8);
 }
-
+#friends {
+    position: absolute;
+    top: 100px;
+    left: 25px;
+    width: 200px;
+    height: 540px;
+    overflow-y: scroll;
+}
+#friends-close {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: url('../img/x.png') no-repeat 0px 0px/14px 14px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+#friends-close:hover {
+    opacity: 1;
+}
+.nofriends {
+    padding: 8px 10px;
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+}
+.friends-title {
+    font-size: 26px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 25px 25px 50px 25px;
+}
+.friend {
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(50,50,50,0.9);
+    border-radius: 4px;
+    margin: 5px 0;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+}
+.friend:hover {
+    color: rgba(255, 255, 255, 1);
+    background: rgba(100,100,100,0.9);
+    cursor: pointer;
+}
+.friend.online:after {
+    content: " ";
+    background: rgba(0,255,55,0.66);
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    float: right;
+    margin: 5px;
+}
+.friend.offline:after {
+    content: " ";
+    background: rgba(255,0,55,0.66);
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    float: right;
+    margin: 5px;
+}
+#addfriend {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    width: 200px;
+}
+#friend-input {
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.9);
+    background: rgba(255,255,255,0.9);
+    border-radius: 4px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+    border: 0;
+    outline: 0;
+    margin: 0;
+    width: 126px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+#friend-add, #friend-remove {
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 0 5px;
+    border-radius: 4px;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+    width: 28px;
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+#friend-add {
+    background: rgba(0,160,25,0.9);
+}
+#friend-remove {
+    background: rgba(160,0,25,0.9);
+}
+#friend-add:hover {
+    background: rgba(0,255,55,0.9);
+}
+#friend-remove:hover {
+    background: rgba(255,0,55,0.9);
+}
 .regular .elversion {
     font-size: 15px;
 }
