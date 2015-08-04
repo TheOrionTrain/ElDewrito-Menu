@@ -23,45 +23,34 @@
     -webkit-font-smoothing: antialiased;
 }
 #browser-buttons {
-    width: 1300px;
-    height: 56px;
+    width: 650px;
+    height: 28px;
     position: absolute;
-    top: 120px;
+    top: 115px;
     right: 100px;
-    transform: scale3d(0.5,0.5,0.5) translatex(50%) translatey(-50%);
 }
 #network-toggle {
     display: none;
 }
 #refresh img {
     margin: 0;
-    height: 56px;
-    width: 56px;
+    height: 28px;
+    width: 28px;
 }
 #direct-connect {
     position: absolute;
     color: #fff;
-    top: 20px;
-    right: 20px;
-    font-size: 44px;
-    opacity: 0.85;
-    z-index: 2;
-    transform: scale3d(0.5,0.5,0.5);
-}
-#load-more {
-    position: absolute;
-    color: #fff;
     bottom: 40px;
-    left: 490px;
+    right: 490px;
     font-size: 22px;
     opacity: 0.85;
     z-index: 2;
-    width: 300px;
-    display: block;
     text-align: center;
+    width: 300px;
 }
 #direct-connect:hover,
-#load-more:hover {
+#load-more:hover,
+#friends-online:hover {
     opacity: 1;
     cursor: pointer;
 }
@@ -74,10 +63,10 @@
     float: right;
     color: #fff;
     top: 115px;
-    font-size: 36px;
+    font-size: 18px;
     opacity: 0.85;
     z-index: 2;
-    margin: 0 30px;
+    margin: 0 15px;
     max-width: 400px;
     box-sizing: border-box;
     -webkit-transition: 0.4s;
@@ -100,11 +89,19 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    font-size: 44px;
+    font-size: 22px;
     opacity: 0.8;
     z-index: 10;
     color: #fff;
-    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
+}
+#friends-online {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 22px;
+    opacity: 0.8;
+    z-index: 10;
+    color: #fff;
 }
 #menu {
     position: absolute;
@@ -121,23 +118,18 @@
     -moz-transform-origin: top left;
     transform-origin: top left;
     box-sizing: border-box;
-    -webkit-perspective: 150px;
-    -webkit-perspective-origin: 50% 50%;
-    perspective: 150px;
-    perspective-origin: 50% 50%;
 }
 #browser-title {
     position: absolute;
     top: 60px;
     left: 100px;
     font-weight: 700;
-    font-size: 136px;
+    font-size: 68px;
     color: #fff;
     opacity: 0.85;
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #browser {
     position: absolute;
@@ -154,8 +146,7 @@
 }
 #browser.regular .server {
     height: 100px;
-    font-size: 40px;
-    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
+    font-size: 20px;
 }
 #browser.condensed .server {
     height: 70px;
@@ -166,11 +157,11 @@
     font-size: 20px;
 }
 #browser .server {
-    width: 2148px;
+    width: 1074px;
     box-sizing: border-box;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.85);
-    border-left: 6px solid rgba(255, 255, 255, 0);
+    border-left: 3px solid rgba(255, 255, 255, 0);
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
@@ -183,72 +174,67 @@
     top: 0px;
     display: inline-block;
     vertical-align: top;
-    max-width:60px;
-    max-height:46px;
+    max-width:30px;
+    max-height:23px;
 }
 .selection input[type="text"] {
     border: none;
     background: transparent;
-    font-size: 44px;
+    font-size: 22px;
     color: rgba(255, 255, 255, 0.85);
     outline: none;
     text-align: center;
     box-sizing: border-box;
     width: 100%;
-    height: 68px;
+    height: 34px;
 }
 .regular .server .thumb,
 .regular .server .info {
     display: inline-block;
-    width: 1180px;
+    width: 590px;
     height: 200px;
     box-sizing: border-box;
     white-space: nowrap;
-    padding: 20px 0px !important;
+    padding: 10px 0px !important;
     vertical-align: top;
-    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .regular .server .thumb {
     text-align: center;
-    width: 480px;
+    width: 240px;
 }
 .regular .server .players {
     display: inline-block;
-    width: 480px;
-    height: 200px;
+    width: 240px;
+    height: 100px;
     text-align: right;
     font-weight: 300;
-    font-size: 76px;
+    font-size: 38px;
     box-sizing: border-box;
     white-space: nowrap;
-    padding: 60px 80px !important;
-    transform: scale3d(1.0,0.5,1.0) translatey(-50%)
+    padding: 30px 40px !important;
 }
 .regular .server .settings {
     padding: 0 0px;
     font-weight: 300;
-    font-size: 50px;
+    font-size: 25px;
     text-align: left;
     vertical-align: center;
     width: 600px;
 }
 #browser.regular .server .thumb img {
     border: 2px solid rgba(255, 255, 255, 0.9);
-    width: 420px;
-    height: 158px;
+    width: 210px;
+    height: 79px;
 }
 .regular .server.passworded .thumb:before{
     border: 2px solid rgba(255, 255, 255, 0.9);
-    width: 420px;
-    height: 158px;
-    left: 28px;
-    top: 20px;
-}
-#options, #choosemusic, #choosemap, #choosetype, #serverbrowser, #browser {
-    transform:translate(0%) rotate3D(0,0,0,0deg);
+    width: 210px;
+    height: 79px;
+    left: 14px;
+    top: 10px;
 }
 .regular .elversion {
-    font-size: 30px;
+    font-size: 15px;
 }
 .condensed .server .thumb,
 .condensed .server .info {
@@ -342,7 +328,7 @@
 #browser.regular .name
 {
     position: relative;
-    padding-top: 24px;
+    padding-top: 12px;
 }
 .regular .name,
 .regular .settings,
@@ -385,7 +371,6 @@ audio {
 }
 #main, #main3{
     top:-720px;
-    transform:translate(3.75%) rotate3D(0,0.5,0,0.5deg);
 }
 #serverbrowser{
     top: -720px;
@@ -405,12 +390,10 @@ audio {
 #customgame {
     top: -720px;
     left: 0;
-    transform:translate(3.75%) rotate3D(0,0.5,0,0.5deg);
 }
 #main2 {
     top: 0px;
     left: 0;
-    transform:translate(3.75%) rotate3D(0,0.5,0,0.5deg);
 }
 #map-thumb,
 #map-thumb-options {
@@ -431,24 +414,23 @@ audio {
     right: 120px;
 }
 #credits table {
-    width: 1360px;
+    width: 680px;
     position: absolute;
     left: 300px;
     top: 200px;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #credits table td.label {
-    width: 1080px;
+    width: 540px;
     text-align: left;
-    font-size: 48px;
+    font-size: 24px;
     color: #fff;
     opacity: 0.9;
     vertical-align: top;
 }
 #credits table td.name {
-    width: 1080px;
+    width: 540px;
     text-align: right;
-    font-size: 48px;
+    font-size: 24px;
     color: #fff;
     opacity: 0.9;
     vertical-align: top;
@@ -490,16 +472,14 @@ audio {
 #music-game,
 #type-name-options {
     top: 320px;
-    font-size: 52px;
+    font-size: 26px;
     opacity: 0.85;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%);
 }
 #map-info-options,
 #type-info-options {
     top: 380px;
-    font-size: 32px;
+    font-size: 16px;
     opacity: 0.7;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%);
 }
 #gametype-icon {
     position: absolute;
@@ -519,17 +499,15 @@ audio {
 #title {
     top: 300px;
     font-weight: 700;
-    font-size: 136px;
+    font-size: 68px;
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #subtitle {
     top: 390px;
-    font-size: 44px;
+    font-size: 22px;
     font-weight: 300;
-    transform: scale3d(0.5,0.5,0.5) translatex(-50%);
 }
 #line1,
 #line2,
@@ -589,44 +567,40 @@ audio {
 #select .selection .value {
     text-align: center;
     display: table-cell;
-    width: 540px;
+    width: 270px;
     padding: 14px 0px 0px 0px;
     box-sizing: border-box;
-    height: 40px;
-    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
+    height: 20px;
 }
 .options-select2 .selection .input {
     text-align: center;
     display: table-cell;
-    width: 560px;
+    width: 270px;
     padding: 0;
     box-sizing: border-box;
-    height: 40px;
-	transform: scale3d(1.0,0.5,1.0) translatey(-50%);
+    height: 20px;
 }
 .options-select2 .selection .label,
 #select .selection .label {
     text-align: left;
     display: table-cell;
-    width: 800px;
-    padding: 14px 20px 0px 14px;
+    width: 400px;
+    padding: 7px 10px 0px 10px;
     box-sizing: border-box;
-    height: 40px;
-    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
+    height: 20px;
 }
 .options-select2 .selection {
     font-weight: 300;
-    font-size: 46px;
+    font-size: 23px;
     color: rgba(255, 255, 255, 0.85);
-    width: 1340px;
+    width: 670px;
     height: 35px;
-    border-left: 6px solid rgba(255, 255, 255, 0);
+    border-left: 3px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
-    line-height: 40px;
+    line-height: 10px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 .options-select2 {
     position: absolute;
@@ -649,7 +623,8 @@ audio {
 #choosemap ::-webkit-scrollbar,
 #choosemusic ::-webkit-scrollbar,
 #choosetype ::-webkit-scrollbar,
-#customgame ::-webkit-scrollbar {
+#customgame ::-webkit-scrollbar,
+#friendslist ::-webkit-scrollbar {
     width: 4px;
 }
 #lobby-container::-webkit-scrollbar{
@@ -697,11 +672,10 @@ audio {
 .options-select .selection .label {
     text-align: left;
     display: table-cell;
-    width: 520px;
-    padding: 14px 20px 0px 20px;
+    width: 260px;
+    padding: 7px 10px 0px 10px;
     box-sizing: border-box;
     height: 80px;
-    transform: scale3d(1.0,0.5,1.0) translatey(-33%);
 }
 
 .music-select .selection,
@@ -729,23 +703,22 @@ audio {
 .type-select2 .selection,
 .options-select .selection {
     font-weight: 300;
-    font-size: 46px;
+    font-size: 23px;
     color: rgba(255, 255, 255, 0.85);
-    width: 520px;
+    width: 260px;
     height: 35px;
-    border-left: 6px solid rgba(255, 255, 255, 0);
+    border-left: 3px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 .map-select .selection,
 .music-select .selection,
 .type-select .selection,
 .options-select .selection {
-    background: url('../img/right.png') no-repeat 464px 8px/36px 18px;
+    background: url('../img/right.png') no-repeat 232px 8px/18px 18px;
 }
 .music-select .selection {
     background: url('../img/right.png') no-repeat 230px 8px/18px 18px;
@@ -763,7 +736,6 @@ audio {
     opacity: 0.5;
     box-sizing: border-box;
     padding: 0;
-    transform: scale3d(2.0,1.0,2.0) translatey(-15%) translatex(-15%);
 }
 .left {
     background-image: url('../img/left.png');
@@ -774,40 +746,37 @@ audio {
 #select .selection,
 .select-main .selection {
     font-weight: 300;
-    font-size: 38px;
+    font-size: 19px;
     color: rgba(255, 255, 255, 0.85);
-    width: 900px;
+    width: 450px;
     height: 40px;
-    border-left: 6px solid rgba(255, 255, 255, 0);
+    border-left: 3px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
-    line-height: 40px;
+    line-height: 20px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
-    transform: scale3d(0.5,1.0,0.5) translatex(-50%);
 }
 .select-main .selection {
-    font-size: 44px;
+    font-size: 22px;
 }
 .select-main .selection .value,
 #select .selection .value {
     text-align: right;
     display: table-cell;
-    width: 450px;
-    padding: 20px 20px;
+    width: 225px;
+    padding: 10px;
     box-sizing: border-box;
     height: 80px;
-    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .select-main .selection .label,
 #select .selection .label {
     text-align: left;
     display: table-cell;
-    width: 450px;
-    padding: 20px 20px;
+    width: 225px;
+    padding: 10px;
     box-sizing: border-box;
     height: 80px;
-    transform: scale3d(1.0,0.5,1.0) translatey(-50%);
 }
 .selection:hover,
 .server:hover,
@@ -838,26 +807,25 @@ audio {
     z-index: 2;
 }
 #lobby {
-    width: 600px;
+    width: 300px;
     border-collapse: separate;
-    border-spacing: 0px 4px;
+    border-spacing: 0px 2px;
 }
 #lobby-container {
     position: absolute;
-    top: 100px;
-    right: 200px;
-    width: 600px;
-    height: 1088px;
+    top: 50px;
+    right: 100px;
+    width: 300px;
+    height: 612px;
     overflow-y: scroll;
-    transform: scale3d(0.5,0.5,0.5) translatex(83%) translatey(-60%);
 }
 #lobby .top td.info {
     background: rgba(0, 0, 0, 0.5);
     font-weight: 300;
-    font-size: 36px;
-    width: 600px;
-    height: 60px;
-    padding: 10px 20px;
+    font-size: 18px;
+    width: 300px;
+    height: 30px;
+    padding: 5px 10px;
     box-sizing: border-box;
     color: #fff;
 }
@@ -868,27 +836,27 @@ audio {
 }
 #lobby td {
     box-sizing: border-box;
-    margin-bottom: 6px;
-    height: 60px;
+    margin-bottom: 3px;
+    height: 30px;
     color: #fff;
     cursor: pointer;
 }
 #lobby td.name {
     font-weight: 300;
-    font-size: 36px;
-    width: 1000px;
-    padding: 4px 40px 4px 40px;
-    background: no-repeat 320px 8px/116px 52px;
+    font-size: 18px;
+    width: 250px;
+    padding: 0px 20px 2px 20px;
+    background: no-repeat 160px 4px/58px 26px;
 }
 #lobby td.rank {
-    width: 100px;
-    padding: 0px 20px 0px 20px;
+    width: 50px;
+    padding: 0px 10px 0px 10px;
     text-align: center;
     background: rgba(0, 0, 0, 0.15);
 }
 #lobby td.rank img {
-    max-width: 56px;
-    max-height: 56px;
+    max-width: 28px;
+    max-height: 28px;
     margin-top: 0px;
     opacity: 0.9;
     box-sizing: border-box;
@@ -904,7 +872,6 @@ audio {
     overflow: hidden;
     opacity: 0.9;
     background: rgba(0, 0, 0, 0.45);
-	transform: rotate3D(0,1,0,-1deg)
 }
 #player-rank-display {
     position: absolute;
@@ -916,12 +883,12 @@ audio {
 }
 #player-name {
     display: block;
-    font-size: 44px;
-    margin: 20px 0;
+    font-size: 22px;
+    margin: 10px 0;
 }
 #player-level-display {
     display: block;
-    font-size: 36px;
+    font-size: 18px;
     opacity: 0.8;
     margin: 0;
 }
@@ -932,7 +899,6 @@ audio {
     width: 536px;
     height: 100px;
     color: #fff;
-	transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #player-kd-chart {
     position: relative;
@@ -963,10 +929,9 @@ audio {
     top: 70px;
     text-align: center;
     z-index: 2;
-    font-size: 76px;
+    font-size: 38px;
     color: #fff;
     width: 100%;
-	transform: scale3d(0.5,0.5,0.5) translatey(-50%);
 }
 #player-armor {
     position: absolute;
@@ -984,11 +949,10 @@ audio {
 #back {
     left: 20px;
     bottom: 20px;
-    font-size: 36px;
+    font-size: 18px;
     opacity: 0.75;
     display: none;
     z-index: 999;
-    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(50%);
 }
 .options-menu {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
@@ -1015,14 +979,13 @@ audio {
     top: 60px;
     left: 150px;
     font-weight: 700;
-    font-size: 96px;
+    font-size: 48px;
     color: #fff;
     opacity: 0.9;
     z-index: 4;
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transform: scale3d(0.5,0.5,0.5) translatex(-50%) translatey(-50%);
 }
 #dot {
     position: absolute;
@@ -1037,9 +1000,8 @@ audio {
 #version {
     right: 5px;
     bottom: 5px;
-    font-size: 28px;
+    font-size: 14px;
     opacity: 0.5;
     font-family: "Conduit ITC";
     font-weight: 300;
-    transform: scale3d(0.5,0.5,0.5) translatex(50%) translatey(50%);
 }
