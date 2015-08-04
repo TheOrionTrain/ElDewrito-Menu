@@ -421,6 +421,10 @@ function loadFriends() {
 		$('#customgame').css({
 			"top": "0px"
 		});
+		$('#friendslist').css('right','-250px');
+		$('.options-section').hide();
+		$('#options').fadeOut(anit);
+		$('#friends-online').fadeIn(anit);
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', 'custom-serverbrowser');
 		$('#customgame').attr('data-from', 'serverbrowser');
@@ -433,9 +437,8 @@ function loadFriends() {
 		$('#network-toggle').hide();
 		$('#type-selection').show();
 		currentMenu = "customgame";
-		$('#friendslist').css('right','-250px');
-		$('.options-section').hide();
-		$('#options').fadeOut(anit);
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
 	});
 }
 
