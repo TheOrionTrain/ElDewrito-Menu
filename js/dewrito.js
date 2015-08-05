@@ -208,7 +208,7 @@ function addServer(i, geoloc) {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
 	});
-	$('.server').click(function() {
+	$('.server').unbind().click(function() {
 		selectedserver = $(this).attr('data-server');
 		changeMenu("serverbrowser-custom", selectedserver);
 	});
@@ -374,6 +374,11 @@ function loadFriends() {
 	$('#friends').empty();
 	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
+	friends.sort(function(a, b) {
+			if (a.toLowerCase() < b.toLowerCase()) return -1;
+			if (a.toLowerCase() > b.toLowerCase()) return 1;
+			return 0;
+	});
 	if(!friends || friends.length < 1) {
 		friends = [];
 		localStorage.setItem("friends", JSON.stringify(friends));
@@ -407,11 +412,10 @@ function loadFriends() {
 			$('#notification')[0].play();
 			return;
 		}
-		changeMap2(d.map);
+		changeMap2(getMapName(d.mapFile));
 		$('#subtitle').text(d.name + " : " + d.ip);
-		if (d.variant === "") {
+		if (d.variant === "")
 			d.variant = "Slayer";
-		}
 		$('#gametype-display').text(d.variant.toUpperCase());
 		if (d.variantType === "none")
 			d.variantType = "Slayer";
@@ -453,6 +457,11 @@ function addFriend() {
 		$('#friend-input').val("");
 		if(friends.indexOf(name) == -1) {
 			friends.push(name);
+			friends.sort(function(a, b) {
+					if (a.toLowerCase() < b.toLowerCase()) return -1;
+					if (a.toLowerCase() > b.toLowerCase()) return 1;
+					return 0;
+			});
 		}
 		localStorage.setItem("friends", JSON.stringify(friends));
 		loadFriends();
@@ -464,6 +473,11 @@ function removeFriend() {
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
 		friends.remove(name);
+		friends.sort(function(a, b) {
+				if (a.toLowerCase() < b.toLowerCase()) return -1;
+				if (a.toLowerCase() > b.toLowerCase()) return 1;
+				return 0;
+		});
 		localStorage.setItem("friends", JSON.stringify(friends));
 		loadFriends();
 	}
@@ -658,7 +672,6 @@ function loadServers() {
 }
 
 function lobbyLoop(ip) {
-	console.log('WHY IS IT CALLED TWICE ' + ip);
 	var success = false;
 	$.getJSON("http://" + ip, function(serverInfo) {
 		success = true;
@@ -677,9 +690,11 @@ function lobbyLoop(ip) {
 			}
 		}
 
+		if (serverInfo.variantType == "none")
+				serverInfo.variantType = "Slayer";
+		if (serverInfo.variant == "")
+				serverInfo.variant = "Slayer";
 		$('#gametype-display').text(serverInfo.variant.toUpperCase());
-		if (serverInfo.variantType === "none")
-			serverInfo.variantType = "slayer";
 		$('#gametype-icon').css('background', "url('img/gametypes/" + (serverInfo.variantType === "ctf" || serverInfo.variantType === "koth") ? serverInfo.variantType : serverInfo.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 
 		if (typeof serverInfo.passworded == 'undefined') {
@@ -770,14 +785,14 @@ function directConnect() {
 			$('#notification')[0].play();
 			return;
 		}
-		changeMap2(d.map);
+		changeMap2(getMapName(d.mapFile));
 		$('#subtitle').text(d.name + " : " + d.ip);
-		if (d.variant === "") {
-			d.variant = "Slayer";
-		}
+		if (d.variant == "")
+				d.variant = "Slayer";
+		if (d.variantType == "none")
+				d.variantType = "Slayer";
+				console.log(d.variant);
 		$('#gametype-display').text(d.variant.toUpperCase());
-		if (d.variantType === "none")
-			d.variantType = "Slayer";
 		$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 		$('#dewrito').css({
 			"opacity": 0,
@@ -1050,7 +1065,7 @@ function changeMenu(menu, details) {
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		var d = servers[details];
 		if (d.players.current != d.players.max) {
-			changeMap2(d.map);
+			changeMap2(getMapName(d.file));
 			$('#subtitle').text(d.name + " : " + d.ip);
 			if (d.gametype === "") {
 				d.gametype = "Slayer";
@@ -1838,6 +1853,8 @@ function changeType2(type, click) {
 	if (dewRconConnected) {
 		dewRcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
 	}
+	if (type == "")
+		type = "Slayer";
 	$('#gametype-display').text(type.toUpperCase());
 	$('#type-name-options').text(type.toUpperCase());
 	$('#type-info-options').text(gametypes[currentType][type]);
