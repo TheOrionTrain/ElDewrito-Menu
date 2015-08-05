@@ -25,7 +25,7 @@ var players = [],
 	sortType,
 	sortFull = false,
 	sortLocked = false,
-	Halo3Index = 6,
+	Halo3Index = 7,
 	currentVersion,
 	usingGamepad = false,
 	currentMenu = "main2",
@@ -658,6 +658,7 @@ function loadServers() {
 }
 
 function lobbyLoop(ip) {
+	console.log('WHY IS IT CALLED TWICE ' + ip);
 	var success = false;
 	$.getJSON("http://" + ip, function(serverInfo) {
 		success = true;
@@ -754,9 +755,60 @@ function getTotalPlayers() {
 
 function directConnect() {
 	var ip = prompt("Enter IP Address: ");
-	var pass = prompt("Enter Password: ");
+	//var pass = prompt("Enter Password: ");
 	//connect function here
-	dewRcon.send('connect ' + ip + ' ' + pass);
+	$.getJSON("http://" + ip, function(d) {
+		host = 0;
+		browsing = 0;
+		$('#lobby').empty();
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		if(d.numPlayers == d.maxPlayers) {
+			$.snackbar({
+				content: "Game is full."
+			});
+			$('#notification')[0].currentTime = 0;
+			$('#notification')[0].play();
+			return;
+		}
+		changeMap2(d.map);
+		$('#subtitle').text(d.name + " : " + d.ip);
+		if (d.variant === "") {
+			d.variant = "Slayer";
+		}
+		$('#gametype-display').text(d.variant.toUpperCase());
+		if (d.variantType === "none")
+			d.variantType = "Slayer";
+		$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
+		$('#dewrito').css({
+			"opacity": 0,
+			"top": "920px"
+		});
+		$('.menu-container').css({
+			"top": "720px"
+		});
+		$('#customgame').css({
+			"top": "0px"
+		});
+		$('#friendslist').css('right','-250px');
+		$('.options-section').hide();
+		$('#options').fadeOut(anit);
+		$('#friends-online').fadeIn(anit);
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'custom-serverbrowser');
+		$('#customgame').attr('data-from', 'serverbrowser');
+		playersJoin(d.numPlayers, d.maxPlayers, 20, ip);
+		currentServer = d;
+		lobbyLoop(ip);
+		loopPlayers = true;
+		$('#start').children('.label').text("JOIN GAME");
+		$('#title').text('CUSTOM GAME');
+		$('#network-toggle').hide();
+		$('#type-selection').show();
+		currentMenu = "customgame";
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
+	});
+	//dewRcon.send('connect ' + ip + ' ' + pass);
 }
 
 function getCurrentVersion() {
