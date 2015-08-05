@@ -374,7 +374,6 @@ function loadFriends() {
 	$('#friends').empty();
 	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
-	console.log(friends['Bivi']);
 	friends.sort(function(a, b) {
 			if (a.toLowerCase() < b.toLowerCase()) return -1;
 			if (a.toLowerCase() > b.toLowerCase()) return 1;
