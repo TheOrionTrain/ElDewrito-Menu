@@ -374,9 +374,15 @@ function loadFriends() {
 	$('#friends').empty();
 	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
+	console.log(friends['Bivi']);
 	friends.sort(function(a, b) {
 			if (a.toLowerCase() < b.toLowerCase()) return -1;
 			if (a.toLowerCase() > b.toLowerCase()) return 1;
+			return 0;
+	});
+	friends.sort(function(a, b) {
+			if (isOnline(a) > isOnline(b)) return -1;
+			if (isOnline(a) < isOnline(b)) return 1;
 			return 0;
 	});
 	if(!friends || friends.length < 1) {
@@ -462,6 +468,11 @@ function addFriend() {
 					if (a.toLowerCase() > b.toLowerCase()) return 1;
 					return 0;
 			});
+			friends.sort(function(a, b) {
+					if (isOnline(a) > isOnline(b)) return -1;
+					if (isOnline(a) < isOnline(b)) return 1;
+					return 0;
+			});
 		}
 		localStorage.setItem("friends", JSON.stringify(friends));
 		loadFriends();
@@ -476,6 +487,11 @@ function removeFriend() {
 		friends.sort(function(a, b) {
 				if (a.toLowerCase() < b.toLowerCase()) return -1;
 				if (a.toLowerCase() > b.toLowerCase()) return 1;
+				return 0;
+		});
+		friends.sort(function(a, b) {
+				if (isOnline(a) > isOnline(b)) return -1;
+				if (isOnline(a) < isOnline(b)) return 1;
 				return 0;
 		});
 		localStorage.setItem("friends", JSON.stringify(friends));
