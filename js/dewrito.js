@@ -652,7 +652,7 @@ $(document).ready(function() {
 		else
 			startgame(currentServer.ip, mode);
 	});
-	Mousetrap.bind('up up down down left right left right b a enter', function() {
+	Mousetrap.bind('enter up up down down left right left right b a enter', function() {
 		settings.background.current = 9001;
 		settings.background.update();
 	});
