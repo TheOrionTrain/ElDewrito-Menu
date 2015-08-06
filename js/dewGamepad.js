@@ -94,6 +94,41 @@ function gamepadBind() {
 				$('#refresh').trigger('click');
 			}
 		}
+		if(e.control == "DPAD_DOWN") {
+			gp_last = Date.now();
+			if ($("[data-gp='" + currentMenu + "-" + (gp_on + 1) + "']").length > 0) {
+				gp_on += 1;
+			}
+			if (currentMenu == "serverbrowser") {
+				$('#browser').animate({
+					scrollTop: ($('.server.gp-on').offset().top - 150) + 'px'
+				}, 'fast');
+			}
+			gamepadSelect(currentMenu + "-" + gp_on);
+			$('#click')[0].currentTime = 0;
+			$('#click')[0].play();
+		}
+		if(e.control == "DPAD_UP") {
+			gp_last = Date.now();
+			if ($("[data-gp='" + currentMenu + "-" + (gp_on - 1) + "']").length > 0) {
+				gp_on -= 1;
+			}
+			if (currentMenu == "serverbrowser") {
+				$('#browser').animate({
+					scrollTop: ($('.server.gp-on').offset().top - 150) + 'px'
+				}, 'fast');
+			}
+			gamepadSelect(currentMenu + "-" + gp_on);
+			$('#click')[0].currentTime = 0;
+			$('#click')[0].play();
+		}
+		if(e.control == "DPAD_LEFT") {
+			gamepadLeft();
+		}
+		if(e.control == "DPAD_RIGHT") {
+			gamepadRight();
+		}
+		console.log(e.control);
 	});
 
 	gamepad.bind(Gamepad.Event.AXIS_CHANGED, function(e) {
