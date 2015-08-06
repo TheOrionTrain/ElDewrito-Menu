@@ -27,7 +27,7 @@ var players = [],
 	sortLocked = false,
 	Halo3Index = 7,
 	currentVersion,
-	usingGamepad = false,
+	usingGamepad = true,
 	currentMenu = "main2",
 	debug = false,
 	songs,
@@ -505,6 +505,51 @@ function isOnline(friend) {
 var online = true;
 
 $(document).ready(function() {
+	Mousetrap.bind('a', function() {
+		$("[data-gp='" + currentMenu + "-" + gp_on + "']").trigger('click');
+	});
+	Mousetrap.bind('b', function() {
+		$("#back").trigger('click');
+	});
+	Mousetrap.bind('y', function() {
+		if (currentMenu == "serverbrowser") {
+			$('#refresh').trigger('click');
+		}
+	});
+	Mousetrap.bind('up', function() {
+		console.log("ARROW_UP");
+		if ($("[data-gp='" + currentMenu + "-" + (gp_on - 1) + "']").length > 0) {
+			gp_on -= 1;
+		}
+		if (currentMenu == "serverbrowser") {
+			$('#browser').animate({
+				scrollTop: ($('.server.gp-on').offset().top - 150) + 'px'
+			}, 'fast');
+		}
+		gamepadSelect(currentMenu + "-" + gp_on);
+		$('#click')[0].currentTime = 0;
+		$('#click')[0].play();
+	});
+	Mousetrap.bind('down', function() {
+		console.log("ARROW_DOWN");
+		if ($("[data-gp='" + currentMenu + "-" + (gp_on + 1) + "']").length > 0) {
+			gp_on += 1;
+		}
+		if (currentMenu == "serverbrowser") {
+			$('#browser').animate({
+				scrollTop: ($('.server.gp-on').offset().top - 150) + 'px'
+			}, 'fast');
+		}
+		gamepadSelect(currentMenu + "-" + gp_on);
+		$('#click')[0].currentTime = 0;
+		$('#click')[0].play();
+	});
+	Mousetrap.bind('left', function() {
+		gamepadLeft();
+	});
+	Mousetrap.bind('right', function() {
+		gamepadRight();
+	});
 	$('#friend-add').click(function() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
