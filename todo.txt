@@ -8,15 +8,12 @@ Halo 3 Custom Edition To-Do List
 4. Rebuild the changeMenu function to be less messy and bloated
 5. Work on CSS for other game styles (Low priority)
 6. Add more server browser filters like ping, location, etc.
-7. Cleanup and further optimize current code
-8. Compress videos more or work out better loading method to help bandwidth and load times
-9. Remake settings to be less bloated and messy (Add return variable, remove changing text from update functions)
-10. Add Spartan customization (How do we show armor?)
-11. Get player stats showing and working correctly in lobbies
-12. Add keyboard navigation, piggyback off of gamepad functions with Mousetrap.js
-13. Add controls to bottom of menu like Reach
-14. Take suggestions from people in IRC for more additions/improvements/bug fixes
-15. Integrate in-game chat
+7. Remake settings to be less bloated and messy (Add return variable, remove changing text from update functions)
+8. Add Spartan customization (How do we show armor?)
+9. Get player stats showing and working correctly in lobbies
+10. Add controls to bottom of menu like Reach
+11. Take suggestions from people in IRC for more additions/improvements/bug fixes
+12. Integrate in-game chat
 
 
 Add any suggestions or things I may have missed to this list.
