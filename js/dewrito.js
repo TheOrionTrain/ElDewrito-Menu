@@ -251,11 +251,11 @@ function initialize() {
 		songs = j;
 		for (i = 0; i < Object.keys(songs).length; i++) {
 			b = Object.keys(songs)[i];
-			$('#choosemusic').children('.music-select').append("<div data-game='" + b + "' class='selection'><span class='label'>" + getGame(b).toUpperCase() + "</span></div>");
+			$('#choosemusic').children('.music-select').append("<div data-gp='music-"+(i+1)+"' data-game='" + b + "' class='selection'><span class='label'>" + getGame(b).toUpperCase() + "</span></div>");
 			$('#choosemusic').append("<div class='music-select2 animated' id='songs-" + b + "'></div>");
 			for (e = 0; e < Object.keys(songs[b]).length; e++) {
 				g = songs[b][e];
-				$('#songs-' + b).append("<div data-song='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
+				$('#songs-' + b).append("<div data-gp='songs-"+b+"-"+(e+1)+"' data-song='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
 			}
 		}
 		$('.music-select .selection').click(function() {
@@ -1865,6 +1865,17 @@ function changeSong1(game) {
 		"background-image": "url('img/album/" + game + ".jpg')"
 	});
 	currentAlbum = game;
+	if ($('#back').attr('data-action') != "setting-settings") {
+		last_back = $('#back').attr('data-action');
+	}
+	last_menu = currentMenu;
+	currentMenu = "songs-" + currentAlbum;
+	if (usingGamepad) {
+		p_gp_on = gp_on;
+		gp_on = 1;
+		gamepadSelect(currentMenu + "-" + gp_on);
+	}
+	$('#back').attr('data-action', 'setting-settings');
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
 }
