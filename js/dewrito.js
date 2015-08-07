@@ -216,6 +216,16 @@ function addServer(i, geoloc) {
 	if (usingGamepad && gp_servers == 1) {
 		gamepadSelect('serverbrowser-1');
 	}
+	$('*[data-gp]').mouseenter(function() {
+		var a = $(this).attr('data-gp').split("-"),
+			b = parseInt(a[a.length-1]);
+		gp_on = b;
+		gamepadSelect(currentMenu + "-" + gp_on);
+	});
+	$('*[data-gp]').mouseout(function() {
+		gp_on = 0;
+		gamepadSelect(currentMenu + "-" + gp_on);
+	});
 }
 
 var settingsToLoad = [['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation']];
@@ -554,6 +564,16 @@ $(document).ready(function() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
 		addFriend();
+	});
+	$('*[data-gp]').mouseenter(function() {
+		var a = $(this).attr('data-gp').split("-"),
+			b = parseInt(a[a.length-1]);
+		gp_on = b;
+		gamepadSelect(currentMenu + "-" + gp_on);
+	});
+	$('*[data-gp]').mouseout(function() {
+		gp_on = 0;
+		gamepadSelect(currentMenu + "-" + gp_on);
 	});
 	$('#friend-remove').click(function() {
 		$('#slide')[0].currentTime = 0;
