@@ -731,7 +731,7 @@ audio {
     box-sizing: border-box;
     display: table-cell;
     background-size: 18px;
-    background-position: center;
+    background-position: 0px 8px;
     background-repeat: no-repeat;
     opacity: 0.5;
     box-sizing: border-box;
