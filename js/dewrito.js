@@ -137,7 +137,7 @@ function queryServer(serverInfo, i, browser) {
 			"map": sanitizeString(serverInfo.map),
 			"file": sanitizeString(serverInfo.mapFile),
 			"status": sanitizeString(serverInfo.status),
-			"version": sanitizeString(serverInfo.eldewritoVersion),
+			"eldewritoVersion": sanitizeString(serverInfo.eldewritoVersion),
 			"players": {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
@@ -203,7 +203,7 @@ function addServer(i, geoloc) {
 	}
 	++gp_servers;
 	var on = (!servers[i].gametype) ? "" : "on";
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag + "<span id='ping-" + i + "'>"+pings[i]+"</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].version + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag + "<span id='ping-" + i + "'>"+pings[i]+"</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -228,7 +228,7 @@ function addServer(i, geoloc) {
 	});
 }
 
-var settingsToLoad = [['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation']];
+var settingsToLoad = [['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version']];
 var loadedSettings = false;
 
 function loadSettings(i) {
@@ -241,6 +241,9 @@ function loadSettings(i) {
 				settings[Object.keys(settings)[i + 1]].current = (Object.keys(settings)[i + 1] == "serverpass" && (parseFloat(settings.saturation.current) == parseFloat(dewRcon.lastMessage))) ? "" : dewRcon.lastMessage;
 				settings[Object.keys(settings)[i + 1]].update();
 				console.log(Object.keys(settings)[i + 1] + ": " + settings[Object.keys(settings)[i + 1]].current);
+				if (Object.keys(settings)[i + 1] == 'gameversion') {
+						settings[Object.keys(settings)[i + 1]].set(dewRcon.lastMessage);
+				}
 				if (Object.keys(settings)[i + 1] == 'username')
 					loadedSettings = true;
 			}
@@ -342,6 +345,10 @@ function changeSetting(s, by) {
 	$('#click')[0].currentTime = 0;
 	$('#click')[0].play();
 	var e = settings[s];
+	if (e.name == "GAME VERSION") {
+		e.update();
+		return;
+	}
 	if (e.typeof == "select") {
 		if (by == 1) {
 			if (e.current < e.max) {
@@ -349,7 +356,7 @@ function changeSetting(s, by) {
 			} else {
 				e.current = e.min;
 			}
-		} else if (by === 0) {
+		} else if (by == 0) {
 			if (e.current > e.min) {
 				e.current -= e.increment;
 			} else {
@@ -1589,6 +1596,14 @@ function startgame(ip, mode) {
 	if (!dewRconConnected) {
 		$.snackbar({
 			content: 'You must be connected to the game to join or start a server.'
+		});
+		$('#notification')[0].currentTime = 0;
+		$('#notification')[0].play();
+		return;
+	}
+	if (currentServer.eldewritoVersion.toString() != settings.gameversion.current.toString()) {
+		$.snackbar({
+			content: 'You must have the same version as the server in order to join.'
 		});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();

@@ -319,6 +319,19 @@ var user = {
 				$("[data-option='browserstyle']").children('.value').text(settings.browserstyle.labels[c]);
 			}
 		},
+		"gameversion": {
+			"typeof": "input",
+			"category": "eldewrito",
+			"name": "GAME VERSION",
+			"current": parseInt(isset(localStorage.getItem('gameversion'), "0.0.0.0")),
+			"update": function() {
+				$("[data-option='gameversion']").children('.input').children('input').val(settings.gameversion.current);
+			},
+			"set": function(vers) {
+				settings.gameversion.current = vers;
+				$("[data-option='gameversion']").children('.input').children('input').val(settings.gameversion.current);
+			}
+		},
 		"username": {
 			"typeof": "input",
 			"category": "eldewrito",
