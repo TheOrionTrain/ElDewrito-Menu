@@ -391,6 +391,13 @@ function loadFriends() {
 	$('#friends').empty();
 	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
+	if(!friends || friends.length < 1) {
+		friends = [];
+		localStorage.setItem("friends", JSON.stringify(friends));
+		$('#friends-online').text("0 Friends Online");
+		$('#friends').append("<div class='nofriends'>You have no friends :(<br/>Add some below</div>");
+		return false;
+	}
 	friends.sort(function(a, b) {
 			if (a.toLowerCase() < b.toLowerCase()) return -1;
 			if (a.toLowerCase() > b.toLowerCase()) return 1;
@@ -401,13 +408,6 @@ function loadFriends() {
 			if (isOnline(a) < isOnline(b)) return 1;
 			return 0;
 	});
-	if(!friends || friends.length < 1) {
-		friends = [];
-		localStorage.setItem("friends", JSON.stringify(friends));
-		$('#friends-online').text("0 Friends Online");
-		$('#friends').append("<div class='nofriends'>You have no friends :(<br/>Add some below</div>");
-		return false;
-	}
 	for(var i=0; i < friends.length; i++) {
 		var o = (isOnline(friends[i])) ? "online" : "offline";
 		$('#friends').append("<div class='friend "+o+"'>"+friends[i]+"</div>");
