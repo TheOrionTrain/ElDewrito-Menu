@@ -1795,6 +1795,8 @@ function getGame(game) {
 			return "Halo Reach";
 		case "online":
 			return "Halo Online";
+		case "halo5":
+			return "Halo 5";
 	}
 }
 
