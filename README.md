@@ -11,14 +11,6 @@ Possible replacement for Halo Online's UI heavily based on Halo: Reach.
 
 #### Find Us:
 
-* Reddit:  <a href="http://reddit.com/user/thefeeltrain">/u/thefeeltrain</a> and <a href="http://reddit.com/user/Shadowfita">/u/Shadowfita</a>
+* Reddit:  <a href="http://reddit.com/user/thefeeltrain">TheFeelTrain</a> and <a href="http://reddit.com/user/Shadowfita">Orion</a>
 * Twitter: <a href="http://twitter.com/TheFeelTrain">TheFeelTrain</a>
-* Website:  <a href="http://eriq.co">eriq.co</a>
-
-&nbsp;
-
-#### Credits:
-* The <a href="https://github.com/FishPhd/DewritoLauncher">ElDewrito</a> developers for being awesome
-* Microsoft, 343 Industries, Bungie
-* <a href="http://twitter.com/zeddikins">Lord Zedd</a> for the Halo 3, ODST, and Reach background videos
-* <a href="http://reddit.com/user/rexadde">/u/rexadde</a> for the logo
+* TheFeelTrain's Website:  <a href="http://eriq.co">ERIQ.CO</a>
