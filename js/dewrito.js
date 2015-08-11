@@ -214,6 +214,9 @@ function addServer(i, geoloc) {
 		gamepadSelect('serverbrowser-1');
 	}
 	$('*[data-gp]').mouseenter(function() {
+		if($(this).attr('data-setting')) {
+			return false;
+		}
 		var a = $(this).attr('data-gp').split("-"),
 			b = parseInt(a[a.length-1]);
 		gp_on = b;
@@ -570,6 +573,9 @@ $(document).ready(function() {
 		addFriend();
 	});
 	$('*[data-gp]').mouseenter(function() {
+		if($(this).attr('data-setting')) {
+			return false;
+		}
 		var a = $(this).attr('data-gp').split("-"),
 			b = parseInt(a[a.length-1]);
 		gp_on = b;

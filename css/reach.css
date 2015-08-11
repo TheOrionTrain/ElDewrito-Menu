@@ -677,7 +677,7 @@ audio {
     box-sizing: border-box;
     height: 80px;
 }
-
+.selection {overflow: hidden;}
 .music-select .selection,
 .music-select2 .selection {
     font-weight: 300;
