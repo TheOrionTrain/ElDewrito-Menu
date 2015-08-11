@@ -11,7 +11,8 @@ Possible replacement for Halo Online's UI heavily based on Halo: Reach.
 
 #### Find Us:
 
-* Reddit:  <a href="http://reddit.com/user/GiveMeBTC">/u/GiveMeBTC</a>, <a href="http://reddit.com/user/thefeeltrain">/u/thefeeltrain</a>, and <a href="http://reddit.com/user/Shadowfita">/u/Shadowfita</a>
+* Reddit:  <a href="http://reddit.com/user/thefeeltrain">/u/thefeeltrain</a> and <a href="http://reddit.com/user/Shadowfita">/u/Shadowfita</a>
+* Twitter: <a href="http://twitter.com/TheFeelTrain">TheFeelTrain</a>
 * Website:  <a href="http://eriq.co">eriq.co</a>
 
 &nbsp;
