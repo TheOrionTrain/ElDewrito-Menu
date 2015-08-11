@@ -38,13 +38,10 @@ var players = [],
 
 (function() {
 	var e = (window.innerHeight - 80) / 2;
-	$('.pace .pace-progress:after').css('top', e);
-
 	var d = getURLParameter('debug');
 	if (d !== undefined && d == "1") {
 		console.log("debug yes");
 	}
-
 })();
 
 function debugLog(val) {
