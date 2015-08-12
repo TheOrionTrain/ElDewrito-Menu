@@ -538,12 +538,13 @@ $(document).ready(function() {
 		if ($("[data-gp='" + currentMenu + "-" + (gp_on - 1) + "']").length > 0) {
 			gp_on -= 1;
 		}
-		if (currentMenu == "serverbrowser") {
-			$('#browser').animate({
-				scrollTop: ($('.server.gp-on').offset().top - 150) + 'px'
-			}, 'fast');
-		}
 		gamepadSelect(currentMenu + "-" + gp_on);
+		if (currentMenu == "serverbrowser") {
+			$('#browser').scrollTo('.server.gp-on');
+		}
+		if (currentMenu.indexOf("songs-") > -1) {
+			$('#'+currentMenu).scrollTo('.selection.gp-on');
+		}
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
 	});
@@ -552,12 +553,13 @@ $(document).ready(function() {
 		if ($("[data-gp='" + currentMenu + "-" + (gp_on + 1) + "']").length > 0) {
 			gp_on += 1;
 		}
-		if (currentMenu == "serverbrowser") {
-			$('#browser').animate({
-				scrollTop: ($('.server.gp-on').offset().top - 150) + 'px'
-			}, 'fast');
-		}
 		gamepadSelect(currentMenu + "-" + gp_on);
+		if (currentMenu == "serverbrowser") {
+			$('#browser').scrollTo('.server.gp-on');
+		}
+		if (currentMenu.indexOf("songs-") > -1) {
+			$('#'+currentMenu).scrollTo('.selection.gp-on');
+		}
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
 	});
