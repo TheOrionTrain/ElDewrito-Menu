@@ -894,7 +894,7 @@ function directConnect() {
 
 function getCurrentVersion() {
 	$.getJSON("http://eriq.co/eldewrito/update", function(data) {
-		currentVersion = data.version.toString();
+		//currentVersion = data.version.toString();
 		//$('#version').text('eldewrito ' + currentVersion);
 	});
 }
@@ -1586,10 +1586,6 @@ function playerInfo(name) {
 		$('#player-armor').css('background', "url('img/players/user.png') no-repeat 0 -50px/320px 704px");
 		$('#player-title').css('background-image', "");
 	}
-}
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function startgame(ip, mode) {
