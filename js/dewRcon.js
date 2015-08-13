@@ -36,6 +36,7 @@ StartRconConnection = function() {
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
         dewRcon.lastMessage = message.data;
+				console.log(dewRcon.lastMessage);
     };
 }
 dewRconHelper = function() {
