@@ -114,10 +114,10 @@ function queryServer(serverInfo, i, browser) {
 			"ip": sanitizeString(serverInfo.address),
 			"host": sanitizeString(serverInfo.hostPlayer),
 			"name": sanitizeString(serverInfo.name),
-			"gametype": sanitizeString(serverInfo.variant),
+			"variant": sanitizeString(serverInfo.variant),
 			"variantType": sanitizeString(serverInfo.variantType),
 			"map": sanitizeString(serverInfo.map),
-			"file": sanitizeString(serverInfo.mapFile),
+			"mapFile": sanitizeString(serverInfo.mapFile),
 			"status": sanitizeString(serverInfo.status),
 			"eldewritoVersion": sanitizeString(serverInfo.eldewritoVersion),
 			"ping": parseInt(serverInfo.ping),
@@ -163,12 +163,12 @@ var gp_servers = 0;
 
 function addServer(i) {
 	++gp_servers;
-	var on = (!servers[i].gametype) ? "" : "on";
+	var on = (!servers[i].variant) ? "" : "on";
 
 	servers[i].location_flag = typeof servers[i].location_flag == 'undefined' ? "[" : servers[i].location_flag;
 	servers[i].ping = servers[i].ping || 0;
 
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -365,7 +365,7 @@ function jumpToServer(ip) {
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		if(d.numPlayers == d.maxPlayers) {
 			$.snackbar({
-				content: "Your friend's game is full. Unable to join."
+				content: "Game is full. Unable to join."
 			});
 			$('#notification')[0].currentTime = 0;
 			$('#notification')[0].play();
@@ -1148,12 +1148,12 @@ function changeMenu(menu, details) {
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		var d = servers[details];
 		if (d.players.current != d.players.max) {
-			changeMap2(getMapName(d.file));
+			changeMap2(getMapName(d.mapFile));
 			$('#subtitle').text(d.name + " : " + d.ip);
-			if (d.gametype === "") {
-				d.gametype = "Slayer";
+			if (d.variant === "") {
+				d.variant = "Slayer";
 			}
-			$('#gametype-display').text(d.gametype.toUpperCase());
+			$('#gametype-display').text(d.variant.toUpperCase());
 			if (d.variantType === "none")
 				d.variantType = "Slayer";
 			$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
@@ -1630,8 +1630,9 @@ function startgame(ip, mode) {
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
 			dewRcon.send('connect ' + ip + ' ' + password);
 			if (currentServer.status != "InLobby") {
+				console.log(currentServer);
 				$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
-				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.file.toString()).toLowerCase() + '.png)');
+				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).toLowerCase() + '.png)');
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 				$('#loading').show();
