@@ -111,7 +111,7 @@ function queryServer(serverInfo, i, browser) {
 	var isPassworded = serverInfo.passworded !== undefined;
 	if (serverInfo.map) {
 		servers[i] = {
-			"ip": sanitizeString(serverInfo.address),
+			"address": sanitizeString(serverInfo.address),
 			"host": sanitizeString(serverInfo.hostPlayer),
 			"name": sanitizeString(serverInfo.name),
 			"variant": sanitizeString(serverInfo.variant),
@@ -154,8 +154,8 @@ function getMapName(filename) {
 function promptPassword(i) {
 	var password = prompt(servers[i].name + " has a password, enter the password to join", "");
 	if (password !== null) {
-		// window.open("dorito:" + servers[i].ip + "/" + password);
-		dewRcon.send('connect ' + servers[i].ip + ' ' + password);
+		// window.open("dorito:" + servers[i].address + "/" + password);
+		dewRcon.send('connect ' + servers[i].address + ' ' + password);
 	}
 }
 
@@ -208,7 +208,7 @@ function loadSettings(i) {
 				console.log(Object.keys(settings)[i + 1] + ": " + settings[Object.keys(settings)[i + 1]].current);
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						settings[Object.keys(settings)[i + 1]].set(dewRcon.lastMessage);
-						$('#version').text("Version " + dewRcon.lastMessage);
+						$('#version').text("Eldewrito " + dewRcon.lastMessage);
 				}
 				if (Object.keys(settings)[i + 1] == 'username')
 					loadedSettings = true;
@@ -372,7 +372,7 @@ function jumpToServer(ip) {
 			return;
 		}
 		changeMap2(getMapName(d.mapFile));
-		$('#subtitle').text(d.name + " : " + d.ip);
+		$('#subtitle').text(d.name + " : " + d.address);
 		if (d.variant === "")
 			d.variant = "Slayer";
 		$('#gametype-display').text(d.variant.toUpperCase());
@@ -443,7 +443,7 @@ function loadFriends() {
 		$('#click')[0].play();
 	});
 	$('.friend.online').click(function() {
-		jumpToServer(serverz.players[$(this).text()].ip);
+		jumpToServer(serverz.players[$(this).text()].address);
 	});
 }
 
@@ -656,7 +656,7 @@ $(document).ready(function() {
 		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
 			startgame("127.0.0.1:11775", mode);
 		else
-			startgame(currentServer.ip, mode);
+			startgame(currentServer.address, mode);
 	});
 	Mousetrap.bind('enter up up down down left right left right b a enter', function() {
 		settings.background.current = 9001;
@@ -838,57 +838,7 @@ function directConnect() {
 	var ip = prompt("Enter IP Address: ");
 	//var pass = prompt("Enter Password: ");
 	//connect function here
-	$.getJSON("http://" + ip, function(d) {
-		host = 0;
-		browsing = 0;
-		$('#lobby').empty();
-		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
-		if(d.numPlayers == d.maxPlayers) {
-			$.snackbar({
-				content: "Game is full."
-			});
-			$('#notification')[0].currentTime = 0;
-			$('#notification')[0].play();
-			return;
-		}
-		changeMap2(getMapName(d.mapFile));
-		$('#subtitle').text(d.name + " : " + d.ip);
-		if (d.variant == "")
-				d.variant = "Slayer";
-		if (d.variantType == "none")
-				d.variantType = "Slayer";
-				console.log(d.variant);
-		$('#gametype-display').text(d.variant.toUpperCase());
-		$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
-		$('#dewrito').css({
-			"opacity": 0,
-			"top": "920px"
-		});
-		$('.menu-container').css({
-			"top": "720px"
-		});
-		$('#customgame').css({
-			"top": "0px"
-		});
-		$('#friendslist').css('right','-250px');
-		$('.options-section').hide();
-		$('#options').fadeOut(anit);
-		$('#friends-online').fadeIn(anit);
-		$('#back').fadeIn(anit);
-		$('#back').attr('data-action', 'custom-serverbrowser');
-		$('#customgame').attr('data-from', 'serverbrowser');
-		playersJoin(d.numPlayers, d.maxPlayers, 20, ip);
-		currentServer = d;
-		lobbyLoop(ip);
-		loopPlayers = true;
-		$('#start').children('.label').text("JOIN GAME");
-		$('#title').text('CUSTOM GAME');
-		$('#network-toggle').hide();
-		$('#type-selection').show();
-		currentMenu = "customgame";
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
-	});
+	jumpToServer(ip);
 	//dewRcon.send('connect ' + ip + ' ' + pass);
 }
 
@@ -1149,7 +1099,7 @@ function changeMenu(menu, details) {
 		var d = servers[details];
 		if (d.players.current != d.players.max) {
 			changeMap2(getMapName(d.mapFile));
-			$('#subtitle').text(d.name + " : " + d.ip);
+			$('#subtitle').text(d.name + " : " + d.address);
 			if (d.variant === "") {
 				d.variant = "Slayer";
 			}
@@ -1165,9 +1115,9 @@ function changeMenu(menu, details) {
 			});
 			$('#back').attr('data-action', 'custom-serverbrowser');
 			$('#customgame').attr('data-from', 'serverbrowser');
-			playersJoin(d.players.current, d.players.max, 20, d.ip);
+			playersJoin(d.players.current, d.players.max, 20, d.address);
 			currentServer = d;
-			lobbyLoop(servers[selectedserver].ip);
+			lobbyLoop(servers[selectedserver].address);
 			loopPlayers = true;
 
 		}
@@ -1550,7 +1500,7 @@ var KDdata = [{
 
 function playerInfo(name) {
 	if (name != "user") {
-		$.getJSON("http://" + servers[selectedserver].ip, function(info) {
+		$.getJSON("http://" + servers[selectedserver].address, function(info) {
 			for (var i = 0; i < info.players.length; i++) {
 				if (info.players[i].name == name) {
 					KDchart.segments[0].value = info.players[i].deaths > 0 ? info.players[i].deaths : 1;
@@ -1597,14 +1547,14 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	/*if (currentServer.eldewritoVersion.toString() != settings.gameversion.current.toString()) {
+	if (currentServer.eldewritoVersion != settings.gameversion.current) {
 		$.snackbar({
 			content: 'You must have the same version as the server in order to join.'
 		});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
 		return;
-	}*/ // Orion please fix this when you get the chance
+	} // Orion please fix this when you get the chance
 	loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
