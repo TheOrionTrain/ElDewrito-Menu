@@ -105,22 +105,7 @@ function getServers(browser) {
 var pings = [];
 
 function queryServer(serverInfo, i, browser) {
-	var startTime = Date.now(),
-		endTime,
-		ping;
-	$.ajax({
-		type: "GET",
-		url: "http://" + serverInfo.address + "/",
-		async: true,
-		success: function() {
-			endTime = Date.now();
-			ping = Math.round((endTime - startTime) / 1.60); //Aproximate ping, may change from 1.75 later
-			pings[i] = ping;
-			$('#ping-' + i).text(pings[i]);
-			console.log(i+": "+pings[i]);
-		}
-	});
-	if (typeof serverInfo.maxPlayers != "number" || typeof serverInfo.numPlayers != "number" || serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
+	if (serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
 		return false;
 	}
 	var isPassworded = serverInfo.passworded !== undefined;
@@ -130,11 +115,13 @@ function queryServer(serverInfo, i, browser) {
 			"host": sanitizeString(serverInfo.hostPlayer),
 			"name": sanitizeString(serverInfo.name),
 			"gametype": sanitizeString(serverInfo.variant),
-			"gameparent": sanitizeString(serverInfo.variantType),
+			"variantType": sanitizeString(serverInfo.variantType),
 			"map": sanitizeString(serverInfo.map),
 			"file": sanitizeString(serverInfo.mapFile),
 			"status": sanitizeString(serverInfo.status),
 			"eldewritoVersion": sanitizeString(serverInfo.eldewritoVersion),
+			"ping": parseInt(serverInfo.ping),
+			"location_flag": serverInfo.location_flag,
 			"players": {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
@@ -142,20 +129,7 @@ function queryServer(serverInfo, i, browser) {
 			"password": isPassworded
 		};
 	}
-	if (typeof servers[i] !== 'undefined' && browser) {
-		ip = serverInfo.address.substring(0, serverInfo.address.indexOf(':'));
-		$.ajax({
-			url: 'http://www.telize.com/geoip/' + serverInfo.address.split(':')[0],
-			dataType: 'json',
-			timeout: 3000,
-			success: function(geoloc) {
-				addServer(i, geoloc);
-			},
-			error: function() {
-				addServer(i, null);
-			}
-		});
-	}
+	addServer(i);
 }
 
 function getMapName(filename) {
@@ -173,7 +147,7 @@ function getMapName(filename) {
 		case "s3d_turf":
 			return "Icebox";
 		default:
-			return filename.toUpperCase();
+			return "s3d_edge";
 	}
 }
 
@@ -187,20 +161,14 @@ function promptPassword(i) {
 
 var gp_servers = 0;
 
-function addServer(i, geoloc) {
-	if(!pings[i]) {pings[i] = 0;}
-	var location_flag = "";
-	i = parseInt(i);
-	if (!geoloc) {
-		geoloc = {};
-		geoloc.country_code = "";
-		location_flag = "[";
-	} else {
-		location_flag = "[<img src='img/flags/" + geoloc.country_code.toLowerCase() + ".png' title='" + geoloc.country + "' alt='" + geoloc.country + "' class='flag'/> ";
-	}
+function addServer(i) {
 	++gp_servers;
 	var on = (!servers[i].gametype) ? "" : "on";
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + location_flag + "<span id='ping-" + i + "'>"+pings[i]+"</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+
+	servers[i].location_flag = typeof servers[i].location_flag == 'undefined' ? "[" : servers[i].location_flag;
+	servers[i].ping = servers[i].ping || 0;
+
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].file).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].gametype + " " + on + " " + servers[i].map + " <span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -214,9 +182,6 @@ function addServer(i, geoloc) {
 		gamepadSelect('serverbrowser-1');
 	}
 	$('*[data-gp]').mouseenter(function() {
-		if($(this).attr('data-setting')) {
-			return false;
-		}
 		var a = $(this).attr('data-gp').split("-"),
 			b = parseInt(a[a.length-1]);
 		gp_on = b;
@@ -243,6 +208,7 @@ function loadSettings(i) {
 				console.log(Object.keys(settings)[i + 1] + ": " + settings[Object.keys(settings)[i + 1]].current);
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						settings[Object.keys(settings)[i + 1]].set(dewRcon.lastMessage);
+						$('#version').text("Version " + dewRcon.lastMessage);
 				}
 				if (Object.keys(settings)[i + 1] == 'username')
 					loadedSettings = true;
@@ -387,6 +353,62 @@ function toggleNetwork() {
 
 var friends = [], friends_online;
 
+function jumpToServer(ip) {
+		var d;
+		for (var i = 0; i < serverz.servers.length; i++) {
+			if (serverz.servers[i].address == ip)
+				d = serverz.servers[i];
+		}
+		host = 0;
+		browsing = 0;
+		$('#lobby').empty();
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		if(d.numPlayers == d.maxPlayers) {
+			$.snackbar({
+				content: "Your friend's game is full. Unable to join."
+			});
+			$('#notification')[0].currentTime = 0;
+			$('#notification')[0].play();
+			return;
+		}
+		changeMap2(getMapName(d.mapFile));
+		$('#subtitle').text(d.name + " : " + d.ip);
+		if (d.variant === "")
+			d.variant = "Slayer";
+		$('#gametype-display').text(d.variant.toUpperCase());
+		if (d.variantType === "none")
+			d.variantType = "Slayer";
+		$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
+		$('#dewrito').css({
+			"opacity": 0,
+			"top": "920px"
+		});
+		$('.menu-container').css({
+			"top": "720px"
+		});
+		$('#customgame').css({
+			"top": "0px"
+		});
+		$('#friendslist').css('right','-250px');
+		$('.options-section').hide();
+		$('#options').fadeOut(anit);
+		$('#friends-online').fadeIn(anit);
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'custom-serverbrowser');
+		$('#customgame').attr('data-from', 'serverbrowser');
+		playersJoin(d.numPlayers, d.maxPlayers, 20, d.address);
+		currentServer = d;
+		lobbyLoop(d.address);
+		loopPlayers = true;
+		$('#start').children('.label').text("JOIN GAME");
+		$('#title').text('CUSTOM GAME');
+		$('#network-toggle').hide();
+		$('#type-selection').show();
+		currentMenu = "customgame";
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
+}
+
 function loadFriends() {
 	$('#friends').empty();
 	friends_online = 0;
@@ -421,55 +443,7 @@ function loadFriends() {
 		$('#click')[0].play();
 	});
 	$('.friend.online').click(function() {
-		host = 0;
-		browsing = 0;
-		$('#lobby').empty();
-		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
-		var d = serverz.players[$(this).text()];
-		if(d.numPlayers == d.maxPlayers) {
-			$.snackbar({
-				content: "Your friend's game is full. Unable to join."
-			});
-			$('#notification')[0].currentTime = 0;
-			$('#notification')[0].play();
-			return;
-		}
-		changeMap2(getMapName(d.mapFile));
-		$('#subtitle').text(d.name + " : " + d.ip);
-		if (d.variant === "")
-			d.variant = "Slayer";
-		$('#gametype-display').text(d.variant.toUpperCase());
-		if (d.variantType === "none")
-			d.variantType = "Slayer";
-		$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
-		$('#dewrito').css({
-			"opacity": 0,
-			"top": "920px"
-		});
-		$('.menu-container').css({
-			"top": "720px"
-		});
-		$('#customgame').css({
-			"top": "0px"
-		});
-		$('#friendslist').css('right','-250px');
-		$('.options-section').hide();
-		$('#options').fadeOut(anit);
-		$('#friends-online').fadeIn(anit);
-		$('#back').fadeIn(anit);
-		$('#back').attr('data-action', 'custom-serverbrowser');
-		$('#customgame').attr('data-from', 'serverbrowser');
-		playersJoin(d.numPlayers, d.maxPlayers, 20, d.ip);
-		currentServer = d;
-		lobbyLoop(d.ip);
-		loopPlayers = true;
-		$('#start').children('.label').text("JOIN GAME");
-		$('#title').text('CUSTOM GAME');
-		$('#network-toggle').hide();
-		$('#type-selection').show();
-		currentMenu = "customgame";
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+		jumpToServer(serverz.players[$(this).text()].ip);
 	});
 }
 
@@ -921,13 +895,32 @@ function directConnect() {
 function getCurrentVersion() {
 	$.getJSON("http://eriq.co/eldewrito/update", function(data) {
 		currentVersion = data.version.toString();
-		$('#version').text('eldewrito ' + currentVersion);
+		//$('#version').text('eldewrito ' + currentVersion);
 	});
 }
 
 function totalPlayersLoop() {
 	$.getJSON("http://192.99.124.166:8080/all", function(data) {
 		serverz = data;
+		for (var i = 0; i < serverz.servers.length; i++) {
+			var startTime = Date.now(),
+				endTime,
+				ping;
+				(function(i) {
+					$.ajax({
+						type: "GET",
+						url: "http://" + serverz.servers[i].address + "/",
+						async: true,
+						success: function() {
+							endTime = Date.now();
+							ping = Math.round((endTime - startTime) / 1.60); //Aproximate ping, may change from 1.75 later
+							serverz.servers[i].ping = ping;
+							console.log(ping);
+							//console.log(serverz.servers[i]);
+						}
+					});
+				})(i);
+		}
 		$('#players-online').text(serverz.count);
 		loadFriends();
 	});
@@ -1133,19 +1126,17 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "main-quickjoin") {
 		var lowestPing = 5000;
-		for (var i = 0; i < servers.length; i++) {
-			if (typeof servers[i] != 'undefined') {
-				if (servers[i].ping < lowestPing && (parseInt(servers[i].players.current) < parseInt(servers[i].players.max)) && !servers[i].password) {
-					lowestPing = parseInt(servers[i].ping);
-					selectedserver = i;
+		for (var i = 0; i < serverz.servers.length; i++) {
+			if (typeof serverz.servers[i] != 'undefined') {
+				if (serverz.servers[i].ping < lowestPing && (parseInt(serverz.servers[i].numPlayers) < parseInt(serverz.servers[i].maxPlayers)) && !serverz.servers[i].passworded) {
+					lowestPing = parseInt(serverz.servers[i].ping);
+					currentServer = serverz.servers[i];
 				}
 			}
-			if (i == servers.length - 1) {
-				changeMenu('main-serverbrowser');
-				changeMenu('serverbrowser-custom', selectedserver);
-				console.log(servers[selectedserver].ip);
+			if (i == serverz.servers.length - 1) {
+				jumpToServer(currentServer.address);
 				setTimeout(function() {
-					startgame(servers[selectedserver].ip, 'JOIN GAME'.split(' '));
+					startgame(currentServer.address, 'JOIN GAME'.split(' '));
 				}, 500);
 			}
 		}
@@ -1163,9 +1154,9 @@ function changeMenu(menu, details) {
 				d.gametype = "Slayer";
 			}
 			$('#gametype-display').text(d.gametype.toUpperCase());
-			if (d.gameparent === "none")
-				d.gameparent = "Slayer";
-			$('#gametype-icon').css('background', "url('img/gametypes/" + (d.gameparent === "ctf" || d.gameparent === "koth") ? d.gameparent : d.gameparent.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
+			if (d.variantType === "none")
+				d.variantType = "Slayer";
+			$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 			$('#serverbrowser').css({
 				"top": "720px"
 			});
@@ -1597,6 +1588,10 @@ function playerInfo(name) {
 	}
 }
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function startgame(ip, mode) {
 	if (!dewRconConnected) {
 		$.snackbar({
@@ -1606,14 +1601,14 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	/*if (currentServer.eldewritoVersion.toString() != settings.gameversion.current.toString()) {
+	if (currentServer.eldewritoVersion.toString() != settings.gameversion.current.toString()) {
 		$.snackbar({
 			content: 'You must have the same version as the server in order to join.'
 		});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
 		return;
-	}*/ // Orion please fix this when you get the chance
+	} // Orion please fix this when you get the chance
 	loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
@@ -1632,11 +1627,11 @@ function startgame(ip, mode) {
 	$('#black').fadeIn(3000);
 	delay(function() {
 		if (mode[0] === "JOIN") {
-			dewRcon.send('connect ' + ip + ' ' + password);
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
+			dewRcon.send('connect ' + ip + ' ' + password);
 			if (currentServer.status != "InLobby") {
 				$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
-				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '.png)');
+				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.file.toString()).toLowerCase() + '.png)');
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 				$('#loading').show();
@@ -1645,13 +1640,13 @@ function startgame(ip, mode) {
 				dewRcon.send('Game.SetMenuEnabled 0');
 			}
 		} else if (mode[1] === "FORGE") {
-			dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
 			$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
 			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '.png)');
-			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.gameparent.toString().capitalizeFirstLetter() + '.png)');
+			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 			$('#loading').show();
 			$('#back').remove();
+			dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
 		} else if (mode[0] === "START" && mode[1] === "GAME") {
 			dewRcon.send('start');
 		}
