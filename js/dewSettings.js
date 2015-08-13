@@ -328,7 +328,7 @@ var user = {
 			"typeof": "input",
 			"category": "eldewrito",
 			"name": "GAME VERSION",
-			"current": parseInt(isset(localStorage.getItem('gameversion'), "0.0.0.0")),
+			"current": "0.0.0.0",
 			"update": function() {
 				$("[data-option='gameversion']").children('.input').children('input').val(settings.gameversion.current);
 			},
