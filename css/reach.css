@@ -946,7 +946,8 @@ audio {
     left: 10px;
     background-color: rgba(0, 0, 0, 0.67);
 }
-#back {
+#back,
+#browser-settings {
     left: 20px;
     bottom: 20px;
     font-size: 18px;

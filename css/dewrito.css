@@ -291,7 +291,8 @@ html {
 }
 #back,
 #version,
-#dewmenu-button {
+#dewmenu-button,
+#browser-settings {
     position: absolute;
     cursor: pointer;
     z-index: 4;

@@ -578,7 +578,9 @@ $(document).ready(function() {
   		dewRcon.send('Game.SetMenuEnabled 0');
 		*/
 	});
-	console.log(window.location.origin);
+	$('#browser-settings').click(function() {
+		changeMenu("serverbrowser-options");
+	});
 	if (window.location.origin.toLowerCase().indexOf("no1dead.github.io") >= 0) {
 		changeMenu("main2-main");
 		changeMenu("main-serverbrowser");
@@ -589,7 +591,7 @@ $(document).ready(function() {
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
 		$('#style').attr('href', 'css/' + CSSfile + '.css');
-		menuConvert(CSSfile)
+		menuConvert(CSSfile);
 	}
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
@@ -725,10 +727,12 @@ $(document).ready(function() {
 	if (getURLParameter('browser')) {
 		changeMenu("main2-main");
 		changeMenu("main-serverbrowser");
-		backButton = $('#back').detach();
+		setTimeout(function() {
+			$('#back').hide();
+		},1000);
+		$('#browser-settings').show();
 	}
 });
-var backButton;
 function loadServers() {
 	if (browsing === 1) {
 		pings = [];
@@ -1106,7 +1110,7 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "serverbrowser-custom" && details) {
 		if (getURLParameter('browser'))
-			backButton.appendTo('body');
+			$('#back').show();
 		host = 0;
 		browsing = 0;
 		$('#lobby').empty();
@@ -1145,7 +1149,7 @@ function changeMenu(menu, details) {
 	if (menu == "custom-serverbrowser") {
 		browsing = 1;
 		if (getURLParameter('browser'))
-			backButton = $('#back').detach();
+			$('#back').hide();
 		if (settings.background.current == Halo3Index) {
 			$('#bg1').fadeOut(anit);
 			$('#bg1')[0].pause();
@@ -1446,6 +1450,21 @@ function changeMenu(menu, details) {
 		});
 		currentMenu = "dewrito-options";
 	}
+	if (menu == "serverbrowser-options") {
+		$('#dewrito-options').show();
+		$('#back').fadeIn(anit);
+		$('#back').attr('data-action', 'options-serverbrowser');
+		$('#serverbrowser').fadeOut(anit);
+		$('#options').fadeIn(anit);
+		currentMenu = "dewrito-options";
+	}
+	if (menu == "options-serverbrowser") {
+		$('.options-section').hide();
+		$('#back').fadeOut(anit);
+		$('#serverbrowser').fadeIn(anit);
+		$('#options').fadeOut(anit);
+		currentMenu = "serverbrowser";
+	}
 	if (menu == "options-main") {
 		$('.options-section').hide();
 		$('#back').fadeOut(anit);
@@ -1599,7 +1618,7 @@ function startgame(ip, mode) {
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 				$('#loading').show();
-				backButton = $('#back').detach();
+				$('#back').hide();
 			} else {
 				dewRcon.send('Game.SetMenuEnabled 0');
 			}
