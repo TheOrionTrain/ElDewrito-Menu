@@ -1547,14 +1547,14 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	if (currentServer.eldewritoVersion != settings.gameversion.current) {
+	/*if (currentServer.eldewritoVersion != settings.gameversion.current) {
 		$.snackbar({
 			content: 'You must have the same version as the server in order to join.'
 		});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
 		return;
-	} // Orion please fix this when you get the chance
+	}*/ // Orion please fix this when you get the chance
 	loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
