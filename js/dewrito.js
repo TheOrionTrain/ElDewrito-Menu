@@ -1395,7 +1395,7 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "options-serverbrowser") {
 		$('.options-section').hide();
-		$('#back').attr('data-action', 'serverbrowser-main');
+		$('#back').attr('data-action', 'options-serverbrowser');
 		$('#serverbrowser').fadeIn(anit);
 		$('#options').fadeOut(anit);
 		currentMenu = "serverbrowser";
