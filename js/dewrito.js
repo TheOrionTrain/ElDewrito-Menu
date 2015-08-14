@@ -1356,6 +1356,9 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "haloonline-options") {
 		$('#back').attr('data-action', 'options-main');
+		if (getURLParameter('browser')) {
+			$('#back').attr('data-action', 'options-serverbrowser');
+		}
 		$('#haloonline').hide();
 		$('#dewrito-options').fadeIn(anit);
 		currentMenu = "dewrito-options";
@@ -1368,6 +1371,9 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "music-options") {
 		$('#back').attr('data-action', 'options-main');
+		if (getURLParameter('browser')) {
+			$('#back').attr('data-action', 'options-serverbrowser');
+		}
 		$('#choosemusic').hide();
 		$('#dewrito-options').fadeIn(anit);
 		currentMenu = "dewrito-options";
