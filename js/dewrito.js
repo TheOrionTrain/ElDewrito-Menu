@@ -713,6 +713,7 @@ $(document).ready(function() {
 	if (getURLParameter('browser')) {
 		changeMenu("main2-main");
 		changeMenu("main-serverbrowser");
+		$('#back').remove();
 	}
 });
 
