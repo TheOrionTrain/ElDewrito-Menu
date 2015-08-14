@@ -305,8 +305,11 @@ function initialize() {
 			$('#types-' + b.replace(/\s/g, "")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
 		}
 	}
-	settings.logo.current = 1;
-	settings.logo.update();
+	if(!localStorage.getItem('newlogo')) {
+		settings.logo.current = 1;
+		settings.logo.update();
+		localStorage.setItem('newlogo',1);
+	}
 }
 
 function changeSetting(s, by) {
@@ -567,6 +570,13 @@ $(document).ready(function() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
 		removeFriend();
+	});
+	$('#dewmenu-button').click(function() {
+		alert("This button will work when DewMenu is ready.");
+		/*
+		dewRcon.send('game.menuurl "http://dewmenu.halo.click/"')
+  		dewRcon.send('Game.SetMenuEnabled 0');
+		*/
 	});
 	console.log(window.location.origin);
 	if (window.location.origin.toLowerCase().indexOf("no1dead.github.io") >= 0) {
