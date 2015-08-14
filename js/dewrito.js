@@ -713,10 +713,10 @@ $(document).ready(function() {
 	if (getURLParameter('browser')) {
 		changeMenu("main2-main");
 		changeMenu("main-serverbrowser");
-		$('#back').remove();
+		backButton = $('#back').detach();
 	}
 });
-
+var backButton;
 function loadServers() {
 	if (browsing === 1) {
 		pings = [];
@@ -1093,6 +1093,8 @@ function changeMenu(menu, details) {
 		}
 	}
 	if (menu == "serverbrowser-custom" && details) {
+		if (getURLParameter('browser'))
+			backButton.appendTo('body');
 		host = 0;
 		browsing = 0;
 		$('#lobby').empty();
@@ -1130,6 +1132,8 @@ function changeMenu(menu, details) {
 	}
 	if (menu == "custom-serverbrowser") {
 		browsing = 1;
+		if (getURLParameter('browser'))
+			backButton = $('#back').detach();
 		if (settings.background.current == Halo3Index) {
 			$('#bg1').fadeOut(anit);
 			$('#bg1')[0].pause();
@@ -1583,7 +1587,7 @@ function startgame(ip, mode) {
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 				$('#loading').show();
-				$('#back').remove();
+				backButton = $('#back').detach();
 			} else {
 				dewRcon.send('Game.SetMenuEnabled 0');
 			}
@@ -1593,7 +1597,7 @@ function startgame(ip, mode) {
 			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
 			$('#loading').show();
-			$('#back').remove();
+			$('#back').hide();
 			dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
 		} else if (mode[0] === "START" && mode[1] === "GAME") {
 			dewRcon.send('start');
