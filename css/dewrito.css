@@ -290,7 +290,8 @@ html {
     font-weight: 300;
 }
 #back,
-#version {
+#version,
+#dewmenu-button {
     position: absolute;
     cursor: pointer;
     z-index: 4;

@@ -954,6 +954,21 @@ audio {
     display: none;
     z-index: 999;
 }
+#dewmenu-button {
+    left: 20px;
+    bottom: 20px;
+    font-size: 15px;
+    opacity: 0.75;
+    z-index: 999;
+    display: block;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    transition: 0.4s;
+}
+#dewmenu-button:hover {
+    cursor: pointer;
+    opacity: 1;
+}
 .options-menu {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
     background: -webkit-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
