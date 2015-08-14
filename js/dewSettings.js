@@ -285,15 +285,15 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "LOGO",
-			"current": parseInt(isset(localStorage.getItem('logo'), 0)),
+			"current": parseInt(isset(localStorage.getItem('logo'), 1)),
 			"min": 0,
 			"max": 4,
 			"labels": [
-            "Halo 3 CE",
-			"ElDewrito",
-            "Halo",
-            "Halo Online",
-            "Halo ODST"
+      	"Halo 3 CE",
+				"ElDewrito",
+        "Halo",
+        "Halo Online",
+        "Halo ODST"
         ],
 			"increment": 1,
 			"update": function() {
@@ -312,7 +312,7 @@ var user = {
 			"min": 0,
 			"max": 2,
 			"labels": [
-            	"REGULAR",
+        "REGULAR",
 				"CONDENSED",
 				"LIST"
         	],

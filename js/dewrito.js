@@ -305,6 +305,8 @@ function initialize() {
 			$('#types-' + b.replace(/\s/g, "")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
 		}
 	}
+	settings.logo.current = 1;
+	settings.logo.update();
 }
 
 function changeSetting(s, by) {
