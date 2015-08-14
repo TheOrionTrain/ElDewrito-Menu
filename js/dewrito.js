@@ -729,6 +729,7 @@ $(document).ready(function() {
 		changeMenu("main-serverbrowser");
 		setTimeout(function() {
 			$('#back').hide();
+			$('#back').attr('data-action', 'options-serverbrowser');
 		},1000);
 		$('#browser-settings').show();
 	}
