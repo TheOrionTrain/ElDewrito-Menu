@@ -14,7 +14,7 @@ StartRconConnection = function() {
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         dewRconConnected = true;
-		loadSettings();
+				loadSettings(Object.keys(settings).length);
     };
     dewRcon.dewWebSocket.onerror = function() {
 		if(!snacking) {

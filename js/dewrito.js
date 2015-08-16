@@ -284,7 +284,7 @@ function initialize() {
 		}
 		settings[set].update();
 	}
-	loadSettings(Object.keys(settings).length);
+	//loadSettings(Object.keys(settings).length);
 	for (i = 0; i < Object.keys(maps).length; i++) {
 		b = Object.keys(maps)[i];
 		$('#choosemap').children('.map-select').append("<div data-game='" + b + "' class='selection'><span class='label'>" + maps[b].name + "</span></div>");
