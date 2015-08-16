@@ -14,7 +14,10 @@ StartRconConnection = function() {
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         dewRconConnected = true;
-				loadSettings(Object.keys(settings).length);
+	loadSettings(Object.keys(settings).length);
+	if(getURLParameter('browser') !== "1") {
+		dewRcon.send('game.menuurl "http://thefeeltrain.github.io/"');
+	}
     };
     dewRcon.dewWebSocket.onerror = function() {
 		if(!snacking) {
