@@ -202,14 +202,13 @@ function loadSettings(i) {
 						settings[Object.keys(settings)[i + 1]].set(dewRcon.lastMessage);
 						$('#version').text("Eldewrito " + dewRcon.lastMessage);
 				}
-				if (Object.keys(settings)[i + 1] == 'gamemenu') {
-						if (!dewRcon.lastMessage.contains('thefeeltrain')) {
+				if (Object.keys(settings)[i + 1] == 'gameversion') {
+						loadedSettings = true;
+						if (!settings.gamemenu.current.contains('thefeeltrain')) {
 								if (confirm('Do you want to set TheFeelTrain as your default menu?'))
 										dewRcon.send('game.menuurl "http://thefeeltrain.github.io/"');
 						}
 				}
-				if (Object.keys(settings)[i + 1] == 'username')
-					loadedSettings = true;
 			}
 		}
 		if (--i) {
