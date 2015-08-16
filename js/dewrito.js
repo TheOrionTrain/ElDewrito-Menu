@@ -151,14 +151,6 @@ function getMapName(filename) {
 	}
 }
 
-function promptPassword(i) {
-	var password = prompt(servers[i].name + " has a password, enter the password to join", "");
-	if (password !== null) {
-		// window.open("dorito:" + servers[i].address + "/" + password);
-		dewRcon.send('connect ' + servers[i].address + ' ' + password);
-	}
-}
-
 var gp_servers = 0;
 
 function addServer(i) {
@@ -193,7 +185,7 @@ function addServer(i) {
 	});
 }
 
-var settingsToLoad = [['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version']];
+var settingsToLoad = [['gamemenu', 'game.menuurl'], ['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version']];
 var loadedSettings = false;
 
 function loadSettings(i) {
@@ -209,6 +201,12 @@ function loadSettings(i) {
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						settings[Object.keys(settings)[i + 1]].set(dewRcon.lastMessage);
 						$('#version').text("Eldewrito " + dewRcon.lastMessage);
+				}
+				if (Object.keys(settings)[i + 1] == 'gamemenu') {
+						if (!dewRcon.lastMessage.contains('thefeeltrain')) {
+								if (confirm('Do you want to set TheFeelTrain as your default menu?'))
+										dewRcon.send('game.menuurl "http://thefeeltrain.github.io/"');
+						}
 				}
 				if (Object.keys(settings)[i + 1] == 'username')
 					loadedSettings = true;
@@ -572,7 +570,8 @@ $(document).ready(function() {
 		removeFriend();
 	});
 	$('#dewmenu-button').click(function() {
-		alert("This button will work when DewMenu is ready.");
+		//alert("This button will work when DewMenu is ready.");
+		window.location.href = "http://dewmenu.halo.click/";
 		/*
 		dewRcon.send('game.menuurl "http://dewmenu.halo.click/"')
   		dewRcon.send('Game.SetMenuEnabled 0');

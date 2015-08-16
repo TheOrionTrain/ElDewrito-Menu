@@ -337,6 +337,19 @@ var user = {
 				$("[data-option='gameversion']").children('.input').children('input').val(settings.gameversion.current);
 			}
 		},
+		"gamemenu": {
+			"typeof": "input",
+			"category": "",
+			"name": "GAME MENU",
+			"current": "0.0.0.0",
+			"update": function() {
+				$("[data-option='gamemenu']").children('.input').children('input').val(settings.gamemenu.current);
+			},
+			"set": function(vers) {
+				settings.gamemenu.current = vers;
+				$("[data-option='gamemenu']").children('.input').children('input').val(settings.gamemenu.current);
+			}
+		},
 		"username": {
 			"typeof": "input",
 			"category": "eldewrito",

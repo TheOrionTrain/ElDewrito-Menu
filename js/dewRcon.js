@@ -46,7 +46,7 @@ StartRconConnection = function() {
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
 				}
-				console.log(dewRcon.lastMessage);
+				//console.log(dewRcon.lastMessage);
     };
 }
 dewRconHelper = function() {
