@@ -21,7 +21,6 @@ StartRconConnection = function() {
 		if(!snacking) {
 			$.snackbar({content:'Not connected. Is the game running?'});
 			port = port == 11776 ? (port == 11764 ? 11776 : 11764) : 11776;
-			console.log(port);
 			if(!played) {
 				$('#notification')[0].currentTime = 0;
 				$('#notification')[0].play();
