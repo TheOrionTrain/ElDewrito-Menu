@@ -109,7 +109,6 @@ function queryServer(serverInfo, i, browser) {
 		return false;
 	}
 	var isPassworded = serverInfo.passworded !== undefined;
-	if (serverInfo.map) {
 		servers[i] = {
 			"address": sanitizeString(serverInfo.address),
 			"host": sanitizeString(serverInfo.hostPlayer),
@@ -128,7 +127,6 @@ function queryServer(serverInfo, i, browser) {
 			},
 			"password": isPassworded
 		};
-	}
 	addServer(i);
 }
 
