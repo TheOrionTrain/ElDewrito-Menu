@@ -1,7 +1,8 @@
 var dewRcon,
 	dewRconConnected = false,
 	snacking = 0,
-	played = 0;
+	played = 0,
+	port = 11776;
 jQuery(function() {
 	if(getURLParameter('offline') !== "1") {
 		StartRconConnection();
@@ -19,6 +20,8 @@ StartRconConnection = function() {
     dewRcon.dewWebSocket.onerror = function() {
 		if(!snacking) {
 			$.snackbar({content:'Not connected. Is the game running?'});
+			port = port == 11776 ? (port == 11764 ? 11776 : 11764) : 11776;
+			console.log(port);
 			if(!played) {
 				$('#notification')[0].currentTime = 0;
 				$('#notification')[0].play();
@@ -51,7 +54,7 @@ StartRconConnection = function() {
 }
 dewRconHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.dewWebSocket = new WebSocket('ws://127.0.0.1:11776', 'dew-rcon');
+    this.dewWebSocket = new WebSocket('ws://127.0.0.1:' + port, 'dew-rcon');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
