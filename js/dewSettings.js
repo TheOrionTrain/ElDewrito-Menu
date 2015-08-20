@@ -282,6 +282,26 @@ var user = {
 				$("[data-option='localbackground']").children('.value').text(settings.localbackground.labels[c]);
 			}
 		},
+		"localmusic": {
+			"typeof": "select",
+			"category": "menu",
+			"name": "LOAD MUSIC LOCALLY",
+			"current": parseInt(isset(localStorage.getItem('localmusic'), 0)),
+			"min": 0,
+			"max": 1,
+			"labels": [
+            "OFF",
+            "ON"
+        ],
+			"increment": 1,
+			"update": function() {
+				var c = settings.localmusic.current;
+				localmusic = c;
+				if ($('#choosemusic').children('.music-select2').length > 0)
+					changeSong2(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
+				$("[data-option='localmusic']").children('.value').text(settings.localmusic.labels[c]);
+			}
+		},
 		"logo": {
 			"typeof": "select",
 			"category": "menu",
