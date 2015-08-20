@@ -145,7 +145,7 @@ function getMapName(filename) {
 		case "s3d_turf":
 			return "Icebox";
 		default:
-			return "s3d_edge";
+			return "Edge";
 	}
 }
 
