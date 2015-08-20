@@ -221,7 +221,7 @@ function initialize() {
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
-	$.getJSON("music.json", function(j) {
+	$.getJSON(settings.localmusic.current == 0 ? "music.json" : "http://thefeeltrain.github.io/music.json", function(j) {
 		songs = j;
 		for (i = 0; i < Object.keys(songs).length; i++) {
 			b = Object.keys(songs)[i];
@@ -1904,9 +1904,7 @@ function changeSong1(game) {
 }
 
 function changeSong2(song) {
-	if (!online) {
-		return;
-	}
+	var directory = settings.localmusic.current == 1 ? "music/" : "http://eriq.co/eldewrito/music/";
 	songIndex = songs[currentAlbum].indexOf(song);
 	thisSong = songs[currentAlbum][songIndex];
 	nextSong = songs[currentAlbum][songIndex + 1];
@@ -1915,7 +1913,7 @@ function changeSong2(song) {
 	}
 	$('.music-select2 .selection').removeClass('selected');
 	$("[data-song='" + song + "']").addClass('selected');
-	$('#music').attr('src', 'http://eriq.co/eldewrito/music/' + currentAlbum + "/" + song + '.ogg');
+	$('#music').attr('src', directory + currentAlbum + "/" + song + '.ogg');
 	localStorage.setItem('song', song);
 	localStorage.setItem('album', currentAlbum);
 	$.snackbar({
