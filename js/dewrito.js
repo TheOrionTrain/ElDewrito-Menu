@@ -152,6 +152,8 @@ function getMapName(filename) {
 var gp_servers = 0;
 
 function addServer(i) {
+	if (servers[i].map == "")
+		return;
 	++gp_servers;
 	var on = (!servers[i].variant) ? "" : "on";
 
