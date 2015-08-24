@@ -245,8 +245,8 @@ var user = {
 						$('#videos').append("<video id='bg1' src='"+d+"reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
 					} else if (c === Halo3Index) {
 						$('#videos').append("<video id='bg1' src='"+d+"halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
-						$('#videos').append("<video id='bg-multiplayer' src='video/halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
-						$('#videos').append("<video id='bg-forge' src='video/halo3/forge.webm' preload='none' loop type='video/webm'></video>");
+						$('#videos').append("<video id='bg-multiplayer' src='"+d+"halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
+						$('#videos').append("<video id='bg-forge' src='"+d+"halo3/forge.webm' preload='none' loop type='video/webm'></video>");
 					} else if (c === 12) {
 						$('#videos').append("<video id='bg1' src='"+d+"reach/custom_games.webm' loop autoplay type='video/webm'></video>");
 						$('#bg-cover').css('background', 'rgba(0,0,0,0)');
