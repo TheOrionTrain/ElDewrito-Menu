@@ -569,12 +569,12 @@ $(document).ready(function() {
 		removeFriend();
 	});
 	$('#dewmenu-button').click(function() {
-		//alert("This button will work when DewMenu is ready.");
-		window.location.href = "http://dewmenu.halo.click/";
-		/*
-		dewRcon.send('game.menuurl "http://dewmenu.halo.click/"')
-  		dewRcon.send('Game.SetMenuEnabled 0');
-		*/
+		//window.location.href = "http://dewmenu.halo.click/";
+		$.snackbar({content: 'Menu now set to halo.thefeeltra.in! This might reset your settings, sorry about that :('});
+		dewRcon.send('game.menuurl "http://halo.thefeeltra.in/"');
+		$('#notification')[0].currentTime = 0;
+		$('#notification')[0].play()
+  		//dewRcon.send('Game.SetMenuEnabled 0');
 	});
 	$('#browser-settings').click(function() {
 		changeMenu("serverbrowser-options");
