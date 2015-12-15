@@ -208,6 +208,9 @@ function loadSettings(i) {
 								if (confirm('Do you want to set TheFeelTrain as your default menu?'))
 										dewRcon.send('game.menuurl "http://halo.thefeeltra.in"');
 						}
+						if(settings.gamemenu.current.contains('thefeeltra.in') || window.location.origin.toLowerCase().contains('thefeeltra.in')) {
+							$('#dewmenu-button').remove();
+						}
 				}
 			}
 		}
@@ -574,6 +577,7 @@ $(document).ready(function() {
 		dewRcon.send('game.menuurl "http://halo.thefeeltra.in/"');
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play()
+		$('#dewmenu-button').remove();
   		//dewRcon.send('Game.SetMenuEnabled 0');
 	});
 	$('#browser-settings').click(function() {
