@@ -204,9 +204,9 @@ function loadSettings(i) {
 				}
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						loadedSettings = true;
-						if (!settings.gamemenu.current.contains('thefeeltrain')) {
+						if (!settings.gamemenu.current.contains('thefeeltrain') && !settings.gamemenu.current.contains('thefeeltra.in')) {
 								if (confirm('Do you want to set TheFeelTrain as your default menu?'))
-										dewRcon.send('game.menuurl "http://thefeeltrain.github.io/"');
+										dewRcon.send('game.menuurl "http://halo.thefeeltra.in"');
 						}
 				}
 			}
@@ -223,7 +223,7 @@ function initialize() {
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
-	$.getJSON(settings.localmusic.current == 0 ? "music.json" : "http://thefeeltrain.github.io/music.json", function(j) {
+	$.getJSON(settings.localmusic.current == 0 ? "music.json" : "http://halo.thefeeltra.in/music.json", function(j) {
 		songs = j;
 		for (i = 0; i < Object.keys(songs).length; i++) {
 			b = Object.keys(songs)[i];
