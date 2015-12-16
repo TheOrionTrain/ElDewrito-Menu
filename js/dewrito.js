@@ -863,9 +863,8 @@ function directConnect() {
 }
 
 function getCurrentVersion() {
-	$.getJSON("http://dewrito.eriq.xyz/update", function(data) {
-		//currentVersion = data.version.toString();
-		//$('#version').text('eldewrito ' + currentVersion);
+	$.getJSON("http://tracks.thefeeltra.in/update", function(data) {
+		console.log(data);
 	});
 }
 
