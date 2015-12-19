@@ -86,13 +86,14 @@
 			</div>
 			<div id="player-level"></div>
 		</div>
+
 		<div class="menu-container animated" id="serverbrowser">
 			<div id="direct-connect">Direct Connect</div>
-			<div id="browser-title">SERVER BROWSER</div>
+			<div id="browser-title">SERVERS</div>
 			<div id="browser-buttons">
 				<div id="refresh"><img src="img/refresh.svg" /> </div>
-				<div data-action="menu" data-menu="serverbrowser-type" id="browser-gametype">Choose Gametype</div>
-				<div data-action="menu" data-menu="serverbrowser-map" id="browser-map">Choose Map</div>
+				<div id="browser-gametype">Choose Gametype</div>
+				<div id="browser-map">Choose Map</div>
 				<div id="browser-full">Showing Full</div>
 				<div id="browser-locked">Showing Locked</div>
 				<div id="clear">Reset</div>
@@ -102,6 +103,7 @@
 			<div id="line4"></div>
 			<div id="browser-settings">Settings</div>
 		</div>
+
 		<div class="menu-container animated" id="customgame" data-from="serverbrowser">
 			<div id="map-thumb">
 				<div id="gametype-icon"></div>
@@ -111,9 +113,9 @@
 			<div id="line1"></div>
 			<div id="select">
 				<div data-gp="customgame-0" id="network-toggle" class="selection"><span class="label">NETWORK</span><span id="network" class="value">OFFLINE</span> </div>
-				<div data-gp="customgame-1" id="type-selection" data-action="menu" data-menu="custom-type" class="selection"><span class="label">GAME TYPE</span><span id="gametype-display" class="value">SLAYER</span> </div>
-				<div data-gp="customgame-2" data-action="menu" data-menu="custom-map" class="selection"><span class="label">MAP</span><span id="currentmap" class="value">EDGE</span> </div>
-				<div data-gp="customgame-3" data-action="menu" data-menu="custom-options" class="selection"><span class="label">GAME OPTIONS</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="customgame-1" id="type-selection" data-action="menu" data-menu="customgame,type" class="selection"><span class="label">GAME TYPE</span><span id="gametype-display" class="value">SLAYER</span> </div>
+				<div data-gp="customgame-2" data-action="menu" data-menu="customgame,map" class="selection"><span class="label">MAP</span><span id="currentmap" class="value">EDGE</span> </div>
+				<div data-gp="customgame-3" data-action="menu" data-menu="customgame,options" class="selection"><span class="label">GAME OPTIONS</span><span class="value">&nbsp;</span> </div>
 				<div data-gp="customgame-4" class="selection" id="start"><span class="label">JOIN GAME</span><span class="value">&nbsp;</span> </div>
 			</div>
 			<div id="line2"></div>
@@ -122,28 +124,32 @@
 			</div>
 			<div id="arrow-right"></div>
 		</div>
+
 		<div class="menu-container animated" id="main3">
 			<div class="select-main">
-				<div data-gp="main3-1" data-action="menu" data-menu="main-custom" class="selection"><span class="label">CUSTOM GAME</span><span class="value">&nbsp;</span> </div>
-				<div data-gp="main3-2" data-action="menu" data-menu="main-forge" class="selection"><span class="label">FORGE</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main3-1" data-action="menu" data-menu="main3,customgame,vertical" class="selection"><span class="label">CUSTOM GAME</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main3-2" data-action="menu" data-menu="main3,forge,vertical" class="selection"><span class="label">FORGE</span><span class="value">&nbsp;</span> </div>
 				<div data-gp="main3-3" class="selection"><span class="label">THEATER</span><span class="value">&nbsp;</span> </div>
 			</div>
 		</div>
+
 		<div class="menu-container animated" id="main2">
 			<div class="select-main">
-				<div data-gp="main2-1" data-action="menu" data-menu="main2-main" class="selection"><span class="label">PLAY MULTIPLAYER</span><span class="value">&nbsp;</span> </div>
-				<div data-gp="main2-2" data-action="menu" data-menu="main-options" class="selection"><span class="label">SETTINGS</span><span class="value">&nbsp;</span> </div>
-				<div data-gp="main2-3" data-action="menu" data-menu="main2-credits" class="selection"><span class="label">CREDITS</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main2-1" data-action="menu" data-menu="main2,main,vertical" class="selection"><span class="label">PLAY MULTIPLAYER</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main2-2" data-action="menu" data-menu="main2,options,fade" class="selection"><span class="label">SETTINGS</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main2-3" data-action="menu" data-menu="main2,credits,vertical" class="selection"><span class="label">CREDITS</span><span class="value">&nbsp;</span> </div>
 			</div>
 			<div id="dewmenu-button">Now located at halo.thefeeltra.in</div>
 		</div>
+
 		<div class="menu-container animated" id="main">
 			<div class="select-main">
-				<div data-gp="main-1" data-action="menu" data-menu="main-quickjoin" class="selection"><span class="label">QUICK JOIN</span><span class="value">&nbsp;</span> </div>
-				<div data-gp="main-2" data-action="menu" data-menu="main-serverbrowser" class="selection"><span class="label">BROWSE SERVERS</span><span class="value">&nbsp;</span> </div>
-				<div data-gp="main-3" data-action="menu" data-menu="main-main3" class="selection"><span class="label">CREATE GAME</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main-1" data-action="quickjoin" class="selection"><span class="label">QUICK JOIN</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main-2" data-action="menu" data-menu="main,serverbrowser,vertical" class="selection"><span class="label">BROWSE SERVERS</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main-3" data-action="menu" data-menu="main,main3,vertical" class="selection"><span class="label">CREATE GAME</span><span class="value">&nbsp;</span> </div>
 			</div>
 		</div>
+
 		<div class="menu-container animated" id="credits">
 			<table>
 				<tr class="credit">
@@ -196,14 +202,16 @@
 				</tr>
 			</table>
 		</div>
+
 		<div class="options-menu" id="options">
+			<div id="back-options" data-action="dewrito-options,">Back</div>
 			<div id="dot"></div>
-			<div class="options-section" id="dewrito-options">
+			<div class="options-section show" id="dewrito-options" data-menu-back="main2">
 				<div class="options-title">GAME SETTINGS</div>
 				<div class="options-select animated">
 					<div data-gp="dewrito-options-1" data-setting="menu" class="selection"><span class="label">MENU SETTINGS</span> </div>
-					<div data-gp="dewrito-options-2" data-action="menu" data-menu="options-music" class="selection"><span class="label">MUSIC</span> </div>
-					<div data-gp="dewrito-options-3" data-action="menu" data-menu="options-haloonline" class="selection"><span class="label">HALO ONLINE SETTINGS</span> </div>
+					<div data-gp="dewrito-options-2" data-action="menu-option" data-menu="dewrito-options,choosemusic" class="selection"><span class="label">MUSIC</span> </div>
+					<div data-gp="dewrito-options-3" data-action="menu-option" data-menu="dewrito-options,haloonline" class="selection"><span class="label">HALO ONLINE SETTINGS</span> </div>
 					<div data-gp="dewrito-options-4" data-setting="eldewrito" class="selection"><span class="label">ELDEWRITO SETTINGS</span> </div>
 					<div data-gp="dewrito-options-5" data-setting="host" class="selection"><span class="label">HOST SETTINGS</span> </div>
 				</div>
@@ -247,7 +255,7 @@
 				<div class="options-title">GAME OPTIONS</div>
 			</div>
 		</div>
-		<div id="dewrito" class="animated"></div>
+		<div id="dewrito" class="animated main"></div>
 		<div id="bg-cover" class="animated"></div>
 		<audio id="music" autoplay></audio>
 		<div id="videos"></div>
@@ -263,4 +271,5 @@
 <script src="js/dewRcon.js"></script>
 <script src="js/dewrito.js"></script>
 <script src="js/dewSettings.js"></script>
+<script src="js/dewStructure.js"></script>
 </html>

@@ -1,3 +1,45 @@
+
+div[data-menu-position="top"] {top: -720px;}
+div[data-menu-position="bottom"] {top: 720px;}
+div[data-menu-position="left"] {left: -720px;}
+div[data-menu-position="right"] {left: 720px;}
+div[data-menu-position="center"] {left: 0px; top: 0px;}
+
+#dewrito.credits {
+    top: -30px;
+    left: 265px;
+    -webkit-transition-timing-function: 200ms;
+    -webkit-transition-delay: 0ms;
+}
+#dewrito.main {
+    left: -10px;
+    top: 240px;
+}
+#dewrito.options {
+    opacity: 0.9;
+    top: 400px;
+    left: -10px;
+    -webkit-transition-timing-function: 200ms;
+    -webkit-transition-delay: 200ms;
+}
+#dewrito.hidden {
+    opacity: 0;
+    left: -10px;
+    top: 240px;
+}
+
+.options-section.show {
+    display: block;
+}
+
+#back-options {
+    left: 20px;
+    bottom: 20px;
+    font-size: 18px;
+    opacity: 0.75;
+    z-index: 999;
+}
+
 #friendslist {
     position: absolute;
     top: 0px;
@@ -290,6 +332,7 @@ html {
     font-weight: 300;
 }
 #back,
+#back-options,
 #version,
 #dewmenu-button,
 #browser-settings {

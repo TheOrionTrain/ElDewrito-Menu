@@ -365,11 +365,11 @@ audio {
 .menu-container {
     position: absolute;
     margin: 0;
-    z-index: 2;
+    z-index: 3;
     width: 1280px;
     height: 720px;
 }
-#main, #main3{
+/*#main, #main3{
     top:-720px;
 }
 #serverbrowser{
@@ -378,7 +378,7 @@ audio {
 }
 #credits {
     top: -720px;
-}
+}*/
 .animated {
     -webkit-transition: 400ms;
     -webkit-transition-timing-function: cubic-bezier(.55, 0, .1, 1);
@@ -387,14 +387,14 @@ audio {
     transition: 400ms;
     transition-timing-function: cubic-bezier(.55, 0, .1, 1);
 }
-#customgame {
+/*#customgame {
     top: -720px;
     left: 0;
 }
 #main2 {
     top: 0px;
     left: 0;
-}
+}*/
 #map-thumb,
 #map-thumb-options {
     position: absolute;
@@ -798,8 +798,6 @@ audio {
 }
 #dewrito {
     position: absolute;
-    left: -10px;
-    top: 240px;
     width: 750px;
     height: 267px;
     opacity: 0.95;

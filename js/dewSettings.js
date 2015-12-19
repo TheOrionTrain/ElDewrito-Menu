@@ -329,11 +329,11 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "SERVER BROWSER STYLE",
-			"current": parseInt(isset(localStorage.getItem('browserstyle'), 0)),
+			"current": parseInt(isset(localStorage.getItem('browserstyle'), 1)),
 			"min": 0,
 			"max": 2,
 			"labels": [
-        "REGULAR",
+        		"REGULAR",
 				"CONDENSED",
 				"LIST"
         	],
