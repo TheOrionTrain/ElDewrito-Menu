@@ -120,7 +120,7 @@ function queryServer(serverInfo, i, browser) {
 			"status": sanitizeString(serverInfo.status),
 			"eldewritoVersion": sanitizeString(serverInfo.eldewritoVersion),
 			"ping": parseInt(serverInfo.ping),
-			"location_flag": serverInfo.location_flag,
+			"location_flag": sanitizeString(serverInfo.location_flag),
 			"players": {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
