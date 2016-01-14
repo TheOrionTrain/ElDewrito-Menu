@@ -125,7 +125,7 @@ function queryServer(serverInfo, i, browser) {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
 			},
-			"password": isPassworded == "true" ? true : false
+			"password": isPassworded
 		};
 	addServer(i);
 }
