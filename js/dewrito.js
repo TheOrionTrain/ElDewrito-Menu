@@ -144,7 +144,7 @@ function getMapName(filename) {
 			return "Reactor";
 		case "s3d_turf":
 			return "Icebox";
-			
+
 		case "zanzibar":
 			return "Last Resort";
 		case "cyberdyne":
@@ -219,13 +219,6 @@ function loadSettings(i) {
 				}
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						loadedSettings = true;
-						if (!settings.gamemenu.current.contains('thefeeltrain') && !settings.gamemenu.current.contains('thefeeltra.in')) {
-								if (confirm('Do you want to set TheFeelTrain as your default menu?'))
-										dewRcon.send('game.menuurl "http://halo.thefeeltra.in"');
-						}
-						if(settings.gamemenu.current.contains('thefeeltra.in') || window.location.origin.toLowerCase().contains('thefeeltra.in')) {
-							$('#dewmenu-button').text("Switch to Scooterpsu's Menu");
-						}
 				}
 			}
 		}
@@ -238,9 +231,6 @@ function loadSettings(i) {
 function initialize() {
 	getCurrentVersion();
 	var set, b, g, i, e;
-	if (window.location.protocol == "https:") {
-		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
-	}
 	$.getJSON(settings.localmusic.current == 0 ? "music.json" : "http://halo.thefeeltra.in/music.json", function(j) {
 		songs = j;
 		for (i = 0; i < Object.keys(songs).length; i++) {
@@ -597,15 +587,9 @@ $(document).ready(function() {
 		removeFriend();
 	});
 	$('#dewmenu-button').click(function() {
-		if (!$('#dewmenu-button').text().contains("Scooter") || window.location.origin.toLowerCase().contains('thefeeltra.in')) {
-			$('#dewmenu-button').text("Switch to Scooterpsu's Menu");
-			$.snackbar({content: 'Menu now set to halo.thefeeltra.in! This might reset your settings, sorry about that :('});
-			$('#notification')[0].currentTime = 0;
-			$('#notification')[0].play()
-			dewRcon.send('game.menuurl "http://halo.thefeeltra.in/"');
-		} else {
-			window.location.href = "http://scooterpsu.github.io/";
+		if(confirm("Are you sure you want to switch to Scooterpsu's menu?")) {
 			dewRcon.send('game.menuurl "http://scooterpsu.github.io/"');
+			window.location = "http://scooterpsu.github.io/";
 		}
 	});
 	$('#browser-settings').click(function() {
@@ -1012,6 +996,9 @@ function joinServer(details) {
 }
 
 function initializeNewMenu() {
+	if (window.location.protocol == "https:") {
+		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
+	}
 	for(var i=0; i < Object.keys(Menu).length; i++) {
 		var data = Menu[Object.keys(Menu)[i]];
 		$('#'+Object.keys(Menu)[i]).attr('data-menu-position',data.position);
@@ -1386,7 +1373,7 @@ function getMapFile(name) {
 				return "s3d_reactor";
 			case "icebox":
 				return "s3d_turf";
-				
+
 			case "high ground":
 				return "deadlock";
 			case "narrows":
