@@ -209,7 +209,7 @@ function loadSettings(i) {
 										dewRcon.send('game.menuurl "http://halo.thefeeltra.in"');
 						}
 						if(settings.gamemenu.current.contains('thefeeltra.in') || window.location.origin.toLowerCase().contains('thefeeltra.in')) {
-							$('#dewmenu-button').remove();
+							$('#dewmenu-button').text("Switch to Scooterpsu's Menu");
 						}
 				}
 			}
@@ -582,11 +582,16 @@ $(document).ready(function() {
 		removeFriend();
 	});
 	$('#dewmenu-button').click(function() {
-		$.snackbar({content: 'Menu now set to halo.thefeeltra.in! This might reset your settings, sorry about that :('});
-		dewRcon.send('game.menuurl "http://halo.thefeeltra.in/"');
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play()
-		$('#dewmenu-button').remove();
+		if (!$('#dewmenu-button').text().contains("Scooter") || window.location.origin.toLowerCase().contains('thefeeltra.in')) {
+			$('#dewmenu-button').text("Switch to Scooterpsu's Menu");
+			$.snackbar({content: 'Menu now set to halo.thefeeltra.in! This might reset your settings, sorry about that :('});
+			$('#notification')[0].currentTime = 0;
+			$('#notification')[0].play()
+			dewRcon.send('game.menuurl "http://halo.thefeeltra.in/"');
+		} else {
+			window.location.href = "http://scooterpsu.github.io/";
+			dewRcon.send('game.menuurl "http://scooterpsu.github.io/"');
+		}
 	});
 	$('#browser-settings').click(function() {
 		changeMenu("serverbrowser,options,fade");
