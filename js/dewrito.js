@@ -120,7 +120,7 @@ function queryServer(serverInfo, i, browser) {
 			"status": sanitizeString(serverInfo.status),
 			"eldewritoVersion": sanitizeString(serverInfo.eldewritoVersion),
 			"ping": parseInt(serverInfo.ping),
-			"location_flag": sanitizeString(serverInfo.location_flag),
+			"location_flag": (serverInfo.location_flag.contains("base64") || serverInfo.location_flag.toLowerCase().contains("rcon")) ? "undefined" : serverInfo.location_flag,
 			"players": {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
@@ -144,6 +144,21 @@ function getMapName(filename) {
 			return "Reactor";
 		case "s3d_turf":
 			return "Icebox";
+			
+		case "zanzibar":
+			return "Last Resort";
+		case "cyberdyne":
+			return "The Pit";
+		case "bunkerworld":
+			return "Standoff";
+		case "chill":
+			return "Narrows";
+		case "shrine":
+			return "Sandtrap";
+		case "deadlock":
+			return "High Ground";
+		case "last resort":
+			return "zanzibar";
 		default:
 			return "Edge";
 	}
@@ -1391,6 +1406,17 @@ function getMapFile(name) {
 				return "s3d_reactor";
 			case "icebox":
 				return "s3d_turf";
+				
+			case "high ground":
+				return "deadlock";
+			case "narrows":
+				return "chill";
+			case "the pit":
+				return "cyberdyne";
+			case "sandtrap":
+				return "shrine";
+			case "standoff":
+				return "bunkerworld";
 		}
 		return "";
 	}
