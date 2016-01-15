@@ -219,7 +219,7 @@ function loadSettings(i) {
 				}
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						loadedSettings = true;
-						if (!settings.gamemenu.current.contains('thefeeltrain') && !settings.gamemenu.current.contains('thefeeltra.in') && !settings.gamemenu.current.contains('file:')) {
+						if (!settings.gamemenu.current.contains('thefeeltrain') && !settings.gamemenu.current.contains('thefeeltra.in')) {
 								if (confirm('Do you want to set TheFeelTrain as your default menu?'))
 										dewRcon.send('game.menuurl "http://halo.thefeeltra.in"');
 						}
