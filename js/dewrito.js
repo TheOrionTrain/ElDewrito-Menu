@@ -144,7 +144,6 @@ function getMapName(filename) {
 			return "Reactor";
 		case "s3d_turf":
 			return "Icebox";
-
 		case "zanzibar":
 			return "Last Resort";
 		case "cyberdyne":
@@ -588,8 +587,8 @@ $(document).ready(function() {
 	});
 	$('#dewmenu-button').click(function() {
 		if(confirm("Are you sure you want to switch to Scooterpsu's menu?")) {
-			dewRcon.send('game.menuurl "http://scooterpsu.github.io/"');
 			window.location = "http://scooterpsu.github.io/";
+			dewRcon.send('game.menuurl "http://scooterpsu.github.io/"');
 		}
 	});
 	$('#browser-settings').click(function() {
@@ -913,13 +912,13 @@ function playersJoin(number, max, time, ip) {
 		debugLog(ip);
 		players = serverInfo.players;
 		var colour = "#000000";
-		
+
 		if (typeof serverInfo.passworded == 'undefined') {
 			players.sort(function(a, b) {
 				return a.team - b.team
 			});
 		}
-		
+
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
