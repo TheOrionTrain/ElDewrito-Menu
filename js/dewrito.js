@@ -801,18 +801,7 @@ function lobbyLoop(ip) {
 		success = true;
 		console.log(currentServer);
 		players = serverInfo.players;
-		var teamGame = false;
 		var colour = "#000000";
-		if (typeof serverInfo.passworded == 'undefined') {
-			for (var i = 0; i < players.length; i++) {
-				if (typeof players[i] != 'undefined') {
-					if (parseInt(players[i].team) > 1)
-						teamGame = false;
-					else
-						teamGame = true;
-				}
-			}
-		}
 
 		if (serverInfo.variantType == "none")
 				serverInfo.variantType = "Slayer";
@@ -837,7 +826,7 @@ function lobbyLoop(ip) {
 		if (typeof serverInfo.passworded == 'undefined') {
 			for (var i = 0; i < players.length; i++) {
 				if (typeof players[i] != 'undefined' && players[i].name != "") {
-					if (teamGame)
+					if (serverInfo.teams)
 						colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
 					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 					$('#player' + i).css("display", "none");
@@ -939,23 +928,14 @@ function playersJoin(number, max, time, ip) {
 	$.getJSON("http://" + ip, function(serverInfo) {
 		debugLog(ip);
 		players = serverInfo.players;
-		var teamGame = false;
 		var colour = "#000000";
-		if (typeof serverInfo.passworded == 'undefined') {
-			for (var i = 0; i < players.length; i++) {
-				if (typeof players[i] != 'undefined') {
-					if (parseInt(players[i].team) > 1)
-						teamGame = false;
-					else
-						teamGame = true;
-				}
-			}
-		}
+		
 		if (typeof serverInfo.passworded == 'undefined') {
 			players.sort(function(a, b) {
 				return a.team - b.team
 			});
 		}
+		
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
@@ -964,7 +944,7 @@ function playersJoin(number, max, time, ip) {
 			return;
 		for (var i = 0; i < players.length; i++) {
 			if (typeof players[i] != 'undefined' && players[i].name != "") {
-				if (teamGame)
+				if (serverInfo.teams)
 					colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
 				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				$('#player' + i).css("display", "none");
