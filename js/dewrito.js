@@ -1157,6 +1157,7 @@ function playerInfo(name) {
 }
 
 function startgame(ip, mode) {
+	//console.log(getMapName(currentServer.mapFile.toString()).toLowerCase());
 	if (!dewRconConnected) {
 		$.snackbar({
 			content: 'You must be connected to the game to join or start a server.'
@@ -1186,11 +1187,10 @@ function startgame(ip, mode) {
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
 			dewRcon.send('connect ' + ip + ' ' + password);
 			if (currentServer.status != "InLobby") {
-				console.log(currentServer);
-				$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
-				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).toLowerCase() + '.png)');
+				$('#loadingMapName').text(currentServer.map.toString().toUpperCase().replace("BUNKERWORLD", "STANDOFF"));//lazy
+				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).replace(/ /g,"").toLowerCase() + '.png)');
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
-				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
+				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g,"").toLowerCase() + '-overlay.png)');
 				$('#loading').show();
 				$('#back').hide();
 			} else {
@@ -1198,9 +1198,9 @@ function startgame(ip, mode) {
 			}
 		} else if (mode[1] === "FORGE") {
 			$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
-			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '.png)');
+			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g,"").toLowerCase() + '.png)');
 			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
-			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().toLowerCase() + '-overlay.png)');
+			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g,"").toLowerCase() + '-overlay.png)');
 			$('#loading').show();
 			$('#back').hide();
 			dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
