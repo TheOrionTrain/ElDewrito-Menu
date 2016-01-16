@@ -1191,6 +1191,7 @@ function startgame(ip, mode) {
 				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).replace(/ /g,"").toLowerCase() + '.png)');
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g,"").toLowerCase() + '-overlay.png)');
+				$('#mapOverlay').css('opacity', '0.8');
 				$('#loading').show();
 				$('#back').hide();
 			} else {
