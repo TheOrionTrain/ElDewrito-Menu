@@ -1166,6 +1166,14 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
+	if (currentServer.players.current == currentServer.players.max) {
+		$.snackbar({
+			content: 'Server is full.'
+		});
+		$('#notification')[0].currentTime = 0;
+		$('#notification')[0].play();
+		return;
+	}
 	loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
