@@ -148,8 +148,10 @@ function getMapName(filename) {
 			return "Last Resort";
 		case "cyberdyne":
 			return "The Pit";
-		case "Bunkerworld":
+		case "bunkerworld":
 			return "Standoff";
+		case "standoff":
+			return "Bunkerworld";
 		case "chill":
 			return "Narrows";
 		case "shrine":
@@ -1393,7 +1395,9 @@ function getMapFile(name) {
 			case "sandtrap":
 				return "shrine";
 			case "standoff":
-				return "Bunkerworld";
+				return "bunkerworld";
+			case "bunkerworld":
+				return "bunkerworld";
 		}
 		return "";
 	}
