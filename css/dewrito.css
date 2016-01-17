@@ -37,7 +37,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     bottom: 20px;
     font-size: 18px;
     opacity: 0.75;
-    z-index: 999;
+    z-index: 99999999;
 }
 
 #friendslist {

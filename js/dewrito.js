@@ -606,7 +606,6 @@ $(document).ready(function() {
 	var CSSfile = getURLParameter('css');
 	if (CSSfile) {
 		$('#style').attr('href', 'css/' + CSSfile + '.css');
-		menuConvert(CSSfile);
 	}
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
@@ -1010,6 +1009,7 @@ function initializeNewMenu() {
 }
 
 function changeMenuOptions(m,b) {
+	$('#back').hide();
 	var e = m.split(",");
 	if($('#'+e[0]).attr('data-menu-back') == "main2" && b) {
 		if(getURLParameter('browser') == 1) {
@@ -1025,10 +1025,12 @@ function changeMenuOptions(m,b) {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
 	}
+	$('#back').hide();
 }
 
 function changeMenu(m) {
 	var e = m.split(","), f = Menu[e[0]], t = Menu[e[1]];
+	console.log(t);
 	if(e[0] === e[1]) {
 		return false;
 	}
@@ -1054,13 +1056,17 @@ function changeMenu(m) {
 		$('#dewrito').removeClass().addClass("animated hidden");
 	}
 	if(t.back) {
+		if(e[0] == "options") {e[2] = "vertical";}
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', e[1]+","+t.back+","+e[2]);
 	} else {
 		$('#back').fadeOut(anit);
 	}
 	if(typeof t.onchange == "function") {
-		t.onchange();
+		if(e[1] == "options" && e[3]) {
+			t.onchange(e[3]);
+		}
+		else {t.onchange();}
 	}
 	if(t.video) {
 		for(var i=0; i< t.video.length; i++) {
@@ -1175,7 +1181,7 @@ function startgame(ip, mode) {
 	var password;
 	if (mode[0] === "JOIN")
 		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
-	
+
 	if ((typeof currentServer.players.current != 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
 		$.snackbar({
 			content: 'Server is full.'
@@ -1184,7 +1190,7 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	
+
 	$('#beep')[0].play();
 	setTimeout(function() {
 		$('#beep')[0].play();
@@ -1309,6 +1315,7 @@ function changeSettingsMenu(setting) {
 	debugLog(currentMenu);
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
+	$('#back').hide();
 }
 
 function changeSettingsBack() {
@@ -1388,7 +1395,6 @@ function getMapFile(name) {
 				return "s3d_reactor";
 			case "icebox":
 				return "s3d_turf";
-
 			case "high ground":
 				return "deadlock";
 			case "narrows":
@@ -1559,7 +1565,7 @@ function changeType2(type, click) {
 		$('#clear').show();
 		filterServers();
 	} else if (click === true) {
-		changeMenu("options,serverbrowser,fade");
+		changeMenu("options,customgame,fade");
 	}
 }
 

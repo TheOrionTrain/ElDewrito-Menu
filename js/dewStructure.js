@@ -32,7 +32,23 @@ var Menu = {
     },
     "options" : {
         "position" : "center",
-        "logo" : "options"
+        "logo" : "options",
+        "onchange" : function(m) {
+            $('#back').hide();
+            if(m) {
+                $('.options-section').hide();
+                $('#'+m).show();
+                if(Menu.options.menus[m]) {
+                    $('#back').fadeIn(anit);
+            		$('#back').attr('data-action', "options,"+Menu.options.menus[m]+",fade");
+                }
+            }
+        },
+        "menus" : {
+            "dewrito-options" : "main2",
+            "choosemap" : "customgame",
+            "choosetype" : "customgame"
+        }
     },
     "customgame" : {
         "position" : "top",
