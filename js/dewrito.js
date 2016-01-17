@@ -1166,7 +1166,12 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	if (currentServer.players.current == currentServer.players.max) {
+	loopPlayers = false;
+	var password;
+	if (mode[0] === "JOIN")
+		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
+	
+	if ((typeof currentServer.players.current != 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
 		$.snackbar({
 			content: 'Server is full.'
 		});
@@ -1174,10 +1179,7 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	loopPlayers = false;
-	var password;
-	if (mode[0] === "JOIN")
-		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
+	
 	$('#beep')[0].play();
 	setTimeout(function() {
 		$('#beep')[0].play();
