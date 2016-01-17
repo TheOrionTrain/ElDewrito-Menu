@@ -159,8 +159,8 @@ function getMapName(filename) {
 			return "Sandtrap";
 		case "deadlock":
 			return "High Ground";
-		case "last resort":
-			return "zanzibar";
+		case "hangem-high":
+				return "Hang 'Em High";
 		default:
 			return "Edge";
 	}
@@ -1399,6 +1399,8 @@ function getMapFile(name) {
 				return "shrine";
 			case "standoff":
 				return "Bunkerworld";
+			case "Hang 'Em High":
+				return "hangem-high";
 		}
 		return "";
 	}
