@@ -783,6 +783,8 @@ function loadServers() {
 
 function lobbyLoop(ip) {
 	var success = false;
+	if (loopPlayers === false)
+		return;
 	$.getJSON("http://" + ip, function(serverInfo) {
 		success = true;
 		console.log(currentServer);
