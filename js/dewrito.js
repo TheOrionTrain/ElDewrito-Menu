@@ -882,7 +882,7 @@ var infoIP = "http://192.99.124.166:8080/all";
 function totalPlayersLoop() {
 	console.log(infoIP);
 	//http://servers.thefeeltra.in/all
-	$.getJSON("http://192.99.124.166:8080/all", function(data) {
+	$.getJSON(infoIP, function(data) {
 		serverz = data;
 		for (var i = 0; i < serverz.servers.length; i++) {
 			//if (!dewRconConnected) {
@@ -898,7 +898,7 @@ function totalPlayersLoop() {
 							endTime = Date.now();
 							ping = Math.round((endTime - startTime) / 1.60); //Aproximate ping, may change from 1.75 later
 							serverz.servers[i].ping = ping;
-							console.log(ping);
+							//console.log(ping);
 							//console.log(serverz.servers[i]);
 						}
 					});
