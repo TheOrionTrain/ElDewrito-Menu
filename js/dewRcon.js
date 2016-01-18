@@ -34,9 +34,10 @@ StartRconConnection = function() {
         dewRconConnected = false;
         if(!dewRconConnected){
     		setTimeout(StartRconConnection, 1000);
-	}
+		}
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
+		//dewRcon.callback(message.data);
         dewRcon.lastMessage = message.data;
 				if (dewRcon.lastMessage.toLowerCase().contains('unable to connect to server') || dewRcon.lastMessage.toLowerCase().contains('host not found')) {
 					$('#loading').hide();
@@ -57,7 +58,9 @@ dewRconHelper = function() {
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
-    this.send = function(command) {
+	this.callback = {};
+    this.send = function(command, cb) {
+		this.callback = cb;
         this.dewWebSocket.send(command);
         this.lastCommand = command;
     }

@@ -160,7 +160,7 @@ function getMapName(filename) {
 		case "deadlock":
 			return "High Ground";
 		case "hangem-high":
-				return "Hang 'Em High";
+				return "Hangem-High CE";
 		default:
 			return "Edge";
 	}
@@ -877,11 +877,16 @@ function getCurrentVersion() {
 	});
 }
 
+var infoIP = "http://192.99.124.166:8080/all";
+
 function totalPlayersLoop() {
+	console.log(infoIP);
+	//http://servers.thefeeltra.in/all
 	$.getJSON("http://192.99.124.166:8080/all", function(data) {
 		serverz = data;
 		for (var i = 0; i < serverz.servers.length; i++) {
-			var startTime = Date.now(),
+			//if (!dewRconConnected) {
+				var startTime = Date.now(),
 				endTime,
 				ping;
 				(function(i) {
@@ -898,9 +903,18 @@ function totalPlayersLoop() {
 						}
 					});
 				})(i);
+			/*} else {
+				dewRcon.send('Server.Ping "' + serverz.servers[i].address.split(':')[0] + '', function(res) {
+					console.log(res);
+				});
+					//console.log(i);
+					//serverz.servers[i].ping = dewRcon.lastMessage.split(' ')[2];
+			}*/
 		}
 		$('#players-online').text(serverz.count);
 		loadFriends();
+	}).fail(function(d) {
+		infoIP = (infoIP == "http://192.99.124.166:8080/all" ? "http://servers.thefeeltra.in/" : "http://192.99.124.166:8080/all";
 	});
 	/*$.getJSON("http://192.99.124.166:8080/count", function(data) {
 		$('#players-online').text(data.result);
@@ -1405,7 +1419,7 @@ function getMapFile(name) {
 				return "shrine";
 			case "standoff":
 				return "Bunkerworld";
-			case "Hang 'Em High":
+			case "Hangem-High CE":
 				return "hangem-high";
 		}
 		return "";
