@@ -914,7 +914,7 @@ function totalPlayersLoop() {
 		$('#players-online').text(serverz.count);
 		loadFriends();
 	}).fail(function(d) {
-		infoIP = (infoIP == "http://192.99.124.166:8080/all" ? "http://servers.thefeeltra.in/" : "http://192.99.124.166:8080/all";
+		infoIP = (infoIP == "http://192.99.124.166:8080/all" ? "http://servers.thefeeltra.in/" : "http://192.99.124.166:8080/all");
 	});
 	/*$.getJSON("http://192.99.124.166:8080/count", function(data) {
 		$('#players-online').text(data.result);
