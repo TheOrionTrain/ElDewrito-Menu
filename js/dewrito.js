@@ -802,10 +802,7 @@ function lobbyLoop(ip) {
 				return a.team - b.team
 			});
 		}
-		$('#lobby').empty();
-		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
-		$('#maxplayers').text(serverInfo.maxPlayers);
-		$('#joined').text(serverInfo.numPlayers);
+		$('#lobby').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>"+serverInfo.numPlayers+"</span>/<span id='maxplayers'>"+serverInfo.maxPlayers+"</span></td></tr>");
 
 		changeMap2(getMapName(serverInfo.mapFile));
 		$('#subtitle').text(serverInfo.name + " : " + ip);
@@ -816,8 +813,6 @@ function lobbyLoop(ip) {
 					if (serverInfo.teams)
 						colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
 					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-					$('#player' + i).css("display", "none");
-					$('#player' + i).fadeIn(anit);
 				}
 			}
 			$('#lobby tr').hover(function() {
