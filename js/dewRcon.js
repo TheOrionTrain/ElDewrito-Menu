@@ -32,23 +32,14 @@ StartRconConnection = function() {
 			},9000);
 		}
         dewRconConnected = false;
-        if(!dewRconConnected){
+        if(!dewRconConnected) {
     		setTimeout(StartRconConnection, 1000);
 		}
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
-		//dewRcon.callback(message.data);
+		if (typeof dewRcon.callback == 'function')
+			dewRcon.callback(message.data);
         dewRcon.lastMessage = message.data;
-				if (dewRcon.lastMessage.toLowerCase().contains('unable to connect to server') || dewRcon.lastMessage.toLowerCase().contains('host not found')) {
-					$('#loading').hide();
-					$('#black').hide();
-					backButton.appendTo('body');
-					$.snackbar({
-						content: 'Failed to connect to server.'
-					});
-					$('#notification')[0].currentTime = 0;
-					$('#notification')[0].play();
-				}
 				//console.log(dewRcon.lastMessage);
     };
 }
