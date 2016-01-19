@@ -978,12 +978,12 @@ function playersJoin(number, max, time, ip) {
 }
 
 function joinServer(details) {
-	host = 0;
-	browsing = 0;
-	$('#lobby').empty();
-	$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 	var d = servers[details];
 	if (d.players.current != d.players.max) {
+		host = 0;
+		browsing = 0;
+		$('#lobby').empty();
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		changeMap2(getMapName(d.mapFile));
 		$('#subtitle').text(d.name + " : " + d.address);
 		if (d.variant === "") {
@@ -994,7 +994,7 @@ function joinServer(details) {
 			d.variantType = "Slayer";
 		$('#gametype-icon').css('background', "url('img/gametypes/" + (d.variantType === "ctf" || d.variantType === "koth") ? d.variantType : d.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
 		Menu.customgame.position = "top";
-		changeMenu("serverbrowser,customgame,vertical");
+		changeMenu("serverbrowser,customgame,vertical,serverbrowser");
 		$('#back').attr('data-action', 'customgame,serverbrowser,vertical');
 		playersJoin(d.players.current, d.players.max, 20, d.address);
 		currentServer = d;
@@ -1039,7 +1039,7 @@ function changeMenuOptions(m,b) {
 
 function changeMenu(m) {
 	var e = m.split(","), f = Menu[e[0]], t = Menu[e[1]];
-	console.log(t);
+	console.log(m);
 	if(e[0] === e[1]) {
 		return false;
 	}
@@ -1072,27 +1072,31 @@ function changeMenu(m) {
 		$('#back').fadeOut(anit);
 	}
 	if(typeof t.onchange == "function") {
-		if(e[1] == "options" && e[3]) {
+		if(e[3]) {
 			t.onchange(e[3]);
 		}
 		else {t.onchange();}
 	}
 	if(t.video) {
-		for(var i=0; i< t.video.length; i++) {
-			if($('#bg-'+t.video[i]).length) {
-				$('#bg-'+t.video[i]).fadeIn(anit);
-				$('#bg-'+t.video[i])[0].play();
-				if(f.video) {
-					for(var i=0; i< f.video.length; i++) {
-						if($('#bg-'+f.video[i]).length) {
-							$('#bg-'+f.video[i]).fadeOut(anit);
-							$('#bg-'+f.video[i])[0].pause();
+		if(t.video == f.video) {
+			console.log("same");
+		} else {
+			for(var i=0; i< t.video.length; i++) {
+				if($('#bg-'+t.video[i]).length) {
+					$('#bg-'+t.video[i]).fadeIn(anit);
+					$('#bg-'+t.video[i])[0].play();
+					if(f.video) {
+						for(var i=0; i< f.video.length; i++) {
+							if($('#bg-'+f.video[i]).length) {
+								$('#bg-'+f.video[i]).fadeOut(anit);
+								$('#bg-'+f.video[i])[0].pause();
+							}
 						}
 					}
-				}
-				else {
-					$('#bg1').fadeOut(anit);
-					$('#bg1')[0].pause();
+					else {
+						$('#bg1').fadeOut(anit);
+						$('#bg1')[0].pause();
+					}
 				}
 			}
 		}
@@ -1114,6 +1118,9 @@ function changeMenu(m) {
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
 	currentMenu = e[1];
+	if(currentMenu != "serverbrowser") {
+		browsing = 0;
+	}
 }
 
 var KDdata = [{
@@ -1220,7 +1227,7 @@ function startgame(ip, mode) {
 					$.snackbar({
 						content: ret
 					});
-					
+
 					$('#loading').hide();
 					$('#black').hide();
 					backButton.appendTo('body');
@@ -1229,7 +1236,7 @@ function startgame(ip, mode) {
 					});
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
-						
+
 					return;
 				}
 			});

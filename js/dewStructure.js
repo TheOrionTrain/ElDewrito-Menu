@@ -54,7 +54,12 @@ var Menu = {
         "position" : "top",
         "video" : ["custom_games","multiplayer"],
         "back" : "main3",
-        "onchange" : function() {
+        "onchange" : function(f) {
+            if(f == "serverbrowser") {
+                Menu.customgame.video = Menu.serverbrowser.video;
+            } else {
+                Menu.customgame.video = ["custom_games","multiplayer"];
+            }
             host = 1;
     		forge = 0;
     		$('#title').text('CUSTOM GAME');
