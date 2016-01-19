@@ -1220,7 +1220,22 @@ function startgame(ip, mode) {
 	delay(function() {
 		if (mode[0] === "JOIN") {
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
-			dewRcon.send('connect ' + ip + ' ' + password);
+			dewRcon.send('connect ' + ip + ' ' + password, function (ret) {
+				$.snackbar({
+					content: ret
+				});
+				
+				$('#loading').hide();
+				$('#black').hide();
+				backButton.appendTo('body');
+				$.snackbar({
+					content: 'Failed to connect to server.'
+				});
+				$('#notification')[0].currentTime = 0;
+				$('#notification')[0].play();
+					
+				return;
+			});
 			if (currentServer.status != "InLobby") {
 				$('#loadingMapName').text(currentServer.map.toString().toUpperCase().replace("BUNKERWORLD", "STANDOFF"));//lazy
 				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).replace(/ /g,"").toLowerCase() + '.png)');
