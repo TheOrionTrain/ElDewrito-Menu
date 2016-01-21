@@ -221,6 +221,7 @@ function loadSettings(i) {
 				}
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						loadedSettings = true;
+						StartConnection();
 				}
 			}
 		}
