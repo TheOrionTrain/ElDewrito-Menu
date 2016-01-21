@@ -25,7 +25,6 @@ StartConnection = function() {
 				friendServer.send("{'type':'connection', 'message':'" + res + ":" + ret.split(' ')[2] + " has connected.'}");
 			});
 		});
-		friendServer.send("{'type':'pm', 'message':'Hello from Orion!', 'guid':'0xcdd4e3beae0e8f71'}");
         $.snackbar({content:'Connected to Friend Server!'});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
@@ -50,7 +49,6 @@ StartConnection = function() {
 		}
     };
     friendServer.friendsServerSocket.onmessage = function(message) {
-		console.log(message.data);
 		try {
 			var result = JSON.parse(message.data);
 			switch (result.type.ToString()) {
