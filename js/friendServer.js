@@ -73,7 +73,7 @@ StartConnection = function() {
 }
 friendServerHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.friendsServerSocket = new WebSocket('ws://127.0.0.1:55555', 'friendServer');
+    this.friendsServerSocket = new WebSocket('ws://58.7.236.17:55555', 'friendServer');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
