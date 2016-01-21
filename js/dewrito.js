@@ -865,7 +865,7 @@ function lobbyLoop(ip) {
 }
 
 function getTotalPlayers() {
-	$.getJSON("http://192.99.124.166:8080/count", function(data) {
+	$.getJSON(infoIP+"/count", function(data) {
 		$('#players-online').text(data.result);
 	});
 }
@@ -881,12 +881,11 @@ function getCurrentVersion() {
 	});
 }
 
-var infoIP = "http://192.99.124.166:8080/all";
+var infoIP = "http://192.99.124.166:8080",
+	totallyLoopingPlayers = setInterval(totalPlayersLoop,10000);
 
 function totalPlayersLoop() {
-	console.log(infoIP);
-	//http://servers.thefeeltra.in/all
-	$.getJSON(infoIP, function(data) {
+	$.getJSON(infoIP+"/all", function(data) {
 		serverz = data;
 		for (var i = 0; i < serverz.servers.length; i++) {
 			//if (!dewRconConnected) {
@@ -918,15 +917,11 @@ function totalPlayersLoop() {
 		$('#players-online').text(serverz.count);
 		loadFriends();
 	}).fail(function(d) {
-		infoIP = (infoIP == "http://192.99.124.166:8080/all" ? "http://servers.thefeeltra.in/all" : "http://192.99.124.166:8080/all");
+		console.log(infoIP+" is currently down.");
+		infoIP = (infoIP == "http://192.99.124.166:8080" ? "http://servers.thefeeltra.in" : "http://192.99.124.166:8080");
+		console.log("Switched to "+infoIP+".");
+		totalPlayersLoop();
 	});
-	/*$.getJSON("http://192.99.124.166:8080/count", function(data) {
-		$('#players-online').text(data.result);
-	});
-	$.getJSON("http://192.99.124.166:8080", function(data) {
-		serverz = data;
-	});*/
-	setTimeout(totalPlayersLoop, 10000);
 }
 
 function playersJoin(number, max, time, ip) {
