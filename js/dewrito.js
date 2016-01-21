@@ -565,6 +565,14 @@ $(document).ready(function() {
 	Mousetrap.bind('right', function() {
 		gamepadRight();
 	});
+	$('#alert-yes').click(function() {
+		var c = $('#alert').attr('data-callback');
+		hideAlert(true,c);
+	});
+	$('#alert-no').click(function() {
+		var c = $('#alert').attr('data-callback');
+		hideAlert(false,c);
+	});
 	$('#friend-add').click(function() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();

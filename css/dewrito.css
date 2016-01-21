@@ -5,6 +5,74 @@ div[data-menu-position="left"] {left: -720px;}
 div[data-menu-position="right"] {left: 720px;}
 div[data-menu-position="center"] {left: 0px; top: 0px;}
 
+#alert-container {
+    display: none;
+    z-index: 11;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1280px;
+    height: 720px;
+    background-color: rgba(0,0,0,0.125);
+}
+
+#alert {
+    position: absolute;
+    left: 390px;
+    top: -300px;
+    width: 500px;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-sizing: border-box;
+    padding: 16px;
+    font-family: "TV Nord";
+}
+
+#alert-title {
+    font-size: 24px;
+    color: #fff;
+    margin: 0 0 24px 0;
+    padding: 0;
+    text-align: left;
+}
+
+#alert-content {
+    font-size: 16px;
+    color: #eee;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+#alert-actions {
+    text-align: right;
+}
+
+#alert-yes,
+#alert-no {
+    display: inline-block;
+    font-size: 16px;
+    color: #ddd;
+    margin: 24px 8px 0px 8px;
+}
+
+#alert-yes:hover,
+#alert-no:hover {
+    cursor: pointer;
+    color: #fff;
+}
+
+#alert a {
+    color: #32aacd;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#alert a:hover {
+    color: #55ccee;
+}
+
 #dewrito.credits {
     top: -30px;
     left: 265px;

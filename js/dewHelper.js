@@ -93,3 +93,55 @@ function checkFileExists(f) {
     	}
 	});
 }
+
+/*Delete these test functions when done testing the alerts */
+function test() {
+	dewAlert({
+		title: "This is a test alert",
+		content: "Here is some text and even <a href='http://thefeeltra.in'>a link here</a>. This is so cool yay.",
+		cancel: true,
+		callback: "test_callback"
+	});
+}
+function test_callback(clicked) {
+	console.log("Callback: "+clicked);
+}
+/* Delete these test functions when done testing the alerts */
+
+function dewAlert(options) {
+	var defaults = {
+		title : "Alert",
+		content : "This is an alert",
+		acceptText : "Accept",
+		cancelText : "Cancel",
+		cancel : 0,
+		callback : false
+	};
+	$.each(defaults, function(index, value) {
+    	if(options && options[index]) {
+			console.log("ok");
+			defaults[index] = options[index];
+		}
+	});
+	$('#alert-title').text(defaults.title);
+	$('#alert-content').html(defaults.content);
+	$('#alert-yes').text(defaults.acceptText);
+	$('#alert-no').text(defaults.cancelText);
+	$('#alert').attr('data-callback',defaults.callback);
+	if(defaults.cancel) {$('#alert-no').show();}
+	else {$('#alert-no').hide();}
+	$('#alert-container').fadeIn(anit);
+	$('#alert').css('top','200px');
+	$('#notification')[0].currentTime = 0;
+	$('#notification')[0].play();
+}
+
+function hideAlert(clicked,callback) {
+	if(callback != "false") {
+		window[callback](clicked);
+	}
+	$('#alert').css('top','-300px');
+	$('#alert-container').fadeOut(anit);
+	$('#slide')[0].currentTime = 0;
+	$('#slide')[0].play();
+}
