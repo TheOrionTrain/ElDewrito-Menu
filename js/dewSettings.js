@@ -184,9 +184,11 @@ var user = {
         ],
 			"increment": 1,
 			"update": function() {
+				videoURL = (infoIP == "http://192.99.124.166:8080") ? "http://192.99.124.166/video/" : "http://video.thefeeltra.in/";
+				console.log("Videos served from "+videoURL+".");
 				var c = settings.background.current,
 					l = settings.background.labels[c],
-					d = (localBackground == 1) ? "video/" : "http://192.99.124.166/video/";
+					d = (localBackground == 1) ? "video/" : videoURL;
 				$('#videos').empty();
 				if (l == "Random") {
 					var r = Math.floor(Math.random() * settings.background.labels.length - 1);
