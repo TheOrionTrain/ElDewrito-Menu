@@ -1547,7 +1547,7 @@ function changeSong1(game) {
 }
 
 function changeSong2(song) {
-	var directory = settings.localmusic.current == 1 ? "music/" : "http://dewrito.eriq.xyz/music/";
+	var directory = settings.localmusic.current == 1 ? "music/" : "http://music.thefeeltra.in/";
 	songIndex = songs[currentAlbum].indexOf(song);
 	thisSong = songs[currentAlbum][songIndex];
 	nextSong = songs[currentAlbum][songIndex + 1];
