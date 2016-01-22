@@ -34,7 +34,8 @@ var players = [],
 	thisSong,
 	nextSong,
 	songIndex,
-	localBackground = isset(localStorage.getItem('localbackground'), 0);
+	localBackground = isset(localStorage.getItem('localbackground'), 0),
+	videoURL = "http://192.99.124.166/video/";
 
 (function() {
 	var e = (window.innerHeight - 80) / 2;
@@ -395,8 +396,10 @@ function jumpToServer(ip) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		if(d.numPlayers == d.maxPlayers) {
-			$.snackbar({
-				content: "Game is full. Unable to join."
+			dewAlert({
+				title: "Server Full",
+				content: 'This server is full, try joining a different one.',
+				acceptText: "OK"
 			});
 			$('#notification')[0].currentTime = 0;
 			$('#notification')[0].play();
@@ -1004,6 +1007,12 @@ function joinServer(details) {
 		currentServer = d;
 		lobbyLoop(servers[selectedserver].address);
 		loopPlayers = true;
+	} else {
+		dewAlert({
+			title: "Server Full",
+			content: 'This server is full, try joining a different one.',
+			acceptText: "OK"
+		});
 	}
 	$('#start').children('.label').text("JOIN GAME");
 	$('#title').text('CUSTOM GAME');
@@ -1190,8 +1199,10 @@ function playerInfo(name) {
 function startgame(ip, mode) {
 	//console.log(getMapName(currentServer.mapFile.toString()).toLowerCase());
 	if (!dewRconConnected) {
-		$.snackbar({
-			content: 'You must be connected to the game to join or start a server.'
+		dewAlert({
+			title: "Not Connected",
+			content: 'You must be connected to the game to join or start a server.',
+			acceptText: "OK"
 		});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
@@ -1203,8 +1214,10 @@ function startgame(ip, mode) {
 		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
 
 	if ((typeof currentServer.players.current != 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
-		$.snackbar({
-			content: 'Server is full.'
+		dewAlert({
+			title: "Server Full",
+			content: 'This server is full, try joining a different one.',
+			acceptText: "OK"
 		});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();

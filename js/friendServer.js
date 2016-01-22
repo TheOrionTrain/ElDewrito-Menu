@@ -4,7 +4,7 @@
  *
  *
  **/
- 
+
 
 
 var friendServer,
@@ -25,24 +25,11 @@ StartConnection = function() {
 				friendServer.send("{'type':'connection', 'message':'" + res + ":" + ret.split(' ')[2] + " has connected.'}");
 			});
 		});
-        $.snackbar({content:'Connected to Friend Server!'});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         friendServerConnected = true;
     };
     friendServer.friendsServerSocket.onerror = function() {
-		if(!snacking) {
-			$.snackbar({content:'Connection to Friend Server failed, retrying.'});
-			if(!played) {
-				$('#notification')[0].currentTime = 0;
-				$('#notification')[0].play();
-				played = 1;
-			}
-			snacking = 1;
-			setTimeout(function() {
-				snacking = 0;
-			},9000);
-		}
         friendServerConnected = false;
         if(!friendServerConnected) {
     		setTimeout(StartConnection, 1000);
@@ -62,7 +49,7 @@ StartConnection = function() {
 		} catch (e) {
 			console.log(message.data);
 		}
-		
+
 		if (typeof friendServer.callback == 'function')
 			friendServer.callback(message.data);
         friendServer.lastMessage = message.data;
