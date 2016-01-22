@@ -50,8 +50,8 @@ StartConnection = function() {
     };
     friendServer.friendsServerSocket.onmessage = function(message) {
 		try {
-			var result = JSON.parse(message.data);
-			switch (result.type.ToString()) {
+			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
+			switch (result.type) {
 				case "pm":
 					console.log(result.message);
 				break;
@@ -72,10 +72,11 @@ StartConnection = function() {
 					});
 				break;
 				default:
-					console.log("Unhandled packet: " + result.type.ToString());
+					console.log("Unhandled packet: " + result.type);
 				break;
 			}
 		} catch (e) {
+			console.log(e);
 			console.log(message.data);
 		}
 		
