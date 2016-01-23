@@ -107,7 +107,7 @@ StartConnection = function() {
 				case "connect":
 					jumpToServer(result.address);
 					setTimeout(function() {
-						startgame(currentServer.address, 'JOIN GAME'.split(' '));
+						startgame(result.address, 'JOIN GAME'.split(' '));
 					}, 500);
 				break;
 				default:
