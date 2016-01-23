@@ -112,6 +112,7 @@ function dewAlert(options) {
 	var defaults = {
 		title : "Alert",
 		content : "This is an alert",
+		info : "",
 		acceptText : "Accept",
 		cancelText : "Cancel",
 		cancel : 0,
@@ -128,6 +129,7 @@ function dewAlert(options) {
 	$('#alert-yes').text(defaults.acceptText);
 	$('#alert-no').text(defaults.cancelText);
 	$('#alert').attr('data-callback',defaults.callback);
+	$('#alert').attr('data-info',defaults.info);
 	if(defaults.cancel) {$('#alert-no').show();}
 	else {$('#alert-no').hide();}
 	$('#alert-container').fadeIn(anit);
@@ -136,9 +138,9 @@ function dewAlert(options) {
 	$('#notification')[0].play();
 }
 
-function hideAlert(clicked,callback) {
+function hideAlert(clicked,callback,info) {
 	if(callback != "false") {
-		window[callback](clicked);
+		window[callback](clicked, info);
 	}
 	$('#alert').css('top','-300px');
 	$('#alert-container').fadeOut(anit);

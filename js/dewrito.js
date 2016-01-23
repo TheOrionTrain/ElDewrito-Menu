@@ -576,11 +576,12 @@ $(document).ready(function() {
 	});
 	$('#alert-yes').click(function() {
 		var c = $('#alert').attr('data-callback');
-		hideAlert(true,c);
+		var d = $('#alert').attr('data-info');
+		hideAlert(true,c,d);
 	});
 	$('#alert-no').click(function() {
 		var c = $('#alert').attr('data-callback');
-		hideAlert(false,c);
+		hideAlert(false,c,false);
 	});
 	$('#friend-add').click(function() {
 		$('#slide')[0].currentTime = 0;
@@ -1227,11 +1228,11 @@ function startgame(ip, mode) {
 	
 	if (party.length > 0) {
 		for (var i = 0; i < party.length; i++ ) {
-			friendServer.send({
+			friendServer.send(JSON.stringify({
 				type: 'connect',
 				guid: party[i].split(':')[1],
 				address: ip
-			});
+			}));
 		}
 	}
 	
@@ -1279,7 +1280,7 @@ function startgame(ip, mode) {
 		if (mode[0] === "JOIN") {
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
 			dewRcon.send('connect ' + ip + ' ' + password, function (ret) {
-				if (!rest.contains("Attempting")) {
+				if (!ret.contains("Attempting")) {
 					$.snackbar({
 						content: ret
 					});

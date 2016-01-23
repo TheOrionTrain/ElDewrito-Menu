@@ -81,8 +81,10 @@ StartConnection = function() {
 					dewAlert({
 						title: "Party Invitation",
 						content: result.player + " has invited you to a party",
+						info: result.senderguid,
 						cancel: true,
-						cancelText: "Decline"
+						cancelText: "Decline",
+						callback: "partyInvite"
 					});
 				break;
 				case "gameinvite":
@@ -126,18 +128,20 @@ StartConnection = function() {
     };
 }
 
-function partyInvite(accepted) {
+function partyInvite(accepted, guid) {
+	console.log(guid);
 	if (accepted) {
-		friendServer.send({
+		friendServer.send(JSON.stringify({
 			type: 'acceptparty',
 			player: pname,
-			guid: puid
-		});
+			guid: guid,
+			pguid: puid
+		}));
 	}
 	console.log(accepted);
 }
 
-function gameInvite(accepted) {
+function gameInvite(accepted, guid) {
 	if (accepted) {
 		friendServer.send({
 			type: 'acceptgame',
