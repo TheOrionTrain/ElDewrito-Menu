@@ -1225,6 +1225,16 @@ function startgame(ip, mode) {
 		return;
 	}
 	
+	if (party.length > 0) {
+		for (var i = 0; i < party.length; i++ ) {
+			friendServer.send({
+				type: 'connect',
+				guid: party[i].split(':')[1],
+				address: ip
+			});
+		}
+	}
+	
 	console.log(currentServer);
 	
 	if (!hasMap(currentServer.mapFile)) {

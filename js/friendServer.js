@@ -10,7 +10,10 @@
 var friendServer,
 	friendServerConnected = false,
 	snacking = 0,
-	played = 0;
+	played = 0,
+	pname,
+	puid;
+	party = [];
 jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
 		StartConnection();
@@ -22,7 +25,15 @@ StartConnection = function() {
     friendServer.friendsServerSocket.onopen = function() {
 		dewRcon.send('player.name', function(res) {
 			dewRcon.send('player.printUID', function(ret) {
+				pname = res;
+				puid = ret.split(' ')[2];
 				friendServer.send("{'type':'connection', 'message':'" + res + ":" + ret.split(' ')[2] + " has connected.'}");
+				
+				console.log({
+					type: 'acceptparty',
+					player: pname,
+					guid: puid
+				})
 			});
 		});
         $.snackbar({content:'Connected to Friend Server!'});
@@ -52,6 +63,17 @@ StartConnection = function() {
 		try {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
+				case "disconnected":
+					if ($.inArray(result.player + ":" + result.guid, party) != -1) {
+						party = $.grep(party, function(value) {
+						  return value != (result.player + ":" + result.guid);
+						});
+						
+						$.snackbar({content: result.player + ' has left your party.'});
+						$('#notification')[0].currentTime = 0;
+						$('#notification')[0].play();
+					}
+				break;
 				case "pm":
 					console.log(result.player + ": " + result.message);
 				break;
@@ -72,6 +94,19 @@ StartConnection = function() {
 						callback: "gameInvite"
 					});
 				break;
+				case "acceptparty":
+					$.snackbar({content: result.player + ' has joined your party.'});
+					$('#notification')[0].currentTime = 0;
+					$('#notification')[0].play();
+					
+					party.push(result.player + ":" + result.pguid);
+				break;
+				case "acceptgame":
+					
+				break;
+				case "connect":
+					jumpToServer(result.address);
+				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
 				break;
@@ -89,10 +124,24 @@ StartConnection = function() {
 }
 
 function partyInvite(accepted) {
+	if (accepted) {
+		friendServer.send({
+			type: 'acceptparty',
+			player: pname,
+			guid: puid
+		});
+	}
 	console.log(accepted);
 }
 
 function gameInvite(accepted) {
+	if (accepted) {
+		friendServer.send({
+			type: 'acceptgame',
+			player: pname,
+			guid: puid
+		});
+	}
 	console.log(accepted);
 }
 
@@ -109,5 +158,3 @@ friendServerHelper = function() {
         this.lastCommand = command;
     }
 }
-
-function after(ms, fn){ setTimeout(fn, ms); }
