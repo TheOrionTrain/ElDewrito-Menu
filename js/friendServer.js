@@ -106,6 +106,9 @@ StartConnection = function() {
 				break;
 				case "connect":
 					jumpToServer(result.address);
+					setTimeout(function() {
+						startgame(currentServer.address, 'JOIN GAME'.split(' '));
+					}, 500);
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
