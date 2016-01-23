@@ -206,6 +206,8 @@ function addServer(i) {
 var settingsToLoad = [['gamemenu', 'game.menuurl'], ['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version']];
 var loadedSettings = false;
 
+var mapList;
+
 function loadSettings(i) {
 	setTimeout(function() {
 		for (var l = 0; l < settingsToLoad.length; l++) {
@@ -222,6 +224,9 @@ function loadSettings(i) {
 				}
 				if (Object.keys(settings)[i + 1] == 'gameversion') {
 						loadedSettings = true;
+						dewRcon.send("game.listmaps", function(res) {
+							mapList = new Array(res.split(','));
+						});
 						StartConnection();
 				}
 			}
@@ -1196,6 +1201,17 @@ function playerInfo(name) {
 	}
 }
 
+
+function hasMap(map) {
+    if(mapList[0].length == 0) {
+        return true;
+    } else if($.inArray(map, mapList[0]) > -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function startgame(ip, mode) {
 	//console.log(getMapName(currentServer.mapFile.toString()).toLowerCase());
 	if (!dewRconConnected) {
@@ -1208,6 +1224,19 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
+	
+	console.log(currentServer);
+	
+	if (!hasMap(currentServer.mapFile)) {
+		var map = getMapName(currentServer.mapFile);
+		dewAlert({
+			title: "Missing Map",
+			content: "You don't have " + ((map == "Edge" && currentServer.mapFile != "s3d_edge") ? currentServer.map : map) + ". Try finding it at <a href='https://www.reddit.com/r/HaloOnline/'>https://www.reddit.com/r/HaloOnline/</a>",
+			acceptText: "OK"
+		});
+		return;
+	}
+	
 	loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")

@@ -53,9 +53,9 @@ StartConnection = function() {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
 				case "pm":
-					console.log(result.message);
+					console.log(result.player + ": " + result.message);
 				break;
-				case "partyreq":
+				case "partyinvite":
 					dewAlert({
 						title: "Party Invitation",
 						content: result.player + " has invited you to a party",
@@ -65,10 +65,11 @@ StartConnection = function() {
 				break;
 				case "gameinvite":
 					dewAlert({
-						title: "Party Invitation",
+						title: "Game Invitation",
 						content: result.player + " has invited you join " + result.server,
 						cancel: true,
-						cancelText: "Decline"
+						cancelText: "Decline",
+						callback: "gameInvite"
 					});
 				break;
 				default:
@@ -86,6 +87,15 @@ StartConnection = function() {
 				//console.log(friendServer.lastMessage);
     };
 }
+
+function partyInvite(accepted) {
+	console.log(accepted);
+}
+
+function gameInvite(accepted) {
+	console.log(accepted);
+}
+
 friendServerHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
     this.friendsServerSocket = new WebSocket('ws://192.99.124.166:55555', 'friendServer');
