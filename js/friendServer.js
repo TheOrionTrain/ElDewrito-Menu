@@ -101,6 +101,14 @@ StartConnection = function() {
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
 					
+					for (var i = 0; i < party.length; i++) {
+						friendServer.send(JSON.stringify({
+							type: "notification",
+							message: result.player + " has joined your party.",
+							guid: party[i].split(':')[1]
+						}));
+					}
+					
 					party.push(result.player + ":" + result.pguid);
 				break;
 				case "acceptgame":
@@ -111,6 +119,11 @@ StartConnection = function() {
 					setTimeout(function() {
 						startgame(result.address, 'JOIN GAME'.split(' '));
 					}, 500);
+				break;
+				case "notification":
+					$.snackbar({content: result.message});
+					$('#notification')[0].currentTime = 0;
+					$('#notification')[0].play();
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
