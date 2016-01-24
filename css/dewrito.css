@@ -120,8 +120,8 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
 #friends {
     position: absolute;
     top: 100px;
-    left: 25px;
-    width: 200px;
+    left: 10px;
+    width: 235px;
     height: 540px;
     overflow-y: scroll;
 }
@@ -131,7 +131,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     position: absolute;
     top: 25px;
     right: 25px;
-    background: url('../img/x.png') no-repeat 0px 0px/14px 14px;
+    background: url('../img/x.svg') no-repeat 0px 0px/14px 14px;
     cursor: pointer;
     opacity: 0.8;
 }
@@ -155,7 +155,6 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     font-size: 16px;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.9);
-    background: rgba(50,50,50,0.9);
     border-radius: 4px;
     margin: 5px 0;
     -webkit-transition: 0.5s;
@@ -164,7 +163,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
 }
 .friend:hover {
     color: rgba(255, 255, 255, 1);
-    background: rgba(100,100,100,0.9);
+    background: rgba(50,50,50,0.9);
     cursor: pointer;
 }
 .friend.online:after {
