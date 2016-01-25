@@ -455,6 +455,18 @@ function loadParty() {
 	}
 }
 
+function updateFriends() {
+	for (var i = 0; i < onlinePlayers.length; i++) {
+		for (var o = 0; o < friends.length; o++) {
+			if (!friends[o].contains(":0x") && friends[o] == onlinePlayers[i].toString().split(':')[0]) {
+				friends[o] += ":" + onlinePlayers[i].split(':')[1];
+			} else if (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0]) {
+				friends[o] = onlinePlayers[i];
+			}
+		}
+	}
+}
+
 function loadFriends() {
 	$('#friends').empty();
 	friends_online = 0;
@@ -467,8 +479,8 @@ function loadFriends() {
 		return false;
 	}
 	friends.sort(function(a, b) {
-			if (a.toLowerCase() < b.toLowerCase()) return -1;
-			if (a.toLowerCase() > b.toLowerCase()) return 1;
+			if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
+			if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
 			return 0;
 	});
 	friends.sort(function(a, b) {
@@ -478,7 +490,7 @@ function loadFriends() {
 	});
 	for(var i=0; i < friends.length; i++) {
 		var o = (isOnline(friends[i])) ? "online" : "offline";
-		$('#friends').append("<div class='friend "+o+"'>"+friends[i]+"</div>");
+		$('#friends').append("<div class='friend "+o+"'>"+friends[i].split(':')[0]+"</div>");
 		if(o == "online") {
 			friends_online++;
 		}
@@ -499,15 +511,47 @@ function loadFriends() {
 	});
 }
 
+function getPlayerName(UID) {
+	for (var i = 0; i < onlinePlayers.length; i++) {
+		if (onlinePlayers[i].split(':')[1] == UID)
+			return onlinePlayers[i].split(':')[0];
+	}
+	return "";
+}
+
+function getPlayerUID(name) {
+	for (var i = 0; i < onlinePlayers.length; i++) {
+		if (onlinePlayers[i].split(':')[0] == name)
+			return onlinePlayers[i].split(':')[1];
+	}
+	return "";
+}
+
+function getPlayerNameFromFriends(UID) {
+	for (var i = 0; i < friends.length; i++) {
+		if (friends[i].split(':')[1] == UID)
+			return friends[i].split(':')[0];
+	}
+	return "";
+}
+
+function getPlayerUIDFromFriends(name) {
+	for (var i = 0; i < friends.length; i++) {
+		if (friends[i].contains(":0x") && friends[i].split(':')[0] == name)
+			return friends[i].split(':')[1];
+	}
+	return "";
+}
+
 function addFriend() {
 	var name = $('#friend-input').val();
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
 		if(friends.indexOf(name) == -1) {
-			friends.push(name);
+			friends.push(name + ":" + getPlayerUID(name));
 			friends.sort(function(a, b) {
-					if (a.toLowerCase() < b.toLowerCase()) return -1;
-					if (a.toLowerCase() > b.toLowerCase()) return 1;
+					if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
+					if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
 					return 0;
 			});
 			friends.sort(function(a, b) {
@@ -517,6 +561,7 @@ function addFriend() {
 			});
 		}
 		localStorage.setItem("friends", JSON.stringify(friends));
+		updateFriends();
 		loadFriends();
 	}
 }
@@ -524,10 +569,10 @@ function addFriend() {
 function removeFriend(name) {
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
-		friends.remove(name);
+		friends.remove(name + getPlayerUIDFromFriends(name) == "" ? "" : ":" + getPlayerUIDFromFriends(name));
 		friends.sort(function(a, b) {
-				if (a.toLowerCase() < b.toLowerCase()) return -1;
-				if (a.toLowerCase() > b.toLowerCase()) return 1;
+				if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
+				if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
 				return 0;
 		});
 		friends.sort(function(a, b) {
@@ -536,12 +581,17 @@ function removeFriend(name) {
 				return 0;
 		});
 		localStorage.setItem("friends", JSON.stringify(friends));
+		updateFriends();
 		loadFriends();
 	}
 }
 
 function isOnline(friend) {
-	return typeof serverz.players[friend] == 'undefined' ? 0 : 1; //Orion, check if friend is online or not here
+	for (var i = 0; i < onlinePlayers.length; i++) {
+		if ((friend.contains(":0x") && onlinePlayers[i].split(':')[1] == friend) || onlinePlayers[i].split(':')[0] == friend || typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined')
+			return true;
+	}
+	return false; //Orion, check if friend is online or not here
 }
 
 var online = true;
@@ -959,8 +1009,9 @@ function totalPlayersLoop() {
 			}*/
 		}
 		$('#players-online').text(serverz.count);
-		loadFriends();
 		loadParty();
+		if (!friendServerConnected)
+			loadFriends();
 	}).fail(function(d) {
 		console.log(infoIP+" is currently down.");
 		infoIP = (infoIP == "http://192.99.124.166:8080" ? "http://servers.thefeeltra.in" : "http://192.99.124.166:8080");
