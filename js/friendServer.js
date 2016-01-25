@@ -27,7 +27,11 @@ StartConnection = function() {
 			dewRcon.send('player.printUID', function(ret) {
 				pname = res;
 				puid = ret.split(' ')[2];
-				friendServer.send("{'type':'connection', 'message':'" + res + ":" + ret.split(' ')[2] + " has connected.'}");
+				
+				friendServer.send(JSON.stringify({
+					type: "connection",
+					message: res + ":" + ret.split(' ')[2] + " has connected."
+				}));
 
 				party.push(res + ":" + ret.split(' ')[2]);
 			});
@@ -106,7 +110,7 @@ StartConnection = function() {
 							guid: party[i].split(':')[1]
 						}));
 						
-						if (party[i].split(':')[1] == result.pguid)
+						if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
 							continue;
 						
 						friendServer.send(JSON.stringify({
