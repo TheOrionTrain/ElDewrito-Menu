@@ -439,6 +439,21 @@ function jumpToServer(ip) {
 		$('#slide')[0].play();
 }
 
+function loadParty() {
+	$('#party').empty();
+	if(party.length > 0) {
+		for(var i=0; i < party.length; i++) {
+			$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
+		}
+		$('.friend,#friend-add,#friend-remove').hover(function() {
+			$('#click')[0].currentTime = 0;
+			$('#click')[0].play();
+		});
+	} else {
+		$('#party').append("<div class='nofriends'>You're not partying :(</div>");
+	}
+}
+
 function loadFriends() {
 	$('#friends').empty();
 	friends_online = 0;
@@ -607,10 +622,19 @@ $(document).ready(function() {
 		removeFriend();
 	});
 	$('#dewmenu-button').click(function() {
-		if(confirm("Are you sure you want to switch to Scooterpsu's menu?")) {
-			window.location = "http://scooterpsu.github.io/";
-			dewRcon.send('game.menuurl "http://scooterpsu.github.io/"');
-		}
+		dewAlert({
+			title: "Are you sure?",
+			content: "Are you sure you want to switch to Scooterpsu's menu?",
+			cancel: true,
+			acceptText: "Confirm",
+			cancelText: "Cancel",
+			callback: function(c) {
+				if(c) {
+					window.location = "http://scooterpsu.github.io/";
+					dewRcon.send('game.menuurl "http://scooterpsu.github.io/"');
+				}
+			}
+		});
 	});
 	$('#browser-settings').click(function() {
 		changeMenu("serverbrowser,options,fade");
@@ -925,6 +949,7 @@ function totalPlayersLoop() {
 		}
 		$('#players-online').text(serverz.count);
 		loadFriends();
+		loadParty();
 	}).fail(function(d) {
 		console.log(infoIP+" is currently down.");
 		infoIP = (infoIP == "http://192.99.124.166:8080" ? "http://servers.thefeeltra.in" : "http://192.99.124.166:8080");
@@ -1225,7 +1250,7 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	
+
 	if (party.length > 0) {
 		for (var i = 0; i < party.length; i++ ) {
 			friendServer.send(JSON.stringify({
@@ -1235,9 +1260,9 @@ function startgame(ip, mode) {
 			}));
 		}
 	}
-	
+
 	console.log(currentServer);
-	
+
 	if (!hasMap(currentServer.mapFile)) {
 		var map = getMapName(currentServer.mapFile);
 		dewAlert({
@@ -1247,7 +1272,7 @@ function startgame(ip, mode) {
 		});
 		return;
 	}
-	
+
 	loopPlayers = false;
 	var password;
 	if (mode[0] === "JOIN")
