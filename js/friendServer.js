@@ -12,7 +12,8 @@ var friendServer,
 	snacking = 0,
 	played = 0,
 	pname,
-	puid;
+	puid,
+	onlinePlayers = {},
 	party = [];
 jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
@@ -30,7 +31,9 @@ StartConnection = function() {
 				
 				friendServer.send(JSON.stringify({
 					type: "connection",
-					message: res + ":" + ret.split(' ')[2] + " has connected."
+					message: " has connected.",
+					guid: ret.split(' ')[2],
+					player: res
 				}));
 
 				party.push(res + ":" + ret.split(' ')[2]);
@@ -60,7 +63,7 @@ StartConnection = function() {
 		}
     };
     friendServer.friendsServerSocket.onmessage = function(message) {
-		try {
+		//try {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
 				case "disconnected":
@@ -68,10 +71,29 @@ StartConnection = function() {
 						party = $.grep(party, function(value) {
 						  return value != (result.player + ":" + result.guid);
 						});
+						
+						for (var i = 0; i < party.length; i++) {
+							friendServer.send(JSON.stringify({
+								type: "updateparty",
+								party: JSON.stringify(party),
+								guid: party[i].split(':')[1]
+							}));
+							
+							if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
+								continue;
+							
+							friendServer.send(JSON.stringify({
+								type: "notification",
+								message: result.player + " has left the party.",
+								guid: party[i].split(':')[1]
+							}));
+						}
 
 						$.snackbar({content: result.player + ' has left your party.'});
 						$('#notification')[0].currentTime = 0;
 						$('#notification')[0].play();
+						
+						loadParty();
 					}
 				break;
 				case "pm":
@@ -119,6 +141,8 @@ StartConnection = function() {
 							guid: party[i].split(':')[1]
 						}));
 					}
+					
+					loadParty();
 				break;
 				case "acceptgame":
 
@@ -136,15 +160,22 @@ StartConnection = function() {
 				break;
 				case "updateparty":
 					party = JSON.parse(result.party);
+					loadParty();
+				break;
+				case "updateplayers":
+					onlinePlayers = JSON.parse(result.players);
+					console.log(onlinePlayers);
+					updateFriends();
+					loadFriends();
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
 				break;
 			}
-		} catch (e) {
+		/*} catch (e) {
 			console.log(e);
 			console.log(message.data);
-		}
+		}*/
 
 		if (typeof friendServer.callback == 'function')
 			friendServer.callback(message.data);

@@ -164,11 +164,16 @@ function submenu(action,friend,isOnline,o) {
 		$('#click-menu-container').show();
 	}
 	else if(action == "join") {
-		jumpToServer(serverz.players[friend].address);
+		//jumpToServer(serverz.players[friend].address);
 		$('#click-menu-container').hide();
 	}
 	else if(action == "invite") {
-		//Invite friend here
+		friendServer.send(JSON.stringify({
+			type: "partyinvite",
+			player: pname,
+			senderguid: puid,
+			
+		}));
 		$('#click-menu-container').hide();
 	}
 	else if(action == "remove") {
