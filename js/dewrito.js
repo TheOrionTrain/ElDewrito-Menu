@@ -736,12 +736,12 @@ $(document).ready(function() {
 	$('#browser-full').click(function() {
 		if (sortFull) {
 			sortFull = false;
-			$(this).children('.eye').toggleClass('hidden');
+			$(this).children('.checkbox').toggleClass('checked');
 		} else {
 			sortFull = true;
-			$(this).children('.eye').toggleClass('hidden');
+			$(this).children('.checkbox').toggleClass('checked');
 		}
-		$('#refresh').trigger('click');
+		filterServers();
 	});
 	$('#friends-online').click(function() {
 		$('#friendslist').css('right','0px');
@@ -758,22 +758,22 @@ $(document).ready(function() {
 	$('#browser-locked').click(function() {
 		if (sortLocked) {
 			sortLocked = false;
-			$(this).children('.eye').toggleClass('hidden');
+			$(this).children('.checkbox').toggleClass('checked');
 		} else {
 			sortLocked = true;
-			$(this).children('.eye').toggleClass('hidden');
+			$(this).children('.checkbox').toggleClass('checked');
 		}
-		$('#refresh').trigger('click');
+		filterServers();
 	});
 	$('#browser-sprint').click(function() {
 		if (sortSprint) {
 			sortSprint = false;
-			$(this).children('.eye').toggleClass('hidden');
+			$(this).children('.checkbox').toggleClass('checked');
 		} else {
 			sortSprint = true;
-			$(this).children('.eye').toggleClass('hidden');
+			$(this).children('.checkbox').toggleClass('checked');
 		}
-		$('#refresh').trigger('click');
+		filterServers();
 	});
 	$('#refresh').click(function() {
 		loadServers();
@@ -1492,7 +1492,7 @@ function clearFilters() {
 	sortFull = false;
 	sortLocked = false;
 	sortSprint = false;
-	$('.eye').removeClass('hidden');
+	$('.checkbox').removeClass('checked');
 	$('#browser-map').text("Choose Map");
 	$('#browser-gametype').text("Choose Gametype");
 	$('#clear').fadeOut(anit);
