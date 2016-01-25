@@ -22,19 +22,18 @@
     user-select: none;
     -webkit-font-smoothing: antialiased;
 }
-.eye {
+.checkbox {
     vertical-align: middle;
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    margin-left: 5px;
+    border: 2px solid #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
     display: inline-block;
-    background-image: url(../img/eye-show.svg);
-    background-size: 16px;
-    background-repeat: no-repeat;
-    background-position: center;
 }
-.eye.hidden {
-    background-image: url(../img/eye-hide.svg);
+.checkbox.checked {
+    background: url(../img/check.png) no-repeat center/14px;
 }
 #browser-buttons {
     width: 800px;
