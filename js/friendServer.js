@@ -29,11 +29,7 @@ StartConnection = function() {
 				puid = ret.split(' ')[2];
 				friendServer.send("{'type':'connection', 'message':'" + res + ":" + ret.split(' ')[2] + " has connected.'}");
 
-				console.log({
-					type: 'acceptparty',
-					player: pname,
-					guid: puid
-				})
+				party.push(res + ":" + ret.split(' ')[2]);
 			});
 		});
         $.snackbar({content:'Connected to Friend Server!'});
@@ -101,15 +97,24 @@ StartConnection = function() {
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
 
+					party.push(result.player + ":" + result.pguid);
+					
 					for (var i = 0; i < party.length; i++) {
+						if (party[i].split(':')[1] == result.pguid)
+							continue;
+						
 						friendServer.send(JSON.stringify({
 							type: "notification",
 							message: result.player + " has joined your party.",
 							guid: party[i].split(':')[1]
 						}));
+							
+						friendServer.send(JSON.stringify({
+							type: "updateparty",
+							party: JSON.stringify(party),
+							guid: party[i].split(':')[1]
+						}));
 					}
-
-					party.push(result.player + ":" + result.pguid);
 				break;
 				case "acceptgame":
 
@@ -124,6 +129,9 @@ StartConnection = function() {
 					$.snackbar({content: result.message});
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
+				break;
+				case "updateparty":
+					party = JSON.parse(result.party);
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
