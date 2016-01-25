@@ -120,30 +120,38 @@ StartConnection = function() {
 					});
 				break;
 				case "acceptparty":
-					$.snackbar({content: result.player + ' has joined your party.'});
-					$('#notification')[0].currentTime = 0;
-					$('#notification')[0].play();
-
-					party.push(result.player + ":" + result.pguid);
-					
-					for (var i = 0; i < party.length; i++) {
-						friendServer.send(JSON.stringify({
-							type: "updateparty",
-							party: JSON.stringify(party),
-							guid: party[i].split(':')[1]
-						}));
+					if (!party.contains(result.player + ":" + result.pguid)) {
+						$.snackbar({content: result.player + ' has joined your party.'});
+						$('#notification')[0].currentTime = 0;
+						$('#notification')[0].play();
 						
-						if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
-							continue;
+						party.push(result.player + ":" + result.pguid);
 						
+						for (var i = 0; i < party.length; i++) {
+							friendServer.send(JSON.stringify({
+								type: "updateparty",
+								party: JSON.stringify(party),
+								guid: party[i].split(':')[1]
+							}));
+							
+							if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
+								continue;
+							
+							friendServer.send(JSON.stringify({
+								type: "notification",
+								message: result.player + " has joined the party.",
+								guid: party[i].split(':')[1]
+							}));
+						}
+						
+						loadParty();
+					} else {
 						friendServer.send(JSON.stringify({
 							type: "notification",
-							message: result.player + " has joined the party.",
-							guid: party[i].split(':')[1]
+							message: "You are already in that party.",
+							guid: result.pguid
 						}));
 					}
-					
-					loadParty();
 				break;
 				case "acceptgame":
 
