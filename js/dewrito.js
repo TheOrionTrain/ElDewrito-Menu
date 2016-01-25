@@ -488,8 +488,14 @@ function loadFriends() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
 	});
-	$('.friend.online').click(function() {
-		jumpToServer(serverz.players[$(this).text()].address);
+	$('#friends .friend').click(function(e) {
+		if($(this).hasClass("online")) {
+			submenu("show",$(this).text(),1,e);
+		} else {
+			submenu("show",$(this).text(),0,e);
+		}
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
 	});
 }
 
@@ -515,8 +521,7 @@ function addFriend() {
 	}
 }
 
-function removeFriend() {
-	var name = $('#friend-input').val();
+function removeFriend(name) {
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
 		friends.remove(name);
@@ -604,6 +609,16 @@ $(document).ready(function() {
 		$('#slide')[0].play();
 		addFriend();
 	});
+	$('#click-menu li').click(function() {
+		submenu($(this).attr('data-action'),$('#click-menu').attr('data-friend'));
+	});
+	$('#click-menu li').hover(function() {
+		$('#click')[0].currentTime = 0;
+		$('#click')[0].play();
+	});
+	$('#click-menu-container').click(function() {
+		$(this).hide();
+	});
 	$('*[data-gp]').mouseenter(function() {
 		if($(this).attr('data-setting')) {
 			return false;
@@ -616,11 +631,6 @@ $(document).ready(function() {
 	$('*[data-gp]').mouseout(function() {
 		gp_on = 0;
 		gamepadSelect(currentMenu + "-" + gp_on);
-	});
-	$('#friend-remove').click(function() {
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
-		removeFriend();
 	});
 	$('#dewmenu-button').click(function() {
 		dewAlert({
