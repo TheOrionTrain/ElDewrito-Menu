@@ -4,7 +4,7 @@
  *
  *
  **/
- 
+
 
 
 var friendServer,
@@ -28,7 +28,7 @@ StartConnection = function() {
 				pname = res;
 				puid = ret.split(' ')[2];
 				friendServer.send("{'type':'connection', 'message':'" + res + ":" + ret.split(' ')[2] + " has connected.'}");
-				
+
 				console.log({
 					type: 'acceptparty',
 					player: pname,
@@ -68,7 +68,7 @@ StartConnection = function() {
 						party = $.grep(party, function(value) {
 						  return value != (result.player + ":" + result.guid);
 						});
-						
+
 						$.snackbar({content: result.player + ' has left your party.'});
 						$('#notification')[0].currentTime = 0;
 						$('#notification')[0].play();
@@ -84,7 +84,7 @@ StartConnection = function() {
 						info: result.senderguid,
 						cancel: true,
 						cancelText: "Decline",
-						callback: "partyInvite"
+						callback: partyInvite
 					});
 				break;
 				case "gameinvite":
@@ -93,14 +93,14 @@ StartConnection = function() {
 						content: result.player + " has invited you join " + result.server,
 						cancel: true,
 						cancelText: "Decline",
-						callback: "gameInvite"
+						callback: gameInvite
 					});
 				break;
 				case "acceptparty":
 					$.snackbar({content: result.player + ' has joined your party.'});
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
-					
+
 					for (var i = 0; i < party.length; i++) {
 						friendServer.send(JSON.stringify({
 							type: "notification",
@@ -108,11 +108,11 @@ StartConnection = function() {
 							guid: party[i].split(':')[1]
 						}));
 					}
-					
+
 					party.push(result.player + ":" + result.pguid);
 				break;
 				case "acceptgame":
-					
+
 				break;
 				case "connect":
 					jumpToServer(result.address);
@@ -133,7 +133,7 @@ StartConnection = function() {
 			console.log(e);
 			console.log(message.data);
 		}
-		
+
 		if (typeof friendServer.callback == 'function')
 			friendServer.callback(message.data);
         friendServer.lastMessage = message.data;
