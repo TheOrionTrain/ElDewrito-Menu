@@ -1162,7 +1162,7 @@ function changeMenu(m) {
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
 	currentMenu = e[1];
-	if(currentMenu != "serverbrowser" && f != "serverbrowser") {
+	if(currentMenu != "serverbrowser" && e[0] != "serverbrowser") {
 		browsing = 0;
 	}
 }
