@@ -111,7 +111,7 @@ StartConnection = function() {
 						
 						friendServer.send(JSON.stringify({
 							type: "notification",
-							message: result.player + " has joined your party.",
+							message: result.player + " has joined the party.",
 							guid: party[i].split(':')[1]
 						}));
 					}
