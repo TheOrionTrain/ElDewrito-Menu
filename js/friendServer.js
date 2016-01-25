@@ -37,6 +37,7 @@ StartConnection = function() {
 				}));
 
 				party.push(res + ":" + ret.split(' ')[2]);
+				loadParty();
 			});
 		});
         $.snackbar({content:'Connected to Friend Server!'});

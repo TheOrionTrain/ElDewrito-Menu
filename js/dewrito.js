@@ -479,8 +479,8 @@ function loadFriends() {
 		return false;
 	}
 	friends.sort(function(a, b) {
-			if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
-			if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
+			if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
+			if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
 			return 0;
 	});
 	friends.sort(function(a, b) {
@@ -495,7 +495,7 @@ function loadFriends() {
 			friends_online++;
 		}
 	}
-	$('#friends-online').text(friends_online+" Friends Online");
+	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
 	$('.friend,#friend-add,#friend-remove').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -548,10 +548,10 @@ function addFriend() {
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
 		if(friends.indexOf(name) == -1) {
-			friends.push(name + ":" + getPlayerUID(name));
+			friends.push(getPlayerUID(name) != "" ? name + ":" + getPlayerUID(name) : name);
 			friends.sort(function(a, b) {
-					if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
-					if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
+					if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
+					if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
 					return 0;
 			});
 			friends.sort(function(a, b) {
@@ -569,10 +569,10 @@ function addFriend() {
 function removeFriend(name) {
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
-		friends.remove(name + getPlayerUIDFromFriends(name) == "" ? "" : ":" + getPlayerUIDFromFriends(name));
+		friends.remove(getPlayerUIDFromFriends(name) == "" ? name : name + ":" + getPlayerUIDFromFriends(name));
 		friends.sort(function(a, b) {
-				if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
-				if ((a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
+				if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
+				if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
 				return 0;
 		});
 		friends.sort(function(a, b) {
@@ -588,7 +588,7 @@ function removeFriend(name) {
 
 function isOnline(friend) {
 	for (var i = 0; i < onlinePlayers.length; i++) {
-		if ((friend.contains(":0x") && onlinePlayers[i].split(':')[1] == friend) || onlinePlayers[i].split(':')[0] == friend || typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined')
+		if ((friend.contains(":0x") && (onlinePlayers[i].split(':')[1] == friend.split(':')[1])) | onlinePlayers[i].split(':')[0] == friend || (typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined'))
 			return true;
 	}
 	return false; //Orion, check if friend is online or not here
