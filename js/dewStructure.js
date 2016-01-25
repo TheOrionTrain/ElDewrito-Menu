@@ -46,8 +46,8 @@ var Menu = {
         },
         "menus" : {
             "dewrito-options" : "main2",
-            "choosemap" : "customgame",
-            "choosetype" : "customgame"
+            "choosemap" : "serverbrowser",
+            "choosetype" : "serverbrowser"
         }
     },
     "customgame" : {
