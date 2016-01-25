@@ -1255,6 +1255,9 @@ function startgame(ip, mode) {
 	if (party.length > 1) {
 		if (party[0].split(':')[1] == puid) {
 			for (var i = 0; i < party.length; i++ ) {
+				if (party[i].split(':')[1] == puid)
+					continue;
+				
 				friendServer.send(JSON.stringify({
 					type: 'connect',
 					guid: party[i].split(':')[1],
