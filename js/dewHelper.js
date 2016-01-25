@@ -148,3 +148,31 @@ function hideAlert(clicked,callback,info) {
 	$('#slide')[0].currentTime = 0;
 	$('#slide')[0].play();
 }
+
+function submenu(action,friend,isOnline,o) {
+	if(action == "cancel") {
+		$('#click-menu-container').hide();
+	}
+	if(action == "show") {
+		console.log(o.pageX/scale);
+		if(isOnline) {
+			$('#click-menu li[data-action="join"], #click-menu li[data-action="invite"]').show();
+		} else {
+			$('#click-menu li[data-action="join"], #click-menu li[data-action="invite"]').hide();
+		}
+		$('#click-menu').css({"left":o.pageX/scale+"px","top":o.pageY/scale+"px"}).attr("data-friend",friend);
+		$('#click-menu-container').show();
+	}
+	else if(action == "join") {
+		jumpToServer(serverz.players[friend].address);
+		$('#click-menu-container').hide();
+	}
+	else if(action == "invite") {
+		//Invite friend here
+		$('#click-menu-container').hide();
+	}
+	else if(action == "remove") {
+		removeFriend(friend);
+		$('#click-menu-container').hide();
+	}
+}

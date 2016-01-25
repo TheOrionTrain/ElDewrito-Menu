@@ -5,7 +5,7 @@ div[data-menu-position="left"] {left: -720px;}
 div[data-menu-position="right"] {left: 720px;}
 div[data-menu-position="center"] {left: 0px; top: 0px;}
 
-#alert-container {
+#alert-container, #click-menu-container {
     display: none;
     z-index: 11;
     position: absolute;
@@ -13,7 +13,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     top: 0;
     width: 1280px;
     height: 720px;
-    background-color: rgba(0,0,0,0.125);
+    background-color: rgba(0,0,0,0.2);
 }
 
 #alert {
@@ -100,6 +100,31 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     display: block;
 }
 
+#click-menu {
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 125px;
+    background-color: #000;
+    border-radius: 4px;
+    z-index: 9999;
+    list-style: none;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#click-menu li {
+    height: 30px;
+    box-sizing: border-box;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: "TV Nord";
+    font-size: 14px;
+    text-align: left;
+    margin: 0;
+    padding: 7px;
+}
+
 #back-options {
     left: 20px;
     bottom: 20px;
@@ -168,7 +193,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     -moz-transition: 0.5s;
     transition: 0.5s;
 }
-.friend:hover {
+.friend:hover, #click-menu li:hover {
     color: rgba(255, 255, 255, 1);
     background: rgba(50,50,50,0.9);
     cursor: pointer;
@@ -226,7 +251,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     border: 0;
     outline: 0;
     margin: 0;
-    width: 60%;
+    width: 80%;
     display: inline-block;
     box-sizing: border-box;
 }
