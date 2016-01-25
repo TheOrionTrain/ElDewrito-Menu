@@ -63,7 +63,7 @@ StartConnection = function() {
 		}
     };
     friendServer.friendsServerSocket.onmessage = function(message) {
-		//try {
+		try {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
 				case "disconnected":
@@ -172,10 +172,10 @@ StartConnection = function() {
 					console.log("Unhandled packet: " + result.type);
 				break;
 			}
-		/*} catch (e) {
+		} catch (e) {
 			console.log(e);
 			console.log(message.data);
-		}*/
+		}
 
 		if (typeof friendServer.callback == 'function')
 			friendServer.callback(message.data);
