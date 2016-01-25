@@ -1251,13 +1251,15 @@ function startgame(ip, mode) {
 		return;
 	}
 
-	if (party.length > 0) {
-		for (var i = 0; i < party.length; i++ ) {
-			friendServer.send(JSON.stringify({
-				type: 'connect',
-				guid: party[i].split(':')[1],
-				address: ip
-			}));
+	if (party.length > 1) {
+		if (party[0].split(':')[1] == puid) {
+			for (var i = 0; i < party.length; i++ ) {
+				friendServer.send(JSON.stringify({
+					type: 'connect',
+					guid: party[i].split(':')[1],
+					address: ip
+				}));
+			}
 		}
 	}
 
