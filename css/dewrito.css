@@ -191,11 +191,27 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     float: right;
     margin: 5px;
 }
+#party .friend:first-of-type:after {
+    content: " ";
+    background-image: url(../img/party.svg);
+    background-size: 100%;
+    background-repeat: none;
+    background-position: center;
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin: 0;
+    opacity: 0.9;
+}
+
+#party .friend:first-of-type:hover:after {
+    opacity: 1;
+}
 #addfriend {
     position: absolute;
     bottom: 0px;
-    left: 10px;
-    width: 235px;
+    left: 15px;
+    width: 220px;
 }
 #friend-input {
     padding: 8px 10px;
