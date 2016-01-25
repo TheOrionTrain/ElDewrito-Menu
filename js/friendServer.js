@@ -100,18 +100,18 @@ StartConnection = function() {
 					party.push(result.player + ":" + result.pguid);
 					
 					for (var i = 0; i < party.length; i++) {
+						friendServer.send(JSON.stringify({
+							type: "updateparty",
+							party: JSON.stringify(party),
+							guid: party[i].split(':')[1]
+						}));
+						
 						if (party[i].split(':')[1] == result.pguid)
 							continue;
 						
 						friendServer.send(JSON.stringify({
 							type: "notification",
 							message: result.player + " has joined your party.",
-							guid: party[i].split(':')[1]
-						}));
-							
-						friendServer.send(JSON.stringify({
-							type: "updateparty",
-							party: JSON.stringify(party),
 							guid: party[i].split(':')[1]
 						}));
 					}
