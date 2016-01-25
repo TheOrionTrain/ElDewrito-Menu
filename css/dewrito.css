@@ -100,6 +100,13 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     display: block;
 }
 
+.sprint {
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
 #click-menu {
     position: absolute;
     left: 500px;
