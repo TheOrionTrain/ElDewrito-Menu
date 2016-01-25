@@ -25,6 +25,7 @@ var players = [],
 	sortType,
 	sortFull = false,
 	sortLocked = false,
+	sortSprint = false,
 	Halo3Index = 7,
 	currentVersion,
 	usingGamepad = true,
@@ -735,10 +736,10 @@ $(document).ready(function() {
 	$('#browser-full').click(function() {
 		if (sortFull) {
 			sortFull = false;
-			$(this).text('Showing Full');
+			$(this).children('.eye').toggleClass('hidden');
 		} else {
 			sortFull = true;
-			$(this).text('Hiding Full');
+			$(this).children('.eye').toggleClass('hidden');
 		}
 		$('#refresh').trigger('click');
 	});
@@ -757,10 +758,20 @@ $(document).ready(function() {
 	$('#browser-locked').click(function() {
 		if (sortLocked) {
 			sortLocked = false;
-			$(this).text('Showing Locked');
+			$(this).children('.eye').toggleClass('hidden');
 		} else {
 			sortLocked = true;
-			$(this).text('Hiding Locked');
+			$(this).children('.eye').toggleClass('hidden');
+		}
+		$('#refresh').trigger('click');
+	});
+	$('#browser-sprint').click(function() {
+		if (sortSprint) {
+			sortSprint = false;
+			$(this).children('.eye').toggleClass('hidden');
+		} else {
+			sortSprint = true;
+			$(this).children('.eye').toggleClass('hidden');
 		}
 		$('#refresh').trigger('click');
 	});
@@ -1434,7 +1445,8 @@ function filterServers() {
 			isMap = content.match(mapFilter),
 			isType = content.match(typeFilter),
 			isFull,
-			isLocked;
+			isLocked,
+			isSprint;
 		if (sortFull) {
 			var full = $(this).children('.players').text(),
 				numbers = full.split("/");
@@ -1456,15 +1468,31 @@ function filterServers() {
 		} else {
 			isLocked = false;
 		}
-		if (isMap && isType && !isFull && !isLocked) {
+		if (sortSprint) {
+			if ($(this).children('.info').children('.settings').children('.sprint').length) {
+				isSprint = true;
+			} else {
+				isSprint = false;
+			}
+		} else {
+			isSprint = false;
+		}
+		if (isMap && isType && !isFull && !isLocked && !isSprint) {
 			$(this).show();
 		}
 	});
+	if ($('#browser').is(':empty')){
+		$('#refresh').trigger('click');
+	}
 }
 
 function clearFilters() {
 	sortMap = "";
 	sortType = "";
+	sortFull = false;
+	sortLocked = false;
+	sortSprint = false;
+	$('.eye').removeClass('hidden');
 	$('#browser-map').text("Choose Map");
 	$('#browser-gametype').text("Choose Gametype");
 	$('#clear').fadeOut(anit);
