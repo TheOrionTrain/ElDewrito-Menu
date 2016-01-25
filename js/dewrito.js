@@ -449,6 +449,7 @@ function loadParty() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
 		});
+		$('#party .friend:first-of-type').attr('title','Party Leader');
 	} else {
 		$('#party').append("<div class='nofriends'>You're not partying :(</div>");
 	}
