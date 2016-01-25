@@ -22,8 +22,22 @@
     user-select: none;
     -webkit-font-smoothing: antialiased;
 }
+.eye {
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    display: inline-block;
+    background-image: url(../img/eye-show.svg);
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.eye.hidden {
+    background-image: url(../img/eye-hide.svg);
+}
 #browser-buttons {
-    width: 650px;
+    width: 800px;
     height: 28px;
     position: absolute;
     top: 115px;
@@ -59,7 +73,8 @@
 #refresh,
 #clear,
 #browser-full,
-#browser-locked {
+#browser-locked,
+#browser-sprint {
     float: right;
     color: #fff;
     top: 115px;
@@ -78,7 +93,8 @@
 #refresh:hover,
 #clear:hover,
 #browser-locked:hover,
-#browser-full:hover {
+#browser-full:hover,
+#browser-sprint:hover {
     opacity: 1;
     cursor: pointer;
 }
