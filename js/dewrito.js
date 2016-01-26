@@ -38,49 +38,6 @@ var players = [],
 	localBackground = isset(localStorage.getItem('localbackground'), 0),
 	videoURL = "http://192.99.124.166/video/";
 
-var Chat = {
-	time: 0,
-	createWindow: function(player) {
-		$('.chat-tab,.chat-window').removeClass('selected');
-		$('#chat-tabs').append("<div data-player='"+player+"' class='chat-tab selected'>"+player+"</div>");
-		$('#chat-windows').append("<div data-player='"+player+"' class='chat-window selected'></div>");
-		$('.chat-tab').click(function() {
-			Chat.changeTab($(this).attr('data-player'));
-		});
-	},
-	isOpen: function(player) {
-		if($('.chat-tab[data-player="'+player+'"]').length > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	},
-	recieveMessage: function(player,message) {
-		if(!Chat.isOpen(player)) {
-			Chat.createWindow(player);
-		}
-		$('.chat-window[data-player="'+player+'"]').append("<span>"+message+"</span>");
-		Chat.showBox();
-	},
-	showBox: function() {
-		$('#chatbox').clearQueue().fadeIn(anit);
-		Chat.time = 8000;
-	},
-	hideBox: function() {$('#chatbox').clearQueue().fadeOut(anit);},
-	changeTab: function(player) {
-		$('.chat-tab,.chat-window').removeClass('selected');
-		$('.chat-tab[data-player="'+player+'"]').addClass('selected');
-		$('.chat-window[data-player="'+player+'"]').addClass('selected');
-	},
-	loop: setInterval(function() {
-		Chat.time -= 100;
-		if(Chat.time <= 0) {
-			Chat.time = 0;
-			Chat.hideBox();
-		}
-	},100)
-}
-
 (function() {
 	var e = (window.innerHeight - 80) / 2;
 	var d = getURLParameter('debug');
@@ -691,9 +648,6 @@ $(document).ready(function() {
 	});
 	Mousetrap.bind('right', function() {
 		gamepadRight();
-	});
-	$('#chat-window').hover(function() {
-		Chat.time = 8000;
 	});
 	$('#alert-yes').click(function() {
 		var c = $('#alert').attr('data-callback');
