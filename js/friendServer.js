@@ -107,7 +107,7 @@ StartConnection = function() {
 						if (typeof res.CurrentMap == 'undefined' || res.CurrentMap == "mainmenu")
 							Chat.receiveMessage(result.player, result.player + ": " + result.message);
 						else
-							dewRcon.send('irc.chatmessage "(PM) <' + result.player + '> "' + result.message);
+							dewRcon.send('irc.chatmessage "<' + result.player + '> "' + result.message);
 					});*/
 					Chat.receiveMessage(result.player, result.player + ": " + result.message);
 					console.log(result.player + ": " + result.message);
