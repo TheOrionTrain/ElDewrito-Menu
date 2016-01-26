@@ -79,7 +79,7 @@ var Chat = {
 			Chat.hideBox();
 		}
 	},100)
-}
+};
 
 (function() {
 	var e = (window.innerHeight - 80) / 2;
