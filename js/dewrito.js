@@ -40,7 +40,10 @@ var players = [],
 
 var Chat = {
 	time: 0,
+	pinned: 0,
+	currentTab: "",
 	createWindow: function(player) {
+		Chat.currentTab = player;
 		$('.chat-tab,.chat-window').removeClass('selected');
 		$('#chat-tabs').append("<div data-player='"+player+"' class='chat-tab selected'>"+player+"</div>");
 		$('#chat-windows').append("<div data-player='"+player+"' class='chat-window selected'></div>");
@@ -48,7 +51,7 @@ var Chat = {
 			Chat.changeTab($(this).attr('data-player'));
 		});
 		var n = $('.chat-tab').length;
-		$('.chat-tab').css('width',Math.floor(450/n)+'px');
+		$('.chat-tab').css('width',Math.floor(420/n)+'px');
 	},
 	isOpen: function(player) {
 		if($('.chat-tab[data-player="'+player+'"]').length > 0) {
@@ -63,6 +66,14 @@ var Chat = {
 		}
 		$('.chat-window[data-player="'+player+'"]').append("<span>"+message+"</span>");
 		Chat.showBox();
+		$('#notification')[0].currentTime = 0;
+		$('#notification')[0].play();
+	},
+	sendMessage: function(player,message) {
+
+		//Orion stuff goes here
+
+		Chat.receiveMessage(player,pname+": "+message);
 	},
 	showBox: function() {
 		$('#chatbox').clearQueue().fadeIn(anit);
@@ -70,17 +81,18 @@ var Chat = {
 	},
 	hideBox: function() {$('#chatbox').clearQueue().fadeOut(anit);},
 	changeTab: function(player) {
+		Chat.currentTab = player;
 		$('.chat-tab,.chat-window').removeClass('selected');
 		$('.chat-tab[data-player="'+player+'"]').addClass('selected');
 		$('.chat-window[data-player="'+player+'"]').addClass('selected');
 	},
 	loop: setInterval(function() {
-		Chat.time -= 100;
-		if(Chat.time <= 0) {
-			Chat.time = 0;
-			Chat.hideBox();
-		} else {
-			Chat.showBox();
+		if(!Chat.pinned) {
+			Chat.time -= 100;
+			if(Chat.time <= 0) {
+				Chat.time = 0;
+				Chat.hideBox();
+			}
 		}
 	},100)
 };
@@ -698,6 +710,20 @@ $(document).ready(function() {
 	});
 	$('#chat-window').hover(function() {
 		Chat.time = 8000;
+	});
+	$('#chat-pin').click(function() {
+		Chat.pinned = (Chat.pinned) ? 0 : 1;
+		$(this).toggleClass('pinned');
+	});
+	$('#chat-enter').click(function() {
+		var m = $('#chat-input').val();
+		if(m.length > 0) {
+			$('#chat-input').val("");
+			Chat.sendMessage(Chat.currentTab,m);
+		}
+	});
+	$('#chat-input').pressEnter(function(e){
+   		$('#chat-enter').trigger('click');
 	});
 	$('#alert-yes').click(function() {
 		var c = $('#alert').attr('data-callback');

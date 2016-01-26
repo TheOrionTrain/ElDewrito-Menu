@@ -31,9 +31,63 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     position: absolute;
     top: 0;
     left: 0;
-    width: 450px;
+    width: 420px;
     height: 30px;
     overflow: hidden;
+}
+
+#chat-pin {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/pin.svg);
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+}
+
+#chat-input {
+    position: absolute;
+    top: 220px;
+    left: 0;
+    width: 390px;
+    height: 30px;
+    overflow: hidden;
+    outline: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: #fff;
+    font-size: 14px;
+    padding: 5px;
+    border-top: 1px solid rgba(255,255,255,0.25);
+}
+
+#chat-enter {
+    position: absolute;
+    top: 220px;
+    right: 0;
+    height: 30px;
+    width: 60px;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 15px;
+    box-sizing: border-box;
+    margin: 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.25);
+}
+
+#chat-pin.pinned,
+#chat-pin:hover,
+#chat-enter:hover {
+    opacity: 1;
+    background-color: rgba(0,0,0,0.4);
+    cursor: pointer;
 }
 
 .chat-tab {
@@ -57,7 +111,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
 
 #chat-windows {
     position: absolute;
-    height: 220px;
+    height: 190px;
     width: 450px;
     top: 30px;
     left: 0;

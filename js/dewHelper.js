@@ -28,6 +28,18 @@ Array.prototype.remove = function(value) {
 	}
 }
 
+$.fn.pressEnter = function(fn) {  
+    return this.each(function() {
+        $(this).bind('enterPress', fn);
+        $(this).keyup(function(e){
+            if(e.keyCode == 13)
+            {
+              $(this).trigger("enterPress");
+            }
+        })
+    });
+ };
+
 jQuery.fn.scrollTo = function(elem, speed) {
     $(this).animate({
         scrollTop:  $(this).scrollTop() - $(this).offset().top + $(elem).offset().top - 150
