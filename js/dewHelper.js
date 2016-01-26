@@ -156,9 +156,9 @@ function submenu(action,friend,isOnline,o) {
 	if(action == "show") {
 		console.log(o.pageX/scale);
 		if(isOnline) {
-			$('#click-menu li[data-action="join"], #click-menu li[data-action="invite"]').show();
+			$('#click-menu li.online').show();
 		} else {
-			$('#click-menu li[data-action="join"], #click-menu li[data-action="invite"]').hide();
+			$('#click-menu li.online').hide();
 		}
 		$('#click-menu').css({"left":o.pageX/scale+"px","top":o.pageY/scale+"px"}).attr("data-friend",friend);
 		$('#click-menu-container').show();
@@ -170,7 +170,7 @@ function submenu(action,friend,isOnline,o) {
 	else if(action == "invite") {
 		if (getPlayerUIDFromFriends(friend) == "" && getPlayerUID(friend) == "")
 			return;
-		
+
 		friendServer.send(JSON.stringify({
 			type: "partyinvite",
 			player: pname,
