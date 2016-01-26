@@ -42,7 +42,7 @@ var Chat = {
 	time: 0,
 	pinned: 0,
 	currentTab: "",
-	createWindow: function(player) {
+	createTab: function(player) {
 		Chat.currentTab = player;
 		$('.chat-tab,.chat-window').removeClass('selected');
 		$('#chat-tabs').append("<div data-player='"+player+"' class='chat-tab selected'>"+player+"</div>");
@@ -62,7 +62,7 @@ var Chat = {
 	},
 	receiveMessage: function(player,message) {
 		if(!Chat.isOpen(player)) {
-			Chat.createWindow(player);
+			Chat.createTab(player);
 		}
 		$('.chat-window[data-player="'+player+'"]').append("<span>"+message+"</span>");
 		Chat.showBox();
@@ -71,7 +71,13 @@ var Chat = {
 	},
 	sendMessage: function(player,message) {
 
-		//Orion stuff goes here
+		friendServer.send(JSON.stringify({
+			type: "pm",
+			message: message,
+			player: pname,
+			senderguid: pguid,
+			guid: getPlayerUIDFromFriends(player)
+		}));
 
 		Chat.receiveMessage(player,pname+": "+message);
 	},
@@ -647,6 +653,10 @@ function removeFriend(name) {
 		updateFriends();
 		loadFriends();
 	}
+}
+
+function isOnlineServer(friend) {
+	return typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined'; //Orion, check if friend is online or not here
 }
 
 function isOnline(friend) {
