@@ -21,6 +21,11 @@ String.prototype.contains = function(it) {
 	return this.indexOf(it) != -1;
 };
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 Array.prototype.remove = function(value) {
 	var index = this.indexOf(value);
 	if (index > -1) {

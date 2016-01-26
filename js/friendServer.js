@@ -98,6 +98,17 @@ StartConnection = function() {
 					}
 				break;
 				case "pm":
+					/*dewRcon.send('game.info', function(resp) {
+						var res = new Array();
+						resp = resp.split('\n');
+						for (var i = 0; i < resp.length; i++) {
+							res[resp[i].split(': ')[0].replaceAll(" ", "")] = resp[i].split(': ')[1];
+						}
+						if (typeof res.CurrentMap == 'undefined' || res.CurrentMap == "mainmenu")
+							Chat.receiveMessage(result.player, result.player + ": " + result.message);
+						else
+							dewRcon.send('irc.chatmessage "(PM) <' + result.player + '> "' + result.message);
+					});*/
 					Chat.receiveMessage(result.player, result.player + ": " + result.message);
 					console.log(result.player + ": " + result.message);
 				break;
