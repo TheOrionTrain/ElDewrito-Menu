@@ -184,7 +184,8 @@ function submenu(action,friend,isOnline,o) {
 		//jumpToServer(serverz.players[friend].address);
 		$('#click-menu-container').hide();
 	} else if (action == "message") {
-		Chat.createTab(friend.contains(":0x") ? friend.split(':')[0] : friend);
+		if(!Chat.isOpen(friend.contains(":0x") ? friend.split(':')[0] : friend))
+			Chat.createTab(friend.contains(":0x") ? friend.split(':')[0] : friend);
 		Chat.showBox();
 	} else if(action == "invite") {
 		if (getPlayerUIDFromFriends(friend) == "" && getPlayerUID(friend) == "")
