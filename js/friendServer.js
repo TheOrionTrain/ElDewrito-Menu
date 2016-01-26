@@ -80,7 +80,7 @@ StartConnection = function() {
 								guid: party[i].split(':')[1]
 							}));
 							
-							if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
+							if (party[i].split(':')[1] == puid || party[i].split(':')[1] == result.guid)
 								continue;
 							
 							friendServer.send(JSON.stringify({
