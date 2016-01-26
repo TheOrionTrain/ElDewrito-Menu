@@ -76,7 +76,7 @@ var Chat = {
 			message: message,
 			player: pname,
 			senderguid: puid,
-			guid: getPlayerUIDFromFriends(player)
+			guid: getPlayerUIDFromFriends(player) == "" ? getPlayerUID(player) : getPlayerUIDFromFriends(player)
 		}));
 
 		Chat.receiveMessage(player,pname+": "+message);
@@ -527,9 +527,7 @@ function loadParty() {
 function updateFriends() {
 	for (var i = 0; i < onlinePlayers.length; i++) {
 		for (var o = 0; o < friends.length; o++) {
-			if (!friends[o].contains(":0x") && friends[o] == onlinePlayers[i].toString().split(':')[0]) {
-				friends[o] += ":" + onlinePlayers[i].split(':')[1];
-			} else if (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0]) {
+			if ((!friends[o].contains(":0x") && friends[o] == onlinePlayers[i].split(':')[0]) || (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0])) {
 				friends[o] = onlinePlayers[i];
 			}
 		}
