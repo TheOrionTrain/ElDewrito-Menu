@@ -47,6 +47,8 @@ var Chat = {
 		$('.chat-tab').click(function() {
 			Chat.changeTab($(this).attr('data-player'));
 		});
+		var n = $('.chat-tab').length;
+		$('.chat-tab').css('width',Math.floor(450/n)+'px');
 	},
 	isOpen: function(player) {
 		if($('.chat-tab[data-player="'+player+'"]').length > 0) {
@@ -77,6 +79,8 @@ var Chat = {
 		if(Chat.time <= 0) {
 			Chat.time = 0;
 			Chat.hideBox();
+		} else {
+			Chat.showBox();
 		}
 	},100)
 };
