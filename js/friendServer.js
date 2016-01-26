@@ -120,38 +120,30 @@ StartConnection = function() {
 					});
 				break;
 				case "acceptparty":
-					if (party.length < 2) {
-						$.snackbar({content: result.player + ' has joined your party.'});
-						$('#notification')[0].currentTime = 0;
-						$('#notification')[0].play();
+					$.snackbar({content: result.player + ' has joined your party.'});
+					$('#notification')[0].currentTime = 0;
+					$('#notification')[0].play();
+					
+					party.push(result.player + ":" + result.pguid);
+					
+					for (var i = 0; i < party.length; i++) {
+						friendServer.send(JSON.stringify({
+							type: "updateparty",
+							party: JSON.stringify(party),
+							guid: party[i].split(':')[1]
+						}));
 						
-						party.push(result.player + ":" + result.pguid);
-						
-						for (var i = 0; i < party.length; i++) {
-							friendServer.send(JSON.stringify({
-								type: "updateparty",
-								party: JSON.stringify(party),
-								guid: party[i].split(':')[1]
-							}));
+						if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
+							continue;
 							
-							if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
-								continue;
-							
-							friendServer.send(JSON.stringify({
-								type: "notification",
-								message: result.player + " has joined the party.",
-								guid: party[i].split(':')[1]
-							}));
-						}
-						
-						loadParty();
-					} else {
 						friendServer.send(JSON.stringify({
 							type: "notification",
-							message: "You are already in a party.",
-							guid: result.pguid
+							message: result.player + " has joined the party.",
+							guid: party[i].split(':')[1]
 						}));
 					}
+					
+					loadParty();
 				break;
 				case "acceptgame":
 
@@ -195,13 +187,17 @@ StartConnection = function() {
 
 function partyInvite(accepted, guid) {
 	console.log(guid);
-	if (accepted) {
+	if (accepted && party.length < 2) {
 		friendServer.send(JSON.stringify({
 			type: 'acceptparty',
 			player: pname,
 			guid: guid,
 			pguid: puid
 		}));
+	} else {
+		$.snackbar({content: "You are already in a party."});
+		$('#notification')[0].currentTime = 0;
+		$('#notification')[0].play();
 	}
 	console.log(accepted);
 }
