@@ -189,7 +189,6 @@ function queryServer(serverInfo, i, browser) {
 			"status": sanitizeString(serverInfo.status),
 			"eldewritoVersion": sanitizeString(serverInfo.eldewritoVersion),
 			"ping": parseInt(serverInfo.ping),
-			"location_flag": typeof serverInfo.location_flag == 'undefined' ? "[ " : (serverInfo.location_flag.contains("base64") || serverInfo.location_flag.toLowerCase().contains("rcon")) ? "undefined" : serverInfo.location_flag,
 			"players": {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
@@ -243,13 +242,10 @@ function addServer(i) {
 		return;
 	++gp_servers;
 	var on = (!servers[i].variant) ? "" : "on";
-
-	servers[i].location_flag = typeof servers[i].location_flag == 'undefined' ? "[" : servers[i].location_flag;
 	servers[i].ping = servers[i].ping || 0;
-
 	var sprint = (servers[i].sprintEnabled == 1) ? "<img class='sprint' src='img/sprint.png'>" : " ";
 
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ") [<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -1100,10 +1096,9 @@ function totalPlayersLoop() {
 						async: true,
 						success: function() {
 							endTime = Date.now();
-							ping = Math.round((endTime - startTime) / 1.60); //Aproximate ping, may change from 1.75 later
+							ping = Math.round((endTime - startTime) * 0.45);
 							serverz.servers[i].ping = ping;
-							//console.log(ping);
-							//console.log(serverz.servers[i]);
+							$('#ping-'+i).text(ping);
 						}
 					});
 				})(i);
@@ -1447,7 +1442,7 @@ function startgame(ip, mode) {
 		$('#notification')[0].play();
 		return;
 	}
-	
+
 	if (party.length > 1) {
 		if ((typeof currentServer.players.current != 'undefined' && (currentServer.players.current + party.length) == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && (currentServer.numPlayers + party.length) == currentServer.maxPlayers)) {
 			dewAlert({
@@ -1459,7 +1454,7 @@ function startgame(ip, mode) {
 			$('#notification')[0].play();
 			return;
 		}
-		
+
 		if (party[0].split(':')[1] == puid) {
 			for (var i = 0; i < party.length; i++ ) {
 				if (party[i].split(':')[1] == puid)
