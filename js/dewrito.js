@@ -75,7 +75,7 @@ var Chat = {
 			type: "pm",
 			message: message,
 			player: pname,
-			senderguid: pguid,
+			senderguid: puid,
 			guid: getPlayerUIDFromFriends(player)
 		}));
 
