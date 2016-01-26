@@ -447,7 +447,7 @@ function quickJoin() {
 	var lowestPing = 5000;
 	for (var i = 0; i < serverz.servers.length; i++) {
 		if (typeof serverz.servers[i] != 'undefined') {
-			if (serverz.servers[i].ping < lowestPing && (parseInt(serverz.servers[i].numPlayers) < parseInt(serverz.servers[i].maxPlayers)) && !serverz.servers[i].passworded) {
+			if (serverz.servers[i].ping < lowestPing && (parseInt(serverz.servers[i].numPlayers + 2) < parseInt(serverz.servers[i].maxPlayers)) && !serverz.servers[i].passworded) {
 				lowestPing = parseInt(serverz.servers[i].ping);
 				currentServer = serverz.servers[i];
 			}
@@ -1420,21 +1420,6 @@ function startgame(ip, mode) {
 		return;
 	}
 
-	if (party.length > 1) {
-		if (party[0].split(':')[1] == puid) {
-			for (var i = 0; i < party.length; i++ ) {
-				if (party[i].split(':')[1] == puid)
-					continue;
-
-				friendServer.send(JSON.stringify({
-					type: 'connect',
-					guid: party[i].split(':')[1],
-					address: ip
-				}));
-			}
-		}
-	}
-
 	console.log(currentServer);
 
 	if (!hasMap(currentServer.mapFile)) {
@@ -1461,6 +1446,32 @@ function startgame(ip, mode) {
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
 		return;
+	}
+	
+	if (party.length > 1) {
+		if ((typeof currentServer.players.current != 'undefined' && (currentServer.players.current + party.length) == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && (currentServer.numPlayers + party.length) == currentServer.maxPlayers)) {
+			dewAlert({
+				title: "Not Enough Slots",
+				content: 'There are not enough slots for your party, try joining a different one.',
+				acceptText: "OK"
+			});
+			$('#notification')[0].currentTime = 0;
+			$('#notification')[0].play();
+			return;
+		}
+		
+		if (party[0].split(':')[1] == puid) {
+			for (var i = 0; i < party.length; i++ ) {
+				if (party[i].split(':')[1] == puid)
+					continue;
+
+				friendServer.send(JSON.stringify({
+					type: 'connect',
+					guid: party[i].split(':')[1],
+					address: ip
+				}));
+			}
+		}
 	}
 
 	$('#beep')[0].play();
