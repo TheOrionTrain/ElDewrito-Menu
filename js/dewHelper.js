@@ -168,14 +168,14 @@ function submenu(action,friend,isOnline,o) {
 		$('#click-menu-container').hide();
 	}
 	else if(action == "invite") {
-		if (getPlayerUIDFromFriends(friend) == "")
+		if (getPlayerUIDFromFriends(friend) == "" && getPlayerUID(friend) == "")
 			return;
 		
 		friendServer.send(JSON.stringify({
 			type: "partyinvite",
 			player: pname,
 			senderguid: puid,
-			guid: getPlayerUIDFromFriends(friend)
+			guid: getPlayerUIDFromFriends(friend) == "" ? getPlayerUID(friend) : getPlayerUIDFromFriends(friend)
 		}));
 		$('#click-menu-container').hide();
 	}
