@@ -55,7 +55,7 @@ var Chat = {
 			return false;
 		}
 	},
-	recieveMessage: function(player,message) {
+	receiveMessage: function(player,message) {
 		if(!Chat.isOpen(player)) {
 			Chat.createWindow(player);
 		}
