@@ -120,7 +120,7 @@ StartConnection = function() {
 					});
 				break;
 				case "acceptparty":
-					if (!party.contains(result.player + ":" + result.pguid)) {
+					if (!party.length > 1) {
 						$.snackbar({content: result.player + ' has joined your party.'});
 						$('#notification')[0].currentTime = 0;
 						$('#notification')[0].play();
@@ -148,7 +148,7 @@ StartConnection = function() {
 					} else {
 						friendServer.send(JSON.stringify({
 							type: "notification",
-							message: "You are already in that party.",
+							message: "You are already in a party.",
 							guid: result.pguid
 						}));
 					}
