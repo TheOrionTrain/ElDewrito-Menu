@@ -120,7 +120,7 @@ StartConnection = function() {
 					});
 				break;
 				case "acceptparty":
-					if (!party.length > 1) {
+					if (party.length < 2) {
 						$.snackbar({content: result.player + ' has joined your party.'});
 						$('#notification')[0].currentTime = 0;
 						$('#notification')[0].play();
