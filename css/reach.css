@@ -639,8 +639,7 @@ audio {
 #choosemusic ::-webkit-scrollbar,
 #choosetype ::-webkit-scrollbar,
 #customgame ::-webkit-scrollbar,
-#friendslist ::-webkit-scrollbar,
-#chatbox ::-webkit-scrollbar {
+#friendslist ::-webkit-scrollbar {
     width: 4px;
 }
 #lobby-container::-webkit-scrollbar{
