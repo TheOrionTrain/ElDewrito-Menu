@@ -167,10 +167,15 @@ function submenu(action,friend,isOnline,o) {
 	}
 	if(action == "show") {
 		console.log(o.pageX/scale);
-		if(isOnline) {
+		if (isOnlineServer(friend)) {
+			$('#click-menu li.onlineserver').show();
+			$('#click-menu li.online').hide();
+		} else if(isOnline) {
 			$('#click-menu li.online').show();
+			$('#click-menu li.onlineserver').hide();
 		} else {
 			$('#click-menu li.online').hide();
+			$('#click-menu li.onlineserver').hide();
 		}
 		$('#click-menu').css({"left":o.pageX/scale+"px","top":o.pageY/scale+"px"}).attr("data-friend",friend);
 		$('#click-menu-container').show();
@@ -178,7 +183,8 @@ function submenu(action,friend,isOnline,o) {
 	else if(action == "join") {
 		//jumpToServer(serverz.players[friend].address);
 		$('#click-menu-container').hide();
-	}
+	} else if (action == "message") {
+		createTab.createTab(friend.contains(":0x") ? friend.split(':')[0] : friend);
 	else if(action == "invite") {
 		if (getPlayerUIDFromFriends(friend) == "" && getPlayerUID(friend) == "")
 			return;

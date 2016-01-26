@@ -98,6 +98,7 @@ StartConnection = function() {
 					}
 				break;
 				case "pm":
+					Chat.receiveMessage(result.player, result.player + ": " + result.message);
 					console.log(result.player + ": " + result.message);
 				break;
 				case "partyinvite":
