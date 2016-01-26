@@ -42,6 +42,8 @@ var Chat = {
 	time: 0,
 	pinned: 0,
 	currentTab: "",
+	hovering: 0,
+	focused: 0,
 	createTab: function(player) {
 		Chat.currentTab = player;
 		$('.chat-tab,.chat-window').removeClass('selected');
@@ -93,7 +95,7 @@ var Chat = {
 		$('.chat-window[data-player="'+player+'"]').addClass('selected');
 	},
 	loop: setInterval(function() {
-		if(!Chat.pinned) {
+		if(!Chat.pinned && !Chat.hovering && !Chat.focused) {
 			Chat.time -= 100;
 			if(Chat.time <= 0) {
 				Chat.time = 0;
@@ -716,8 +718,15 @@ $(document).ready(function() {
 	Mousetrap.bind('right', function() {
 		gamepadRight();
 	});
-	$('#chat-window').hover(function() {
-		Chat.time = 8000;
+	$('#chatbox').hover(
+		function() {Chat.hovering = 1;},
+		function() {Chat.hovering = 0;}
+	);
+	$('#chat-input').focus(function() {
+		Chat.focused = 1;
+	});
+	$('#chat-input').blur(function() {
+		Chat.focused = 0;
 	});
 	$('#chat-pin').click(function() {
 		Chat.pinned = (Chat.pinned) ? 0 : 1;
