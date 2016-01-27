@@ -47,11 +47,31 @@ var Chat = {
 	createTab: function(player) {
 		Chat.currentTab = player;
 		$('.chat-tab,.chat-window').removeClass('selected');
-		$('#chat-tabs').append("<div data-player='"+player+"' class='chat-tab selected'>"+player+"</div>");
+		$('#chat-tabs').append("<div data-player='"+player+"' class='chat-tab selected'>"+player+"<div class='x'></div></div>");
 		$('#chat-windows').append("<div data-player='"+player+"' class='chat-window selected'></div>");
 		$('.chat-tab').click(function() {
 			Chat.changeTab($(this).attr('data-player'));
 		});
+		$('.chat-tab > .x').click(function() {
+			Chat.destroyTab($(this).parent('.chat-tab').attr('data-player'));
+		});
+		var n = $('.chat-tab').length;
+		$('.chat-tab').css('width',Math.floor(420/n)+'px');
+	},
+	destroyTab: function(player) {
+		if(player == Chat.currentTab) {
+			$('.chat-window[data-player="'+player+'"]').remove();
+			$('.chat-tab[data-player="'+player+'"]').remove();
+			if($('.chat-tab').length > 0) {
+				var e = $('.chat-tab:first-of-type').attr('data-player');
+				Chat.changeTab(e);
+			} else {
+				Chat.hideBox();
+			}
+		} else {
+			$('.chat-window[data-player="'+player+'"]').remove();
+			$('.chat-tab[data-player="'+player+'"]').remove();
+		}
 		var n = $('.chat-tab').length;
 		$('.chat-tab').css('width',Math.floor(420/n)+'px');
 	},
@@ -73,7 +93,7 @@ var Chat = {
 		$('#notification')[0].play();
 	},
 	sendMessage: function(player,message) {
-		
+
 		if (player.contains("Party Chat -")) {
 			friendServer.send(JSON.stringify({
 				type: "partymessage",
