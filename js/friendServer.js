@@ -70,6 +70,10 @@ StartConnection = function() {
 				case "disconnected":
 					if ($.inArray(result.player + ":" + result.guid, party) != -1) {
 						
+						party = $.grep(party, function(value) {
+						  return value != (result.player + ":" + result.guid);
+						});
+						
 						for (var i = 0; i < party.length; i++) {
 							friendServer.send(JSON.stringify({
 								type: "updateparty",
@@ -90,10 +94,6 @@ StartConnection = function() {
 						$.snackbar({content: result.player + ' has left your party.'});
 						$('#notification')[0].currentTime = 0;
 						$('#notification')[0].play();
-						
-						party = $.grep(party, function(value) {
-						  return value != (result.player + ":" + result.guid);
-						});
 						
 						loadParty();
 					}
