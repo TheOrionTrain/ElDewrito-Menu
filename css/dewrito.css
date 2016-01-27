@@ -110,6 +110,17 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     color: rgba(255,0,0,0.9);
 }
 
+.chat-message > .balloon {
+    background-image: url(../img/party.svg);
+    background-size: 100%;
+    background-repeat: none;
+    background-position: center;
+    width: 12px;
+    height: 12px;
+    opacity: 0.9;
+    display: inline-block;
+}
+
 #chat-pin.pinned,
 #chat-pin:hover,
 #chat-enter:hover {
