@@ -174,12 +174,19 @@ StartConnection = function() {
 				case "updateparty":
 					party = JSON.parse(result.party);
 					loadParty();
+					if(!Chat.isOpen("Party Chat - " + party[0].split(':')[0]) && party.length > 1) {
+						Chat.createTab("Party Chat - " + party[0].split(':')[0]);
+						Chat.showBox();
+					}
 				break;
 				case "updateplayers":
 					onlinePlayers = JSON.parse(result.players);
 					console.log(onlinePlayers);
 					updateFriends();
 					loadFriends();
+				break;
+				case "partymessage":
+					Chat.receiveMessage("Party Chat - " + party[0].split(':')[0], result.player + ": " + result.message);
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);

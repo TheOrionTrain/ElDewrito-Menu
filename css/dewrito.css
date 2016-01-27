@@ -82,6 +82,15 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     border-top: 1px solid rgba(255,255,255,0.25);
 }
 
+.chat-message {
+    display: block;
+    font-size: 16px;
+    color: #fff;
+}
+.chat-message.self {
+    color: rgba(255,255,255,0.667);
+}
+
 #chat-pin.pinned,
 #chat-pin:hover,
 #chat-enter:hover {
