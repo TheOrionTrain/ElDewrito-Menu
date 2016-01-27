@@ -66,20 +66,31 @@ var Chat = {
 		if(!Chat.isOpen(player)) {
 			Chat.createTab(player);
 		}
-		$('.chat-window[data-player="'+player+'"]').append("<span>"+message+"</span>");
+		$('.chat-window[data-player="'+player+'"]').append("<span class='" + (message.split(': ')[0] == pname ? "chat-message self" : "chat-message") + "'>"+message+"</span>");
+		$('.chat-window[data-player="'+player+'"]').scrollTop($('.chat-window[data-player="'+player+'"]')[0].scrollHeight);
 		Chat.showBox();
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
 	},
 	sendMessage: function(player,message) {
-
-		friendServer.send(JSON.stringify({
-			type: "pm",
-			message: message,
-			player: pname,
-			senderguid: puid,
-			guid: getPlayerUIDFromFriends(player) == "" ? getPlayerUID(player) : getPlayerUIDFromFriends(player)
-		}));
+		
+		if (player.contains("Party Chat -")) {
+			friendServer.send(JSON.stringify({
+				type: "partymessage",
+				message: message,
+				player: pname,
+				senderguid: puid,
+				partymembers: party
+			}));
+		} else {
+			friendServer.send(JSON.stringify({
+				type: "pm",
+				message: message,
+				player: pname,
+				senderguid: puid,
+				guid: getPlayerUIDFromFriends(player) == "" ? getPlayerUID(player) : getPlayerUIDFromFriends(player)
+			}));
+		}
 
 		Chat.receiveMessage(player,pname+": "+message);
 	},
