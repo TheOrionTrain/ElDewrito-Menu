@@ -16,6 +16,21 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     background-color: rgba(0,0,0,0.2);
 }
 
+.chat-tab > .x {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: url('../img/x.svg') no-repeat 0px 0px/8px 8px;
+    cursor: pointer;
+    opacity: 0.8;
+    z-index: 10;
+}
+.chat-tab > .x:hover {
+    opacity: 1;
+}
+
 #chatbox {
     display: none;
     width: 450px;
@@ -110,6 +125,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    position: relative;
 }
 
 .chat-tab.selected, .chat-tab:hover {
