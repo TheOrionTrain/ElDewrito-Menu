@@ -68,6 +68,14 @@ StartConnection = function() {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
 				case "disconnected":
+					if ($.inArray(result.player + ":" + result.guid, friends) != -1 || $.inArray(result.player, friends)) {
+						console.log(result.player);
+						if(Chat.isOpen(result.player)) {
+							$('.chat-window[data-player="'+result.player+'"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
+							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
+						}
+					}
+					
 					if ($.inArray(result.player + ":" + result.guid, party) != -1) {
 						
 						party = $.grep(party, function(value) {
