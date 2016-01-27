@@ -89,8 +89,6 @@ var Chat = {
 		$('.chat-window[data-player="'+player+'"]').append("<span class='" + (message.split(': ')[0] == pname ? "chat-message self" : "chat-message") + "'>"+message+"</span>");
 		$('.chat-window[data-player="'+player+'"]').scrollTop($('.chat-window[data-player="'+player+'"]')[0].scrollHeight);
 		Chat.showBox();
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play();
 	},
 	sendMessage: function(player,message) {
 
@@ -558,6 +556,7 @@ function updateFriends() {
 		for (var o = 0; o < friends.length; o++) {
 			if ((!friends[o].contains(":0x") && friends[o] == onlinePlayers[i].split(':')[0]) || (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0])) {
 				friends[o] = onlinePlayers[i];
+				localStorage.setItem("friends", JSON.stringify(friends));
 			}
 		}
 	}

@@ -106,6 +106,10 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     color: rgba(255,255,255,0.667);
 }
 
+.chat-message.alert {
+    color: rgba(255,0,0,0.9);
+}
+
 #chat-pin.pinned,
 #chat-pin:hover,
 #chat-enter:hover {
