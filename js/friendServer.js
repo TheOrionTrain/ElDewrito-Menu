@@ -28,7 +28,7 @@ StartConnection = function() {
 			dewRcon.send('player.printUID', function(ret) {
 				pname = res;
 				puid = ret.split(' ')[2];
-				
+
 				friendServer.send(JSON.stringify({
 					type: "connection",
 					message: " has connected.",
@@ -75,23 +75,23 @@ StartConnection = function() {
 							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
 						}
 					}
-					
+
 					if ($.inArray(result.player + ":" + result.guid, party) != -1) {
-						
+
 						party = $.grep(party, function(value) {
 						  return value != (result.player + ":" + result.guid);
 						});
-						
+
 						for (var i = 0; i < party.length; i++) {
 							friendServer.send(JSON.stringify({
 								type: "updateparty",
 								party: JSON.stringify(party),
 								guid: party[i].split(':')[1]
 							}));
-							
+
 							if (party[i].split(':')[1] == puid || party[i].split(':')[1] == result.guid)
 								continue;
-							
+
 							friendServer.send(JSON.stringify({
 								type: "notification",
 								message: result.player + " has left the party.",
@@ -102,7 +102,7 @@ StartConnection = function() {
 						$.snackbar({content: result.player + ' has left your party.'});
 						$('#notification')[0].currentTime = 0;
 						$('#notification')[0].play();
-						
+
 						loadParty();
 					}
 				break;
@@ -144,26 +144,26 @@ StartConnection = function() {
 					$.snackbar({content: result.player + ' has joined your party.'});
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
-					
+
 					party.push(result.player + ":" + result.pguid);
-					
+
 					for (var i = 0; i < party.length; i++) {
 						friendServer.send(JSON.stringify({
 							type: "updateparty",
 							party: JSON.stringify(party),
 							guid: party[i].split(':')[1]
 						}));
-						
+
 						if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
 							continue;
-							
+
 						friendServer.send(JSON.stringify({
 							type: "notification",
 							message: result.player + " has joined the party.",
 							guid: party[i].split(':')[1]
 						}));
 					}
-					
+
 					loadParty();
 				break;
 				case "acceptgame":
@@ -195,7 +195,12 @@ StartConnection = function() {
 					loadFriends();
 				break;
 				case "partymessage":
-					Chat.receiveMessage("Party Chat - " + party[0].split(':')[0], result.player + ": " + result.message);
+					var lead = party[0].split(':')[0];
+					if(result.player == lead) {
+						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message,1);
+					} else {
+						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message);
+					}
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);

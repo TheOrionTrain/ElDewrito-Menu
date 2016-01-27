@@ -82,11 +82,11 @@ var Chat = {
 			return false;
 		}
 	},
-	receiveMessage: function(player,message) {
+	receiveMessage: function(player,message,balloon) {
 		if(!Chat.isOpen(player)) {
 			Chat.createTab(player);
 		}
-		$('.chat-window[data-player="'+player+'"]').append("<span class='" + (message.split(': ')[0] == pname ? "chat-message self" : "chat-message") + "'>"+message+"</span>");
+		$('.chat-window[data-player="'+player+'"]').append("<span class='chat-message " + (message.split(': ')[0] == pname ? "self" : "") + "'>" + (balloon == 1 ? "<div class='balloon'></div> " : "")+message+"</span>");
 		$('.chat-window[data-player="'+player+'"]').scrollTop($('.chat-window[data-player="'+player+'"]')[0].scrollHeight);
 		Chat.showBox();
 	},
