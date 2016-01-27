@@ -66,7 +66,10 @@ var Chat = {
 		if(!Chat.isOpen(player)) {
 			Chat.createTab(player);
 		}
-		$('.chat-window[data-player="'+player+'"]').append("<span class='" + (message.split(': ')[0] == pname ? "chat-message self" : "chat-message") + "'>"+message+"</span>");
+		if (player.contains("Party Chat -"))
+			$('.chat-window[data-player="'+player+'"]').append((message.split(': ')[0] == party[0] ? "<img src='img/refresh.svg' />" : "") + "<span class='" + (message.split(': ')[0] == pname ? "chat-message self" : "chat-message") + "'>"+message+"</span>");
+		else		
+			$('.chat-window[data-player="'+player+'"]').append("<span class='" + (message.split(': ')[0] == pname ? "chat-message self" : "chat-message") + "'>"+message+"</span>");
 		$('.chat-window[data-player="'+player+'"]').scrollTop($('.chat-window[data-player="'+player+'"]')[0].scrollHeight);
 		Chat.showBox();
 		$('#notification')[0].currentTime = 0;

@@ -186,7 +186,7 @@ function submenu(action,friend,isOnline,o) {
 		$('#click-menu-container').show();
 	}
 	else if(action == "join") {
-		//jumpToServer(serverz.players[friend].address);
+		jumpToServer(serverz.players[friend].address);
 		$('#click-menu-container').hide();
 	} else if (action == "message") {
 		if(!Chat.isOpen(friend.contains(":0x") ? friend.split(':')[0] : friend))
