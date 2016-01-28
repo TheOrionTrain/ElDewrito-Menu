@@ -85,7 +85,7 @@ StartConnection = function() {
 							if (party[0].split(':')[0] == result.player)
 								Chat.renameTab("Party Chat - " + result.player, "Party Chat - " + party[1].split(':')[0]);
 						}
-
+						
 						party = $.grep(party, function(value) {
 						  return value != (result.player + ":" + result.guid);
 						});
@@ -97,7 +97,7 @@ StartConnection = function() {
 								guid: party[i].split(':')[1]
 							}));
 
-							if (party[i].split(':')[1] == puid || party[i].split(':')[1] == result.guid)
+							if (party[0].split(':')[1] == puid)
 								continue;
 
 							friendServer.send(JSON.stringify({
