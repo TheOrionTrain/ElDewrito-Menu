@@ -86,34 +86,32 @@ StartConnection = function() {
 								Chat.renameTab("Party Chat - " + result.player, "Party Chat - " + party[1].split(':')[0]);
 						}
 						
-						if (party[0].split(':')[1] == puid) {
-							party = $.grep(party, function(value) {
-							  return value != (result.player + ":" + result.guid);
-							});
+						party = $.grep(party, function(value) {
+						  return value != (result.player + ":" + result.guid);
+						});
 
-							for (var i = 0; i < party.length; i++) {
-								friendServer.send(JSON.stringify({
-									type: "updateparty",
-									party: JSON.stringify(party),
-									guid: party[i].split(':')[1]
-								}));
+						for (var i = 0; i < party.length; i++) {
+							friendServer.send(JSON.stringify({
+								type: "updateparty",
+								party: JSON.stringify(party),
+								guid: party[i].split(':')[1]
+							}));
 
-								if (party[0].split(':')[1] == puid)
-									continue;
+							if (party[0].split(':')[1] == puid)
+								continue;
 
-								friendServer.send(JSON.stringify({
-									type: "notification",
-									message: result.player + " has left the party.",
-									guid: party[i].split(':')[1]
-								}));
-							}
-
-							$.snackbar({content: result.player + ' has left your party.'});
-							$('#notification')[0].currentTime = 0;
-							$('#notification')[0].play();
-
-							loadParty();
+							friendServer.send(JSON.stringify({
+								type: "notification",
+								message: result.player + " has left the party.",
+								guid: party[i].split(':')[1]
+							}));
 						}
+
+						$.snackbar({content: result.player + ' has left your party.'});
+						$('#notification')[0].currentTime = 0;
+						$('#notification')[0].play();
+
+						loadParty();
 					}
 				break;
 				case "pm":
