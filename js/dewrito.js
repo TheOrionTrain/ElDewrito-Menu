@@ -58,6 +58,11 @@ var Chat = {
 		var n = $('.chat-tab').length;
 		$('.chat-tab').css('width',Math.floor(420/n)+'px');
 	},
+	renameTab: function(name) {
+		$('.chat-tab[data-player="'+player+'"]').text(name);
+		$('#chat-windows').attr("data-player", name);
+		$('#chat-tabs').attr("data-player", name);
+	},
 	destroyTab: function(player) {
 		if(player == Chat.currentTab) {
 			$('.chat-window[data-player="'+player+'"]').remove();
