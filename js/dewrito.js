@@ -59,7 +59,7 @@ var Chat = {
 		$('.chat-tab').css('width',Math.floor(420/n)+'px');
 	},
 	renameTab: function(previous, name) {
-		$('.chat-tab[data-player="'+previous+'"]').text(name);
+		$('.chat-tab[data-player="'+previous+'"]').text(name + "<div class='x'></div>");
 		$('.chat-tab[data-player="'+previous+'"]').attr("data-player", name);
 		$('.chat-window[data-player="'+previous+'"]').attr("data-player", name);
 	},
