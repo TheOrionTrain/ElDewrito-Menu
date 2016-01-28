@@ -1494,7 +1494,7 @@ function startgame(ip, mode, pass) {
 					type: 'connect',
 					guid: party[i].split(':')[1],
 					address: ip,
-					password: password;
+					password: password
 				}));
 			}
 		}
