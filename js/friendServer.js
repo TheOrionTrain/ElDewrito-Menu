@@ -73,7 +73,9 @@ StartConnection = function() {
 							$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
 							if (party[0].split(':')[0] == result.player)
 								$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').append("<span class='chat-message alert'>" + party[1].split(':')[0] + " is the new party leader.</span>");
-							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
+							$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').scrollTop($('.chat-window[data-player="' + "Party Chat - " + result.player + '"]')[0].scrollHeight);
+							if (party[0].split(':')[0] == result.player)
+								Chat.renameTab("Party Chat - " + party[1].split(':')[0]);
 						}
 						
 						if(Chat.isOpen(result.player)) {
