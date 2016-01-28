@@ -235,7 +235,7 @@ function partyInvite(accepted, guid) {
 			guid: guid,
 			pguid: puid
 		}));
-	} else {
+	} else if (party.length > 1) {
 		$.snackbar({content: "You are already in a party."});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
