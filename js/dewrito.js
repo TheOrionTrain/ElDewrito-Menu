@@ -480,7 +480,7 @@ function quickJoin() {
 		if (i == serverz.servers.length - 1) {
 			jumpToServer(currentServer.address);
 			setTimeout(function() {
-				startgame(currentServer.address, 'JOIN GAME'.split(' '));
+				startgame(currentServer.address, 'JOIN GAME'.split(' '), "");
 			}, 500);
 		}
 	}
@@ -554,7 +554,7 @@ function loadParty() {
 function updateFriends() {
 	for (var i = 0; i < onlinePlayers.length; i++) {
 		for (var o = 0; o < friends.length; o++) {
-			if ((!friends[o].contains(":0x") && friends[o] == onlinePlayers[i].split(':')[0]) || (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0])) {
+			if (((!friends[o].contains(":0x") || friends[o].contains(":n")) && friends[o] == onlinePlayers[i].split(':')[0]) || (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0])) {
 				friends[o] = onlinePlayers[i];
 				localStorage.setItem("friends", JSON.stringify(friends));
 			}
@@ -918,9 +918,9 @@ $(document).ready(function() {
 	$('#start').click(function() {
 		var mode = $('#start').children('.label').text().toString().split(" ");
 		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
-			startgame("127.0.0.1:11775", mode);
+			startgame("127.0.0.1:11775", mode, "");
 		else
-			startgame(currentServer.address, mode);
+			startgame(currentServer.address, mode, "");
 	});
 	Mousetrap.bind('enter up up down down left right left right b a enter', function() {
 		settings.background.current = 9001;
@@ -1432,7 +1432,7 @@ function hasMap(map) {
     }
 }
 
-function startgame(ip, mode) {
+function startgame(ip, mode, pass) {
 	//console.log(getMapName(currentServer.mapFile.toString()).toLowerCase());
 	if (!dewRconConnected) {
 		dewAlert({
@@ -1458,8 +1458,8 @@ function startgame(ip, mode) {
 	}
 
 	loopPlayers = false;
-	var password;
-	if (mode[0] === "JOIN")
+	var password = pass;
+	if (mode[0] === "JOIN" && pass == "")
 		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
 
 	if ((typeof currentServer.players.current != 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
@@ -1493,7 +1493,8 @@ function startgame(ip, mode) {
 				friendServer.send(JSON.stringify({
 					type: 'connect',
 					guid: party[i].split(':')[1],
-					address: ip
+					address: ip,
+					password: password;
 				}));
 			}
 		}
