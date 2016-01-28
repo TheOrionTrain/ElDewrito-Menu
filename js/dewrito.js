@@ -496,6 +496,7 @@ function jumpToServer(ip) {
 		browsing = 0;
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		console.log(d);
 		if(d.numPlayers == d.maxPlayers) {
 			dewAlert({
 				title: "Server Full",
@@ -900,6 +901,9 @@ $(document).ready(function() {
 	});
 	$('#direct-connect').click(function() {
 		directConnect();
+	});
+	$('#quit').click(function() {
+		dewRcon.send('Game.SetMenuEnabled 0');
 	});
 	$('#clear').click(function() {
 		clearFilters();
