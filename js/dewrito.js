@@ -58,10 +58,10 @@ var Chat = {
 		var n = $('.chat-tab').length;
 		$('.chat-tab').css('width',Math.floor(420/n)+'px');
 	},
-	renameTab: function(name, previous) {
+	renameTab: function(previous, name) {
+		$('.chat-tab[data-player="'+previous+'"]').text(name);
 		$('.chat-tab[data-player="'+previous+'"]').attr("data-player", name);
 		$('.chat-window[data-player="'+previous+'"]').attr("data-player", name);
-		$('.chat-tab[data-player="'+name+'"]').text(name);
 	},
 	destroyTab: function(player) {
 		if(player == Chat.currentTab) {
@@ -610,6 +610,16 @@ function loadFriends() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
 	});
+	
+	/*$('#party .friend').click(function(e) {
+		if($(this).hasClass("online")) {
+			submenu("show",$(this).text(),1,e);
+		} else {
+			submenu("show",$(this).text(),0,e);
+		}
+		$('#slide')[0].currentTime = 0;
+		$('#slide')[0].play();
+	});*/
 }
 
 function getPlayerName(UID) {
