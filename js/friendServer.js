@@ -69,15 +69,6 @@ StartConnection = function() {
 			switch (result.type) {
 				case "disconnected":
 					if ($.inArray(result.player + ":" + result.guid, friends) != -1 || $.inArray(result.player, friends) != -1) {
-						if (Chat.isOpen("Party Chat - " + result.player)) {
-							$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
-							if (party[0].split(':')[0] == result.player)
-								$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').append("<span class='chat-message alert'>" + party[1].split(':')[0] + " is the new party leader.</span>");
-							$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').scrollTop($('.chat-window[data-player="' + "Party Chat - " + result.player + '"]')[0].scrollHeight);
-							if (party[0].split(':')[0] == result.player)
-								Chat.renameTab("Party Chat - " + party[1].split(':')[0]);
-						}
-						
 						if(Chat.isOpen(result.player)) {
 							$('.chat-window[data-player="'+result.player+'"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
 							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
@@ -85,6 +76,15 @@ StartConnection = function() {
 					}
 
 					if ($.inArray(result.player + ":" + result.guid, party) != -1) {
+						
+						if (Chat.isOpen("Party Chat - " + party[0].split(':')[0])) {
+							$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
+							if (party[0].split(':')[0] == result.player)
+								$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').append("<span class='chat-message alert'>" + party[1].split(':')[0] + " is the new party leader.</span>");
+							$('.chat-window[data-player="' + "Party Chat - " + result.player + '"]').scrollTop($('.chat-window[data-player="' + "Party Chat - " + result.player + '"]')[0].scrollHeight);
+							if (party[0].split(':')[0] == result.player)
+								Chat.renameTab("Party Chat - " + result.player, "Party Chat - " + party[1].split(':')[0]);
+						}
 
 						party = $.grep(party, function(value) {
 						  return value != (result.player + ":" + result.guid);

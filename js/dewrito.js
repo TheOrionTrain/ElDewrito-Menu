@@ -58,10 +58,10 @@ var Chat = {
 		var n = $('.chat-tab').length;
 		$('.chat-tab').css('width',Math.floor(420/n)+'px');
 	},
-	renameTab: function(name) {
-		$('.chat-tab[data-player="'+player+'"]').text(name);
-		$('#chat-windows').attr("data-player", name);
-		$('#chat-tabs').attr("data-player", name);
+	renameTab: function(name, previous) {
+		$('.chat-tab[data-player="'+previous+'"]').attr("data-player", name);
+		$('.chat-window[data-player="'+previous+'"]').attr("data-player", name);
+		$('.chat-tab[data-player="'+name+'"]').text(name);
 	},
 	destroyTab: function(player) {
 		if(player == Chat.currentTab) {
