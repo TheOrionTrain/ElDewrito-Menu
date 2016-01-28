@@ -171,7 +171,7 @@ StartConnection = function() {
 				case "connect":
 					jumpToServer(result.address);
 					setTimeout(function() {
-						startgame(result.address, 'JOIN GAME'.split(' '));
+						startgame(result.address, 'JOIN GAME'.split(' '), result.password);
 					}, 500);
 				break;
 				case "notification":
