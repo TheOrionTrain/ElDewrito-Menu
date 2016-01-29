@@ -1563,6 +1563,9 @@ function startgame(ip, mode, pass) {
 				$('#mapOverlay').css('opacity', '0.8');
 				$('#loading').show();
 				$('#back').hide();
+				setTimeout(function() {
+					dewRcon.send('Game.SetMenuEnabled 0');
+				}, 10000);
 			} else {
 				dewRcon.send('Game.SetMenuEnabled 0');
 			}
