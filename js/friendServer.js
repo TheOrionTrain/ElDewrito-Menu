@@ -35,7 +35,8 @@ StartConnection = function() {
 					guid: ret.split(' ')[2],
 					player: res
 				}));
-
+				
+				party = [];
 				party.push(res + ":" + ret.split(' ')[2]);
 				loadParty();
 			});
