@@ -15,11 +15,11 @@ var friendServer,
 	puid,
 	onlinePlayers = {},
 	party = [];
-jQuery(function() {
+/*jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
 		StartConnection();
 	}
-});
+});*/
 
 StartConnection = function() {
     friendServer = new friendServerHelper();
@@ -44,6 +44,12 @@ StartConnection = function() {
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         friendServerConnected = true;
+    };
+	friendServer.friendsServerSocket.onclose = function() {
+        $.snackbar({content:'Lost Connection to Friend Server'});
+		$('#notification')[0].currentTime = 0;
+		$('#notification')[0].play();
+        friendServerConnected = false;
     };
     friendServer.friendsServerSocket.onerror = function() {
 		if(!snacking) {
