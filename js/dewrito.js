@@ -1482,7 +1482,7 @@ function startgame(ip, mode, pass) {
 	if (mode[0] === "JOIN" && pass == "")
 		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
 
-	if ((typeof currentServer.players.current != 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
+	if ((typeof currentServer.players !== 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
 		dewAlert({
 			title: "Server Full",
 			content: 'This server is full, try joining a different one.',
@@ -1494,7 +1494,7 @@ function startgame(ip, mode, pass) {
 	}
 
 	if (party.length > 1) {
-		if ((typeof currentServer.players.current != 'undefined' && (currentServer.players.current + party.length) == currentServer.players.max) || (typeof currentServer.numPlayers != 'undefined' && (currentServer.numPlayers + party.length) == currentServer.maxPlayers)) {
+		if ((typeof currentServer.players !== 'undefined' && (currentServer.players.current + party.length) == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && (currentServer.numPlayers + party.length) == currentServer.maxPlayers)) {
 			dewAlert({
 				title: "Not Enough Slots",
 				content: 'There are not enough slots for your party, try joining a different one.',
@@ -1519,6 +1519,8 @@ function startgame(ip, mode, pass) {
 			}
 		}
 	}
+	
+	console.log(password);
 
 	$('#beep')[0].play();
 	setTimeout(function() {
