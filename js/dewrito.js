@@ -329,7 +329,7 @@ function loadSettings(i) {
 						dewRcon.send("game.listmaps", function(res) {
 							mapList = new Array(res.split(','));
 						});
-						StartConnection();
+						setTimeout(StartConnection, 500);
 				}
 			}
 		}
