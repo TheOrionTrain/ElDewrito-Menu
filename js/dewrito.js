@@ -224,6 +224,7 @@ function queryServer(serverInfo, i, browser) {
 			"status": sanitizeString(serverInfo.status),
 			"eldewritoVersion": sanitizeString(serverInfo.eldewritoVersion),
 			"ping": parseInt(serverInfo.ping),
+			"location_flag": typeof serverInfo.location_flag == 'undefined' ? "[ " : (serverInfo.location_flag.contains("base64") || serverInfo.location_flag.toLowerCase().contains("rcon")) ? "undefined" : serverInfo.location_flag,
 			"players": {
 				"max": parseInt(serverInfo.maxPlayers),
 				"current": parseInt(serverInfo.numPlayers)
@@ -277,10 +278,11 @@ function addServer(i) {
 		return;
 	++gp_servers;
 	var on = (!servers[i].variant) ? "" : "on";
+	servers[i].location_flag = typeof servers[i].location_flag == 'undefined' ? "[" : servers[i].location_flag;
 	servers[i].ping = servers[i].ping || 0;
 	var sprint = (servers[i].sprintEnabled == 1) ? "<img class='sprint' src='img/sprint.png'>" : " ";
 
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ") [<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
