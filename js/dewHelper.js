@@ -209,3 +209,34 @@ function submenu(action,friend,isOnline,o) {
 		$('#click-menu-container').hide();
 	}
 }
+
+function partysubmenu(action,friend,o) {
+	if(action == "cancel") {
+		$('#click-menu-container').hide();
+	}
+	if(action == "show") {
+		console.log(o.pageX/scale);
+		if (getPlayerUIDFromFriends(friend) == "") {
+			$('#party-click-menu li.notfriend').show();
+		} else {
+			$('#party-click-menu li.notfriend').hide();
+		}
+		$('#party-click-menu').css({"left":o.pageX/scale+"px","top":o.pageY/scale+"px"}).attr("data-friend",friend);
+		$('#click-menu-container').show();
+	}
+	else if(action == "kick") {
+		friendServer.send(JSON.stringify({
+			type: "kick",
+			player: friend,
+			guid: getPlayerUID(friend)
+		}));
+		$('#click-menu-container').hide();
+	} else if (action == "message") {
+		if(!Chat.isOpen(friend.contains(":0x") ? friend.split(':')[0] : friend))
+			Chat.createTab(friend.contains(":0x") ? friend.split(':')[0] : friend);
+		Chat.showBox();
+	} else if(action == "add") {
+		addFriend(friend + ":" + getPlayerUID(friend));
+		$('#click-menu-container').hide();
+	}
+}
