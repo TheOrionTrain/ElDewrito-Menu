@@ -614,15 +614,11 @@ function loadFriends() {
 		$('#slide')[0].play();
 	});
 	
-	/*$('#party .friend').click(function(e) {
-		if($(this).hasClass("online")) {
-			submenu("show",$(this).text(),1,e);
-		} else {
-			submenu("show",$(this).text(),0,e);
-		}
+	$('#party .friend').click(function(e) {
+		partysubmenu("show",$(this).text(),e);
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
-	});*/
+	});
 }
 
 function getPlayerName(UID) {
@@ -657,8 +653,7 @@ function getPlayerUIDFromFriends(name) {
 	return "";
 }
 
-function addFriend() {
-	var name = $('#friend-input').val();
+function addFriend(name) {
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
 		if(friends.indexOf(name) == -1) {
@@ -799,7 +794,7 @@ $(document).ready(function() {
 	$('#friend-add').click(function() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
-		addFriend();
+		addFriend($('#friend-input').val());
 	});
 	$('#click-menu li').click(function() {
 		submenu($(this).attr('data-action'),$('#click-menu').attr('data-friend'));

@@ -113,10 +113,14 @@ StartConnection = function() {
 								guid: party[i].split(':')[1]
 							}));
 						}
-
-						$.snackbar({content: result.player + ' has left your party.'});
-						$('#notification')[0].currentTime = 0;
-						$('#notification')[0].play();
+						
+						if (party[0].split(':')[1] == puid) {
+							
+							$.snackbar({content: result.player + ' has left your party.'});
+							$('#notification')[0].currentTime = 0;
+							$('#notification')[0].play();
+							
+						}
 
 						loadParty();
 					}
