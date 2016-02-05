@@ -500,7 +500,7 @@ function jumpToServer(ip) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		console.log(d);
-		if(d.numPlayers == d.maxPlayers) {
+		if((typeof d.players !== 'undefined' && typeof d.players.current !== 'undefined' && d.players.current == d.players.max) || (typeof d.numPlayers !== 'undefined' && d.numPlayers == d.maxPlayers)) {
 			dewAlert({
 				title: "Server Full",
 				content: 'This server is full, try joining a different one.',
@@ -1223,7 +1223,7 @@ function playersJoin(number, max, time, ip) {
 
 function joinServer(details) {
 	var d = servers[details];
-	if (d.players.current != d.players.max) {
+	if ((typeof d.players !== 'undefined' && typeof d.players.current !== 'undefined' && d.players.current != d.players.max) || (typeof d.numPlayers !== 'undefined' && d.numPlayers != d.maxPlayers)) {
 		host = 0;
 		browsing = 0;
 		$('#lobby').empty();
@@ -1474,7 +1474,7 @@ function startgame(ip, mode, pass) {
 	if (mode[0] === "JOIN" && pass == "")
 		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
 
-	if ((typeof currentServer.players !== 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
+	if ((typeof currentServer.players !== 'undefined' && typeof currentServer.players.current !== 'undefined'&& currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
 		dewAlert({
 			title: "Server Full",
 			content: 'This server is full, try joining a different one.',
