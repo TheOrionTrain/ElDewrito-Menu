@@ -14,7 +14,8 @@ StartRconConnection = function() {
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         dewRconConnected = true;
-				loadSettings(Object.keys(settings).length);
+		//loadSettings(Object.keys(settings).length);
+		loadSettings(0);
     };
     dewRcon.dewWebSocket.onerror = function() {
 		if(!snacking) {
@@ -36,7 +37,7 @@ StartRconConnection = function() {
 		}
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
-		console.log(message.data);
+		//console.log(message.data);
 		if (typeof dewRcon.callback == 'function')
 			dewRcon.callback(message.data);
         dewRcon.lastMessage = message.data;
