@@ -309,7 +309,6 @@ function addServer(i) {
 
 var settingsToLoad = [['gamemenu', 'game.menuurl'], ['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version'], ['maplist', 'game.listmaps']];
 var loadedSettings = false;
-
 var mapList;
 
 function loadSettings(i) {
@@ -333,6 +332,7 @@ function loadSettings(i) {
 	} else {
 		if (!friendServerConnected)
 			StartConnection();
+		loadedSettings = true;
 	}
 }
 
