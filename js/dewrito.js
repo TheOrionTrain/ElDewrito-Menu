@@ -307,38 +307,33 @@ function addServer(i) {
 	});
 }
 
-var settingsToLoad = [['gamemenu', 'game.menuurl'], ['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version']];
+var settingsToLoad = [['gamemenu', 'game.menuurl'], ['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version'], ['maplist', 'game.listmaps']];
 var loadedSettings = false;
 
 var mapList;
 
 function loadSettings(i) {
-	setTimeout(function() {
-		for (var l = 0; l < settingsToLoad.length; l++) {
-			if (Object.keys(settings)[i] == settingsToLoad[l][0]) {
-				dewRcon.send(settingsToLoad[l][1]);
+	if (i != settingsToLoad.length) {
+		if (settingsToLoad[i][0] == "serverpass")
+			i++;
+		dewRcon.send(settingsToLoad[i][1], function(ret) {
+			if (settingsToLoad[i][0] == "gameversion") {
+				settings[settingsToLoad[i][0]].set(ret);
+				$('#version').text("Eldewrito " + ret);
+			} else if (settingsToLoad[i][0] == "maplist") {
+				mapList = new Array(ret.split(','));
+			} else {
+				settings[settingsToLoad[i][0]].current = ret;
+				settings[settingsToLoad[i][0]].update();
+				console.log(settingsToLoad[i][0] + ": " + settings[settingsToLoad[i][0]].current);
 			}
-			if (Object.keys(settings)[i + 1] == settingsToLoad[l][0]) {
-				settings[Object.keys(settings)[i + 1]].current = (Object.keys(settings)[i + 1] == "serverpass" && (parseFloat(settings.saturation.current) == parseFloat(dewRcon.lastMessage))) ? "" : dewRcon.lastMessage;
-				settings[Object.keys(settings)[i + 1]].update();
-				console.log(Object.keys(settings)[i + 1] + ": " + settings[Object.keys(settings)[i + 1]].current);
-				if (Object.keys(settings)[i + 1] == 'gameversion') {
-						settings[Object.keys(settings)[i + 1]].set(dewRcon.lastMessage);
-						$('#version').text("Eldewrito " + dewRcon.lastMessage);
-				}
-				if (Object.keys(settings)[i + 1] == 'gameversion') {
-						loadedSettings = true;
-						dewRcon.send("game.listmaps", function(res) {
-							mapList = new Array(res.split(','));
-						});
-						setTimeout(StartConnection, 500);
-				}
-			}
-		}
-		if (--i) {
+			i++;
 			loadSettings(i);
-		}
-	}, 5);
+		});
+	} else {
+		if (!friendServerConnected)
+			StartConnection();
+	}
 }
 
 function initialize() {
