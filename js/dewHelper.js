@@ -89,10 +89,10 @@ function brighter(color) {
 function clearAllCookies() {
 	for (var i = 0; i < Object.keys(settings).length; i++) {
 		var set = Object.keys(settings)[i];
-		localStorage.removeItem(set);
+		//localStorage.removeItem(set);
 	}
-	localStorage.removeItem('song');
-	localStorage.removeItem('album');
+	//localStorage.removeItem('song');
+	//localStorage.removeItem('album');
 	alert("All cookies reset.");
 	window.location.reload();
 }

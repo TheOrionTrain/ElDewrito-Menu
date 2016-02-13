@@ -12,7 +12,7 @@ var players = [],
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
 	currentSetting = "menu",
-	currentAlbum = isset(localStorage.getItem('album'), "halo3"),
+	currentAlbum = "halo3",
 	currentServer,
 	selectedserver,
 	loopPlayers,
@@ -28,14 +28,14 @@ var players = [],
 	sortSprint = false,
 	Halo3Index = 7,
 	currentVersion,
-	usingGamepad = true,
+	usingGamepad = false,
 	currentMenu = "main2",
 	debug = false,
 	songs,
 	thisSong,
 	nextSong,
 	songIndex,
-	localBackground = isset(localStorage.getItem('localbackground'), 0),
+	localBackground = 0,
 	videoURL = "http://192.99.124.166/video/";
 
 var Chat = {
@@ -293,17 +293,17 @@ function addServer(i) {
 	});
 	filterServers();
 	if (usingGamepad && gp_servers == 1) {
-		gamepadSelect('serverbrowser-1');
+		//gamepadSelect('serverbrowser-1');
 	}
 	$('*[data-gp]').mouseenter(function() {
 		var a = $(this).attr('data-gp').split("-"),
 			b = parseInt(a[a.length-1]);
 		gp_on = b;
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 	});
 	$('*[data-gp]').mouseout(function() {
 		gp_on = 0;
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 	});
 }
 
@@ -312,10 +312,11 @@ var loadedSettings = false;
 var mapList;
 
 function loadSettings(i) {
+	return;
 	if (i != settingsToLoad.length) {
 		if (settingsToLoad[i][0] == "serverpass")
 			i++;
-		dewRcon.send(settingsToLoad[i][1], function(ret) {
+		dewrcon.send(settingsToLoad[i][1], function(ret) {
 			if (settingsToLoad[i][0] == "gameversion") {
 				settings[settingsToLoad[i][0]].set(ret);
 				$('#version').text("Eldewrito " + ret);
@@ -330,17 +331,18 @@ function loadSettings(i) {
 			loadSettings(i);
 		});
 	} else {
-		if (!friendServerConnected)
-			StartConnection();
+		/*if (!friendServerConnected)
+			StartConnection();*/
 		loadedSettings = true;
 	}
 }
 
 function initialize() {
-	getCurrentVersion();
+	//getCurrentVersion();
 	var set, b, g, i, e;
-	$.getJSON(settings.localmusic.current == 0 ? "music.json" : "http://halo.thefeeltra.in/music.json", function(j) {
+	$.getJSON("anvil://menu/music.json", function(j) {
 		songs = j;
+		console.log(songs);
 		for (i = 0; i < Object.keys(songs).length; i++) {
 			b = Object.keys(songs)[i];
 			$('#choosemusic').children('.music-select').append("<div data-gp='music-"+(i+1)+"' data-game='" + b + "' class='selection'><span class='label'>" + getGame(b).toUpperCase() + "</span></div>");
@@ -364,7 +366,7 @@ function initialize() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
 		});
-		changeSong2(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
+		changeSong2("Mythic Menu Theme");
 	});
 	for (i = 0; i < Object.keys(settings).length; i++) {
 		set = Object.keys(settings)[i];
@@ -418,11 +420,8 @@ function initialize() {
 			$('#types-' + b.replace(/\s/g, "")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
 		}
 	}
-	if(!localStorage.getItem('newlogo')) {
 		settings.logo.current = 1;
 		settings.logo.update();
-		localStorage.setItem('newlogo',1);
-	}
 }
 
 function changeSetting(s, by) {
@@ -453,7 +452,7 @@ function changeSetting(s, by) {
 	}
 	settings[s] = e;
 	e.update();
-	localStorage.setItem(s, e.current);
+	//localStorage.setItem(s, e.current);
 }
 
 function toggleNetwork() {
@@ -560,7 +559,7 @@ function updateFriends() {
 		for (var o = 0; o < friends.length; o++) {
 			if (((!friends[o].contains(":0x") || friends[o].contains(":n")) && friends[o] == onlinePlayers[i].split(':')[0]) || (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0])) {
 				friends[o] = onlinePlayers[i];
-				localStorage.setItem("friends", JSON.stringify(friends));
+				//localStorage.setItem("friends", JSON.stringify(friends));
 			}
 		}
 	}
@@ -572,7 +571,7 @@ function loadFriends() {
 	friends = JSON.parse(localStorage.getItem("friends"));
 	if(!friends || friends.length < 1) {
 		friends = [];
-		localStorage.setItem("friends", JSON.stringify(friends));
+		//localStorage.setItem("friends", JSON.stringify(friends));
 		$('#friends-online').text("0 Friends Online");
 		$('#friends').append("<div class='nofriends'>You have no friends :(<br/>Add some below</div>");
 		return false;
@@ -664,7 +663,7 @@ function addFriend(name) {
 					return 0;
 			});
 		}
-		localStorage.setItem("friends", JSON.stringify(friends));
+		//localStorage.setItem("friends", JSON.stringify(friends));
 		updateFriends();
 		loadFriends();
 	}
@@ -684,7 +683,7 @@ function removeFriend(name) {
 				if (isOnline(a) < isOnline(b)) return 1;
 				return 0;
 		});
-		localStorage.setItem("friends", JSON.stringify(friends));
+		//localStorage.setItem("friends", JSON.stringify(friends));
 		updateFriends();
 		loadFriends();
 	}
@@ -722,7 +721,7 @@ $(document).ready(function() {
 		if ($("[data-gp='" + currentMenu + "-" + (gp_on - 1) + "']").length > 0) {
 			gp_on -= 1;
 		}
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 		if (currentMenu == "serverbrowser") {
 			$('#browser').scrollTo('.server.gp-on');
 		}
@@ -737,7 +736,7 @@ $(document).ready(function() {
 		if ($("[data-gp='" + currentMenu + "-" + (gp_on + 1) + "']").length > 0) {
 			gp_on += 1;
 		}
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 		if (currentMenu == "serverbrowser") {
 			$('#browser').scrollTo('.server.gp-on');
 		}
@@ -808,11 +807,11 @@ $(document).ready(function() {
 		var a = $(this).attr('data-gp').split("-"),
 			b = parseInt(a[a.length-1]);
 		gp_on = b;
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 	});
 	$('*[data-gp]').mouseout(function() {
 		gp_on = 0;
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 	});
 	$('#dewmenu-button').click(function() {
 		dewAlert({
@@ -824,7 +823,7 @@ $(document).ready(function() {
 			callback: function(c) {
 				if(c) {
 					window.location = "http://scooterpsu.github.io/";
-					dewRcon.send('game.menuurl "http://scooterpsu.github.io/"');
+					//dewrcon.send('game.menuurl "http://scooterpsu.github.io/"');
 				}
 			}
 		});
@@ -842,10 +841,10 @@ $(document).ready(function() {
 	if (CSSfile) {
 		$('#style').attr('href', 'css/' + CSSfile + '.css');
 	}
-	gamepadBind();
+	//gamepadBind();
 	Mousetrap.bind('f11', function() {
 		setTimeout(function() {
-			dewRcon.send('Game.SetMenuEnabled 0');
+			//dewrcon.send('Game.SetMenuEnabled 0');
 		}, anit);
 	});
 	initialize();
@@ -853,7 +852,7 @@ $(document).ready(function() {
 	$('#notification')[0].play();
 	//getMasterServers();
 	//getTotalPlayers();
-	totalPlayersLoop();
+	//totalPlayersLoop();
 	$('#music')[0].addEventListener('ended', function() {
 		if (settings.shufflemusic.current === 1) {
 			changeSong2(nextSong);
@@ -909,9 +908,6 @@ $(document).ready(function() {
 	});
 	$('#direct-connect').click(function() {
 		directConnect();
-	});
-	$('#quit').click(function() {
-		dewRcon.send('Game.SetMenuEnabled 0');
 	});
 	$('#clear').click(function() {
 		clearFilters();
@@ -989,14 +985,14 @@ $(document).ready(function() {
 		changeMenu($(this).attr('data-action'));
 		if (usingGamepad) {
 			gp_on = p_gp_on;
-			gamepadSelect(currentMenu + "-" + p_gp_on);
+			//gamepadSelect(currentMenu + "-" + p_gp_on);
 		}
 	});
 	$('#back-options').click(function() {
 		changeMenuOptions($(this).attr('data-action'),1);
 		if (usingGamepad) {
 			gp_on = p_gp_on;
-			gamepadSelect(currentMenu + "-" + p_gp_on);
+			//gamepadSelect(currentMenu + "-" + p_gp_on);
 		}
 	});
 	if (getURLParameter('browser')) {
@@ -1032,6 +1028,7 @@ function lobbyLoop(ip) {
 	var success = false;
 	if (loopPlayers === false)
 		return;
+	return;
 	$.getJSON("http://" + ip, function(serverInfo) {
 		success = true;
 		console.log(currentServer);
@@ -1115,19 +1112,20 @@ function directConnect() {
 }
 
 function getCurrentVersion() {
+	return;
 	$.getJSON("http://tracks.thefeeltra.in/update", function(data) {
 		console.log(data);
 	});
 }
 
-var infoIP = "http://192.99.124.166:8080",
+/*var infoIP = "http://192.99.124.166:8080",
 	totallyLoopingPlayers = setInterval(totalPlayersLoop,10000);
 
 function totalPlayersLoop() {
 	$.getJSON(infoIP+"/all", function(data) {
 		serverz = data;
 		for (var i = 0; i < serverz.servers.length; i++) {
-			//if (!dewRconConnected) {
+			//if (!dewrconConnected) {
 				var startTime = Date.now(),
 				endTime,
 				ping;
@@ -1145,24 +1143,24 @@ function totalPlayersLoop() {
 					});
 				})(i);
 			/*} else {
-				dewRcon.send('Server.Ping "' + serverz.servers[i].address.split(':')[0] + '', function(res) {
+				//dewrcon.send('Server.Ping "' + serverz.servers[i].address.split(':')[0] + '', function(res) {
 					console.log(res);
 				});
 					//console.log(i);
-					//serverz.servers[i].ping = dewRcon.lastMessage.split(' ')[2];
+					//serverz.servers[i].ping = //dewrcon.lastMessage.split(' ')[2];
 			}*/
-		}
+		/*}
 		$('#players-online').text(serverz.count);
 		loadParty();
-		if (!friendServerConnected)
-			loadFriends();
-	}).fail(function(d) {
+		/*if (!friendServerConnected)
+			loadFriends();*/
+	/*}).fail(function(d) {
 		console.log(infoIP+" is currently down.");
 		infoIP = (infoIP == "http://192.99.124.166:8080" ? "http://servers.thefeeltra.in" : "http://192.99.124.166:8080");
 		console.log("Switched to "+infoIP+".");
 		totalPlayersLoop();
 	});
-}
+}*/
 
 function playersJoin(number, max, time, ip) {
 	$.getJSON("http://" + ip, function(serverInfo) {
@@ -1445,74 +1443,7 @@ function hasMap(map) {
 }
 
 function startgame(ip, mode, pass) {
-	//console.log(getMapName(currentServer.mapFile.toString()).toLowerCase());
-	if (!dewRconConnected) {
-		dewAlert({
-			title: "Not Connected",
-			content: 'You must be connected to the game to join or start a server.',
-			acceptText: "OK"
-		});
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play();
-		return;
-	}
-
-	console.log(currentServer);
-
-	if (!hasMap(currentServer.mapFile)) {
-		var map = getMapName(currentServer.mapFile);
-		dewAlert({
-			title: "Missing Map",
-			content: "You don't have " + ((map == "Edge" && currentServer.mapFile != "s3d_edge") ? currentServer.map : map) + ". Try finding it at <a href='https://www.reddit.com/r/HaloOnline/'>https://www.reddit.com/r/HaloOnline/</a>",
-			acceptText: "OK"
-		});
-		return;
-	}
-
-	loopPlayers = false;
-	var password = pass;
-	if (mode[0] === "JOIN" && pass == "")
-		password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
-
-	if ((typeof currentServer.players !== 'undefined' && typeof currentServer.players.current !== 'undefined'&& currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
-		dewAlert({
-			title: "Server Full",
-			content: 'This server is full, try joining a different one.',
-			acceptText: "OK"
-		});
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play();
-		return;
-	}
-
-	if (party.length > 1) {
-		if ((typeof currentServer.players !== 'undefined' && (currentServer.players.current + party.length) == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && (currentServer.numPlayers + party.length) == currentServer.maxPlayers)) {
-			dewAlert({
-				title: "Not Enough Slots",
-				content: 'There are not enough slots for your party, try joining a different one.',
-				acceptText: "OK"
-			});
-			$('#notification')[0].currentTime = 0;
-			$('#notification')[0].play();
-			return;
-		}
-
-		if (party[0].split(':')[1] == puid) {
-			for (var i = 0; i < party.length; i++ ) {
-				if (party[i].split(':')[1] == puid)
-					continue;
-
-				friendServer.send(JSON.stringify({
-					type: 'connect',
-					guid: party[i].split(':')[1],
-					address: ip,
-					password: password
-				}));
-			}
-		}
-	}
-	
-	console.log(password);
+	console.log(mode);
 
 	$('#beep')[0].play();
 	setTimeout(function() {
@@ -1529,25 +1460,6 @@ function startgame(ip, mode, pass) {
 	delay(function() {
 		if (mode[0] === "JOIN") {
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
-			dewRcon.send('connect ' + ip + ' ' + password, function (ret) {
-				if (!ret.contains("Attempting")) {
-					$.snackbar({
-						content: ret
-					});
-
-					$('#loading').hide();
-					$('#black').hide();
-					backButton.appendTo('body');
-					$.snackbar({
-						content: 'Failed to connect to server.'
-					});
-					$('#notification')[0].currentTime = 0;
-					$('#notification')[0].play();
-
-					return;
-				}
-			});
-			if (currentServer.status != "InLobby") {
 				$('#loadingMapName').text(currentServer.map.toString().toUpperCase().replace("BUNKERWORLD", "STANDOFF"));//lazy
 				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).replace(/ /g,"").toLowerCase() + '.png)');
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
@@ -1556,21 +1468,19 @@ function startgame(ip, mode, pass) {
 				$('#loading').show();
 				$('#back').hide();
 				setTimeout(function() {
-					dewRcon.send('Game.SetMenuEnabled 0');
+					//dewrcon.send('Game.SetMenuEnabled 0');
 				}, 10000);
-			} else {
-				dewRcon.send('Game.SetMenuEnabled 0');
-			}
-		} else if (mode[1] === "FORGE") {
-			$('#loadingMapName').text(currentServer.map.toString().toUpperCase());
-			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g,"").toLowerCase() + '.png)');
-			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
-			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g,"").toLowerCase() + '-overlay.png)');
+		} else if (mode[0] == "START" || mode[1] === "FORGE") {
+			$('#loadingMapName').text($('#currentmap').text().toString().toUpperCase());
+			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + $('#currentmap').text().toString().replace(/ /g,"").toLowerCase() + '.png)');
+			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + $('#currentmap').text().toString().capitalizeFirstLetter() + '.png)');
+			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + $('#currentmap').text().toString().replace(/ /g,"").toLowerCase() + '-overlay.png)');
 			$('#loading').show();
 			$('#back').hide();
-			dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
+			anvil.LoadMap('maps\\' + getMapFile($('#currentmap').text().toString().toLowerCase()) + '', 2, 5);
+			//dewrcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
 		} else if (mode[0] === "START" && mode[1] === "GAME") {
-			dewRcon.send('start');
+			//dewrcon.send('start');
 		}
 	}, 3700);
 }
@@ -1669,7 +1579,7 @@ function changeSettingsMenu(setting) {
 	if (usingGamepad) {
 		p_gp_on = gp_on;
 		gp_on = 1;
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', 'setting-settings');
 	debugLog(currentMenu);
@@ -1689,7 +1599,7 @@ function changeSettingsBack() {
 	currentMenu = last_menu;
 	if (usingGamepad) {
 		gp_on = 1;
-		gamepadSelect(last_menu + "-" + gp_on);
+		//gamepadSelect(last_menu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', last_back);
 	debugLog(currentMenu);
@@ -1784,8 +1694,8 @@ function changeMap2(map, click) {
 	$('#map-info-options').text(maps[currentGame][map]);
 	$('.map-select2 .selection').removeClass('selected');
 	$("[data-map='" + map + "']").addClass('selected');
-	if ($('#start').children('.label').text() != "JOIN GAME" && dewRconConnected)
-		dewRcon.send('map ' + getMapFile($('#currentmap').text()));
+	/*if ($('#start').children('.label').text() != "JOIN GAME" && dewrconConnected)
+		dewrcon.send('map ' + getMapFile($('#currentmap').text()));*/
 	if (browsing === 1 && click === true) {
 		$('#browser-map').text(map.toTitleCase());
 		changeMenu("options,serverbrowser,fade");
@@ -1862,7 +1772,7 @@ function changeSong1(game) {
 	if (usingGamepad) {
 		p_gp_on = gp_on;
 		gp_on = 1;
-		gamepadSelect(currentMenu + "-" + gp_on);
+		//gamepadSelect(currentMenu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', 'setting-settings');
 	$('#slide')[0].currentTime = 0;
@@ -1870,7 +1780,8 @@ function changeSong1(game) {
 }
 
 function changeSong2(song) {
-	var directory = settings.localmusic.current == 1 ? "music/" : "http://music.thefeeltra.in/";
+	var directory = "anvil://menu/music/";
+	console.log(songs);
 	songIndex = songs[currentAlbum].indexOf(song);
 	thisSong = songs[currentAlbum][songIndex];
 	nextSong = songs[currentAlbum][songIndex + 1];
@@ -1880,8 +1791,8 @@ function changeSong2(song) {
 	$('.music-select2 .selection').removeClass('selected');
 	$("[data-song='" + song + "']").addClass('selected');
 	$('#music').attr('src', directory + currentAlbum + "/" + song + '.ogg');
-	localStorage.setItem('song', song);
-	localStorage.setItem('album', currentAlbum);
+	//localStorage.setItem('song', song);
+	//localStorage.setItem('album', currentAlbum);
 	$.snackbar({
 		content: 'Now playing ' + song + ' from ' + getGame(currentAlbum) + '.'
 	});
@@ -1908,8 +1819,8 @@ function changeType2(type, click) {
 		});
 	}
 	debugLog(type);
-	if (dewRconConnected) {
-		dewRcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
+	if (dewrconConnected) {
+		//dewrcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
 	}
 	if (type == "")
 		type = "Slayer";
