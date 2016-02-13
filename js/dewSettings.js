@@ -1,6 +1,6 @@
 var user = {
-		"name": isset(localStorage.getItem('username'), "Your Username"),
-		"color": isset(localStorage.getItem('color'), "#ff0000"),
+		"name": "Your Username",
+		"color": "#ff0000",
 		"rank": 0,
 		"infsens": 0,
 		"armor": {
@@ -69,7 +69,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "MUSIC VOLUME",
-			"current": parseInt(isset(localStorage.getItem('musicvolume'), 25)),
+			"current": 25,
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -83,7 +83,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "EFFECTS VOLUME",
-			"current": parseInt(isset(localStorage.getItem('sfxvolume'), 25)),
+			"current": 25,
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -102,7 +102,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "SHUFFLE MUSIC",
-			"current": parseInt(isset(localStorage.getItem('shufflemusic'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -163,7 +163,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "BACKGROUND",
-			"current": parseInt(isset(localStorage.getItem('background'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 14,
 			"labels": [
@@ -185,11 +185,9 @@ var user = {
         ],
 			"increment": 1,
 			"update": function() {
-				videoURL = (infoIP == "http://192.99.124.166:8080") ? "http://192.99.124.166/video/" : "http://video.thefeeltra.in/";
-				console.log("Videos served from "+videoURL+".");
 				var c = settings.background.current,
 					l = settings.background.labels[c],
-					d = (localBackground == 1) ? "video/" : videoURL;
+					d = "Anvil://menu/video/";
 				$('#videos').empty();
 				if (l == "Random") {
 					var r = Math.floor(Math.random() * settings.background.labels.length - 1);
@@ -272,7 +270,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "LOAD BACKGROUNDS LOCALLY",
-			"current": parseInt(isset(localStorage.getItem('localbackground'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -291,7 +289,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "LOAD MUSIC LOCALLY",
-			"current": parseInt(isset(localStorage.getItem('localmusic'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -303,7 +301,7 @@ var user = {
 				var c = settings.localmusic.current;
 				localmusic = c;
 				if ($('#choosemusic').children('.music-select2').length > 0)
-					changeSong2(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
+					changeSong2("Mythic Menu Theme");
 				$("[data-option='localmusic']").children('.value').text(settings.localmusic.labels[c]);
 			}
 		},
@@ -311,7 +309,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "LOGO",
-			"current": parseInt(isset(localStorage.getItem('logo'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 4,
 			"labels": [
@@ -334,7 +332,7 @@ var user = {
 			"typeof": "select",
 			"category": "menu",
 			"name": "SERVER BROWSER STYLE",
-			"current": parseInt(isset(localStorage.getItem('browserstyle'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -380,14 +378,14 @@ var user = {
 			"typeof": "input",
 			"category": "eldewrito",
 			"name": "USERNAME",
-			"current": parseInt(isset(localStorage.getItem('username'), "Your Username")),
+			"current": "Your Username",
 			"update": function() {
 				var c = settings.username.current;
 				user.name = c;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send("player.name \"" + c + "\"");
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				$("[data-option='username']").children('.input').children('input').val(c);
 			}
 		},
@@ -395,7 +393,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "CONTROLS METHOD",
-			"current": parseInt(isset(localStorage.getItem('keypad'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -412,7 +410,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "INFANTRY SENSITIVITY",
-			"current": parseInt(isset(localStorage.getItem('infsens'), 50)),
+			"current": 50,
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -425,7 +423,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "VEHICLE SENSITIVITY",
-			"current": parseInt(isset(localStorage.getItem('vehsens'), 50)),
+			"current": 50,
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -438,7 +436,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "MOUSE ACCELERATION",
-			"current": parseInt(isset(localStorage.getItem('mouseacceleration'), 50)),
+			"current": 50,
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -452,7 +450,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "RAW INPUT",
-			"current": parseInt(isset(localStorage.getItem('rawinput'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -462,10 +460,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.rawinput.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('input.rawinput ' + c);
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				$("[data-option='rawinput']").children('.value').text(settings.rawinput.labels[c]);
 			}
 		},
@@ -473,7 +471,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "INVERT MOUSE",
-			"current": parseInt(isset(localStorage.getItem('invertmouse'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -491,7 +489,7 @@ var user = {
 			"typeof": "select",
 			"category": "controls",
 			"name": "TOGGLE CROUCH",
-			"current": parseInt(isset(localStorage.getItem('togglecrouch'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -509,7 +507,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "CENTERED CROSSHAIR",
-			"current": parseInt(isset(localStorage.getItem('centeredcrosshair'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -519,10 +517,10 @@ var user = {
 			"increment": 1,
 			"update": function() {
 				var c = settings.centeredcrosshair.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('camera.crosshair ' + c);
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				//dewRcon.send('camera.crosshair ' + settings.centeredcrosshair.labels[c] === "ON" ? '1' : '0');
 				//dewRcon.send('writeconfig');
 				$("[data-option='centeredcrosshair']").children('.value').text(settings.centeredcrosshair.labels[c]);
@@ -532,7 +530,7 @@ var user = {
 			"typeof": "select",
 			"category": "gameplay",
 			"name": "HUD SHAKE",
-			"current": parseInt(isset(localStorage.getItem('hudshake'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -549,7 +547,7 @@ var user = {
 			"typeof": "select",
 			"category": "gameplay",
 			"name": "PLAYER MARKER COLORS",
-			"current": parseInt(isset(localStorage.getItem('markercolors'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -567,16 +565,16 @@ var user = {
 			"typeof": "select",
 			"category": "gameplay",
 			"name": "FOV",
-			"current": parseInt(isset(localStorage.getItem('fov'), 90)),
+			"current": 90,
 			"min": 40,
 			"max": 150,
 			"increment": 5,
 			"update": function() {
 				var c = parseFloat(settings.fov.current);
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('camera.fov ' + c);
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				$("[data-option='fov']").children('.value').text(c.toFixed(2));
 			}
 		},
@@ -584,16 +582,16 @@ var user = {
 			"typeof": "select",
 			"category": "host",
 			"name": "START TIMER",
-			"current": parseInt(isset(localStorage.getItem('starttimer'), 5)),
+			"current": 5,
 			"min": 0,
 			"max": 20,
 			"increment": 1,
 			"update": function() {
 				var c = settings.starttimer.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('server.countdown ' + c);
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				$("[data-option='starttimer']").children('.value').text(c);
 			}
 		},
@@ -601,16 +599,16 @@ var user = {
 			"typeof": "select",
 			"category": "host",
 			"name": "MAX PLAYERS",
-			"current": parseInt(isset(localStorage.getItem('maxplayers'), 16)),
+			"current": 16,
 			"min": 1,
 			"max": 16,
 			"increment": 1,
 			"update": function() {
 				var c = settings.maxplayers.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('server.maxplayers ' + c);
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				$("[data-option='maxplayers']").children('.value').text(c);
 			}
 		},
@@ -618,15 +616,15 @@ var user = {
 			"typeof": "input",
 			"category": "host",
 			"name": "SERVER NAME",
-			"current": parseInt(isset(localStorage.getItem('servername'), "Halo Online Server")),
+			"current": "Anvil Online Server",
 			"update": function() {
 				var c = settings.servername.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						console.log(c);
 						dewRcon.send("server.name \"" + c + "\"");
 						dewRcon.send('writeconfig');
 						console.log(c);
-				}
+				}*/
 				$("[data-option='servername']").children('.input').children('input').val(c);
 			}
 		},
@@ -634,13 +632,13 @@ var user = {
 			"typeof": "input",
 			"category": "host",
 			"name": "SERVER PASSWORD",
-			"current": parseInt(isset(localStorage.getItem('serverpass'), "")),
+			"current": "",
 			"update": function() {
 				var c = settings.serverpass.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('server.password ' + c);
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				$("[data-option='serverpass']").children('.input').children('input').val(c);
 			}
 		},
@@ -648,7 +646,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "VSYNC",
-			"current": parseInt(isset(localStorage.getItem('vsync'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -665,7 +663,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "DIRECTX 9.0 EXTENSIONS",
-			"current": parseInt(isset(localStorage.getItem('directx9ext'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -682,7 +680,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "SHOW FPS COUNTER",
-			"current": parseInt(isset(localStorage.getItem('showfps'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -699,7 +697,7 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "DISABLE INTRO VIDEOS",
-			"current": parseInt(isset(localStorage.getItem('introvideos'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -716,16 +714,16 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "SATURATION",
-			"current": parseInt(isset(localStorage.getItem('saturation'), parseFloat(1))),
+			"current": parseFloat(1),
 			"min": -10,
 			"max": 10,
 			"increment": 0.1,
 			"update": function() {
 				var c = parseFloat(settings.saturation.current);
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.saturation ' + c);
 						dewRcon.send('writeconfig');
-				}
+				}*/
 				$("[data-option='saturation']").children('.value').text(c.toFixed(2));
 			}
 		},
@@ -733,15 +731,15 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "RED",
-			"current": parseInt(isset(localStorage.getItem('red'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.red.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.redhue ' + c);
-				}
+				}*/
 				$("[data-option='red']").children('.value').text(c.toFixed(2));
 			}
 		},
@@ -749,15 +747,15 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "BLUE",
-			"current": parseInt(isset(localStorage.getItem('blue'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.blue.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.bluehue ' + c);
-				}
+				}*/
 				$("[data-option='blue']").children('.value').text(c.toFixed(2));
 			}
 		},
@@ -765,15 +763,15 @@ var user = {
 			"typeof": "select",
 			"category": "eldewrito",
 			"name": "GREEN",
-			"current": parseInt(isset(localStorage.getItem('green'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"increment": 0.05,
 			"update": function() {
 				var c = settings.green.current;
-				if (dewRconConnected && loadedSettings) {
+				/*if (dewRconConnected && loadedSettings) {
 						dewRcon.send('graphics.greenhue ' + c);
-				}
+				}*/
 				$("[data-option='green']").children('.value').text(c.toFixed(2));
 			}
 		},
@@ -781,7 +779,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "QUALITY PRESET",
-			"current": parseInt(isset(localStorage.getItem('quality'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -799,7 +797,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "BRIGHTNESS",
-			"current": parseInt(isset(localStorage.getItem('brightness'), 50)),
+			"current": 50,
 			"min": 0,
 			"max": 100,
 			"increment": 5,
@@ -812,7 +810,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "FULLSCREEN",
-			"current": parseInt(isset(localStorage.getItem('quality'), 0)),
+			"current": 0,
 			"min": 0,
 			"max": 2,
 			"labels": [
@@ -830,7 +828,7 @@ var user = {
 			"typeof": "select",
 			"category": "video",
 			"name": "ANTI-ALIASING",
-			"current": parseInt(isset(localStorage.getItem('antialiasing'), 1)),
+			"current": 1,
 			"min": 0,
 			"max": 1,
 			"labels": [
@@ -847,7 +845,7 @@ var user = {
 			"typeof": "select",
 			"category": "audio",
 			"name": "MASTER VOLUME",
-			"current": parseInt(isset(localStorage.getItem('mastervolume'), 100)),
+			"current": 50,
 			"min": 0,
 			"max": 100,
 			"increment": 5,
