@@ -276,7 +276,7 @@ audio {
     top: 80px;
     width: 450px;
     height: 200px;
-    background: url('../img/maps/EDGE.png') no-repeat 0 0/cover;
+    background: url('../img/maps/EDGE.jpg') no-repeat 0 0/cover;
     border-radius: 4px;
 }
 #credits table {
