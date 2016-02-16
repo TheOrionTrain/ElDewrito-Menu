@@ -282,7 +282,7 @@ function addServer(i) {
 	servers[i].ping = servers[i].ping || 0;
 	var sprint = (servers[i].sprintEnabled == 1) ? "<img class='sprint' src='img/sprint.png'>" : " ";
 
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".png'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".jpg'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -366,7 +366,7 @@ function initialize() {
 			$('#click')[0].currentTime = 0;
 			$('#click')[0].play();
 		});
-		changeSong2("Mythic Menu Theme");
+		//changeSong2("Mythic Menu Theme");
 	});
 	for (i = 0; i < Object.keys(settings).length; i++) {
 		set = Object.keys(settings)[i];
@@ -1461,7 +1461,7 @@ function startgame(ip, mode, pass) {
 		if (mode[0] === "JOIN") {
 			//$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
 				$('#loadingMapName').text(currentServer.map.toString().toUpperCase().replace("BUNKERWORLD", "STANDOFF"));//lazy
-				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).replace(/ /g,"").toLowerCase() + '.png)');
+				$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).replace(/ /g,"").toLowerCase() + '.jpg)');
 				$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
 				$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g,"").toLowerCase() + '-overlay.png)');
 				$('#mapOverlay').css('opacity', '0.8');
@@ -1472,8 +1472,8 @@ function startgame(ip, mode, pass) {
 				}, 10000);
 		} else if (mode[0] == "START" || mode[1] === "FORGE") {
 			$('#loadingMapName').text($('#currentmap').text().toString().toUpperCase());
-			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + $('#currentmap').text().toString().replace(/ /g,"").toLowerCase() + '.png)');
-			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + $('#currentmap').text().toString().capitalizeFirstLetter() + '.png)');
+			$('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + $('#currentmap').text().toString().replace(/ /g,"").toLowerCase() + '.jpg)');
+			$('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + $('#gametype-display').text().toString().capitalizeFirstLetter() + '.png)');
 			$('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + $('#currentmap').text().toString().replace(/ /g,"").toLowerCase() + '-overlay.png)');
 			$('#loading').show();
 			$('#back').hide();
@@ -1684,10 +1684,10 @@ function getMapFile(name) {
 
 function changeMap2(map, click) {
 	$('#map-thumb').css({
-		"background-image": "url('img/maps/" + map.toString().toUpperCase() + ".png')"
+		"background-image": "url('img/maps/" + map.toString().toUpperCase() + "jpg')"
 	});
 	$('#map-thumb-options').css({
-		"background-image": "url('img/maps/" + map.toString().toUpperCase() + ".png')"
+		"background-image": "url('img/maps/" + map.toString().toUpperCase() + ".jpg')"
 	});
 	$('#currentmap').text(map);
 	$('#map-name-options').text(map);
@@ -1805,7 +1805,7 @@ function changeType2(type, click) {
 		var reg = currentType.match(/\b(\w)/g);
 		var acronym = reg.join('');
 		$('#gametype-icon').css({
-			"background-image": "url('img/gametypes/" + acronym.toString().toLowerCase() + ".png')"
+			"background-image": "url('img/gametypes/" + acronym.toString().toLowerCase() + "jp')"
 		});
 		$('#type-icon-options').css({
 			"background-image": "url('img/gametypes/" + acronym.toString().toLowerCase() + ".png')"
