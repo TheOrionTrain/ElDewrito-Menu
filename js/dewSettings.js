@@ -172,10 +172,10 @@ var user = {
             "Reach Act 2",
             "Reach Act 3",
             "Halo CE",
-						"Halo CEA",
+			"Halo CEA",
             "Halo 2",
             "Halo 3",
-						"Halo 3A",
+			"Halo 3A",
             "Halo 3 ODST",
             "Halo 4",
             "Crash",
@@ -281,7 +281,7 @@ var user = {
 			"update": function() {
 				var c = settings.localbackground.current;
 				localBackground = c;
-				settings.background.update();
+				//settings.background.update();
 				$("[data-option='localbackground']").children('.value').text(settings.localbackground.labels[c]);
 			}
 		},
