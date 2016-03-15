@@ -608,7 +608,7 @@ function loadFriends() {
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
 	});
-	
+
 	$('#party .friend').click(function(e) {
 		partysubmenu("show",$(this).text(),e);
 		$('#slide')[0].currentTime = 0;
@@ -705,6 +705,9 @@ function isOnline(friend) {
 var online = true;
 
 $(document).ready(function() {
+	$(window).resize(function(){
+		settings.resolution.update();
+	});
 	initializeNewMenu();
 	Mousetrap.bind('a', function() {
 		$("[data-gp='" + currentMenu + "-" + gp_on + "']").trigger('click');
@@ -1511,7 +1514,7 @@ function startgame(ip, mode, pass) {
 			}
 		}
 	}
-	
+
 	console.log(password);
 
 	$('#beep')[0].play();
