@@ -708,6 +708,13 @@ $(document).ready(function() {
 	$(window).resize(function(){
 		settings.resolution.update();
 	});
+	if(!localStorage.getItem('PressF11ToQuit')) {
+		dewAlert({
+			title: "Press F11 to Close the Menu",
+			content: "By clicking Accept, you understand that it is your responsibility to remember that the close/quit button is and always has been F11, and you will not bother the developers of this menu to ask them how to close the menu.",
+			callback: function() {localStorage.setItem('PressF11ToQuit',1)}
+		});
+	}
 	initializeNewMenu();
 	Mousetrap.bind('a', function() {
 		$("[data-gp='" + currentMenu + "-" + gp_on + "']").trigger('click');
