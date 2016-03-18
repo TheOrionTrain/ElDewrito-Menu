@@ -81,8 +81,8 @@ StartConnection = function() {
 							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
 						}
 					}
-
-					if ($.inArray(result.player + ":" + result.guid, party) != -1) {
+					
+					if ($.inArray(result.player + ":" + result.guid, party) != -1 && party.length > 1) {
 						
 						if (Chat.isOpen("Party Chat - " + party[0].split(':')[0])) {
 							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
