@@ -172,10 +172,10 @@ var user = {
             "Reach Act 2",
             "Reach Act 3",
             "Halo CE",
-						"Halo CEA",
+			"Halo CEA",
             "Halo 2",
             "Halo 3",
-						"Halo 3A",
+			"Halo 3A",
             "Halo 3 ODST",
             "Halo 4",
             "Crash",
@@ -185,7 +185,7 @@ var user = {
         ],
 			"increment": 1,
 			"update": function() {
-				videoURL = (infoIP == "http://192.99.124.166:8080") ? "http://192.99.124.166/video/" : "http://video.thefeeltra.in/";
+				videoURL = (infoIP == "http://158.69.166.144:8080") ? "http://158.69.166.144/video/" : "http://video.thefeeltra.in/";
 				console.log("Videos served from "+videoURL+".");
 				var c = settings.background.current,
 					l = settings.background.labels[c],

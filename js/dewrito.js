@@ -36,7 +36,7 @@ var players = [],
 	nextSong,
 	songIndex,
 	localBackground = isset(localStorage.getItem('localbackground'), 0),
-	videoURL = "http://192.99.124.166/video/";
+	videoURL = "http://158.69.166.144/video/";
 
 var Chat = {
 	time: 0,
@@ -333,6 +333,15 @@ function loadSettings(i) {
 		if (!friendServerConnected)
 			StartConnection();
 		loadedSettings = true;
+		if (window.location.origin == 'dew://') {
+			$('#music')[0].pause();
+			$("video").each(function(){
+				$(this)[0].pause();
+			});
+			
+			loopPlayers = false;
+			clearInterval(totallyLoopingPlayers);
+		}
 	}
 }
 
@@ -855,7 +864,10 @@ $(document).ready(function() {
 	gamepadBind();
 	Mousetrap.bind('f11', function() {
 		setTimeout(function() {
-			dewRcon.send('Game.SetMenuEnabled 0');
+			if (dewRconConnected)
+				dewRcon.send('Game.SetMenuEnabled 0');
+			else
+				dew.hide();
 		}, anit);
 	});
 	initialize();
@@ -1017,6 +1029,7 @@ $(document).ready(function() {
 		$('#browser-settings').show();
 	}
 });
+
 function loadServers() {
 	if (browsing === 1) {
 		pings = [];
@@ -1130,7 +1143,7 @@ function getCurrentVersion() {
 	});
 }
 
-var infoIP = "http://192.99.124.166:8080",
+var infoIP = "http://158.69.166.144:8081",
 	totallyLoopingPlayers = setInterval(totalPlayersLoop,10000);
 
 function totalPlayersLoop() {
@@ -1168,7 +1181,7 @@ function totalPlayersLoop() {
 			loadFriends();
 	}).fail(function(d) {
 		console.log(infoIP+" is currently down.");
-		infoIP = (infoIP == "http://192.99.124.166:8080" ? "http://servers.thefeeltra.in" : "http://192.99.124.166:8080");
+		infoIP = (infoIP == "http://158.69.166.144:8081" ? "http://servers.thefeeltra.in" : "http://158.69.166.144:8081");
 		console.log("Switched to "+infoIP+".");
 		totalPlayersLoop();
 	});
