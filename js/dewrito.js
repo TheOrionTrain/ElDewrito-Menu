@@ -408,6 +408,18 @@ function initialize() {
 		}
 		settings[set].update();
 	}
+	$.getJSON("http://158.69.166.144/matchmaking/Standard.txt", function(json) {
+		for (i = 0; i < Object.keys(json).length; i++) {
+			console.log(json[i]);
+			$("#settings-standard").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
+		}
+	});
+	$.getJSON("http://158.69.166.144/matchmaking/Social.txt", function(json) {
+		for (i = 0; i < Object.keys(json).length; i++) {
+			console.log(json[i]);
+			$("#settings-social").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
+		}
+	});
 	//loadSettings(Object.keys(settings).length);
 	for (i = 0; i < Object.keys(maps).length; i++) {
 		b = Object.keys(maps)[i];
@@ -1001,8 +1013,8 @@ $(document).ready(function() {
 	$("[data-action='menu']").click(function() {
 		changeMenu($(this).attr('data-menu'));
 	});
-	$("[data-action='quickjoin']").click(function() {
-		quickJoin();
+	$("[data-action='matchmaking']").click(function() {
+		//quickJoin();
 	});
 	$("[data-action='menu-option']").click(function() {
 		changeMenuOptions($(this).attr('data-menu'));

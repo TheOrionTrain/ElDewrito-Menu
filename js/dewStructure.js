@@ -46,6 +46,7 @@ var Menu = {
         },
         "menus" : {
             "dewrito-options" : "main2",
+            "matchmaking" : "main",
             "choosemap" : "serverbrowser",
             "choosetype" : "serverbrowser"
         }

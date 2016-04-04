@@ -173,7 +173,7 @@
 
 		<div class="menu-container animated" id="main">
 			<div class="select-main">
-				<div data-gp="main-1" data-action="quickjoin" class="selection"><span class="label">QUICK JOIN</span><span class="value">&nbsp;</span> </div>
+				<div data-gp="main-1" data-action="menu" data-menu="main,options,fade,matchmaking" class="selection"><span class="label">MATCHMAKING</span><span class="value">&nbsp;</span> </div>
 				<div data-gp="main-2" data-action="menu" data-menu="main,serverbrowser,vertical" class="selection"><span class="label">BROWSE SERVERS</span><span class="value">&nbsp;</span> </div>
 				<div data-gp="main-3" data-action="menu" data-menu="main,main3,vertical" class="selection"><span class="label">CREATE GAME</span><span class="value">&nbsp;</span> </div>
 			</div>
@@ -235,6 +235,31 @@
 		<div class="options-menu" id="options">
 			<div id="back-options" data-action="dewrito-options,">Back</div>
 			<div id="dot"></div>
+			<div class="options-section show" id="matchmaking" data-menu-back="main">
+				<div class="options-title">MATCHMAKING</div>
+				<div class="options-select animated">
+					<div data-gp="matchmaking-options-1" data-setting="standard" class="selection"><span class="label">STANDARD</span> </div>
+					<div data-gp="matchmaking-options-2" data-setting="social" class="selection"><span class="label">SOCIAL</span> </div>
+					<!--<div data-gp="matchmaking-options-3" data-action="menu" class="selection"><span class="label">PLACEHOLDER</span> </div>-->
+				</div>
+				<div class="options-select2 animated" id="settings-standard">
+					<!--<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Slayer</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Team Slayer 4v4</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Team Slayer 6v6</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Team Swat</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Team Snipers</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Multi Flag CTF</span></div>-->
+				</div>
+				<div class="options-select2 animated" id="settings-social">
+					<!--<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Infection</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Big Team Battle</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>King of the Hill</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Oddball</span></div>
+					<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>Grifball</span></div>-->
+				</div>
+				<!--<div class="options-select2 animated" id="settings-eldewrito"></div>
+				<div class="options-select2 animated" id="settings-host"></div>-->
+			</div>
 			<div class="options-section show" id="dewrito-options" data-menu-back="main2">
 				<div class="options-title">GAME SETTINGS</div>
 				<div class="options-select animated">
