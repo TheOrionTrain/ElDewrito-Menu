@@ -21,6 +21,7 @@ var Menu = {
         "onchange" : function() {
     		browsing = 1;
     		$('#browser').empty();
+            $('#lobby').empty();
     		setTimeout(loadServers, 1000);
     		loopPlayers = false;
     	}
