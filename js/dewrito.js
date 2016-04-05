@@ -318,7 +318,7 @@ function loadSettings(i) {
 		dewRcon.send(settingsToLoad[i][1], function(ret) {
 			if (settingsToLoad[i][0] == "gameversion") {
 				settings[settingsToLoad[i][0]].set(ret);
-				$('#version').text("Eldewrito " + ret);
+				$('#version').text("ElDewrito " + ret);
 			} else if (settingsToLoad[i][0] == "maplist") {
 				mapList = new Array(ret.split(','));
 			} else {
