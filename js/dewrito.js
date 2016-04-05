@@ -567,7 +567,7 @@ function loadParty() {
 		for(var i=0; i < party.length; i++) {
 			$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
 			var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
-			$('#current-party').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			$('#current-party').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 		$('.friend,#friend-add,#friend-remove').hover(function() {
 			$('#click')[0].currentTime = 0;
@@ -619,15 +619,25 @@ function loadFriends() {
 		if(o == "online") {
 			friends_online++;
 			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
-			$('#friends-on').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			$('#friends-on').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
 	$('#friends-on-count').text(friends_online);
 	$('#friends-on-total').text(friends.length);
-	$('.friend,#friend-add,#friend-remove').hover(function() {
+	$('.friend,#friend-add,#friend-remove,#lobby-container table tr').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
+	});
+	$("#lobby-container table tr").mouseover(function() {
+		var n = $(this).attr('id'),
+			col = $(this).attr('hex-colour'),
+			bright = brighter(col);
+		$(this).css("background-color", hexToRgb(bright, 0.75));
+	}).mouseout(function() {
+		var n = $(this).attr('id'),
+			col = $(this).attr('hex-colour');
+		$(this).css("background-color", hexToRgb(col, 0.5));
 	});
 	$('#friends .friend, #friends-on td.name').click(function(e) {
 		if($(this).hasClass("online")) {
@@ -1108,11 +1118,11 @@ function lobbyLoop(ip) {
 					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name "+isDev+"'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				}
 			}
-			$('#lobby tr').hover(function() {
+			$('#lobby-container table tr').hover(function() {
 				$('#click')[0].currentTime = 0;
 				$('#click')[0].play();
 			});
-			$("#lobby tr").mouseover(function() {
+			$("#lobby-container table tr").mouseover(function() {
 				var n = $(this).attr('id'),
 					col = $(this).attr('hex-colour'),
 					bright = brighter(col);
