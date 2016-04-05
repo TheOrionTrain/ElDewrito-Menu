@@ -845,20 +845,25 @@ audio {
     background: url('../img/Halo 3 CE.png') no-repeat 0 0/cover;
     z-index: 2;
 }
-#lobby {
+#lobby-container table {
     width: 300px;
     border-collapse: separate;
     border-spacing: 0px 2px;
+    margin-bottom: 10px;
 }
 #lobby-container {
     position: absolute;
-    top: 50px;
-    right: 100px;
+    top: 60px;
+    right: 150px;
     width: 300px;
-    height: 612px;
+    height: 590px;
     overflow-y: scroll;
+    z-index: 5;
 }
-#lobby .top td.info {
+#lobby-container table .top td.info > span {
+    float: right;
+}
+#lobby-container table .top td.info {
     background: rgba(0, 0, 0, 0.5);
     font-weight: 300;
     font-size: 18px;
@@ -868,34 +873,33 @@ audio {
     box-sizing: border-box;
     color: #fff;
 }
-#lobby tr {
+#lobby-container table tr {
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
 }
-#lobby td {
+#lobby-container table td {
     box-sizing: border-box;
     margin-bottom: 3px;
-    height: 30px;
     color: #fff;
     cursor: pointer;
 }
-#lobby td.name {
+#lobby-container table td.name {
     font-weight: 300;
     font-size: 18px;
     width: 250px;
-    padding: 0px 20px 2px 20px;
+    padding: 1px 20px 0px 20px;
     background: no-repeat 160px 4px/58px 26px;
 }
-#lobby td.rank {
+#lobby-container table td.rank {
     width: 50px;
     padding: 0px 10px 0px 10px;
     text-align: center;
     background: rgba(0, 0, 0, 0.15);
 }
-#lobby td.rank img {
-    max-width: 28px;
-    max-height: 28px;
+#lobby-container table td.rank img {
+    max-width: 22px;
+    max-height: 22px;
     margin-top: 0px;
     opacity: 0.9;
     box-sizing: border-box;

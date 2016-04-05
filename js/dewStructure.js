@@ -68,7 +68,7 @@ var Menu = {
     			"background-image": "url('img/gametypes/" + currentType + ".png')"
     		});
             $('#lobby').empty();
-    		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>16</span></td></tr>");
+    		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
     		$('#start').children('.label').text("START GAME");
     		playersJoin(1, 2, 20, "127.0.0.1:11775");
         }

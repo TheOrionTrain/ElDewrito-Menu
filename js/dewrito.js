@@ -519,7 +519,7 @@ function jumpToServer(ip) {
 		host = 0;
 		browsing = 0;
 		$('#lobby').empty();
-		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
 		console.log(d);
 		if((typeof d.players !== 'undefined' && typeof d.players.current !== 'undefined' && d.players.current == d.players.max) || (typeof d.numPlayers !== 'undefined' && d.numPlayers == d.maxPlayers)) {
 			dewAlert({
@@ -562,9 +562,11 @@ function jumpToServer(ip) {
 
 function loadParty() {
 	$('#party').empty();
+	$('#current-party').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Party <span class='numbers'><span id='current-party-count'>"+party.length+"</span></span></td></tr>");
 	if(party.length > 0) {
 		for(var i=0; i < party.length; i++) {
 			$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
+			$('#current-party').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 		$('.friend,#friend-add,#friend-remove').hover(function() {
 			$('#click')[0].currentTime = 0;
@@ -589,6 +591,7 @@ function updateFriends() {
 
 function loadFriends() {
 	$('#friends').empty();
+	$('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <span class='numbers'><span id='friends-on-count'>0</span></span></td></tr>");
 	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
 	if(!friends || friends.length < 1) {
@@ -613,9 +616,11 @@ function loadFriends() {
 		$('#friends').append("<div class='friend "+o+"'>"+friends[i].split(':')[0]+"</div>");
 		if(o == "online") {
 			friends_online++;
+			$('#friends-on').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
+	$('#friends-on-count').text(friends_online);
 	$('.friend,#friend-add,#friend-remove').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -712,7 +717,7 @@ function removeFriend(name) {
 }
 
 function isOnlineServer(friend) {
-	return typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined'; //Orion, check if friend is online or not here
+	return typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined';
 }
 
 function isOnline(friend) {
@@ -720,7 +725,7 @@ function isOnline(friend) {
 		if ((friend.contains(":0x") && (onlinePlayers[i].split(':')[1] == friend.split(':')[1])) | onlinePlayers[i].split(':')[0] == friend || (typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined'))
 			return true;
 	}
-	return false; //Orion, check if friend is online or not here
+	return false;
 }
 
 var online = true;
@@ -1085,7 +1090,7 @@ function lobbyLoop(ip) {
 				return a.team - b.team
 			});
 		}
-		$('#lobby').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>"+serverInfo.numPlayers+"</span>/<span id='maxplayers'>"+serverInfo.maxPlayers+"</span></td></tr>");
+		$('#lobby').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>"+serverInfo.numPlayers+"</span>/<span id='maxplayers'>"+serverInfo.maxPlayers+"</span></span></td></tr>");
 
 		changeMap2(getMapName(serverInfo.mapFile));
 		$('#subtitle').text(serverInfo.name + " : " + ip);
@@ -1212,7 +1217,7 @@ function playersJoin(number, max, time, ip) {
 		}
 
 		$('#lobby').empty();
-		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>0</span>/<span id='maxplayers'>0</span></td></tr>");
+		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
 		$('#maxplayers').text(serverInfo.maxPlayers);
 		$('#joined').text(serverInfo.numPlayers);
 		if (typeof serverInfo.passworded != 'undefined')
@@ -1262,7 +1267,7 @@ function joinServer(details) {
 		host = 0;
 		browsing = 0;
 		$('#lobby').empty();
-		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
+		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
 		changeMap2(getMapName(d.mapFile));
 		$('#subtitle').text(d.name + " : " + d.address);
 		if (d.variant === "") {
