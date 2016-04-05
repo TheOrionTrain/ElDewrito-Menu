@@ -552,6 +552,7 @@ function jumpToServer(ip) {
 			loopPlayers = true;
 		},3000);
 		$('#start').children('.label').text("JOIN GAME");
+		$('#friends-on').stop().fadeOut(anit);
 		$('#title').text('CUSTOM GAME');
 		$('#network-toggle').hide();
 		$('#type-selection').show();
@@ -1308,6 +1309,7 @@ function joinServer(details) {
 		});
 	}
 	$('#start').children('.label').text("JOIN GAME");
+	$('#friends-on').stop().fadeOut(anit);
 	$('#title').text('CUSTOM GAME');
 	$('#network-toggle').hide();
 	$('#type-selection').show();
@@ -1374,6 +1376,11 @@ function changeMenu(m) {
 		$('#lobby-container').removeClass().addClass('showing');
 	} else {
 		$('#lobby-container').removeClass().addClass('hidden');
+	}
+	if(t.friendslist) {
+		$('#friends-on').stop().fadeIn(anit);
+	} else {
+		$('#friends-on').stop().fadeOut(anit);
 	}
 	if(t.back) {
 		if(e[0] == "options") {e[2] = "vertical";}

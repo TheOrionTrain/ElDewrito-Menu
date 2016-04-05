@@ -2,7 +2,8 @@ var Menu = {
     "main" : {
         "position" : "top",
         "back" : "main2",
-        "playerlist" : 1
+        "playerlist" : 1,
+        "friendslist" : 1
     },
     "main2" : {
         "position" : "center",
@@ -74,6 +75,7 @@ var Menu = {
     		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
     		$('#start').children('.label').text("START GAME");
     		playersJoin(1, 2, 20, "127.0.0.1:11775");
+            $('#friends-on').stop().fadeIn(anit);
         }
     },
     "forge" : {
