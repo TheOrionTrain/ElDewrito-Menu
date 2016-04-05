@@ -15,7 +15,7 @@ var friendServer,
 	puid,
 	onlinePlayers = {},
 	party = [],
-	developers;
+	developers = [];
 /*jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
 		StartConnection();
