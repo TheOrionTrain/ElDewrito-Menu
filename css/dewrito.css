@@ -246,8 +246,8 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     -webkit-transition-delay: 0ms;
 }
 #dewrito.main {
-    left: -10px;
-    top: 240px;
+    left: 30px;
+    top: 280px;
 }
 #dewrito.options {
     opacity: 0.9;
@@ -258,8 +258,8 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
 }
 #dewrito.hidden {
     opacity: 0;
-    left: -10px;
-    top: 240px;
+    left: 30px;
+    top: 280px;
 }
 
 .options-section.show {
@@ -610,14 +610,6 @@ html {
     -webkit-animation: rotating 2s linear infinite;
     -moz-animation: rotating 2s linear infinite;
     animation: rotating 2s linear infinite;
-}
-#version {
-    right: 5px;
-    bottom: 5px;
-    font-size: 14px;
-    opacity: 0.5;
-    font-family: "Conduit ITC";
-    font-weight: 300;
 }
 #back,
 #back-options,
