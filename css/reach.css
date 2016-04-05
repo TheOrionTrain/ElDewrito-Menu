@@ -1065,10 +1065,21 @@ td.name.developer {
     opacity: 0.67;
 }
 #version {
-    right: 120px;
-    bottom: 40px;
-    font-size: 14px;
-    opacity: 0.5;
+    right: 2px;
+    bottom: 2px;
+    font-size: 10px;
+    opacity: 0.3;
     font-family: "Conduit ITC";
     font-weight: 300;
+}
+#bungie {
+    position: absolute;
+    right: 120px;
+    bottom: 40px;
+    opacity: 0.5;
+    background-image: url(../img/TheBungieTrain.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 180px;
+    height: 36px;
 }
