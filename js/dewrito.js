@@ -577,6 +577,7 @@ function loadParty() {
 		$('#party .friend:first-of-type').attr('title','Party Leader');
 	} else {
 		$('#party').append("<div class='nofriends'>You're not partying :(</div>");
+		$('#current-party').empty();
 	}
 }
 
@@ -625,6 +626,7 @@ function loadFriends() {
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
 	$('#friends-on-count').text(friends_online);
+	if(friends_online === 0) {$('#friends-on').empty();}
 	$('#friends-on-total').text(friends.length);
 	$('.friend,#friend-add,#friend-remove,#lobby-container table tr').hover(function() {
 		$('#click')[0].currentTime = 0;
