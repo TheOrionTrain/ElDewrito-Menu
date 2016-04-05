@@ -2,6 +2,7 @@ var Menu = {
     "main" : {
         "position" : "top",
         "back" : "main2",
+        "playerlist" : 1
     },
     "main2" : {
         "position" : "center",
@@ -49,6 +50,7 @@ var Menu = {
         "position" : "top",
         "video" : ["custom_games","multiplayer"],
         "back" : "main",
+        "playerlist" : 1,
         "onchange" : function(f) {
             if(f == "serverbrowser") {
                 Menu.customgame.video = Menu.serverbrowser.video;
@@ -77,5 +79,6 @@ var Menu = {
         "position" : "top",
         "video" : ["forge"],
         "back" : "main",
+        "playerlist" : 1
     }
 };
