@@ -410,13 +410,11 @@ function initialize() {
 	}
 	$.getJSON("http://158.69.166.144/matchmaking/Standard.json", function(json) {
 		for (i = 0; i < Object.keys(json).length; i++) {
-			console.log(json[i]);
 			$("#settings-standard").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
 		}
 	});
 	$.getJSON("http://158.69.166.144/matchmaking/Social.json", function(json) {
 		for (i = 0; i < Object.keys(json).length; i++) {
-			console.log(json[i]);
 			$("#settings-social").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
 		}
 	});
@@ -568,7 +566,8 @@ function loadParty() {
 		for(var i=0; i < party.length; i++) {
 			$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
 			var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
-			$('#current-party').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			//$('#current-party').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			$('#current-party').append("<tr hex-colour='" + party[i].split(":")[2] + "' data-color='" + hexToRgb(party[i].split(":")[2], 0.5) + "' style='background:" + hexToRgb(party[i].split(":")[2], 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 		$('.friend,#friend-add,#friend-remove').hover(function() {
 			$('#click')[0].currentTime = 0;
@@ -588,6 +587,14 @@ function updateFriends() {
 				friends[o] = onlinePlayers[i];
 				localStorage.setItem("friends", JSON.stringify(friends));
 			}
+		}
+	}
+}
+
+function getPlayerColour(guid) {
+	for (var i = 0; i < onlinePlayers.length; i++) {
+		if (guid == onlinePlayers[i].split(":")[1]) {
+			return onlinePlayers[i].split(":")[2] == null ? "#000000" : onlinePlayers[i].split(":")[2];
 		}
 	}
 }
@@ -620,8 +627,10 @@ function loadFriends() {
 		$('#friends').append("<div class='friend "+o+"'>"+friends[i].split(':')[0]+"</div>");
 		if(o == "online") {
 			friends_online++;
+			//console.log(getPlayerColour(friends[i].split(':')[1]));
 			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
-			$('#friends-on').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			//$('#friends-on').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			$('#friends-on').append("<tr hex-colour='" + getPlayerColour(friends[i].split(':')[1]) +  "' data-color='" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + "' style='background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
@@ -1516,7 +1525,7 @@ function hasMap(map) {
 
 function startgame(ip, mode, pass) {
 	//console.log(getMapName(currentServer.mapFile.toString()).toLowerCase());
-	if (!dewRconConnected) {
+	if (!dewRconConnected && dewRcon == typeof(dewRconHelper)) {
 		dewAlert({
 			title: "Not Connected",
 			content: 'You must be connected to the game to join or start a server.',
