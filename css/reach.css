@@ -851,10 +851,16 @@ audio {
     border-spacing: 0px 2px;
     margin-bottom: 10px;
 }
+#lobby-container.showing {
+    right: 150px;
+}
+#lobby-container.hidden {
+    right: -350px;
+}
 #lobby-container {
+    transition: 0.5s;
     position: absolute;
     top: 60px;
-    right: 150px;
     width: 300px;
     height: 590px;
     overflow-y: scroll;
@@ -889,7 +895,9 @@ audio {
     font-size: 18px;
     width: 250px;
     padding: 1px 20px 0px 20px;
-    background: no-repeat 160px 4px/58px 26px;
+}
+td.name.developer {
+    background: url(../img/nameplates/haloce.png) no-repeat 160px 3px/43px 20px;
 }
 #lobby-container table td.rank {
     width: 50px;

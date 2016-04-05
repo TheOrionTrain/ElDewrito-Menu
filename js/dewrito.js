@@ -566,7 +566,8 @@ function loadParty() {
 	if(party.length > 0) {
 		for(var i=0; i < party.length; i++) {
 			$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
-			$('#current-party').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
+			$('#current-party').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 		$('.friend,#friend-add,#friend-remove').hover(function() {
 			$('#click')[0].currentTime = 0;
@@ -591,9 +592,10 @@ function updateFriends() {
 
 function loadFriends() {
 	$('#friends').empty();
-	$('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <span class='numbers'><span id='friends-on-count'>0</span></span></td></tr>");
+	$('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <span class='numbers'><span id='friends-on-count'>0</span>/<span id='friends-on-total'>0</span></span></td></tr>");
 	friends_online = 0;
 	friends = JSON.parse(localStorage.getItem("friends"));
+
 	if(!friends || friends.length < 1) {
 		friends = [];
 		localStorage.setItem("friends", JSON.stringify(friends));
@@ -616,16 +618,18 @@ function loadFriends() {
 		$('#friends').append("<div class='friend "+o+"'>"+friends[i].split(':')[0]+"</div>");
 		if(o == "online") {
 			friends_online++;
-			$('#friends-on').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
+			$('#friends-on').append("<tr style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 		}
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
 	$('#friends-on-count').text(friends_online);
+	$('#friends-on-total').text(friends.length);
 	$('.friend,#friend-add,#friend-remove').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
 	});
-	$('#friends .friend').click(function(e) {
+	$('#friends .friend, #friends-on td.name').click(function(e) {
 		if($(this).hasClass("online")) {
 			submenu("show",$(this).text(),1,e);
 		} else {
@@ -635,7 +639,7 @@ function loadFriends() {
 		$('#slide')[0].play();
 	});
 
-	$('#party .friend').click(function(e) {
+	$('#party .friend, #current-party td.name').click(function(e) {
 		partysubmenu("show",$(this).text(),e);
 		$('#slide')[0].currentTime = 0;
 		$('#slide')[0].play();
@@ -1100,7 +1104,8 @@ function lobbyLoop(ip) {
 				if (typeof players[i] != 'undefined' && players[i].name != "") {
 					if (serverInfo.teams)
 						colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
-					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+						var isDev = (developers.indexOf(players[i].uid) >= 0) ? "developer" : "";
+					$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name "+isDev+"'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				}
 			}
 			$('#lobby tr').hover(function() {
@@ -1226,7 +1231,8 @@ function playersJoin(number, max, time, ip) {
 			if (typeof players[i] != 'undefined' && players[i].name != "") {
 				if (serverInfo.teams)
 					colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
-				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+				var isDev = (developers.indexOf(players[i].uid) >= 0) ? "developer" : "";
+				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name "+isDev+"'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 				$('#player' + i).css("display", "none");
 				$('#player' + i).fadeIn(anit);
 			}
@@ -1353,6 +1359,11 @@ function changeMenu(m) {
 		$('#dewrito').removeClass().addClass("animated "+t.logo);
 	} else {
 		$('#dewrito').removeClass().addClass("animated hidden");
+	}
+	if(t.playerlist) {
+		$('#lobby-container').removeClass().addClass('showing');
+	} else {
+		$('#lobby-container').removeClass().addClass('hidden');
 	}
 	if(t.back) {
 		if(e[0] == "options") {e[2] = "vertical";}

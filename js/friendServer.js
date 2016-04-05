@@ -14,7 +14,8 @@ var friendServer,
 	pname,
 	puid,
 	onlinePlayers = {},
-	party = [];
+	party = [],
+	developers;
 /*jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
 		StartConnection();
@@ -35,7 +36,7 @@ StartConnection = function() {
 					guid: ret.split(' ')[2],
 					player: res
 				}));
-				
+
 				party = [];
 				party.push(res + ":" + ret.split(' ')[2]);
 				loadParty();
@@ -45,6 +46,9 @@ StartConnection = function() {
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         friendServerConnected = true;
+		$.getJSON("http://thefeeltra.in/developers.json", function(json) {
+			developers = json;
+		});
     };
 	friendServer.friendsServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Friend Server'});
@@ -81,9 +85,9 @@ StartConnection = function() {
 							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
 						}
 					}
-					
+
 					if ($.inArray(result.player + ":" + result.guid, party) != -1 && party.length > 1) {
-						
+
 						if (Chat.isOpen("Party Chat - " + party[0].split(':')[0])) {
 							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
 							if (party[0].split(':')[0] == result.player)
@@ -92,7 +96,7 @@ StartConnection = function() {
 							if (party[0].split(':')[0] == result.player)
 								Chat.renameTab("Party Chat - " + result.player, "Party Chat - " + party[1].split(':')[0]);
 						}
-						
+
 						party = $.grep(party, function(value) {
 						  return value != (result.player + ":" + result.guid);
 						});
@@ -113,13 +117,13 @@ StartConnection = function() {
 								guid: party[i].split(':')[1]
 							}));
 						}
-						
+
 						if (party[0].split(':')[1] == puid) {
-							
+
 							$.snackbar({content: result.player + ' has left your party.'});
 							$('#notification')[0].currentTime = 0;
 							$('#notification')[0].play();
-							
+
 						}
 
 						loadParty();
