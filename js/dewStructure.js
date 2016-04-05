@@ -2,21 +2,15 @@ var Menu = {
     "main" : {
         "position" : "top",
         "back" : "main2",
-        "logo" : "main"
     },
     "main2" : {
         "position" : "center",
         "logo" : "main"
     },
-    "main3" : {
-        "position" : "top",
-        "back" : "main",
-        "logo" : "main"
-    },
     "credits" : {
         "position" : "top",
         "video" : ["firefight"],
-        "back" : "main2",
+        "back" : "main",
         "logo" : "credits"
     },
     "serverbrowser" : {
@@ -54,7 +48,7 @@ var Menu = {
     "customgame" : {
         "position" : "top",
         "video" : ["custom_games","multiplayer"],
-        "back" : "main3",
+        "back" : "main",
         "onchange" : function(f) {
             if(f == "serverbrowser") {
                 Menu.customgame.video = Menu.serverbrowser.video;
@@ -82,6 +76,6 @@ var Menu = {
     "forge" : {
         "position" : "top",
         "video" : ["forge"],
-        "back" : "main3",
+        "back" : "main",
     }
 };

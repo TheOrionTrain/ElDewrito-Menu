@@ -529,10 +529,16 @@ audio {
 #line1,
 #line2,
 #line3,
-#line4 {
+#line4,
+#main-line {
     position: absolute;
     background: rgba(255, 255, 255, 0.25);
     height: 1px;
+}
+#main-line {
+    bottom: 60px;
+    left: 150px;
+    width: 900px;
 }
 #line1 {
     top: 450px;
@@ -560,10 +566,16 @@ audio {
     left: 90px;
     width: 450px;
 }
-.select-main {
+#main .select-main {
     position: absolute;
-    top: 500px;
-    left: 90px;
+    bottom: 150px;
+    left: 150px;
+    width: 450px;
+}
+#main2 .select-main {
+    position: absolute;
+    bottom: 130px;
+    left: 110px;
     width: 450px;
 }
 .map-select,
@@ -580,8 +592,7 @@ audio {
 .type-select .selection {
     background: url('../img/right.png') no-repeat 232px 8px/36px 18px;
 }
-.options-select2 .selection .value,
-#select .selection .value {
+.options-select2 .selection .value {
     text-align: center;
     display: table-cell;
     width: 270px;
@@ -597,8 +608,7 @@ audio {
     box-sizing: border-box;
     height: 20px;
 }
-.options-select2 .selection .label,
-#select .selection .label {
+.options-select2 .selection .label {
     text-align: left;
     display: table-cell;
     width: 400px;
@@ -761,53 +771,66 @@ audio {
 .right {
     background-image: url('../img/right.png');
 }
+.select-title {
+    position: absolute;
+    top: 240px;
+    left: 160px;
+    font-weight: 600;
+    font-size: 56px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.8) 33%,rgba(255,255,255,0.333) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.select-icon {
+    position: absolute;
+    top: 242px;
+    left: 78px;
+    width: 72px;
+    height: 62px;
+    background: url('../img/EL.png') no-repeat 0 0/cover;
+    opacity: 0.75;
+}
 #select .selection,
 .select-main .selection {
     font-weight: 300;
     font-size: 19px;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.75);
     width: 450px;
-    height: 40px;
+    height: 30px;
     border-left: 3px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
+    padding: 5px 10px;
 }
 .select-main .selection {
-    font-size: 22px;
+    font-size: 21px;
 }
 .select-main .selection .value,
 #select .selection .value {
-    text-align: right;
-    display: table-cell;
-    width: 225px;
-    padding: 10px;
-    box-sizing: border-box;
-    height: 80px;
+    float: right;
 }
-.select-main .selection .label,
-#select .selection .label {
-    text-align: left;
-    display: table-cell;
-    width: 225px;
-    padding: 10px;
-    box-sizing: border-box;
-    height: 80px;
+@keyframes menuHover {
+    0% {background-color: rgba(255, 255, 255, 0.1);}
+    50% {background-color: rgba(255, 255, 255, 0.01);}
+    100% {background-color: rgba(255, 255, 255, 0.1);}
 }
 .selection:hover,
 .server:hover,
 .selection.gp-on,
 .server.gp-on {
-    border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
+    animation: menuHover 2s 1s infinite;
     background-color: rgba(255, 255, 255, 0.1);
+    border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.95);
 }
 .selection.selected {
+    animation: menuHover 2s 1s infinite;
+    background-color: rgba(255, 255, 255, 0.1);
     border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
-    background: rgba(255, 255, 255, 0.1);
     cursor: pointer;
     color: rgba(255, 255, 255, 0.95);
 }
@@ -816,8 +839,8 @@ audio {
 }
 #dewrito {
     position: absolute;
-    width: 750px;
-    height: 267px;
+    width: 640px;
+    height: 200px;
     opacity: 0.95;
     background: url('../img/Halo 3 CE.png') no-repeat 0 0/cover;
     z-index: 2;
@@ -972,8 +995,8 @@ audio {
     z-index: 999;
 }
 #dewmenu-button {
-    left: 20px;
-    bottom: 20px;
+    left: 120px;
+    bottom: 40px;
     font-size: 14px;
     opacity: 0.75;
     z-index: 999;
@@ -1030,8 +1053,8 @@ audio {
     opacity: 0.67;
 }
 #version {
-    right: 5px;
-    bottom: 5px;
+    right: 120px;
+    bottom: 40px;
     font-size: 14px;
     opacity: 0.5;
     font-family: "Conduit ITC";

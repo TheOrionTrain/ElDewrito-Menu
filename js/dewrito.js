@@ -338,7 +338,7 @@ function loadSettings(i) {
 			$("video").each(function(){
 				$(this)[0].pause();
 			});
-			
+
 			loopPlayers = false;
 			clearInterval(totallyLoopingPlayers);
 		}
