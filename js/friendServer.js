@@ -13,6 +13,7 @@ var friendServer,
 	played = 0,
 	pname,
 	puid,
+	colour = "#000000",
 	onlinePlayers = {},
 	party = [],
 	developers = [];
@@ -27,19 +28,23 @@ StartConnection = function() {
     friendServer.friendsServerSocket.onopen = function() {
 		dewRcon.send('player.name', function(res) {
 			dewRcon.send('player.printUID', function(ret) {
-				pname = res;
-				puid = ret.split(' ')[2];
+				dewRcon.send('Player.Colors.Primary', function(col) {
+					pname = res;
+					puid = ret.split(' ')[2];
+					colour = col;
 
-				friendServer.send(JSON.stringify({
-					type: "connection",
-					message: " has connected.",
-					guid: ret.split(' ')[2],
-					player: res
-				}));
+					friendServer.send(JSON.stringify({
+						type: "connection",
+						message: " has connected.",
+						guid: ret.split(' ')[2],
+						player: res,
+						colour: col
+					}));
 
-				party = [];
-				party.push(res + ":" + ret.split(' ')[2]);
-				loadParty();
+					party = [];
+					party.push(res + ":" + ret.split(' ')[2] + ":" + col);
+					loadParty();
+				});
 			});
 		});
         $.snackbar({content:'Connected to Friend Server!'});
@@ -168,7 +173,7 @@ StartConnection = function() {
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
 
-					party.push(result.player + ":" + result.pguid);
+					party.push(result.player + ":" + result.pguid + ":" + result.colour);
 
 					for (var i = 0; i < party.length; i++) {
 						friendServer.send(JSON.stringify({
@@ -248,7 +253,8 @@ function partyInvite(accepted, guid) {
 			type: 'acceptparty',
 			player: pname,
 			guid: guid,
-			pguid: puid
+			pguid: puid,
+			colour: col
 		}));
 	} else if (party.length > 1) {
 		$.snackbar({content: "You are already in a party."});
