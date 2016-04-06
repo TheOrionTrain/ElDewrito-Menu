@@ -2,7 +2,8 @@ var dewRcon,
 	dewRconConnected = false,
 	snacking = 0,
 	played = 0,
-	port = 11776;
+	port = 11776,
+	hook = false;
 jQuery(function() {
 	try {
 		dewRcon = new dewHook();
@@ -37,8 +38,8 @@ jQuery(function() {
 			clearInterval(totallyLoopingPlayers);
 		});
 		
+		hook = true;
 		loadSettings(0);
-		console.log("Hook");
 	} catch(err) {
 		console.log(err);
 		if(getURLParameter('offline') !== "1") {
