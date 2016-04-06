@@ -594,7 +594,7 @@ function updateFriends() {
 function getPlayerColour(guid) {
 	for (var i = 0; i < onlinePlayers.length; i++) {
 		if (guid == onlinePlayers[i].split(":")[1]) {
-			return onlinePlayers[i].split(":")[2] == null ? "#000000" : onlinePlayers[i].split(":")[2];
+			return(onlinePlayers[i].split(":")[2] === 'undefined' || onlinePlayers[i].split(":")[2].length < 1 || onlinePlayers[i].split(":")[2] === null) ? "#000000" : onlinePlayers[i].split(":")[2];
 		}
 	}
 	return "#000000";
