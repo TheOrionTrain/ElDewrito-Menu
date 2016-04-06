@@ -266,7 +266,7 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     display: block;
 }
 
-.sprint {
+.sprint, .nosprint {
     vertical-align: middle;
     width: 20px;
     height: 20px;
@@ -463,7 +463,9 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     font-size: 14px;
 }
 .list .elversion {
-    font-size: 15px;
+    font-size: 14px;
+    float: right;
+    padding-right: 20px;
 }
 .elversion {
     vertical-align: middle;
@@ -686,8 +688,8 @@ html {
     content: " ";
     display: block;
     background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
-    width: 71px;
-    height: 32px;
+    width: 70px;
+    height: 24px;
     padding: 0;
     margin: 0;
     position: absolute;
