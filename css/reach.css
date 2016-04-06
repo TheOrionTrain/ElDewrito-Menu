@@ -168,8 +168,8 @@
     font-size: 18px;
 }
 #browser.list .server {
-    height: 40px;
-    font-size: 20px;
+    height: 30px;
+    font-size: 16px;
 }
 #browser .server {
     width: 1074px;
@@ -277,7 +277,7 @@
     padding: 15px 30px !important;
 }
 .condensed .server .settings {
-    padding: 0 0px;
+    padding: 0;
     font-weight: 300;
     font-size: 22px;
     text-align: left;
@@ -292,11 +292,11 @@
 .list .server .thumb,
 .list .server .info {
     display: inline-block;
-    width: 730px;
-    height: 40px;
+    width: 870px;
+    height: 30px;
     box-sizing: border-box;
     white-space: nowrap;
-    padding: 2px 0px !important;
+    padding: 1px 0px !important;
     vertical-align: top;
 }
 .list .server .thumb {
@@ -305,41 +305,42 @@
 }
 .list .server .players {
     display: inline-block;
-    width: 240px;
-    height: 40px;
+    width: 80px;
+    height: 30px;
     text-align: right;
     font-weight: 300;
-    font-size: 26px;
+    font-size: 20px;
     box-sizing: border-box;
     white-space: nowrap;
-    padding: 5px 30px !important;
+    padding: 2px 0 !important;
 }
 .list .server .settings {
-    padding: 0 0px;
+    padding: 0 40px 0 0;
     font-weight: 300;
-    font-size: 20px;
+    font-size: 16px;
     text-align: left;
     vertical-align: center;
-    width: 600px;
+    box-sizing: border-box;
 }
 #browser.list .server .thumb img {
     border: 1px solid rgba(255, 255, 255, 0.9);
-    width: 71px;
-    height: 32px;
+    width: 70px;
+    height: 24px;
 }
 
 .list .name {
-    width: 65%;
+    width: 60%;
     display: inline-block;
-    padding-top: 5px;
+    padding: 4px 0 0 0;
+    margin-right: 40px;
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 .list .settings {
-    width: 35%;
+    width: 40%;
     display: inline-block;
-    padding-top: 5px;
+    padding-top: 2px;
     overflow-x: hidden;
 }
 #browser.regular .name
