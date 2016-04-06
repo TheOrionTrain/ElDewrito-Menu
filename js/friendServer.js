@@ -13,8 +13,10 @@ var friendServer,
 	played = 0,
 	pname,
 	puid,
+	colour = "#000000",
 	onlinePlayers = {},
-	party = [];
+	party = [],
+	developers = [];
 /*jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
 		StartConnection();
@@ -26,25 +28,32 @@ StartConnection = function() {
     friendServer.friendsServerSocket.onopen = function() {
 		dewRcon.send('player.name', function(res) {
 			dewRcon.send('player.printUID', function(ret) {
-				pname = res;
-				puid = ret.split(' ')[2];
+				dewRcon.send('Player.Colors.Primary', function(col) {
+					pname = res;
+					puid = ret.split(' ')[2];
+					colour = col;
 
-				friendServer.send(JSON.stringify({
-					type: "connection",
-					message: " has connected.",
-					guid: ret.split(' ')[2],
-					player: res
-				}));
-				
-				party = [];
-				party.push(res + ":" + ret.split(' ')[2]);
-				loadParty();
+					friendServer.send(JSON.stringify({
+						type: "connection",
+						message: " has connected.",
+						guid: ret.split(' ')[2],
+						player: res,
+						colour: col
+					}));
+
+					party = [];
+					party.push(res + ":" + ret.split(' ')[2] + ":" + col);
+					loadParty();
+				});
 			});
 		});
         $.snackbar({content:'Connected to Friend Server!'});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         friendServerConnected = true;
+		$.getJSON("http://thefeeltra.in/developers.json", function(json) {
+			developers = json;
+		});
     };
 	friendServer.friendsServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Friend Server'});
@@ -81,9 +90,9 @@ StartConnection = function() {
 							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
 						}
 					}
-					
+
 					if ($.inArray(result.player + ":" + result.guid, party) != -1 && party.length > 1) {
-						
+
 						if (Chat.isOpen("Party Chat - " + party[0].split(':')[0])) {
 							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
 							if (party[0].split(':')[0] == result.player)
@@ -92,7 +101,7 @@ StartConnection = function() {
 							if (party[0].split(':')[0] == result.player)
 								Chat.renameTab("Party Chat - " + result.player, "Party Chat - " + party[1].split(':')[0]);
 						}
-						
+
 						party = $.grep(party, function(value) {
 						  return value != (result.player + ":" + result.guid);
 						});
@@ -113,13 +122,13 @@ StartConnection = function() {
 								guid: party[i].split(':')[1]
 							}));
 						}
-						
+
 						if (party[0].split(':')[1] == puid) {
-							
+
 							$.snackbar({content: result.player + ' has left your party.'});
 							$('#notification')[0].currentTime = 0;
 							$('#notification')[0].play();
-							
+
 						}
 
 						loadParty();
@@ -164,7 +173,7 @@ StartConnection = function() {
 					$('#notification')[0].currentTime = 0;
 					$('#notification')[0].play();
 
-					party.push(result.player + ":" + result.pguid);
+					party.push(result.player + ":" + result.pguid + ":" + result.colour);
 
 					for (var i = 0; i < party.length; i++) {
 						friendServer.send(JSON.stringify({
@@ -244,7 +253,8 @@ function partyInvite(accepted, guid) {
 			type: 'acceptparty',
 			player: pname,
 			guid: guid,
-			pguid: puid
+			pguid: puid,
+			colour: col
 		}));
 	} else if (party.length > 1) {
 		$.snackbar({content: "You are already in a party."});
