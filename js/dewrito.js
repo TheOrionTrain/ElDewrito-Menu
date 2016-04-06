@@ -332,7 +332,7 @@ function loadSettings(i) {
 	} else {
 		if (!friendServerConnected)
 			StartConnection();
-		loadedSettings = true;;
+		loadedSettings = true;
 		if (!dewRconConnected && hook) {
 			$('#music')[0].pause();
 			$("video").each(function(){
