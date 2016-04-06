@@ -597,6 +597,7 @@ function getPlayerColour(guid) {
 			return onlinePlayers[i].split(":")[2] == null ? "#000000" : onlinePlayers[i].split(":")[2];
 		}
 	}
+	return "#000000";
 }
 
 function loadFriends() {
