@@ -332,8 +332,8 @@ function loadSettings(i) {
 	} else {
 		if (!friendServerConnected)
 			StartConnection();
-		loadedSettings = true;
-		if (window.location.origin == 'dew://') {
+		loadedSettings = true;;
+		if (!dewRconConnected && hook) {
 			$('#music')[0].pause();
 			$("video").each(function(){
 				$(this)[0].pause();
@@ -1526,7 +1526,7 @@ function hasMap(map) {
 
 function startgame(ip, mode, pass) {
 	//console.log(getMapName(currentServer.mapFile.toString()).toLowerCase());
-	if (!dewRconConnected && dewRcon == typeof(dewRconHelper)) {
+	if (!dewRconConnected && !hook) {
 		dewAlert({
 			title: "Not Connected",
 			content: 'You must be connected to the game to join or start a server.',
