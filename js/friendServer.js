@@ -92,8 +92,7 @@ StartConnection = function() {
 						}
 					}
 
-					if ($.inArray(result.player + ":" + result.guid, party) != -1 && party.length > 1) {
-
+					if ($.inArray(result.player + ":" + result.guid + ":" + getPlayerColour(result.guid), party) != -1 && party.length > 1) {
 						if (Chat.isOpen("Party Chat - " + party[0].split(':')[0])) {
 							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
 							if (party[0].split(':')[0] == result.player)
@@ -104,7 +103,7 @@ StartConnection = function() {
 						}
 
 						party = $.grep(party, function(value) {
-						  return value != (result.player + ":" + result.guid);
+						  return value != (result.player + ":" + result.guid + ":" + getPlayerColour(result.guid));
 						});
 
 						for (var i = 0; i < party.length; i++) {
@@ -225,6 +224,7 @@ StartConnection = function() {
 				break;
 				case "partymessage":
 					var lead = party[0].split(':')[0];
+					console.log("Party Chat - " + lead);
 					if(result.player == lead) {
 						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message,1);
 					} else {
