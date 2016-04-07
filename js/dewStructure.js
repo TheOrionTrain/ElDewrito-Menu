@@ -83,5 +83,13 @@ var Menu = {
         "video" : ["forge"],
         "back" : "main",
         "playerlist" : 1
+    },
+    "description" : {
+        "main-1" : "Take your party to view the current multiplayer servers online that are available to join.",
+        "main-2" : "Take your party online and into the frenetic action of live combat, objective-based missions, and dangerous military exercises.",
+        "main-3" : "Take your party to combat and objective-based missions that you select and design. Your rules, your maps, your game.",
+        "main-4" : "Take your party to collaborate in real time to edit and play variations of your favorite maps, from the subtle to the insane.",
+        "main-5" : "Change how the game or menu plays or looks. You can customize everything from music, to the background, to the appearance of the server browser.",
+        "main-6" : "View the team of people who worked hard to build and take this menu to where it is today.",
     }
 };

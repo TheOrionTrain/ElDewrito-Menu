@@ -541,6 +541,38 @@ audio {
     left: 150px;
     width: 900px;
 }
+#controls {
+    position: absolute;
+    left: 150px;
+    bottom: 10px;
+    height: 40px;
+    width: 900px;
+}
+#controls > div {
+    display: inline-block;
+    font-size: 18px;
+    color: #fff;
+    opacity: 0.8;
+    height: 20px;
+    background-size: 20px;
+    background-position: top left;
+    background-repeat: no-repeat;
+    padding: 0 0 0 25px;
+    margin: 0 15px 0 0;
+}
+.control-a {background-image: url(../img/xbox/A.png)}
+.control-b {background-image: url(../img/xbox/B.png)}
+.control-start {background-image: url(../img/xbox/M.png)}
+#description {
+    position: absolute;
+    bottom: 70px;
+    left: 160px;
+    width: 375px;
+    color: #fff;
+    font-size: 18px;
+    opacity: 0.667;
+    height: 70px;
+}
 #line1 {
     top: 450px;
     left: 90px;

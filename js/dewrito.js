@@ -1006,6 +1006,11 @@ $(document).ready(function() {
 	$('.selection').hover(function() {
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
+		$('.selection').removeClass('gp-on');
+		$(this).addClass("gp-on");
+		gp_on = $(this).attr('data-gp').split("-")[1];
+		gamepadSelect(currentMenu + "-" + gp_on);
+		$('#description').text(Menu.description[$(this).attr('data-gp')]);
 	});
 	$('.map-select .selection').click(function() {
 		changeMap1($(this).attr('data-game'));
