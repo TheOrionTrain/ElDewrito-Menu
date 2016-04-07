@@ -278,7 +278,7 @@ function gameInvite(accepted, guid) {
 
 friendServerHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.friendsServerSocket = new WebSocket('ws://158.69.166.144:55555/friendServer', 'friendServer');
+    this.friendsServerSocket = new WebSocket('ws://158.69.166.144:55555', 'friendServer');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
