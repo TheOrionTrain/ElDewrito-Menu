@@ -255,7 +255,7 @@ function partyInvite(accepted, guid) {
 			player: pname,
 			guid: guid,
 			pguid: puid,
-			colour: col
+			colour: colour
 		}));
 	} else if (party.length > 1) {
 		$.snackbar({content: "You are already in a party."});
@@ -278,7 +278,7 @@ function gameInvite(accepted, guid) {
 
 friendServerHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.friendsServerSocket = new WebSocket('ws://127.0.0.1:55555/friendServer', 'friendServer');
+    this.friendsServerSocket = new WebSocket('ws://158.69.166.144:55555/friendServer', 'friendServer');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
