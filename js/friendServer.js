@@ -26,23 +26,23 @@ var friendServer,
 StartConnection = function() {
     friendServer = new friendServerHelper();
     friendServer.friendsServerSocket.onopen = function() {
-		dewRcon.send('player.name', function(res) {
-			dewRcon.send('player.printUID', function(ret) {
+		dewRcon.send('player.name', function(name) {
+			dewRcon.send('player.printUID', function(uid) {
 				dewRcon.send('Player.Colors.Primary', function(col) {
-					pname = res;
-					puid = ret.split(' ')[2];
+					pname = name;
+					puid = uid.split(' ')[2];
 					colour = col;
 
 					friendServer.send(JSON.stringify({
 						type: "connection",
 						message: " has connected.",
-						guid: ret.split(' ')[2],
-						player: res,
+						guid: uid.split(' ')[2],
+						player: name,
 						colour: col
 					}));
 
 					party = [];
-					party.push(res + ":" + ret.split(' ')[2] + ":" + col);
+					party.push(name + ":" + uid.split(' ')[2] + ":" + col);
 					loadParty();
 				});
 			});
@@ -54,6 +54,7 @@ StartConnection = function() {
 		$.getJSON("http://thefeeltra.in/developers.json", function(json) {
 			developers = json;
 		});
+		StartMatchmakingConnection();
     };
 	friendServer.friendsServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Friend Server'});
@@ -277,7 +278,7 @@ function gameInvite(accepted, guid) {
 
 friendServerHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.friendsServerSocket = new WebSocket('ws://158.69.166.144:55555', 'friendServer');
+    this.friendsServerSocket = new WebSocket('ws://127.0.0.1:55555/friendServer', 'friendServer');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
