@@ -280,7 +280,7 @@ function addServer(i) {
 	var on = (!servers[i].variant) ? "" : "on";
 	servers[i].location_flag = typeof servers[i].location_flag == 'undefined' ? "[" : servers[i].location_flag;
 	servers[i].ping = servers[i].ping || 0;
-	var sprint = (servers[i].sprintEnabled == 1) ? "<img class='sprint' src='img/sprint.png'>" : " ";
+	var sprint = (servers[i].sprintEnabled == 1) ? "<img class='sprint' src='img/sprint.svg'>" : " ";
 
 	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".jpg'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
@@ -771,17 +771,12 @@ $(document).ready(function() {
 		});
 	}
 	initializeNewMenu();
-	Mousetrap.bind('a', function() {
-		$("[data-gp='" + currentMenu + "-" + gp_on + "']").trigger('click');
-	});
-	Mousetrap.bind('b', function() {
-		$("#back").trigger('click');
-	});
-	Mousetrap.bind('y', function() {
-		if (currentMenu == "serverbrowser") {
-			$('#refresh').trigger('click');
-		}
-	});
+
+	Mousetrap.bind('a', function() {$(".control-A").trigger('click');});
+	Mousetrap.bind('b', function() {$(".control-B").trigger('click');});
+	Mousetrap.bind('x', function() {$(".control-X").trigger('click');});
+	Mousetrap.bind('y', function() {$(".control-Y").trigger('click');});
+
 	Mousetrap.bind('up', function() {
 		if ($("[data-gp='" + currentMenu + "-" + (gp_on - 1) + "']").length > 0) {
 			gp_on -= 1;

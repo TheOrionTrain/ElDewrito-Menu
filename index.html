@@ -124,24 +124,6 @@
 			<table id="lobby" cellspacing="0"></table>
 		</div>
 
-		<div class="menu-container animated" id="serverbrowser">
-			<div id="direct-connect">Direct Connect</div>
-			<div id="browser-title">SERVERS</div>
-			<div id="browser-buttons">
-				<div id="refresh"><img src="img/refresh.svg" /> </div>
-				<div id="browser-gametype" data-action="menu" data-menu="serverbrowser,options,fade,choosetype">Choose Gametype</div>
-				<div id="browser-map" data-action="menu" data-menu="serverbrowser,options,fade,choosemap">Choose Map</div>
-				<div id="browser-full">Full<span class="checkbox checked"></span></div>
-				<div id="browser-locked">Locked<span class="checkbox checked"></span></div>
-				<div id="browser-sprint">Sprint<span class="checkbox checked"></span></div>
-				<div id="clear">Reset</div>
-			</div>
-			<div id="line3"></div>
-			<div id="browser" class="regular"></div>
-			<div id="line4"></div>
-			<div id="browser-settings">Settings</div>
-		</div>
-
 		<div class="menu-container animated" id="main2" style="display:block">
 			<div class="select-main">
 				<div data-gp="main2-1" id="main-browse" class="selection">BROWSE SERVERS</div>
@@ -172,10 +154,24 @@
 		</div> !-->
 
 		<div class="menu-container animated" id="main">
+			<div id="serverbrowser">
+				<div id="browser-buttons">
+					<div id="refresh"><img src="img/refresh.svg" /> </div>
+					<div id="browser-gametype" data-action="menu" data-menu="serverbrowser,options,fade,choosetype">Choose Gametype</div>
+					<div id="browser-map" data-action="menu" data-menu="serverbrowser,options,fade,choosemap">Choose Map</div>
+					<div id="browser-full">Full<span class="checkbox checked"></span></div>
+					<div id="browser-locked">Locked<span class="checkbox checked"></span></div>
+					<div id="browser-sprint">Sprint<span class="checkbox checked"></span></div>
+					<div id="clear">Reset</div>
+				</div>
+				<div id="line3"></div>
+				<div id="browser" class="regular"></div>
+			</div>
 			<div id="map-thumb"></div>
 			<div id="select-icon"></div>
 			<div id="select-title">MAIN MENU</div>
-			<div id="select-previous">NOTHING</div>
+			<div id="party-text">This party is local to this computer.</div>
+			<div id="select-previous"></div>
 			<div id="select-main"></div>
 			<div id="description"></div>
 			<div id="controls"></div>

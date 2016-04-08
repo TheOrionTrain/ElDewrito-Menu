@@ -44,6 +44,11 @@ var DewMenu = {
             } else {
                 $('#map-thumb').hide();
             }
+            if(ch.class) {
+                $('#main').removeClass().addClass("menu-container animated "+ch.class);
+            } else {
+                $('#main').removeClass().addClass("menu-container animated");
+            }
             $('#select-main').empty();
             for(var i=0;i<Object.keys(ch.options).length;i++) {
                 var da = ch.options[Object.keys(ch.options)[i]],
@@ -76,6 +81,7 @@ var DewMenu = {
             });
             $('#slide')[0].currentTime = 0;
             $('#slide')[0].play();
+            if(ch.onload) {ch.onload();}
         }
     },
     "previous" : function() {
@@ -130,6 +136,47 @@ var DewMenu = {
                 "B" : {
                     "label" : "Back",
                     "action" : function(){DewMenu.previous();}
+                },
+                "START" : {
+                    "label" : "Friends List",
+                    "action" : function() {
+                        gamepadSelect("lobby-1");
+                    }
+                }
+            }
+        },
+        "serverbrowser" : {
+            "title" : "SERVERS",
+            "previous" : "main",
+            "onload" : function() {
+                browsing = 1;
+        		$('#browser').empty();
+                $('#lobby').empty();
+        		setTimeout(loadServers, 1000);
+        		loopPlayers = false;
+            },
+            "class" : "browser",
+            "thumbnail": 0,
+            "lists" : [],
+            "options": {},
+            "controls" : {
+                "A" : {
+                    "label" : "Select",
+                    "action" : function() {
+                        $('.gp-on').trigger('click');
+                    }
+                },
+                "B" : {
+                    "label" : "Back",
+                    "action" : function(){DewMenu.previous();}
+                },
+                "X" : {
+                    "label" : "Direct Connect",
+                    "action" : function(){directConnect();}
+                },
+                "Y" : {
+                    "label" : "Refresh",
+                    "action" : function(){$('#refresh').trigger('click');}
                 },
                 "START" : {
                     "label" : "Friends List",

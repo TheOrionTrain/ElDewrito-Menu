@@ -134,7 +134,13 @@
     transform-origin: top left;
     box-sizing: border-box;
 }
-#browser-title {
+#main:not(.browser) #serverbrowser {
+    display: none;
+}
+.browser #select-previous {
+    left: 115px;
+}
+.browser #select-title {
     position: absolute;
     top: 60px;
     left: 100px;
@@ -146,6 +152,12 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.browser #select-main,
+.browser #party-text,
+.browser #select-icon,
+.browser #description {
+    display: none;
+}
 #browser {
     position: absolute;
     left: 100px;
@@ -155,7 +167,7 @@
     border-spacing: 0px 2px;
     padding: 2px;
     box-sizing: border-box;
-    height: 450px;
+    height: 475px;
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -296,7 +308,7 @@
     height: 30px;
     box-sizing: border-box;
     white-space: nowrap;
-    padding: 1px 0px !important;
+    padding: 2px 0px !important;
     vertical-align: top;
 }
 .list .server .thumb {
@@ -562,6 +574,8 @@ audio {
 }
 .control-A {background-image: url(../img/xbox/A.png)}
 .control-B {background-image: url(../img/xbox/B.png)}
+.control-X {background-image: url(../img/xbox/X.png)}
+.control-Y {background-image: url(../img/xbox/Y.png)}
 .control-START {background-image: url(../img/xbox/M.png)}
 #description {
     position: absolute;
@@ -572,6 +586,16 @@ audio {
     font-size: 18px;
     opacity: 0.667;
     height: 70px;
+}
+#party-text {
+    position: absolute;
+    top: 320px;
+    left: 160px;
+    width: 375px;
+    color: #fff;
+    font-size: 18px;
+    opacity: 0.667;
+    min-height: 50px;
 }
 #line1 {
     top: 450px;
