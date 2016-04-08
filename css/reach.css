@@ -823,12 +823,13 @@ audio {
 #select-previous {
     transform: rotate(90deg);
     position: absolute;
-    top: 385px;
-    left: 20px;
+    top: 320px;
+    left: 140px;
     font-weight: 600;
     font-size: 46px;
     color: #fff;
     opacity: 0.125;
+    transform-origin: top left;
 }
 #select-previous:hover {
     cursor: pointer;
