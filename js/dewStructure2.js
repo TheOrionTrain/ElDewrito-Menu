@@ -160,6 +160,39 @@ var DewMenu = {
                 },
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
+                     "action" : function() {DewMenu.change("matchmaking-search")}
+                }
+            },
+            "controls" : {
+                "A" : {
+                    "label" : "Select",
+                    "action" : function() {
+                        $('.gp-on').trigger('click');
+                    }
+                },
+                "B" : {
+                    "label" : "Back",
+                    "action" : function(){DewMenu.previous()}
+                },
+                "START" : {
+                    "label" : "Friends List",
+                    "action" : function() {
+                        gamepadSelect("lobby-1");
+                    }
+                }
+            }
+        },
+		"matchmaking-search" : {
+            "title" : "SEARCHING",
+            "background" : ["matchmaking","multiplayer"],
+            "previous" : "matchmaking",
+            "thumbnail": 0,
+            "lists" : [
+                "current-party"
+            ],
+            "options": {
+                "SEARCHING FOR PLAYERS..." : {
+                     "description" : "Start selected Matchmaking game playlist.",
                      "action" : function() {
                          console.log("Start matchmaking function goes here.");
                      }
@@ -184,6 +217,6 @@ var DewMenu = {
                 }
             }
         }
-    },
+	},
     "selected" : "main"
 };
