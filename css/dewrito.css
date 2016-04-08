@@ -661,7 +661,7 @@ html {
 .regular .server.passworded .thumb:before {
     content: " ";
     display: block;
-    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
+    background: rgba(0, 0, 0, 0.59) url(../img/passworded.svg) no-repeat 50% 50%;
     width: 210px;
     height: 79px;
     padding: 0;
@@ -674,7 +674,7 @@ html {
 .condensed .server.passworded .thumb:before {
     content: " ";
     display: block;
-    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
+    background: rgba(0, 0, 0, 0.59) url(../img/passworded.svg) no-repeat 50% 50%;
     width: 210px;
     height: 60px;
     padding: 0;
@@ -687,7 +687,7 @@ html {
 .list .server.passworded .thumb:before {
     content: " ";
     display: block;
-    background: rgba(0, 0, 0, 0.59) url(../img/passworded.png) no-repeat 50% 50%;
+    background: rgba(0, 0, 0, 0.59) url(../img/passworded.svg) no-repeat 50% 50%;
     width: 70px;
     height: 24px;
     padding: 0;

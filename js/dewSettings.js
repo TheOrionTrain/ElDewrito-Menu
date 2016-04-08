@@ -325,7 +325,7 @@ var user = {
 			"update": function() {
 				var c = settings.logo.current;
 				$('#dewrito').css({
-					'background': "url('img/" + settings.logo.labels[c] + ".png') no-repeat 0 0/cover"
+					'background': "url('img/" + settings.logo.labels[c] + ".svg') no-repeat 0 0/cover"
 				});
 				$("[data-option='logo']").children('.value').text(settings.logo.labels[c]);
 			}
