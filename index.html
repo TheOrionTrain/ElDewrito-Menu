@@ -160,16 +160,16 @@
 			<div id="arrow-right"></div>
 		</div>
 
-		<div class="menu-container animated" id="main2">
+		<div class="menu-container animated" id="main2" style="display:block">
 			<div class="select-main">
-				<div data-gp="main2-1" data-action="menu" data-menu="main2,serverbrowser,vertical" class="selection">BROWSE SERVERS</div>
-				<div data-gp="main2-2" data-action="menu" data-menu="main2,main,vertical" class="selection">MAIN MENU</div>
+				<div data-gp="main2-1" id="main-browse" class="selection">BROWSE SERVERS</div>
+				<div data-gp="main2-2" id="main-menu" class="selection">MAIN MENU</div>
 			</div>
 			<div id="dewmenu-button">Switch to Scooterpsu's menu</div>
 			<div id="bungie"></div>
 		</div>
 
-		<div class="menu-container animated" id="main">
+		<!-- <div class="menu-container animated" id="main">
 			<div class="select-icon"></div>
 			<div class="select-title">MAIN MENU</div>
 			<div class="select-main">
@@ -187,6 +187,16 @@
 				<div class="control-b">Back</div>
 				<div class="control-start">Friends List</div>
 			</div>
+		</div> !-->
+
+		<div class="menu-container animated" id="main">
+			<div id="select-icon"></div>
+			<div id="select-title">MAIN MENU</div>
+			<div id="select-previous">NOTHING</div>
+			<div id="select-main"></div>
+			<div id="description"></div>
+			<div id="main-line"></div>
+			<div id="controls"></div>
 		</div>
 
 		<div class="menu-container animated" id="credits">
@@ -335,5 +345,5 @@
 <script src="js/dewRcon.js"></script>
 <script src="js/dewrito.js"></script>
 <script src="js/dewSettings.js"></script>
-<script src="js/dewStructure.js"></script>
+<script src="js/dewStructure2.js"></script>
 </html>

@@ -1332,10 +1332,12 @@ function initializeNewMenu() {
 	if (window.location.protocol == "https:") {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
-	for(var i=0; i < Object.keys(Menu).length; i++) {
-		var data = Menu[Object.keys(Menu)[i]];
-		$('#'+Object.keys(Menu)[i]).attr('data-menu-position',data.position);
-	}
+	$('#main-menu').click(function() {
+        DewMenu.change("main");
+		$('#main').show();
+        $('#main2').hide();
+        console.log(Menu);
+    });
 }
 
 function changeMenuOptions(m,b) {
@@ -1358,7 +1360,7 @@ function changeMenuOptions(m,b) {
 	$('#back').hide();
 }
 
-function changeMenu(m) {
+/*function changeMenu(m) {
 	var e = m.split(","), f = Menu[e[0]], t = Menu[e[1]];
 	if(e[0] === e[1]) {
 		return false;
@@ -1450,7 +1452,7 @@ function changeMenu(m) {
 	if(currentMenu != "serverbrowser" && e[0] != "serverbrowser") {
 		browsing = 0;
 	}
-}
+}*/
 
 var KDdata = [{
 		value: 1,

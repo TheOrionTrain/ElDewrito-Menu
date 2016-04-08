@@ -102,19 +102,19 @@
 }
 #players-online {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 22px;
-    opacity: 0.8;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+    opacity: 0.75;
     z-index: 10;
     color: #fff;
 }
 #friends-online {
     position: absolute;
     top: 20px;
-    right: 20px;
-    font-size: 22px;
-    opacity: 0.8;
+    right: 60px;
+    font-size: 18px;
+    opacity: 0.75;
     z-index: 10;
     color: #fff;
 }
@@ -381,6 +381,7 @@ audio {
     display: none;
 }
 .menu-container {
+    display: none;
     position: absolute;
     margin: 0;
     z-index: 3;
@@ -560,9 +561,9 @@ audio {
     padding: 0 0 0 25px;
     margin: 0 15px 0 0;
 }
-.control-a {background-image: url(../img/xbox/A.png)}
-.control-b {background-image: url(../img/xbox/B.png)}
-.control-start {background-image: url(../img/xbox/M.png)}
+.control-A {background-image: url(../img/xbox/A.png)}
+.control-B {background-image: url(../img/xbox/B.png)}
+.control-START {background-image: url(../img/xbox/M.png)}
 #description {
     position: absolute;
     bottom: 70px;
@@ -599,7 +600,8 @@ audio {
     left: 90px;
     width: 450px;
 }
-#main .select-main {
+#main .select-main,
+#main #select-main {
     position: absolute;
     bottom: 150px;
     left: 150px;
@@ -804,7 +806,7 @@ audio {
 .right {
     background-image: url('../img/right.svg');
 }
-.select-title {
+.select-title, #select-title {
     position: absolute;
     top: 240px;
     left: 160px;
@@ -814,7 +816,17 @@ audio {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.select-icon {
+#select-previous {
+    transform: rotate(90deg);
+    position: absolute;
+    top: 385px;
+    left: 20px;
+    font-weight: 600;
+    font-size: 46px;
+    color: #fff;
+    opacity: 0.2;
+}
+.select-icon, #select-icon {
     position: absolute;
     top: 242px;
     left: 78px;
@@ -824,7 +836,8 @@ audio {
     opacity: 0.75;
 }
 #select .selection,
-.select-main .selection {
+.select-main .selection,
+#select-main .selection {
     font-weight: 300;
     font-size: 19px;
     color: rgba(255, 255, 255, 0.75);
@@ -838,10 +851,12 @@ audio {
     transition: 0.5s;
     padding: 5px 10px;
 }
-.select-main .selection {
+.select-main .selection,
+#select-main .selection {
     font-size: 21px;
 }
 .select-main .selection .value,
+#select-main .selection .value,
 #select .selection .value {
     float: right;
 }
@@ -851,6 +866,7 @@ audio {
     100% {background-color: rgba(255, 255, 255, 0.1);}
 }
 .selection:hover,
+#select-main .selection:hover,
 .server:hover,
 .selection.gp-on,
 .server.gp-on {
