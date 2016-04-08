@@ -568,7 +568,7 @@ function updateFriends() {
 	for (var i = 0; i < onlinePlayers.length; i++) {
 		for (var o = 0; o < friends.length; o++) {
 			if (((!friends[o].contains(":0x") || friends[o].contains(":n")) && friends[o] == onlinePlayers[i].split(':')[0]) || (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0])) {
-				friends[o] = onlinePlayers[i];
+				friends[o] = onlinePlayers[i].split(":")[0] + ":" + onlinePlayers[i].split(":")[1];
 				localStorage.setItem("friends", JSON.stringify(friends));
 			}
 		}
