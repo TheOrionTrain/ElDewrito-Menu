@@ -1,51 +1,89 @@
 var DewMenu = {
     "change" : function(m) {
-        var ch = DewMenu.pages[m];
-        $('#select-title').text(ch.title);
-        $('#select-previous').text(ch.previous);
-        $('#lobby-container > table').hide();
-        for(var i=0;i<ch.lists.length;i++) {
-            $('#'+ch.lists[i]).show();
+        if(DewMenu.pages[m]) {
+            var ch = DewMenu.pages[m];
+            if(ch.background) {
+        		for(var i=0; i< ch.background.length; i++) {
+        			if($('#bg-'+ch.background[i]).length) {
+                        $('#videos > video').fadeOut(anit);
+                        $('#videos > video')[0].pause();
+        				$('#bg-'+ch.background[i]).fadeIn(anit);
+        				$('#bg-'+ch.background[i])[0].play();
+        			}
+        		}
+        	} else {
+                $('#videos > video').fadeOut(anit);
+                $('#videos > video')[0].pause();
+        		$('#bg1').stop().fadeIn(anit);
+        		$('#bg1')[0].play();
+        	}
+            $('#select-title').text(ch.title);
+            if(ch.previous) {
+                $('#select-previous').text(DewMenu.pages[ch.previous].title).click(function() {
+                    DewMenu.previous();
+                });
+            } else {
+                $('#select-previous').text("");
+            }
+            $('#lobby-container > table').hide();
+            for(var i=0;i<ch.lists.length;i++) {
+                $('#'+ch.lists[i]).show();
+            }
+            if(ch.lists.length > 0) {
+                $('#lobby-container').removeClass().addClass('showing');
+            } else {
+                $('#lobby-container').removeClass().addClass('hidden');
+            }
+            if(ch.logo) {
+        		$('#dewrito').removeClass().addClass("animated "+ch.logo);
+        	} else {
+        		$('#dewrito').removeClass().addClass("animated hidden");
+        	}
+            $('#select-main').empty();
+            for(var i=0;i<Object.keys(ch.options).length;i++) {
+                var da = ch.options[Object.keys(ch.options)[i]],
+                    v = (da.value) ? "<span class='value'>"+da.value+"</span>" : "";
+                $('#select-main').append("<div class='selection' data-gp='"+m+"-"+(i+1)+"'>"+Object.keys(ch.options)[i]+v+"</div>");
+            }
+            $('#controls').empty();
+            for(var i=0;i<Object.keys(ch.controls).length;i++) {
+                var co = ch.controls[Object.keys(ch.controls)[i]];
+                $('#controls').append("<div class='control-"+Object.keys(ch.controls)[i]+"'>"+co.label+"</div>");
+            }
+            gamepadSelect(m+"-1");
+            DewMenu.selected = m;
+            $('#select-main .selection').hover(function() {
+    			$('#click')[0].currentTime = 0;
+    			$('#click')[0].play();
+                $('.selection').removeClass('gp-on');
+        		$(this).addClass("gp-on");
+        		gp_on = $(this).attr('data-gp').split("-")[1];
+        		gamepadSelect(DewMenu.selected + "-" + gp_on);
+                $('#description').text(DewMenu.pages[DewMenu.selected].options[Object.keys(DewMenu.pages[DewMenu.selected].options)[parseInt(gp_on)-1]].description);
+    		});
+            $('#select-main .selection').click(function() {
+                var n = parseInt($(this).attr('data-gp').split("-")[1])-1;
+                DewMenu.pages[DewMenu.selected].options[Object.keys(DewMenu.pages[DewMenu.selected].options)[n]].action();
+            });
+            $('#controls > div').click(function() {
+                var button = $(this).attr('class').split('-')[1];
+                DewMenu.pages[DewMenu.selected].controls[button].action();
+            });
+            $('#slide')[0].currentTime = 0;
+            $('#slide')[0].play();
         }
-        if(ch.lists.length > 0) {
-            $('#lobby-container').removeClass().addClass('showing');
-        } else {
-            $('#lobby-container').removeClass().addClass('hidden');
-        }
-        if(ch.logo) {
-    		$('#dewrito').removeClass().addClass("animated "+ch.logo);
-    	} else {
-    		$('#dewrito').removeClass().addClass("animated hidden");
-    	}
-        $('#select-main').empty();
-        for(var i=0;i<Object.keys(ch.options).length;i++) {
-            var da = ch.options[Object.keys(ch.options)[i]];
-            $('#select-main').append("<div class='selection' data-gp='"+m+"-"+(i+1)+"'>"+Object.keys(ch.options)[i]+"</div>");
-        }
-        $('#controls').empty();
-        for(var i=0;i<Object.keys(ch.controls).length;i++) {
-            var co = ch.controls[Object.keys(ch.controls)[i]];
-            $('#controls').append("<div class='control-"+Object.keys(ch.controls)[i]+"'>"+co.label+"</div>");
-        }
-        gamepadSelect(m+"-1");
-        DewMenu.selected = m;
-        $('#select-main .selection').hover(function() {
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
-            $('.selection').removeClass('gp-on');
-    		$(this).addClass("gp-on");
-    		gp_on = $(this).attr('data-gp').split("-")[1];
-    		gamepadSelect(DewMenu.selected + "-" + gp_on);
-            $('#description').text(DewMenu.pages[DewMenu.selected].options[Object.keys(DewMenu.pages[DewMenu.selected].options)[parseInt(gp_on)-1]].description)
-		});
     },
     "previous" : function() {
-        console.log("previous");
+        DewMenu.change(DewMenu.pages[DewMenu.selected].previous);
+    },
+    "changeSetting" : function(set) {
+        console.log("changeSetting: "+set);
+        $('#beep')[0].currentTime = 0;
+        $('#beep')[0].play();
     },
     "pages" : {
         "main" : {
             "title" : "MAIN MENU",
-            "previous" : " ",
             "thumbnail": 0,
             "lists" : [
                 "current-party",
@@ -75,6 +113,56 @@ var DewMenu = {
                 "CREDITS" : {
                     "description" : "View the team of people who worked hard to build and take this menu to where it is today.",
                     "action" : function() {DewMenu.change("credits")}
+                }
+            },
+            "controls" : {
+                "A" : {
+                    "label" : "Select",
+                    "action" : function() {
+                        $('.gp-on').trigger('click');
+                    }
+                },
+                "B" : {
+                    "label" : "Back",
+                    "action" : function(){DewMenu.previous();}
+                },
+                "START" : {
+                    "label" : "Friends List",
+                    "action" : function() {
+                        gamepadSelect("lobby-1");
+                    }
+                }
+            }
+        },
+        "matchmaking" : {
+            "title" : "MATCHMAKING",
+            "background" : ["matchmaking","multiplayer"],
+            "previous" : "main",
+            "thumbnail": 0,
+            "lists" : [
+                "current-party",
+                "friends-on"
+            ],
+            "options": {
+                "PLAYLIST" : {
+                    "description" : "Select a playlist that suits your favorite play style.",
+                    "value" : "OFFLINE",
+                    "action" : function() {DewMenu.changeSetting("PLAYLIST")}
+                },
+                "SEARCH RESTRICTIONS" : {
+                    "description" : "Select options to prioritize how you get matched in matchmaking.",
+                    "value" : "NONE (FASTEST)",
+                    "action" : function() {DewMenu.changeSetting("SEARCH RESTRICTIONS")}
+                },
+                "PSYCH PROFILE" : {
+                    "description" : "Select options that describe your playlist so that we can find you better matches.",
+                    "action" : function() {DewMenu.change("PSYCH PROFILE")}
+                },
+                "START MATCHMAKING" : {
+                     "description" : "Start selected Matchmaking game playlist.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
                 }
             },
             "controls" : {
