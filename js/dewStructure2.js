@@ -39,6 +39,11 @@ var DewMenu = {
         	} else {
         		$('#dewrito').removeClass().addClass("animated hidden");
         	}
+            if(ch.thumbnail) {
+                $('#map-thumb').show();
+            } else {
+                $('#map-thumb').hide();
+            }
             $('#select-main').empty();
             for(var i=0;i<Object.keys(ch.options).length;i++) {
                 var da = ch.options[Object.keys(ch.options)[i]],
@@ -98,7 +103,7 @@ var DewMenu = {
                     "description" : "Take your party online and into the frenetic action of live combat, objective-based missions, and dangerous military exercises.",
                     "action" : function() {DewMenu.change("matchmaking")}
                 },
-                "CUSTOM GAMES" : {
+                "CUSTOM GAME" : {
                     "description" : "Take your party to combat and objective-based missions that you select and design. Your rules, your maps, your game.",
                     "action" : function() {DewMenu.change("customgame")}
                 },
@@ -138,7 +143,7 @@ var DewMenu = {
             "title" : "MATCHMAKING",
             "background" : ["matchmaking","multiplayer"],
             "previous" : "main",
-            "thumbnail": 0,
+            "thumbnail": 1,
             "lists" : [
                 "current-party",
                 "friends-on"
@@ -147,20 +152,20 @@ var DewMenu = {
                 "PLAYLIST" : {
                     "description" : "Select a playlist that suits your favorite play style.",
                     "value" : "OFFLINE",
-                    "action" : function() {DewMenu.changeSetting("PLAYLIST")}
+                    "action" : function() {DewMenu.changeSetting("playlist")}
                 },
                 "SEARCH RESTRICTIONS" : {
                     "description" : "Select options to prioritize how you get matched in matchmaking.",
                     "value" : "NONE (FASTEST)",
-                    "action" : function() {DewMenu.changeSetting("SEARCH RESTRICTIONS")}
+                    "action" : function() {DewMenu.changeSetting("restrictions")}
                 },
                 "PSYCH PROFILE" : {
                     "description" : "Select options that describe your playlist so that we can find you better matches.",
-                    "action" : function() {DewMenu.change("PSYCH PROFILE")}
+                    "action" : function() {DewMenu.change("psych")}
                 },
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
-                     "action" : function() {DewMenu.change("matchmakingsearch")}
+                     "action" : function() {DewMenu.change("searching")}
                 }
             },
             "controls" : {
@@ -182,7 +187,7 @@ var DewMenu = {
                 }
             }
         },
-		"matchmakingsearch" : {
+		"searching" : {
             "title" : "SEARCHING",
             "background" : ["matchmaking","multiplayer"],
             "previous" : "matchmaking",
@@ -194,7 +199,7 @@ var DewMenu = {
                 "SEARCHING FOR PLAYERS..." : {
                      "description" : "Searching for players...",
                      "action" : function() {
-                         console.log("Start matchmaking function goes here.");
+
                      }
                 }
             },
@@ -219,9 +224,9 @@ var DewMenu = {
         },
 		"customgame" : {
             "title" : "CUSTOM GAME",
-            "background" : ["matchmaking","multiplayer"],
+            "background" : ["custom_games","multiplayer"],
             "previous" : "main",
-            "thumbnail": 0,
+            "thumbnail": 1,
             "lists" : [
                 "current-party",
 				"lobby"
@@ -229,26 +234,24 @@ var DewMenu = {
             "options": {
 				"GAME TYPE" : {
                      "description" : "Choose the game type you would like to play.",
-                     "action" : function() {
-                         console.log("Start matchmaking function goes here.");
-                     }
+                     "value" : "SLAYER",
+                     "action" : function() {DewMenu.changeSetting("gametype")}
                 },
 				"MAP" : {
                      "description" : "Choose which map you want to play.",
-                     "action" : function() {
-                         console.log("Start matchmaking function goes here.");
-                     }
+                     "value" : "EDGE",
+                     "action" : function() {DewMenu.changeSetting("map")}
                 },
 				"GAME OPTIONS" : {
                      "description" : "Choose the rules for the game.",
                      "action" : function() {
-                         console.log("Start matchmaking function goes here.");
+
                      }
                 },
                 "START GAME" : {
                      "description" : "Start the selected mission.",
                      "action" : function() {
-                         console.log("Start matchmaking function goes here.");
+
                      }
                 }
             },
@@ -272,10 +275,10 @@ var DewMenu = {
             }
         },
 		"forge" : {
-            "title" : "CUSTOM GAME",
-            "background" : ["matchmaking","forge"],
+            "title" : "FORGE",
+            "background" : ["forge","multiplayer"],
             "previous" : "main",
-            "thumbnail": 0,
+            "thumbnail": 1,
             "lists" : [
                 "current-party",
 				"lobby"
@@ -283,26 +286,24 @@ var DewMenu = {
             "options": {
 				"GAME TYPE" : {
                      "description" : "Choose the game type you would like to edit object setup for.",
-                     "action" : function() {
-                         console.log("Start matchmaking function goes here.");
-                     }
+                     "value" : "BASIC EDITING",
+                     "action" : function() {DewMenu.changeSetting("gametype")}
                 },
 				"MAP" : {
                      "description" : "Choose which map you want to edit objects on.",
-                     "action" : function() {
-                         console.log("Start matchmaking function goes here.");
-                     }
+                     "value" : "EDGE",
+                     "action" : function() {DewMenu.changeSetting("map")}
                 },
 				"GAME OPTIONS" : {
                      "description" : "Choose the rules for the game.",
                      "action" : function() {
-                         console.log("Start matchmaking function goes here.");
+
                      }
                 },
                 "START GAME" : {
                      "description" : "Start the selected mission.",
                      "action" : function() {
-                         console.log("Start matchmaking function goes here.");
+
                      }
                 }
             },

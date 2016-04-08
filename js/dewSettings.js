@@ -968,8 +968,8 @@ var user = {
 		    "TIMBERLAND" : "An enemy behind every tree!",
 		    "WIZARD" : "Round and Round and Round."*/
 		},
-		/*"Halo2" : {
-		    "name": "HALO 2",
+		"Halo2" : {
+		    "name": "HALO 2",/*
 		    "ASCENSION" : "This relay station is part of a network that has kept Delta Halo functioning smoothly for untold centuries.",
 		    "BACKWASH" : "There are strong indications that beneath the shroud of mist drowning this swamp on Delta Halo lies a powerful intelligence.",
 		    "BEAVER CREEK" : "These forgotten structures were once the site of many bitter battles but have since been reclaimed by nature.",
@@ -984,7 +984,7 @@ var user = {
 		    "GEMINI" : "This sanctuary now rings with the sound of combat - the end of the ancient duality of the Covenant is truly at hand.",
 		    "HEADLONG" : "Although during the day Section 14 monitors almost all harbour traffic, at night it's one of the city's most notorious hangouts.",
 		    "IVORY TOWER" : "Once home to the famous socialite Lance O'Donnell, the top floor of this building is now a public park.",
-		    "LOCKOUT" : "Some believe this remote facility was once used to study the Flood. But few clues remain amidst the snow and ice.",
+		    */"LOCKOUT" : "Some believe this remote facility was once used to study the Flood. But few clues remain amidst the snow and ice."/*,
 		    "MIDSHIP" : "Don't let its luxury fool you - the Pious Inquisitor is one of the fastest ships in the Covenant fleet.",
 		    "RELIC" : "Covenant scripture dictates that structures of this type are memorials to Forerunners who fell in battle against the Flood.",
 		    "SANCTUARY" : "Though its original purpose has been lost to the march of eons, this structure is now a cemetery to countless brave warriors.",
@@ -994,8 +994,8 @@ var user = {
 		    "UPLIFT" : "Unknowable energies see the from this long-abandoned Forerunner spire, making it a vital prize for Covenant and Human forces.",
 		    "WARLOCK" : "Despite overwhelming evidence to the contrary, some stubbornly maintain that this structure was once a Forerunner arena.",
 		    "WATERWORKS" : "While the Forerunners excelled at mimicking natural beauty, the machinery in this cavern exemplifies their true genius.",
-		    "ZANZIBAR" : "Wind Power Station 7 sits as a mute reminder of the EAP's late 25th-century attempt at re-nationalization."
-		},*/
+		    "ZANZIBAR" : "Wind Power Station 7 sits as a mute reminder of the EAP's late 25th-century attempt at re-nationalization."*/
+		},
 		"Halo3": {
 			"name": "HALO 3",
 			/*"ASSEMBLY" : "The Covenant war machine continues its march to conquest; even with its head severed it is still dangerous",
