@@ -1336,7 +1336,6 @@ function initializeNewMenu() {
         DewMenu.change("main");
 		$('#main').show();
         $('#main2').hide();
-        console.log(Menu);
     });
 }
 

@@ -531,35 +531,36 @@ audio {
 #line1,
 #line2,
 #line3,
-#line4,
-#main-line {
+#line4 {
     position: absolute;
     background: rgba(255, 255, 255, 0.25);
     height: 1px;
-}
-#main-line {
-    bottom: 60px;
-    left: 150px;
-    width: 900px;
 }
 #controls {
     position: absolute;
     left: 150px;
     bottom: 10px;
-    height: 40px;
+    height: 50px;
     width: 900px;
+    padding: 10px 0 0 0;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255,255,255,0.25);
 }
 #controls > div {
     display: inline-block;
     font-size: 18px;
     color: #fff;
-    opacity: 0.8;
+    opacity: 0.75;
     height: 20px;
     background-size: 20px;
     background-position: top left;
     background-repeat: no-repeat;
     padding: 0 0 0 25px;
     margin: 0 15px 0 0;
+}
+#controls > div:hover {
+    opacity: 1;
+    cursor: pointer;
 }
 .control-A {background-image: url(../img/xbox/A.png)}
 .control-B {background-image: url(../img/xbox/B.png)}
@@ -606,6 +607,9 @@ audio {
     bottom: 150px;
     left: 150px;
     width: 450px;
+    border-top: 1px solid rgba(255,255,255,0.075);
+    border-bottom: 1px solid rgba(255,255,255,0.075);
+    padding: 5px 0;
 }
 #main2 .select-main {
     position: absolute;
@@ -824,7 +828,11 @@ audio {
     font-weight: 600;
     font-size: 46px;
     color: #fff;
-    opacity: 0.2;
+    opacity: 0.125;
+}
+#select-previous:hover {
+    cursor: pointer;
+    opacity: 0.25;
 }
 .select-icon, #select-icon {
     position: absolute;
