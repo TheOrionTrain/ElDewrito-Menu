@@ -33,7 +33,7 @@
     display: inline-block;
 }
 .checkbox.checked {
-    background: url(../img/check.png) no-repeat center/14px;
+    background: url(../img/check.svg) no-repeat center/14px;
 }
 #browser-buttons {
     width: 800px;
@@ -623,7 +623,7 @@ audio {
 .map-select .selection,
 .music-select .selection,
 .type-select .selection {
-    background: url('../img/right.png') no-repeat 232px 8px/36px 18px;
+    background: url('../img/right.svg') no-repeat 232px 8px/36px 18px;
 }
 .options-select2 .selection .value {
     text-align: center;
@@ -779,10 +779,10 @@ audio {
 .music-select .selection,
 .type-select .selection,
 .options-select .selection {
-    background: url('../img/right.png') no-repeat 232px 8px/18px 18px;
+    background: url('../img/right.svg') no-repeat 232px 8px/18px 18px;
 }
 .music-select .selection {
-    background: url('../img/right.png') no-repeat 230px 8px/18px 18px;
+    background: url('../img/right.svg') no-repeat 230px 8px/18px 18px;
 }
 .left,
 .right {
@@ -799,10 +799,10 @@ audio {
     padding: 0;
 }
 .left {
-    background-image: url('../img/left.png');
+    background-image: url('../img/left.svg');
 }
 .right {
-    background-image: url('../img/right.png');
+    background-image: url('../img/right.svg');
 }
 .select-title {
     position: absolute;
@@ -820,7 +820,7 @@ audio {
     left: 78px;
     width: 72px;
     height: 62px;
-    background: url('../img/EL.png') no-repeat 0 0/cover;
+    background: url('../img/EL.svg') no-repeat 0 0/cover;
     opacity: 0.75;
 }
 #select .selection,
@@ -875,7 +875,7 @@ audio {
     width: 640px;
     height: 200px;
     opacity: 0.95;
-    background: url('../img/Halo 3 CE.png') no-repeat 0 0/cover;
+    background: url('../img/Halo 3 CE.svg') no-repeat 0 0/cover;
     z-index: 2;
 }
 #lobby-container table {
