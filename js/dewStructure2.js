@@ -160,7 +160,7 @@ var DewMenu = {
                 },
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
-                     "action" : function() {DewMenu.change("matchmaking-search")}
+                     "action" : function() {DewMenu.change("matchmakingsearch")}
                 }
             },
             "controls" : {
@@ -182,7 +182,7 @@ var DewMenu = {
                 }
             }
         },
-		"matchmaking-search" : {
+		"matchmakingsearch" : {
             "title" : "SEARCHING",
             "background" : ["matchmaking","multiplayer"],
             "previous" : "matchmaking",
@@ -192,7 +192,115 @@ var DewMenu = {
             ],
             "options": {
                 "SEARCHING FOR PLAYERS..." : {
-                     "description" : "Start selected Matchmaking game playlist.",
+                     "description" : "Searching for players...",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                }
+            },
+            "controls" : {
+                "A" : {
+                    "label" : "Select",
+                    "action" : function() {
+                        $('.gp-on').trigger('click');
+                    }
+                },
+                "B" : {
+                    "label" : "Back",
+                    "action" : function(){DewMenu.previous()}
+                },
+                "START" : {
+                    "label" : "Friends List",
+                    "action" : function() {
+                        gamepadSelect("lobby-1");
+                    }
+                }
+            }
+        },
+		"customgame" : {
+            "title" : "CUSTOM GAME",
+            "background" : ["matchmaking","multiplayer"],
+            "previous" : "main",
+            "thumbnail": 0,
+            "lists" : [
+                "current-party",
+				"lobby"
+            ],
+            "options": {
+				"GAME TYPE" : {
+                     "description" : "Choose the game type you would like to play.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                },
+				"MAP" : {
+                     "description" : "Choose which map you want to play.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                },
+				"GAME OPTIONS" : {
+                     "description" : "Choose the rules for the game.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                },
+                "START GAME" : {
+                     "description" : "Start the selected mission.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                }
+            },
+            "controls" : {
+                "A" : {
+                    "label" : "Select",
+                    "action" : function() {
+                        $('.gp-on').trigger('click');
+                    }
+                },
+                "B" : {
+                    "label" : "Back",
+                    "action" : function(){DewMenu.previous()}
+                },
+                "START" : {
+                    "label" : "Friends List",
+                    "action" : function() {
+                        gamepadSelect("lobby-1");
+                    }
+                }
+            }
+        },
+		"forge" : {
+            "title" : "CUSTOM GAME",
+            "background" : ["matchmaking","forge"],
+            "previous" : "main",
+            "thumbnail": 0,
+            "lists" : [
+                "current-party",
+				"lobby"
+            ],
+            "options": {
+				"GAME TYPE" : {
+                     "description" : "Choose the game type you would like to edit object setup for.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                },
+				"MAP" : {
+                     "description" : "Choose which map you want to edit objects on.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                },
+				"GAME OPTIONS" : {
+                     "description" : "Choose the rules for the game.",
+                     "action" : function() {
+                         console.log("Start matchmaking function goes here.");
+                     }
+                },
+                "START GAME" : {
+                     "description" : "Start the selected mission.",
                      "action" : function() {
                          console.log("Start matchmaking function goes here.");
                      }
