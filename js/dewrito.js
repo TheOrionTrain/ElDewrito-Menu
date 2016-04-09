@@ -509,7 +509,7 @@ function jumpToServer(ip) {
 function loadParty() {
 	if(party !== previous.party) {
 		$('#party').empty();
-		$('#current-party').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Party <span class='numbers'><span id='current-party-count'>"+party.length+"</span></span></td></tr>");
+		$('#current-party').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Party <span class='numbers'><span id='current-party-count'>"+party.length+"</span>/16</span></td></tr>");
 		if(party.length > 0) {
 			for(var i=0; i < party.length; i++) {
 				$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
@@ -1034,8 +1034,7 @@ function loadServers() {
 			$('#click')[0].play();
 		});
 		$('.server').click(function() {
-			joinServer($(this).attr('data-server'));
-			selectedserver = $(this).attr('data-server');
+			Lobby.join($(this).attr('data-server'));
 		});
 		filterServers();
 	}

@@ -1,21 +1,26 @@
 var Lobby = {
     "address" : "0.0.0.0",
     "status" : false,
-    "variant" : "not",
-    "map" : "not",
     "players" : [],
     "update" : function() {
         if(Lobby.status && DewMenu.selected == "gamelobby") {
             $.getJSON("http://" + Lobby.address, function(d) {
                 for(var i=0; i < Object.keys(d).length; i++) {
                     var x = Object.keys(d)[i];
-                    Lobby[x] = d[x];
+                    if(typeof d[x] == "String") {
+                        Lobby[x] = sanitizeString(d[x]);
+                    } else {
+                        Lobby[x] = d[x];
+                    }
                 }
                 console.log(Lobby);
                 var o = DewMenu.pages.gamelobby.options;
-                o["GAME TYPE"].value = Lobby.variant;
-                o["MAP"].value = Lobby.map;
-                DewMenu.change("gamelobby");
+                $('[data-option="GAME TYPE"]').html("GAME TYPE <span class='value'>"+Lobby.variant.toUpperCase()+"</span>");
+                $('[data-option="MAP"]').html("MAP <span class='value'>"+Lobby.map.toUpperCase()+"</span>");
+                $('#map-thumb').css({
+            		"background-image": "url('img/maps/"+getMapName(Lobby.mapFile).toUpperCase()+".jpg')"
+            	});
+                $('#party-text').text(Lobby.name);
             });
         }
     },
@@ -24,7 +29,7 @@ var Lobby = {
         Lobby.address = servers[s].address;
         Lobby.status = 1;
         DewMenu.change("gamelobby");
-		Lobby.update();
+        Lobby.update();
     }
 },
 DewMenu = {
@@ -82,7 +87,7 @@ DewMenu = {
             for(var i=0;i<Object.keys(ch.options).length;i++) {
                 var da = ch.options[Object.keys(ch.options)[i]],
                     v = (da.value) ? "<span class='value'>"+da.value+"</span>" : "";
-                $('#select-main').append("<div class='selection' data-gp='"+m+"-"+(i+1)+"'>"+Object.keys(ch.options)[i]+v+"</div>");
+                $('#select-main').append("<div data-option='"+Object.keys(ch.options)[i]+"' class='selection' data-gp='"+m+"-"+(i+1)+"'>"+Object.keys(ch.options)[i]+v+"</div>");
             }
             $('#controls').empty();
             for(var i=0;i<Object.keys(ch.controls).length;i++) {
@@ -191,6 +196,7 @@ DewMenu = {
         		loopPlayers = false;
             },
             "class" : "browser",
+            "background": ["matchmaking","multiplayer"],
             "thumbnail": 0,
             "lists" : [],
             "options": {},
@@ -316,11 +322,11 @@ DewMenu = {
             "options": {
 				"GAME TYPE" : {
                      "description" : "The game type you are playing on this server.",
-                     "value" : Lobby.variant.toUpperCase(),
+                     "value" : " ",
                 },
 				"MAP" : {
                      "description" : "The map you are playing on this server.",
-                     "value" : Lobby.map.toUpperCase(),
+                     "value" : " ",
                 },
 				"GAME OPTIONS" : {
                      "description" : "The rules for the server.",
