@@ -138,7 +138,7 @@
     display: none;
 }
 .browser #select-previous {
-    left: 115px;
+    left: 105px;
 }
 .browser #select-title {
     position: absolute;
@@ -978,7 +978,7 @@ audio {
     padding: 1px 20px 0px 20px;
 }
 td.name.developer {
-    background: url(../img/nameplates/haloce.png) no-repeat 160px 3px/43px 20px;
+    background: url(../img/nameplates/haloce.png) no-repeat 160px 4px/43px 20px;
 }
 #lobby-container table td.rank {
     width: 50px;
