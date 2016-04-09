@@ -146,6 +146,8 @@ StartConnection = function() {
 						else
 							dewRcon.send('irc.chatmessage "<' + result.player + '> "' + result.message);
 					});*/
+					if ($.inArray(result.player + ":" + result.guid, friends) == -1)
+						return;
 					Chat.receiveMessage(sanitizeString(result.player), sanitizeString(result.player) + ": " + sanitizeString(result.message));
 					console.log(sanitizeString(result.player) + ": " + sanitizeString(result.message));
 				break;
@@ -222,6 +224,8 @@ StartConnection = function() {
 					loadFriends();
 				break;
 				case "partymessage":
+					if ($.inArray(result.player + ":" + result.guid + ":" + getPlayerColour(result.guid), party) == -1)
+						return;
 					var lead = party[0].split(':')[0];
 					console.log("Party Chat - " + lead);
 					if(result.player == lead) {
