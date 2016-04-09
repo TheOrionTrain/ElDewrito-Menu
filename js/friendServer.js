@@ -201,7 +201,7 @@ StartConnection = function() {
 
 				break;
 				case "connect":
-					if (party[0].split(':')[1]) != result.guid)
+					if (party[0].split(':')[1] != result.guid)
 						return;
 					
 					jumpToServer(result.address);
