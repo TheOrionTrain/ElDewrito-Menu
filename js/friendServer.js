@@ -81,6 +81,7 @@ StartConnection = function() {
 		}
     };
     friendServer.friendsServerSocket.onmessage = function(message) {
+		console.log(message.data);
 		try {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
@@ -200,6 +201,9 @@ StartConnection = function() {
 
 				break;
 				case "connect":
+					if (party[0].split(':')[1]) != result.guid)
+						return;
+					
 					jumpToServer(result.address);
 					setTimeout(function() {
 						startgame(result.address, 'JOIN GAME'.split(' '), result.password);
