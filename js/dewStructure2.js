@@ -24,6 +24,7 @@ var Lobby = {
         Lobby.address = servers[s].address;
         Lobby.status = 1;
         DewMenu.change("gamelobby");
+		Lobby.update();
     }
 },
 DewMenu = {
@@ -139,11 +140,17 @@ DewMenu = {
                 },
                 "CUSTOM GAME" : {
                     "description" : "Take your party to combat and objective-based missions that you select and design. Your rules, your maps, your game.",
-                    "action" : function() {DewMenu.change("customgame")}
+                    "action" : function() {
+						dewRcon.send("server.lobbytype 2");
+						DewMenu.change("customgame");
+					}
                 },
                 "FORGE" : {
                      "description" : "Take your party to collaborate in real time to edit and play variations of your favorite maps, from the subtle to the insane.",
-                     "action" : function() {DewMenu.change("forge")}
+                     "action" : function() {
+						 dewRcon.send("server.lobbytype 3");
+						 DewMenu.change("forge");
+					 }
                 },
                 "SETTINGS" : {
                     "description" : "Change how the game or menu plays or looks. You can customize everything from music, to the background, to the appearance of the server browser.",
@@ -351,6 +358,11 @@ DewMenu = {
 				"lobby"
             ],
             "options": {
+				"NETWORK" : {
+                     "description" : "Choose which network to play on.",
+                     "value" : "LOCAL",
+                     "action" : function() {}
+                },
 				"GAME TYPE" : {
                      "description" : "Choose the game type you would like to play.",
                      "value" : "SLAYER",
@@ -403,6 +415,11 @@ DewMenu = {
 				"lobby"
             ],
             "options": {
+				"NETWORK" : {
+                     "description" : "Choose which network to play on.",
+                     "value" : "LOCAL",
+                     "action" : function() {}
+                },
 				"GAME TYPE" : {
                      "description" : "Choose the game type you would like to edit object setup for.",
                      "value" : "BASIC EDITING",
