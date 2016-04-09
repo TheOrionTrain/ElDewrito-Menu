@@ -33,6 +33,8 @@ function gamepadBind() {
 	window.gamepad = new Gamepad();
 
 	gamepad.bind(Gamepad.Event.CONNECTED, function(device) {
+		if (device.id.contains("Joystick") || device.id.contains("Throttle"))
+			return;
 		console.log('Connected', device);
 		for (control in device.state) {
 			value = device.state[control];
@@ -50,6 +52,8 @@ function gamepadBind() {
 	});
 
 	gamepad.bind(Gamepad.Event.DISCONNECTED, function(device) {
+		if (device.id.contains("Joystick") || device.id.contains("Throttle"))
+			return;
 		console.log('Disconnected', device);
 	});
 
