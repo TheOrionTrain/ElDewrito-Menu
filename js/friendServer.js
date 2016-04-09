@@ -26,23 +26,23 @@ var friendServer,
 StartConnection = function() {
     friendServer = new friendServerHelper();
     friendServer.friendsServerSocket.onopen = function() {
-		dewRcon.send('player.name', function(res) {
-			dewRcon.send('player.printUID', function(ret) {
+		dewRcon.send('player.name', function(name) {
+			dewRcon.send('player.printUID', function(uid) {
 				dewRcon.send('Player.Colors.Primary', function(col) {
-					pname = res;
-					puid = ret.split(' ')[2];
+					pname = name;
+					puid = uid.split(' ')[2];
 					colour = col;
 
 					friendServer.send(JSON.stringify({
 						type: "connection",
 						message: " has connected.",
-						guid: ret.split(' ')[2],
-						player: res,
+						guid: uid.split(' ')[2],
+						player: name,
 						colour: col
 					}));
 
 					party = [];
-					party.push(res + ":" + ret.split(' ')[2] + ":" + col);
+					party.push(name + ":" + uid.split(' ')[2] + ":" + col);
 					loadParty();
 				});
 			});
@@ -54,6 +54,7 @@ StartConnection = function() {
 		$.getJSON("http://thefeeltra.in/developers.json", function(json) {
 			developers = json;
 		});
+		StartMatchmakingConnection();
     };
 	friendServer.friendsServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Friend Server'});
@@ -86,15 +87,14 @@ StartConnection = function() {
 				case "disconnected":
 					if ($.inArray(result.player + ":" + result.guid, friends) != -1 || $.inArray(result.player, friends) != -1) {
 						if(Chat.isOpen(result.player)) {
-							$('.chat-window[data-player="'+result.player+'"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
-							$('.chat-window[data-player="'+result.player+'"]').scrollTop($('.chat-window[data-player="'+result.player+'"]')[0].scrollHeight);
+							$('.chat-window[data-player="'+sanitizeString(result.player)+'"]').append("<span class='chat-message alert'>" + sanitizeString(result.player) + " has gone offline.</span>");
+							$('.chat-window[data-player="'+sanitizeString(result.player)+'"]').scrollTop($('.chat-window[data-player="'+sanitizeString(result.player)+'"]')[0].scrollHeight);
 						}
 					}
 
-					if ($.inArray(result.player + ":" + result.guid, party) != -1 && party.length > 1) {
-
+					if ($.inArray(result.player + ":" + result.guid + ":" + getPlayerColour(result.guid), party) != -1 && party.length > 1) {
 						if (Chat.isOpen("Party Chat - " + party[0].split(':')[0])) {
-							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + result.player + " has gone offline.</span>");
+							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + sanitizeString(result.player) + " has gone offline.</span>");
 							if (party[0].split(':')[0] == result.player)
 								$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + party[1].split(':')[0] + " is the new party leader.</span>");
 							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').scrollTop($('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]')[0].scrollHeight);
@@ -103,7 +103,7 @@ StartConnection = function() {
 						}
 
 						party = $.grep(party, function(value) {
-						  return value != (result.player + ":" + result.guid);
+						  return value != (result.player + ":" + result.guid + ":" + getPlayerColour(result.guid));
 						});
 
 						for (var i = 0; i < party.length; i++) {
@@ -146,13 +146,13 @@ StartConnection = function() {
 						else
 							dewRcon.send('irc.chatmessage "<' + result.player + '> "' + result.message);
 					});*/
-					Chat.receiveMessage(result.player, result.player + ": " + result.message);
-					console.log(result.player + ": " + result.message);
+					Chat.receiveMessage(sanitizeString(result.player), sanitizeString(result.player) + ": " + sanitizeString(result.message));
+					console.log(sanitizeString(result.player) + ": " + sanitizeString(result.message));
 				break;
 				case "partyinvite":
 					dewAlert({
 						title: "Party Invitation",
-						content: result.player + " has invited you to a party",
+						content: sanitizeString(result.player) + " has invited you to a party",
 						info: result.senderguid,
 						cancel: true,
 						cancelText: "Decline",
@@ -218,16 +218,16 @@ StartConnection = function() {
 				break;
 				case "updateplayers":
 					onlinePlayers = JSON.parse(result.players);
-					console.log(onlinePlayers);
 					updateFriends();
 					loadFriends();
 				break;
 				case "partymessage":
 					var lead = party[0].split(':')[0];
+					console.log("Party Chat - " + lead);
 					if(result.player == lead) {
-						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message,1);
+						Chat.receiveMessage("Party Chat - " + lead, sanitizeString(result.player) + ": " + sanitizeString(result.message),1);
 					} else {
-						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message);
+						Chat.receiveMessage("Party Chat - " + lead, sanitizeString(result.player) + ": " + sanitizeString(result.message));
 					}
 				break;
 				default:
@@ -254,7 +254,7 @@ function partyInvite(accepted, guid) {
 			player: pname,
 			guid: guid,
 			pguid: puid,
-			colour: col
+			colour: colour
 		}));
 	} else if (party.length > 1) {
 		$.snackbar({content: "You are already in a party."});
