@@ -200,6 +200,9 @@ StartConnection = function() {
 
 				break;
 				case "connect":
+					if (party[0].split(':')[1] != result.guid)
+						return;
+					
 					jumpToServer(result.address);
 					setTimeout(function() {
 						startgame(result.address, 'JOIN GAME'.split(' '), result.password);
