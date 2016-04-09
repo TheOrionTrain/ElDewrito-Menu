@@ -1,4 +1,32 @@
-var DewMenu = {
+var Lobby = {
+    "address" : "0.0.0.0",
+    "status" : false,
+    "variant" : "not",
+    "map" : "not",
+    "players" : [],
+    "update" : function() {
+        if(Lobby.status && DewMenu.selected == "gamelobby") {
+            $.getJSON("http://" + Lobby.address, function(d) {
+                for(var i=0; i < Object.keys(d).length; i++) {
+                    var x = Object.keys(d)[i];
+                    Lobby[x] = d[x];
+                }
+                console.log(Lobby);
+                var o = DewMenu.pages.gamelobby.options;
+                o["GAME TYPE"].value = Lobby.variant;
+                o["MAP"].value = Lobby.map;
+                DewMenu.change("gamelobby");
+            });
+        }
+    },
+    "loop" : setInterval(function(){Lobby.update()},5000),
+    "join" : function(s) {
+        Lobby.address = servers[s].address;
+        Lobby.status = 1;
+        DewMenu.change("gamelobby");
+    }
+},
+DewMenu = {
     "change" : function(m) {
         if(DewMenu.pages[m]) {
             var ch = DewMenu.pages[m];
@@ -7,14 +35,14 @@ var DewMenu = {
         			if($('#bg-'+ch.background[i]).length) {
                         $('#videos > video').fadeOut(anit);
                         $('#videos > video')[0].pause();
-        				$('#bg-'+ch.background[i]).fadeIn(anit);
+        				$('#bg-'+ch.background[i]).stop().fadeIn(anit);
         				$('#bg-'+ch.background[i])[0].play();
         			}
         		}
         	} else {
                 $('#videos > video').fadeOut(anit);
                 $('#videos > video')[0].pause();
-        		$('#bg1').stop().fadeIn(anit);
+        		$('#bg1').stop().stop().fadeIn(anit);
         		$('#bg1')[0].play();
         	}
             $('#select-title').text(ch.title);
@@ -266,6 +294,50 @@ var DewMenu = {
                     "action" : function() {
                         gamepadSelect("lobby-1");
                     }
+                }
+            }
+        },
+        "gamelobby" : {
+            "title" : "ONLINE GAME",
+            "background" : ["matchmaking","multiplayer"],
+            "previous" : "serverbrowser",
+            "thumbnail": 1,
+            "lists" : [
+                "current-party",
+				"lobby"
+            ],
+            "options": {
+				"GAME TYPE" : {
+                     "description" : "The game type you are playing on this server.",
+                     "value" : Lobby.variant.toUpperCase(),
+                },
+				"MAP" : {
+                     "description" : "The map you are playing on this server.",
+                     "value" : Lobby.map.toUpperCase(),
+                },
+				"GAME OPTIONS" : {
+                     "description" : "The rules for the server.",
+                     "action" : function() {
+                         //View lobby options
+                     }
+                },
+                "JOIN GAME" : {
+                     "description" : "Start the selected mission.",
+                     "action" : function() {
+                         //Join the game officially
+                     }
+                }
+            },
+            "controls" : {
+                "A" : {
+                    "label" : "Select",
+                    "action" : function() {
+                        $('.gp-on').trigger('click');
+                    }
+                },
+                "B" : {
+                    "label" : "Back",
+                    "action" : function(){DewMenu.previous()}
                 }
             }
         },
