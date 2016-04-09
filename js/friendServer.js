@@ -224,7 +224,8 @@ StartConnection = function() {
 					loadFriends();
 				break;
 				case "partymessage":
-					if ($.inArray(result.player + ":" + result.guid + ":" + getPlayerColour(result.guid), party) == -1)
+					console.log($.inArray(result.player + ":" + result.senderguid + ":" + getPlayerColour(result.senderguid), party));
+					if ($.inArray(result.player + ":" + result.senderguid + ":" + getPlayerColour(result.senderguid), party) == -1)
 						return;
 					var lead = party[0].split(':')[0];
 					console.log("Party Chat - " + lead);
