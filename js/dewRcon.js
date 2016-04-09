@@ -102,7 +102,7 @@ dewHook = function() {
 	this.callback = {};
     this.send = function(command, cb) {
 		this.callback = cb;
-		dew.command(command, {}, function (ret) {
+		dew.command(command, {}).then(function (ret) {
 			if (typeof dewRcon.callback == 'function')
 				dewRcon.callback(ret);
 		});
