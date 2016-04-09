@@ -218,7 +218,6 @@ StartConnection = function() {
 				break;
 				case "updateplayers":
 					onlinePlayers = JSON.parse(result.players);
-					console.log(onlinePlayers);
 					updateFriends();
 					loadFriends();
 				break;
