@@ -90,7 +90,18 @@ var Chat = {
 		if(!Chat.isOpen(player)) {
 			Chat.createTab(player);
 		}
-		$('.chat-window[data-player="'+player+'"]').append("<span class='chat-message " + (message.split(': ')[0] == pname ? "self" : "") + "'>" + (balloon == 1 ? "<div class='balloon'></div> " : "")+message+"</span>");
+		//$('.chat-window[data-player="'+player+'"]').append("<span class='chat-message " + (message.split(': ')[0] == pname ? "self" : "") + "'>" + (balloon == 1 ? "<div class='balloon'></div> " : "")+message+"</span>");
+		console.log(balloon);
+		$('<span>', {
+			class: 'chat-message ' + (message.split(': ')[0] == pname ? "self" : ""),
+			text: message
+		}).prepend(balloon == 1 ? '<div class="balloon"/> ' : null).appendTo('.chat-window[data-player="'+player+'"]');
+
+		/*if (balloon == 1) {
+			m.prepend('<div class="balloon"/> ');
+		}*/
+
+		//m.appendTo('.chat-window[data-player="'+player+'"]');
 		$('.chat-window[data-player="'+player+'"]').scrollTop($('.chat-window[data-player="'+player+'"]')[0].scrollHeight);
 		Chat.showBox();
 	},
@@ -582,6 +593,14 @@ function loadFriends() {
 			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
 			//$('#friends-on').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 			$('#friends-on').append("<tr hex-colour='" + getPlayerColour(friends[i].split(':')[1]) +  "' data-color='" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + "' style='background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			/*$('<td>', {
+				class: "name " + isDev
+			});*/
+			/*$('<tr>', {
+				"hex-colour": getPlayerColour(friends[i].split(':')[1]),
+				"data-color": hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5),
+				style: "'background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";",
+			}).appendTo('#friends-on');*/
 		}
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");

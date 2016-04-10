@@ -81,7 +81,7 @@ StartConnection = function() {
 		}
     };
     friendServer.friendsServerSocket.onmessage = function(message) {
-		console.log(message.data);
+		//console.log(message.data);
 		try {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
@@ -99,8 +99,11 @@ StartConnection = function() {
 							if (party[0].split(':')[0] == result.player)
 								$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + party[1].split(':')[0] + " is the new party leader.</span>");
 							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').scrollTop($('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]')[0].scrollHeight);
-							if (party[0].split(':')[0] == result.player)
-								Chat.renameTab("Party Chat - " + result.player, "Party Chat - " + party[1].split(':')[0]);
+							if (party[0].split(':')[0] == result.player) {
+								Chat.destroyTab(result.player);
+								if ((party.length - 1) > 1)
+									Chat.createTab(party[1].split(':')[0]);
+							}
 						}
 
 						party = $.grep(party, function(value) {
@@ -147,7 +150,7 @@ StartConnection = function() {
 						else
 							dewRcon.send('irc.chatmessage "<' + result.player + '> "' + result.message);
 					});*/
-					if ($.inArray(result.player + ":" + result.guid, friends) == -1)
+					if ($.inArray(result.player + ":" + result.senderguid, friends) == -1)
 						return;
 					Chat.receiveMessage(sanitizeString(result.player), sanitizeString(result.player) + ": " + sanitizeString(result.message));
 					console.log(sanitizeString(result.player) + ": " + sanitizeString(result.message));
@@ -215,6 +218,10 @@ StartConnection = function() {
 					$('#notification')[0].play();
 				break;
 				case "updateparty":
+					if ($.inArray(result.player + ":" + result.guid, party) == -1) {
+						
+					}
+						
 					party = JSON.parse(result.party);
 					loadParty();
 					if(!Chat.isOpen("Party Chat - " + party[0].split(':')[0]) && party.length > 1) {
@@ -228,15 +235,13 @@ StartConnection = function() {
 					loadFriends();
 				break;
 				case "partymessage":
-					console.log($.inArray(result.player + ":" + result.senderguid + ":" + getPlayerColour(result.senderguid), party));
 					if ($.inArray(result.player + ":" + result.senderguid + ":" + getPlayerColour(result.senderguid), party) == -1)
 						return;
 					var lead = party[0].split(':')[0];
-					console.log("Party Chat - " + lead);
 					if(result.player == lead) {
-						Chat.receiveMessage("Party Chat - " + lead, sanitizeString(result.player) + ": " + sanitizeString(result.message),1);
+						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message,1);
 					} else {
-						Chat.receiveMessage("Party Chat - " + lead, sanitizeString(result.player) + ": " + sanitizeString(result.message));
+						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message);
 					}
 				break;
 				default:
