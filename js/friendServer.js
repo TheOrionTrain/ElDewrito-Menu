@@ -150,7 +150,7 @@ StartConnection = function() {
 						else
 							dewRcon.send('irc.chatmessage "<' + result.player + '> "' + result.message);
 					});*/
-					if ($.inArray(result.player + ":" + result.senderguid, friends) == -1)
+					if ($.inArray(result.player + ":" + result.senderguid, friends) == -1 && $.inArray(result.player, friends) == -1)
 						return;
 					Chat.receiveMessage(sanitizeString(result.player), sanitizeString(result.player) + ": " + sanitizeString(result.message));
 					console.log(sanitizeString(result.player) + ": " + sanitizeString(result.message));
