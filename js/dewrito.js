@@ -125,7 +125,7 @@ var Chat = {
 			}));
 		}
 
-		Chat.receiveMessage(player,pname+": "+message);
+		Chat.receiveMessage(player,pname+": "+message, party[0].split(':')[0] == pname ? 1 : 0);
 	},
 	showBox: function() {
 		$('#chatbox').clearQueue().fadeIn(anit);
@@ -593,9 +593,6 @@ function loadFriends() {
 			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
 			//$('#friends-on').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
 			$('#friends-on').append("<tr hex-colour='" + getPlayerColour(friends[i].split(':')[1]) +  "' data-color='" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + "' style='background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-			/*$('<td>', {
-				class: "name " + isDev
-			});*/
 			/*$('<tr>', {
 				"hex-colour": getPlayerColour(friends[i].split(':')[1]),
 				"data-color": hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5),
