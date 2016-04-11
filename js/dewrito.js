@@ -525,8 +525,7 @@ function loadParty() {
 			for(var i=0; i < party.length; i++) {
 				$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
 				var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
-				//$('#current-party').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-				addPlayer('#current-party', party[i], isDev);
+				addPlayer('current-party', party[i], isDev);
 			}
 			$('.friend,#friend-add,#friend-remove').hover(function() {
 				$('#click')[0].currentTime = 0;
@@ -580,7 +579,7 @@ function addPlayer(id, player, isDev, opacity) {
 		html: $('<img>', {
 			src: 'img/ranks/38.png'
 		})
-	})).appendTo(id);
+	})).appendTo('#'+id);
 }
 
 function loadFriends() {
@@ -611,16 +610,8 @@ function loadFriends() {
 		$('#friends').append("<div class='friend "+o+"'>"+friends[i].split(':')[0]+"</div>");
 		if(o == "online") {
 			friends_online++;
-			//console.log(getPlayerColour(friends[i].split(':')[1]));
 			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
-			//$('#friends-on').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-			//$('#friends-on').append("<tr hex-colour='" + getPlayerColour(friends[i].split(':')[1]) +  "' data-color='" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + "' style='background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-			addPlayer('#friends-on', friends[i], isDev);
-			/*$('<tr>', {
-				"hex-colour": getPlayerColour(friends[i].split(':')[1]),
-				"data-color": hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5),
-				style: "'background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";",
-			}).appendTo('#friends-on');*/
+			addPlayer('friends-on', friends[i], isDev);
 		}
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
@@ -1118,20 +1109,7 @@ function lobbyLoop(ip) {
 					}
 				}
 				previous.players = players;
-				$('#lobby-container table tr').hover(function() {
-					$('#click')[0].currentTime = 0;
-					$('#click')[0].play();
-				});
-				$("#lobby-container table tr").mouseover(function() {
-					var n = $(this).attr('id'),
-						col = $(this).attr('hex-colour'),
-						bright = brighter(col);
-					$(this).css("background-color", hexToRgb(bright, 0.75));
-				}).mouseout(function() {
-					var n = $(this).attr('id'),
-						col = $(this).attr('hex-colour');
-					$(this).css("background-color", hexToRgb(col, 0.5));
-				});
+				
 				$('#lobby tr').click(function() {
 					var e = $(this).children('.name').text(),
 						n = $(this).attr('id'),

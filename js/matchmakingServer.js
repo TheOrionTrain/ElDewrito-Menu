@@ -8,14 +8,14 @@ StartMatchmakingConnection = function() {
     matchmakingServer.matchmakingServerSocket.onopen = function() {
         matchmakingServerConnected = true;
     };
-	
+
 	matchmakingServer.matchmakingServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Matchmaking Server'});
 		$('#notification')[0].currentTime = 0;
 		$('#notification')[0].play();
         matchmakingServerConnected = false;
     };
-	
+
     matchmakingServer.matchmakingServerSocket.onerror = function() {
 		if(!snacking) {
 			$.snackbar({content:'Connection to Matchmaking Server failed, retrying.'});
@@ -34,13 +34,13 @@ StartMatchmakingConnection = function() {
     		setTimeout(StartMatchmakingConnection, 1000);
 		}
     };
-	
+
     matchmakingServer.matchmakingServerSocket.onmessage = function(message) {
 		try {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
 				case "disconnected":
-					
+
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
@@ -61,12 +61,12 @@ function startSearch(playlist) {
 	$("#search").empty();
 	for (var i = 0; i < party.length; i++) {
 		var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
-		addPlayer("#search", party[i], isDev);
+		addPlayer("search", party[i], isDev);
 	}
 	for (var i = 0; i < (8 - party.length); i++) {
-		addPlayer("#search", "Looking for player...:000000", "", 0.6);
+		addPlayer("search", "Looking for player...:000000", "", 0.6);
 	}
-	
+
 	matchmakingServer.send(JSON.stringify({
 		type: "search",
 		players: party
