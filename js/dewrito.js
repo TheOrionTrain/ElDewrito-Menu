@@ -526,7 +526,7 @@ function loadParty() {
 				$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
 				var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
 				//$('#current-party').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-				$('#current-party').append("<tr hex-colour='" + party[i].split(":")[2] + "' data-color='" + hexToRgb(party[i].split(":")[2], 0.5) + "' style='background:" + hexToRgb(party[i].split(":")[2], 0.5) + ";'><td class='name "+isDev+"'>" + party[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+				addPlayer('#current-party', party[i], isDev);
 			}
 			$('.friend,#friend-add,#friend-remove').hover(function() {
 				$('#click')[0].currentTime = 0;
@@ -553,12 +553,34 @@ function updateFriends() {
 }
 
 function getPlayerColour(guid) {
+	if (guid == "000000")
+		return "#BDBDBD";
+	if (guid == puid)
+		return colour;
 	for (var i = 0; i < onlinePlayers.length; i++) {
 		if (guid == onlinePlayers[i].split(":")[1]) {
 			return(onlinePlayers[i].split(":")[2] === 'undefined' || onlinePlayers[i].split(":")[2].length < 1 || onlinePlayers[i].split(":")[2] === null) ? "#000000" : onlinePlayers[i].split(":")[2];
 		}
 	}
 	return "#000000";
+}
+
+function addPlayer(id, player, isDev, opacity) {
+	$('<tr>', {
+		'hex-colour': getPlayerColour(player.split(':')[1]),
+		'data-color': hexToRgb(getPlayerColour(player.split(':')[1]), 0.5),
+		'style': 'background:' + hexToRgb(getPlayerColour(player.split(':')[1]), 0.5) + ';' + (opacity ? 'opacity:' + opacity : null),
+		html: $('<td>', {
+			class: 'name ' + isDev,
+			text: player.split(':')[0]
+		})
+	}).append(
+	$('<td>', {
+		class: 'rank',
+		html: $('<img>', {
+			src: 'img/ranks/38.png'
+		})
+	})).appendTo(id);
 }
 
 function loadFriends() {
@@ -592,7 +614,8 @@ function loadFriends() {
 			//console.log(getPlayerColour(friends[i].split(':')[1]));
 			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
 			//$('#friends-on').append("<tr hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-			$('#friends-on').append("<tr hex-colour='" + getPlayerColour(friends[i].split(':')[1]) +  "' data-color='" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + "' style='background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			//$('#friends-on').append("<tr hex-colour='" + getPlayerColour(friends[i].split(':')[1]) +  "' data-color='" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + "' style='background:" + hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5) + ";'><td class='name "+ isDev +"'>" + friends[i].split(':')[0] + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
+			addPlayer('#friends-on', friends[i], isDev);
 			/*$('<tr>', {
 				"hex-colour": getPlayerColour(friends[i].split(':')[1]),
 				"data-color": hexToRgb(getPlayerColour(friends[i].split(':')[1]), 0.5),
@@ -628,10 +651,12 @@ function loadFriends() {
 		$('#slide')[0].play();
 	});
 
-	$('#party .friend, #current-party td.name').click(function(e) {
-		partysubmenu("show",$(this).text(),e);
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+	$('#party .friend, #current-party td.name').unbind().click(function(e) {
+		if ($(this).text() != pname) {
+			partysubmenu("show",$(this).text(),e);
+			$('#slide')[0].currentTime = 0;
+			$('#slide')[0].play();
+		}
 	});
 }
 

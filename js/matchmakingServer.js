@@ -56,6 +56,22 @@ StartMatchmakingConnection = function() {
         matchmakingServer.lastMessage = message.data;
     };
 }
+function startSearch(playlist) {
+	console.log(playlist);
+	$("#search").empty();
+	for (var i = 0; i < party.length; i++) {
+		var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
+		addPlayer("#search", party[i], isDev);
+	}
+	for (var i = 0; i < (8 - party.length); i++) {
+		addPlayer("#search", "Looking for player...:000000", "", 0.6);
+	}
+	
+	matchmakingServer.send(JSON.stringify({
+		type: "search",
+		players: party
+	}));
+}
 
 matchmakingServerHelper = function() {
     window.WebSocket2 = window.WebSocket2 || window.MozWebSocket2;

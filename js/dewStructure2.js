@@ -253,7 +253,10 @@ DewMenu = {
                 },
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
-                     "action" : function() {DewMenu.change("searching")}
+                     "action" : function() {
+						 startSearch("Team Slayer 4v4");
+						 DewMenu.change("searching");
+					 }
                 }
             },
             "controls" : {
@@ -281,7 +284,7 @@ DewMenu = {
             "previous" : "matchmaking",
             "thumbnail": 0,
             "lists" : [
-                "current-party"
+                "search"
             ],
             "options": {
                 "SEARCHING FOR PLAYERS..." : {
