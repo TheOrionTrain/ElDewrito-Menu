@@ -619,7 +619,7 @@ function loadFriends() {
 		$(this).css("background-color", hexToRgb(col, 0.5));
 	});
 	$('#friends .friend, #friends-on td.name').click(function(e) {
-		if($(this).hasClass("online")) {
+		if($(this).hasClass("online") || $(this).hasClass("name")) {
 			submenu("show",$(this).text(),1,e);
 		} else {
 			submenu("show",$(this).text(),0,e);

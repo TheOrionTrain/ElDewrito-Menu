@@ -285,7 +285,7 @@ DewMenu = {
             ],
             "options": {
                 "SEARCHING FOR PLAYERS..." : {
-                     "description" : "Searching for players...",
+                     "description" : "Matchmaking is a work in progress.",
                      "action" : function() {
 
                      }
