@@ -21,8 +21,55 @@ var Lobby = {
             		"background-image": "url('img/maps/"+getMapName(Lobby.mapFile).toUpperCase()+".jpg')"
             	});
                 $('#party-text').text(Lobby.name);
+                $('#lobby').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>"+Lobby.numPlayers+"</span>/<span id='maxplayers'>"+Lobby.maxPlayers+"</span></span></td></tr>");
+                var color = "#000000";
+                Lobby.players.sort(function(a, b) {
+    				return a.team - b.team
+    			});
+    			if (typeof Lobby.passworded == 'undefined') {
+    				for (var i = 0; i < Lobby.players.length; i++) {
+    					if (typeof Lobby.players[i] != 'undefined' && Lobby.players[i].name != "") {
+    						if (Lobby.teams) {
+                                color = (parseInt(Lobby.players[i].team) === 0) ? "#c02020" : "#214EC0";
+                            }
+    						var isDev = (developers.indexOf(Lobby.players[i].uid) >= 0) ? "developer" : "";
+    						Lobby.display(Lobby.players[i].name,color,isDev);
+    					}
+    				}
+                }
+                $('#lobby-container table tr').hover(function() {
+					$('#click')[0].currentTime = 0;
+					$('#click')[0].play();
+				});
+				$("#lobby-container table tr").mouseover(function() {
+					var n = $(this).attr('id'),
+						col = $(this).attr('hex-color'),
+						bright = brighter(col);
+					$(this).css("background-color", hexToRgb(bright, 0.75));
+				}).mouseout(function() {
+					var n = $(this).attr('id'),
+						col = $(this).attr('hex-color');
+					$(this).css("background-color", hexToRgb(col, 0.5));
+				});
             });
         }
+    },
+    "display" : function(player, color, isDev) {
+    	$('<tr>', {
+    		'hex-color': color,
+    		'data-color': hexToRgb(color, 0.5),
+    		'style': 'background:' + hexToRgb(color, 0.5) + ';',
+    		html: $('<td>', {
+    			class: 'name ' + isDev,
+    			text: player
+    		})
+    	}).append(
+    	$('<td>', {
+    		class: 'rank',
+    		html: $('<img>', {
+    			src: 'img/ranks/38.png'
+    		})
+    	})).appendTo('#lobby');
     },
     "loop" : setInterval(function(){Lobby.update()},5000),
     "join" : function(s) {

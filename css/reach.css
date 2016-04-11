@@ -111,9 +111,9 @@
 }
 #friends-online {
     position: absolute;
-    top: 20px;
-    right: 60px;
-    font-size: 18px;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
     opacity: 0.75;
     z-index: 10;
     color: #fff;
@@ -933,7 +933,7 @@ audio {
     margin-bottom: 10px;
 }
 #lobby-container.showing {
-    right: 150px;
+    right: 160px;
 }
 #lobby-container.hidden {
     right: -350px;
@@ -941,7 +941,7 @@ audio {
 #lobby-container {
     transition: 0.5s;
     position: absolute;
-    top: 60px;
+    top: 40px;
     width: 300px;
     height: 590px;
     overflow-y: scroll;
