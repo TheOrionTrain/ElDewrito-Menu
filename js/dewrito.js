@@ -767,29 +767,29 @@ $(document).ready(function() {
 	Mousetrap.bind('y', function() {$(".control-Y").trigger('click');});
 
 	Mousetrap.bind('up', function() {
-		if ($("[data-gp='" + DewMenu.selected + "-" + (gp_on - 1) + "']").length > 0) {
+		if ($("[data-gp='" + Menu.selected + "-" + (gp_on - 1) + "']").length > 0) {
 			gp_on -= 1;
 		}
-		gamepadSelect(DewMenu.selected + "-" + gp_on);
-		if (DewMenu.selected == "serverbrowser") {
+		gamepadSelect(Menu.selected + "-" + gp_on);
+		if (Menu.selected == "serverbrowser") {
 			$('#browser').scrollTo('.server.gp-on');
 		}
-		if (DewMenu.selected.indexOf("songs-") > -1) {
-			$('#'+DewMenu.selected).scrollTo('.selection.gp-on');
+		if (Menu.selected.indexOf("songs-") > -1) {
+			$('#'+Menu.selected).scrollTo('.selection.gp-on');
 		}
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
 	});
 	Mousetrap.bind('down', function() {
-		if ($("[data-gp='" + DewMenu.selected + "-" + (gp_on + 1) + "']").length > 0) {
+		if ($("[data-gp='" + Menu.selected + "-" + (gp_on + 1) + "']").length > 0) {
 			gp_on += 1;
 		}
-		gamepadSelect(DewMenu.selected + "-" + gp_on);
-		if (DewMenu.selected == "serverbrowser") {
+		gamepadSelect(Menu.selected + "-" + gp_on);
+		if (Menu.selected == "serverbrowser") {
 			$('#browser').scrollTo('.server.gp-on');
 		}
-		if (DewMenu.selected.indexOf("songs-") > -1) {
-			$('#'+DewMenu.selected).scrollTo('.selection.gp-on');
+		if (Menu.selected.indexOf("songs-") > -1) {
+			$('#'+Menu.selected).scrollTo('.selection.gp-on');
 		}
 		$('#click')[0].currentTime = 0;
 		$('#click')[0].play();
@@ -855,11 +855,11 @@ $(document).ready(function() {
 		var a = $(this).attr('data-gp').split("-"),
 			b = parseInt(a[a.length-1]);
 		gp_on = b;
-		gamepadSelect(DewMenu.selected + "-" + gp_on);
+		gamepadSelect(Menu.selected + "-" + gp_on);
 	});
 	$('*[data-gp]').mouseout(function() {
 		gp_on = 0;
-		gamepadSelect(DewMenu.selected + "-" + gp_on);
+		gamepadSelect(Menu.selected + "-" + gp_on);
 	});
 	$('#dewmenu-button').click(function() {
 		dewAlert({
@@ -992,8 +992,8 @@ $(document).ready(function() {
 		$('.selection').removeClass('gp-on');
 		$(this).addClass("gp-on");
 		gp_on = $(this).attr('data-gp').split("-")[1];
-		gamepadSelect(DewMenu.selected + "-" + gp_on);
-		$('#description').text(DewMenu.description[$(this).attr('data-gp')]);
+		gamepadSelect(Menu.selected + "-" + gp_on);
+		$('#description').text(Menu.description[$(this).attr('data-gp')]);
 	});
 	$('.map-select .selection').click(function() {
 		changeMap1($(this).attr('data-game'));
@@ -1042,14 +1042,14 @@ $(document).ready(function() {
 		changeMenu($(this).attr('data-action'));
 		if (usingGamepad) {
 			gp_on = p_gp_on;
-			gamepadSelect(DewMenu.selected + "-" + p_gp_on);
+			gamepadSelect(Menu.selected + "-" + p_gp_on);
 		}
 	});
 	$('#back-options').click(function() {
 		changeMenuOptions($(this).attr('data-action'),1);
 		if (usingGamepad) {
 			gp_on = p_gp_on;
-			gamepadSelect(DewMenu.selected + "-" + p_gp_on);
+			gamepadSelect(Menu.selected + "-" + p_gp_on);
 		}
 	});
 	if (getURLParameter('browser')) {
@@ -1315,7 +1315,7 @@ function initializeNewMenu() {
 		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
 	$('#main-menu').click(function() {
-        DewMenu.change("main");
+        Menu.change("main");
 		$('#main').show();
         $('#main2').hide();
     });

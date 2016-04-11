@@ -3,7 +3,7 @@ var Lobby = {
     "status" : false,
     "players" : [],
     "update" : function() {
-        if(Lobby.status && DewMenu.selected == "gamelobby") {
+        if(Lobby.status && Menu.selected == "gamelobby") {
             $.getJSON("http://" + Lobby.address, function(d) {
                 for(var i=0; i < Object.keys(d).length; i++) {
                     var x = Object.keys(d)[i];
@@ -14,7 +14,7 @@ var Lobby = {
                     }
                 }
                 console.log(Lobby);
-                var o = DewMenu.pages.gamelobby.options;
+                var o = Menu.pages.gamelobby.options;
                 $('[data-option="GAME TYPE"]').html("GAME TYPE <span class='value'>"+Lobby.variant.toUpperCase()+"</span>");
                 $('[data-option="MAP"]').html("MAP <span class='value'>"+Lobby.map.toUpperCase()+"</span>");
                 $('#map-thumb').css({
@@ -28,14 +28,14 @@ var Lobby = {
     "join" : function(s) {
         Lobby.address = servers[s].address;
         Lobby.status = 1;
-        DewMenu.change("gamelobby");
+        Menu.change("gamelobby");
         Lobby.update();
     }
 },
-DewMenu = {
+Menu = {
     "change" : function(m) {
-        if(DewMenu.pages[m]) {
-            var ch = DewMenu.pages[m];
+        if(Menu.pages[m]) {
+            var ch = Menu.pages[m];
             if(ch.background) {
         		for(var i=0; i< ch.background.length; i++) {
         			if($('#bg-'+ch.background[i]).length) {
@@ -53,8 +53,8 @@ DewMenu = {
         	}
             $('#select-title').text(ch.title);
             if(ch.previous) {
-                $('#select-previous').text(DewMenu.pages[ch.previous].title).click(function() {
-                    DewMenu.previous();
+                $('#select-previous').text(Menu.pages[ch.previous].title).click(function() {
+                    Menu.previous();
                 });
             } else {
                 $('#select-previous').text("");
@@ -95,23 +95,23 @@ DewMenu = {
                 $('#controls').append("<div class='control-"+Object.keys(ch.controls)[i]+"'>"+co.label+"</div>");
             }
             gamepadSelect(m+"-1");
-            DewMenu.selected = m;
+            Menu.selected = m;
             $('#select-main .selection').hover(function() {
     			$('#click')[0].currentTime = 0;
     			$('#click')[0].play();
                 $('.selection').removeClass('gp-on');
         		$(this).addClass("gp-on");
         		gp_on = $(this).attr('data-gp').split("-")[1];
-        		gamepadSelect(DewMenu.selected + "-" + gp_on);
-                $('#description').text(DewMenu.pages[DewMenu.selected].options[Object.keys(DewMenu.pages[DewMenu.selected].options)[parseInt(gp_on)-1]].description);
+        		gamepadSelect(Menu.selected + "-" + gp_on);
+                $('#description').text(Menu.pages[Menu.selected].options[Object.keys(Menu.pages[Menu.selected].options)[parseInt(gp_on)-1]].description);
     		});
             $('#select-main .selection').click(function() {
                 var n = parseInt($(this).attr('data-gp').split("-")[1])-1;
-                DewMenu.pages[DewMenu.selected].options[Object.keys(DewMenu.pages[DewMenu.selected].options)[n]].action();
+                Menu.pages[Menu.selected].options[Object.keys(Menu.pages[Menu.selected].options)[n]].action();
             });
             $('#controls > div').click(function() {
                 var button = $(this).attr('class').split('-')[1];
-                DewMenu.pages[DewMenu.selected].controls[button].action();
+                Menu.pages[Menu.selected].controls[button].action();
             });
             $('#slide')[0].currentTime = 0;
             $('#slide')[0].play();
@@ -119,7 +119,7 @@ DewMenu = {
         }
     },
     "previous" : function() {
-        DewMenu.change(DewMenu.pages[DewMenu.selected].previous);
+        Menu.change(Menu.pages[Menu.selected].previous);
     },
     "changeSetting" : function(set) {
         console.log("changeSetting: "+set);
@@ -137,33 +137,33 @@ DewMenu = {
             "options": {
                 "BROWSE SERVERS" : {
                     "description" : "Take your party to view the current multiplayer servers online that are available to join.",
-                    "action" : function() {DewMenu.change("serverbrowser")}
+                    "action" : function() {Menu.change("serverbrowser")}
                 },
                 "MATCHMAKING" : {
                     "description" : "Take your party online and into the frenetic action of live combat, objective-based missions, and dangerous military exercises.",
-                    "action" : function() {DewMenu.change("matchmaking")}
+                    "action" : function() {Menu.change("matchmaking")}
                 },
                 "CUSTOM GAME" : {
                     "description" : "Take your party to combat and objective-based missions that you select and design. Your rules, your maps, your game.",
                     "action" : function() {
 						dewRcon.send("server.lobbytype 2");
-						DewMenu.change("customgame");
+						Menu.change("customgame");
 					}
                 },
                 "FORGE" : {
                      "description" : "Take your party to collaborate in real time to edit and play variations of your favorite maps, from the subtle to the insane.",
                      "action" : function() {
 						 dewRcon.send("server.lobbytype 3");
-						 DewMenu.change("forge");
+						 Menu.change("forge");
 					 }
                 },
                 "SETTINGS" : {
                     "description" : "Change how the game or menu plays or looks. You can customize everything from music, to the background, to the appearance of the server browser.",
-                    "action" : function() {DewMenu.change("settings")}
+                    "action" : function() {Menu.change("settings")}
                 },
                 "CREDITS" : {
                     "description" : "View the team of people who worked hard to build and take this menu to where it is today.",
-                    "action" : function() {DewMenu.change("credits")}
+                    "action" : function() {Menu.change("credits")}
                 }
             },
             "controls" : {
@@ -175,7 +175,7 @@ DewMenu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){DewMenu.previous();}
+                    "action" : function(){Menu.previous();}
                 },
                 "START" : {
                     "label" : "Friends List",
@@ -209,7 +209,7 @@ DewMenu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){DewMenu.previous();}
+                    "action" : function(){Menu.previous();}
                 },
                 "X" : {
                     "label" : "Direct Connect",
@@ -240,22 +240,22 @@ DewMenu = {
                 "PLAYLIST" : {
                     "description" : "Select a playlist that suits your favorite play style.",
                     "value" : "OFFLINE",
-                    "action" : function() {DewMenu.changeSetting("playlist")}
+                    "action" : function() {Menu.changeSetting("playlist")}
                 },
                 "SEARCH RESTRICTIONS" : {
                     "description" : "Select options to prioritize how you get matched in matchmaking.",
                     "value" : "NONE (FASTEST)",
-                    "action" : function() {DewMenu.changeSetting("restrictions")}
+                    "action" : function() {Menu.changeSetting("restrictions")}
                 },
                 "PSYCH PROFILE" : {
                     "description" : "Select options that describe your playlist so that we can find you better matches.",
-                    "action" : function() {DewMenu.change("psych")}
+                    "action" : function() {Menu.change("psych")}
                 },
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
                      "action" : function() {
 						 startSearch("Team Slayer 4v4");
-						 DewMenu.change("searching");
+						 Menu.change("searching");
 					 }
                 }
             },
@@ -268,7 +268,7 @@ DewMenu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){DewMenu.previous()}
+                    "action" : function(){Menu.previous()}
                 },
                 "START" : {
                     "label" : "Friends List",
@@ -303,7 +303,7 @@ DewMenu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){DewMenu.previous()}
+                    "action" : function(){Menu.previous()}
                 },
                 "START" : {
                     "label" : "Friends List",
@@ -353,7 +353,7 @@ DewMenu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){DewMenu.previous()}
+                    "action" : function(){Menu.previous()}
                 }
             }
         },
@@ -375,12 +375,12 @@ DewMenu = {
 				"GAME TYPE" : {
                      "description" : "Choose the game type you would like to play.",
                      "value" : "SLAYER",
-                     "action" : function() {DewMenu.changeSetting("gametype")}
+                     "action" : function() {Menu.changeSetting("gametype")}
                 },
 				"MAP" : {
                      "description" : "Choose which map you want to play.",
                      "value" : "EDGE",
-                     "action" : function() {DewMenu.changeSetting("map")}
+                     "action" : function() {Menu.changeSetting("map")}
                 },
 				"GAME OPTIONS" : {
                      "description" : "Choose the rules for the game.",
@@ -404,7 +404,7 @@ DewMenu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){DewMenu.previous()}
+                    "action" : function(){Menu.previous()}
                 },
                 "START" : {
                     "label" : "Friends List",
@@ -432,12 +432,12 @@ DewMenu = {
 				"GAME TYPE" : {
                      "description" : "Choose the game type you would like to edit object setup for.",
                      "value" : "BASIC EDITING",
-                     "action" : function() {DewMenu.changeSetting("gametype")}
+                     "action" : function() {Menu.changeSetting("gametype")}
                 },
 				"MAP" : {
                      "description" : "Choose which map you want to edit objects on.",
                      "value" : "EDGE",
-                     "action" : function() {DewMenu.changeSetting("map")}
+                     "action" : function() {Menu.changeSetting("map")}
                 },
 				"GAME OPTIONS" : {
                      "description" : "Choose the rules for the game.",
@@ -461,7 +461,7 @@ DewMenu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){DewMenu.previous()}
+                    "action" : function(){Menu.previous()}
                 },
                 "START" : {
                     "label" : "Friends List",
