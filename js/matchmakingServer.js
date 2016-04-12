@@ -6,6 +6,16 @@ var matchmakingServer,
 StartMatchmakingConnection = function() {
     matchmakingServer = new matchmakingServerHelper();
     matchmakingServer.matchmakingServerSocket.onopen = function() {
+		matchmakingServer.send(JSON.stringify({
+			type: "connection",
+			message: " has connected.",
+			player: {
+				name: pname,
+				guid: puid,
+				colour: colour,
+				rank: 0
+			},
+		}));
         matchmakingServerConnected = true;
     };
 
@@ -40,7 +50,31 @@ StartMatchmakingConnection = function() {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
 				case "disconnected":
-
+					
+				break;
+				case "updatesearch":
+					console.log(result);
+					$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
+					var isDev = (developers.indexOf(puid) >= 0) ? "developer" : "";
+					addPlayer("search", {
+						name: pname,
+						guid: puid,
+						colour: colour,
+						rank: 0
+					}, isDev);
+					for (var i = 0; i < result.players.length; i++) {
+						var isDev2 = (developers.indexOf(result.players[i].guid) >= 0) ? "developer" : "";
+						if (result.players[i].guid != puid)
+							addPlayer("search", result.players[i], isDev2);
+					}
+					for (var i = 0; i < (8 - result.players.length); i++) {
+						addPlayer("search", {
+							name: "Looking for player...",
+							guid: "000000",
+							colour: "#BDBDBD",
+							rank: 0
+						}, null, 0.6);
+					}
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
@@ -61,10 +95,20 @@ function startSearch(playlist) {
 	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
 	for (var i = 0; i < party.length; i++) {
 		var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
-		addPlayer("search", party[i], isDev);
+		addPlayer("search", {
+			name: party[i].split(':')[0],
+			guid: party[i].split(':')[1],
+			colour: party[i].split(':')[2],
+			rank: 0,
+		}, isDev);
 	}
 	for (var i = 0; i < (8 - party.length); i++) {
-		addPlayer("search", "Looking for player...:000000", "", 0.6);
+		addPlayer("search", {
+			name: "Looking for player...",
+			guid: "000000",
+			colour: "#BDBDBD",
+			rank: 0
+		}, null, 0.6);
 	}
 
 	matchmakingServer.send(JSON.stringify({
