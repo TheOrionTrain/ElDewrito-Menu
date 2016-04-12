@@ -48,7 +48,7 @@ function gamepadBind() {
 		gamepadSelect("main1");
 		usingGamepad = true;
 		$.snackbar({content:'Controller connected! Use the left thumbstick to navigate the menu. Use the A and B buttons to go forwards and back.'});
-		$('#connectgamepad')[0].play();
+		Audio.connect.play();
 	});
 
 	gamepad.bind(Gamepad.Event.DISCONNECTED, function(device) {
@@ -110,8 +110,8 @@ function gamepadBind() {
 			if (currentMenu.indexOf("songs-") > -1) {
 				$('#'+currentMenu).scrollTo('.selection.gp-on');
 			}
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
+			Audio.click.currentTime = 0;
+			Audio.click.play();
 		}
 		if(e.control == "DPAD_UP") {
 			gp_last = Date.now();
@@ -125,8 +125,8 @@ function gamepadBind() {
 			if (currentMenu.indexOf("songs-") > -1) {
 				$('#'+currentMenu).scrollTo('.selection.gp-on');
 			}
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
+			Audio.click.currentTime = 0;
+			Audio.click.play();
 		}
 		if(e.control == "DPAD_LEFT") {
 			gamepadLeft();
@@ -152,8 +152,8 @@ function gamepadBind() {
 			if (currentMenu.indexOf("songs-") > -1) {
 				$('#'+currentMenu).scrollTo('.selection.gp-on');
 			}
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
+			Audio.click.currentTime = 0;
+			Audio.click.play();
 		} else if (e.axis == "LEFT_STICK_Y" && e.value > 0.85) {
 			gp_last = Date.now();
 			if ($("[data-gp='" + currentMenu + "-" + (gp_on + 1) + "']").length > 0) {
@@ -166,8 +166,8 @@ function gamepadBind() {
 			if (currentMenu.indexOf("songs-") > -1) {
 				$('#'+currentMenu).scrollTo('.selection.gp-on');
 			}
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
+			Audio.click.currentTime = 0;
+			Audio.click.play();
 		} else if (e.axis == "LEFT_STICK_X" && e.value < -0.85) {
 			gp_last = Date.now();
 			gamepadLeft();

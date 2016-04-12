@@ -25,46 +25,6 @@ var user = {
 	},
 
 	settings = {
-		/*"preset": {
-			"typeof": "select",
-			"category": "menu",
-			"name": "PRESET",
-			"current": parseInt(isset(localStorage.getItem('preset'), 0),
-			"min": 0,
-			"max": 6,
-			"labels": [
-          "Default",
-          "Halo Reach",
-          "Halo CE",
-          "Halo 2",
-          "Halo 3",
-          "Halo 3 ODST",
-          "Halo 4"
-      ],
-			"increment": 1,
-			"update": function() {
-				var c = settings.preset.current;
-				if (settings.preset.labels[c] == "Default") {
-					$("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
-					return;
-				}
-				for (var i = 0; i < settings.background.labels.length; i++) {
-					if (settings.background.labels[i] === settings.preset.labels[c]) {
-						settings.background.current = i;
-					}
-				}
-				for (var i = 0; i < settings.musictrack.labels.length; i++) {
-					if (settings.preset.labels[c] === "Halo 4") {
-						settings.musictrack.current = 11;
-					} else if (settings.musictrack.labels[i] === settings.preset.labels[c]) {
-						settings.musictrack.current = i;
-					}
-				}
-				$("[data-option='preset']").children('.value').text(settings.preset.labels[c]);
-				settings.background.update();
-				settings.musictrack.update();
-			}
-		},*/
 		"musicvolume": {
 			"typeof": "select",
 			"category": "menu",
@@ -89,12 +49,12 @@ var user = {
 			"increment": 5,
 			"update": function() {
 				var c = settings.sfxvolume.current;
-				$('#click')[0].volume = c*0.01;
-				$('#slide')[0].volume = c*0.01;
-				$('#beep')[0].volume = c*0.01;
-				$('#beeep')[0].volume = c*0.01;
-				$('#notification')[0].volume = c*0.01;
-				$('#connectgamepad')[0].volume = c*0.01;
+				Audio.click.volume = c*0.01;
+				Audio.slide.volume = c*0.01;
+				Audio.beep.volume = c*0.01;
+				Audio.beeep.volume = c*0.01;
+				Audio.notification.volume = c*0.01;
+				Audio.connect.volume = c*0.01;
 				$("[data-option='sfxvolume']").children('.value').text(c);
 			}
 		},
@@ -148,7 +108,6 @@ var user = {
 						'-moz-transform': 'scale(' + s + ')'
 					});
 					$("[data-option='resolution']").children('.value').text("Auto (" + Math.floor(1280 * s) + "x" + Math.floor(720 * s) + ")");
-					scale = s;
 				} else {
 					s = l.split("x")[0] / 1280;
 					$('#menu').css({
