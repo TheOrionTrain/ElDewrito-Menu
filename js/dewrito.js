@@ -565,19 +565,20 @@ function getPlayerColour(guid) {
 }
 
 function addPlayer(id, player, isDev, opacity) {
+	console.log(player.colour);
 	$('<tr>', {
-		'hex-colour': getPlayerColour(player.split(':')[1]),
-		'data-color': hexToRgb(getPlayerColour(player.split(':')[1]), 0.5),
-		'style': 'background:' + hexToRgb(getPlayerColour(player.split(':')[1]), 0.5) + ';' + (opacity ? 'opacity:' + opacity : null),
+		'hex-colour': player.colour,
+		'data-color': hexToRgb(player.colour, 0.5),
+		'style': 'background:' + hexToRgb(player.colour, 0.5) + ';' + (opacity ? 'opacity:' + opacity : null),
 		html: $('<td>', {
 			class: 'name ' + isDev,
-			text: player.split(':')[0]
+			text: player.name
 		})
 	}).append(
 	$('<td>', {
 		class: 'rank',
 		html: $('<img>', {
-			src: 'img/ranks/38.png'
+			src: 'img/ranks/' + player.rank + '.png'
 		})
 	})).appendTo('#'+id);
 }
