@@ -36,9 +36,12 @@ StartConnection = function() {
 					friendServer.send(JSON.stringify({
 						type: "connection",
 						message: " has connected.",
-						guid: uid.split(' ')[2],
-						player: name,
-						colour: col
+						player: {
+							name: pname,
+							guid: puid,
+							colour: colour,
+							rank: 0
+						},
 					}));
 
 					party = [];
@@ -291,7 +294,7 @@ function gameInvite(accepted, guid) {
 
 friendServerHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.friendsServerSocket = new WebSocket('ws://158.69.166.144:55555', 'friendServer');
+    this.friendsServerSocket = new WebSocket('ws://127.0.0.1:55555/friendServer', 'friendServer');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;

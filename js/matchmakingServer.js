@@ -69,7 +69,15 @@ function startSearch(playlist) {
 
 	matchmakingServer.send(JSON.stringify({
 		type: "search",
-		players: party
+		playlist: playlist,
+		players: [
+			{
+				name: pname,
+				guid: puid,
+				colour: colour,
+				rank: 0
+			}
+		]
 	}));
 }
 
