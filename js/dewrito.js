@@ -4,9 +4,7 @@
 */
 var players = [],
 	serverz = [],
-	joined = 0,
 	track = 5,
-	scale = 1,
 	anit = 400,
 	currentGame = "HaloOnline",
 	currentType = "Slayer",
@@ -15,10 +13,7 @@ var players = [],
 	currentServer,
 	selectedserver,
 	loopPlayers,
-	host = 1,
-	forge = 0,
 	servers,
-	network = "offline",
 	browsing = 0,
 	sortMap,
 	sortType,
@@ -34,134 +29,18 @@ var players = [],
 	nextSong,
 	songIndex,
 	localBackground = isset(localStorage.getItem('localbackground'), 0),
-	videoURL = "http://158.69.166.144/video/";
-
-var Chat = {
-	time: 0,
-	pinned: 0,
-	currentTab: "",
-	hovering: 0,
-	focused: 0,
-	createTab: function(player) {
-		Chat.currentTab = player;
-		$('.chat-tab,.chat-window').removeClass('selected');
-		$('#chat-tabs').append("<div data-player='"+player+"' class='chat-tab selected'>"+player+"<div class='x'></div></div>");
-		$('#chat-windows').append("<div data-player='"+player+"' class='chat-window selected'></div>");
-		$('.chat-tab').click(function() {
-			Chat.changeTab($(this).attr('data-player'));
-		});
-		$('.chat-tab > .x').click(function() {
-			Chat.destroyTab($(this).parent('.chat-tab').attr('data-player'));
-		});
-		var n = $('.chat-tab').length;
-		$('.chat-tab').css('width',Math.floor(420/n)+'px');
-	},
-	renameTab: function(previous, name) {
-		$('.chat-tab[data-player="'+previous+'"]').text(name);
-		$('.chat-tab[data-player="'+previous+'"]').attr("data-player", name);
-		$('.chat-window[data-player="'+previous+'"]').attr("data-player", name);
-		//console.log($('.chat-tab[data-player="'+name+'"]').data());
-	},
-	destroyTab: function(player) {
-		if(player == Chat.currentTab) {
-			$('.chat-window[data-player="'+player+'"]').remove();
-			$('.chat-tab[data-player="'+player+'"]').remove();
-			if($('.chat-tab').length > 0) {
-				var e = $('.chat-tab:first-of-type').attr('data-player');
-				Chat.changeTab(e);
-			} else {
-				Chat.hideBox();
-			}
-		} else {
-			$('.chat-window[data-player="'+player+'"]').remove();
-			$('.chat-tab[data-player="'+player+'"]').remove();
-		}
-		var n = $('.chat-tab').length;
-		$('.chat-tab').css('width',Math.floor(420/n)+'px');
-	},
-	isOpen: function(player) {
-		if($('.chat-tab[data-player="'+player+'"]').length > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	},
-	receiveMessage: function(player,message,balloon) {
-		if(!Chat.isOpen(player)) {
-			Chat.createTab(player);
-		}
-		//$('.chat-window[data-player="'+player+'"]').append("<span class='chat-message " + (message.split(': ')[0] == pname ? "self" : "") + "'>" + (balloon == 1 ? "<div class='balloon'></div> " : "")+message+"</span>");
-		console.log(balloon);
-		$('<span>', {
-			class: 'chat-message ' + (message.split(': ')[0] == pname ? "self" : ""),
-			text: message
-		}).prepend(balloon == 1 ? '<div class="balloon"/> ' : null).appendTo('.chat-window[data-player="'+player+'"]');
-
-		/*if (balloon == 1) {
-			m.prepend('<div class="balloon"/> ');
-		}*/
-
-		//m.appendTo('.chat-window[data-player="'+player+'"]');
-		$('.chat-window[data-player="'+player+'"]').scrollTop($('.chat-window[data-player="'+player+'"]')[0].scrollHeight);
-		Chat.showBox();
-	},
-	sendMessage: function(player,message) {
-
-		if (player.contains("Party Chat -")) {
-			friendServer.send(JSON.stringify({
-				type: "partymessage",
-				message: message,
-				player: pname,
-				senderguid: puid,
-				partymembers: party
-			}));
-		} else {
-			friendServer.send(JSON.stringify({
-				type: "pm",
-				message: message,
-				player: pname,
-				senderguid: puid,
-				guid: getPlayerUIDFromFriends(player) == "" ? getPlayerUID(player) : getPlayerUIDFromFriends(player)
-			}));
-		}
-
-		Chat.receiveMessage(player,pname+": "+message, party[0].split(':')[0] == pname ? 1 : 0);
-	},
-	showBox: function() {
-		$('#chatbox').clearQueue().fadeIn(anit);
-		Chat.time = 8000;
-	},
-	hideBox: function() {$('#chatbox').clearQueue().fadeOut(anit);},
-	changeTab: function(player) {
-		Chat.currentTab = player;
-		$('.chat-tab,.chat-window').removeClass('selected');
-		$('.chat-tab[data-player="'+player+'"]').addClass('selected');
-		$('.chat-window[data-player="'+player+'"]').addClass('selected');
-	},
-	loop: setInterval(function() {
-		if(!Chat.pinned && !Chat.hovering && !Chat.focused) {
-			Chat.time -= 100;
-			if(Chat.time <= 0) {
-				Chat.time = 0;
-				Chat.hideBox();
-			}
-		}
-	},100)
-};
+	videoURL = "http://158.69.166.144/video/",
+	online = true,
+	last_back = "",
+	last_menu = "",
+	pings = [],
+	previous = {};
 
 (function() {
-	var e = (window.innerHeight - 80) / 2;
-	var d = getURLParameter('debug');
-	if (d !== undefined && d == "1") {
-		console.log("debug yes");
+	if (window.location.protocol == "https:") {
+		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
 	}
 })();
-
-function debugLog(val) {
-	if (!debug) return;
-
-	console.log(val);
-}
 
 function getServers(browser) {
 	if (usingGamepad) {
@@ -174,8 +53,6 @@ function getServers(browser) {
 		queryServer(serverz.servers[i], i, browser);
 	}
 }
-
-var pings = [];
 
 function queryServer(serverInfo, i, browser) {
 	if (serverInfo.numPlayers > 16 || serverInfo.maxPlayers > 16) {
@@ -253,8 +130,8 @@ function addServer(i) {
 
 	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".jpg'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
+		Audio.click.currentTime = 0;
+		Audio.click.play();
 		gamepadSelect($(this).attr('data-gp'));
 	});
 	$('.server').unbind().click(function() {
@@ -325,12 +202,12 @@ function initialize() {
 			changeSong2($(this).attr('data-song'));
 		});
 		$('.music-select .selection').hover(function() {
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
+			Audio.click.currentTime = 0;
+			Audio.click.play();
 		});
 		$('.music-select2 .selection').hover(function() {
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
+			Audio.click.currentTime = 0;
+			Audio.click.play();
 		});
 		changeSong2(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
 	});
@@ -361,7 +238,6 @@ function initialize() {
                 ],
 				change: function(color) {
 					changeSetting(set, color.toHexString());
-					debugLog(color.toHexString());
 				}
 			});
 		}
@@ -377,7 +253,6 @@ function initialize() {
 			$("#settings-social").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
 		}
 	});
-	//loadSettings(Object.keys(settings).length);
 	for (i = 0; i < Object.keys(maps).length; i++) {
 		b = Object.keys(maps)[i];
 		$('#choosemap').children('.map-select').append("<div data-game='" + b + "' class='selection'><span class='label'>" + maps[b].name + "</span></div>");
@@ -396,16 +271,11 @@ function initialize() {
 			$('#types-' + b.replace(/\s/g, "")).append("<div data-type='" + g + "' class='selection'><span class='label'>" + g.toUpperCase() + "</span></div>");
 		}
 	}
-	if(!localStorage.getItem('newlogo')) {
-		settings.logo.current = 1;
-		settings.logo.update();
-		localStorage.setItem('newlogo',1);
-	}
 }
 
 function changeSetting(s, by) {
-	$('#click')[0].currentTime = 0;
-	$('#click')[0].play();
+	Audio.click.currentTime = 0;
+	Audio.click.play();
 	var e = settings[s];
 	if (e.name == "GAME VERSION") {
 		e.update();
@@ -434,19 +304,6 @@ function changeSetting(s, by) {
 	localStorage.setItem(s, e.current);
 }
 
-function toggleNetwork() {
-	if (network == "offline") {
-		//network = "online";
-		//callbacks.networkType(1);
-	} else {
-		network = "offline";
-		//callbacks.networkType(2);
-	}
-	$('#network').text(network.toUpperCase());
-	$('#click')[0].currentTime = 0;
-	$('#click')[0].play();
-}
-
 var friends = [], friends_online;
 
 function quickJoin() {
@@ -473,7 +330,6 @@ function jumpToServer(ip) {
 			if (serverz.servers[i].address == ip)
 				d = serverz.servers[i];
 		}
-		host = 0;
 		browsing = 0;
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
@@ -483,8 +339,8 @@ function jumpToServer(ip) {
 				content: 'This server is full, try joining a different one.',
 				acceptText: "OK"
 			});
-			$('#notification')[0].currentTime = 0;
-			$('#notification')[0].play();
+			Audio.notification.currentTime = 0;
+			Audio.notification.play();
 			return;
 		}
 		changeMap2(getMapName(d.mapFile));
@@ -500,7 +356,6 @@ function jumpToServer(ip) {
 		$('#friends-online').fadeIn(anit);
 		$('#back').fadeIn(anit);
 		$('#back').attr('data-action', 'customgame,serverbrowser,vertical');
-		playersJoin(d.numPlayers, d.maxPlayers, 20, d.address);
 		currentServer = d;
 		loopPlayers = false;
 		setTimeout(function() {
@@ -513,8 +368,8 @@ function jumpToServer(ip) {
 		$('#network-toggle').hide();
 		$('#type-selection').show();
 		currentMenu = "customgame";
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+		Audio.slide.currentTime = 0;
+		Audio.slide.play();
 }
 
 function loadParty() {
@@ -528,8 +383,8 @@ function loadParty() {
 				addPlayer('current-party', party[i], isDev);
 			}
 			$('.friend,#friend-add,#friend-remove').hover(function() {
-				$('#click')[0].currentTime = 0;
-				$('#click')[0].play();
+				Audio.click.currentTime = 0;
+				Audio.click.play();
 			});
 			$('#party .friend:first-of-type').attr('title','Party Leader');
 		} else {
@@ -620,8 +475,8 @@ function loadFriends() {
 	if(friends_online === 0) {$('#friends-on').empty();}
 	$('#friends-on-total').text(friends.length);
 	$('.friend,#friend-add,#friend-remove,#lobby-container table tr').hover(function() {
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
+		Audio.click.currentTime = 0;
+		Audio.click.play();
 	});
 	$("#lobby-container table tr").mouseover(function() {
 		var n = $(this).attr('id'),
@@ -639,15 +494,15 @@ function loadFriends() {
 		} else {
 			submenu("show",$(this).text(),0,e);
 		}
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+		Audio.slide.currentTime = 0;
+		Audio.slide.play();
 	});
 
 	$('#party .friend, #current-party td.name').unbind().click(function(e) {
 		if ($(this).text() != pname) {
 			partysubmenu("show",$(this).text(),e);
-			$('#slide')[0].currentTime = 0;
-			$('#slide')[0].play();
+			Audio.slide.currentTime = 0;
+			Audio.slide.play();
 		}
 	});
 }
@@ -738,8 +593,6 @@ function isOnline(friend) {
 	return false;
 }
 
-var online = true;
-
 $(document).ready(function() {
 	$(window).resize(function(){
 		settings.resolution.update();
@@ -751,7 +604,6 @@ $(document).ready(function() {
 			callback: function() {localStorage.setItem('PressF11ToQuit',1)}
 		});
 	}
-	initializeNewMenu();
 
 	Mousetrap.bind('a', function() {$(".control-A").trigger('click');});
 	Mousetrap.bind('b', function() {$(".control-B").trigger('click');});
@@ -769,8 +621,8 @@ $(document).ready(function() {
 		if (Menu.selected.indexOf("songs-") > -1) {
 			$('#'+Menu.selected).scrollTo('.selection.gp-on');
 		}
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
+		Audio.click.currentTime = 0;
+		Audio.click.play();
 	});
 	Mousetrap.bind('down', function() {
 		if ($("[data-gp='" + Menu.selected + "-" + (gp_on + 1) + "']").length > 0) {
@@ -783,8 +635,8 @@ $(document).ready(function() {
 		if (Menu.selected.indexOf("songs-") > -1) {
 			$('#'+Menu.selected).scrollTo('.selection.gp-on');
 		}
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
+		Audio.click.currentTime = 0;
+		Audio.click.play();
 	});
 	Mousetrap.bind('left', function() {
 		gamepadLeft();
@@ -792,6 +644,11 @@ $(document).ready(function() {
 	Mousetrap.bind('right', function() {
 		gamepadRight();
 	});
+	$('#main-menu').click(function() {
+        Menu.change("main");
+		$('#main').show();
+        $('#main2').hide();
+    });
 	$('#chatbox').hover(
 		function() {Chat.hovering = 1;},
 		function() {Chat.hovering = 0;}
@@ -826,16 +683,16 @@ $(document).ready(function() {
 		hideAlert(false,c,false);
 	});
 	$('#friend-add').click(function() {
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+		Audio.slide.currentTime = 0;
+		Audio.slide.play();
 		addFriend($('#friend-input').val());
 	});
 	$('#click-menu li').click(function() {
 		submenu($(this).attr('data-action'),$('#click-menu').attr('data-friend'));
 	});
 	$('#click-menu li').hover(function() {
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
+		Audio.click.currentTime = 0;
+		Audio.click.play();
 	});
 	$('#click-menu-container').click(function() {
 		$(this).hide();
@@ -890,9 +747,8 @@ $(document).ready(function() {
 		}, anit);
 	});
 	initialize();
-	$('#notification')[0].currentTime = 0;
-	$('#notification')[0].play();
-	//getTotalPlayers();
+	Audio.notification.currentTime = 0;
+	Audio.notification.play();
 	totalPlayersLoop();
 	$('#music')[0].addEventListener('ended', function() {
 		if (settings.shufflemusic.current === 1) {
@@ -914,14 +770,14 @@ $(document).ready(function() {
 	$('#friends-online').click(function() {
 		$('#friendslist').css('right','0px');
 		$('#friends-online').fadeOut(anit);
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+		Audio.slide.currentTime = 0;
+		Audio.slide.play();
 	});
 	$('#friends-close').click(function() {
 		$('#friendslist').css('right','-250px');
 		$('#friends-online').fadeIn(anit);
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+		Audio.slide.currentTime = 0;
+		Audio.slide.play();
 	});
 	$('#browser-locked').click(function() {
 		if (sortLocked) {
@@ -948,7 +804,8 @@ $(document).ready(function() {
 		filterServers();
 	});
 	$('#direct-connect').click(function() {
-		directConnect();
+		var ip = prompt("Enter IP Address: ");
+		Lobby.joinIP(ip);
 	});
 	$('#quit').click(function() {
 		dewRcon.send('Game.SetMenuEnabled 0');
@@ -956,17 +813,14 @@ $(document).ready(function() {
 	$('#clear').click(function() {
 		clearFilters();
 	});
-	$('#network-toggle').click(function() {
-		toggleNetwork();
-	});
 	$('#version').click(function() {
 		clearAllCookies();
 	});
 	var e = ((window.innerHeight - $('#menu').height()) / 2) - 40;
-	$('#connectgamepad')[0].volume = settings.musicvolume.current * 0.01;
+	Audio.connect.volume = settings.musicvolume.current * 0.01;
 	$('#music')[0].volume = settings.musicvolume.current * 0.01;
-	$('#click')[0].volume = settings.sfxvolume.current * 0.01;
-	$('#notification')[0].volume = settings.sfxvolume.current * 0.01;
+	Audio.click.volume = settings.sfxvolume.current * 0.01;
+	Audio.notification.volume = settings.sfxvolume.current * 0.01;
 	$('#start').click(function() {
 		var mode = $('#start').children('.label').text().toString().split(" ");
 		if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
@@ -979,8 +833,8 @@ $(document).ready(function() {
 		settings.background.update();
 	});
 	$('.selection').hover(function() {
-		$('#click')[0].currentTime = 0;
-		$('#click')[0].play();
+		Audio.click.currentTime = 0;
+		Audio.click.play();
 		$('.selection').removeClass('gp-on');
 		$(this).addClass("gp-on");
 		gp_on = $(this).attr('data-gp').split("-")[1];
@@ -1063,8 +917,8 @@ function loadServers() {
 		$('#browser').empty();
 		getServers(true);
 		$('.server').hover(function() {
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
+			Audio.click.currentTime = 0;
+			Audio.click.play();
 		});
 		$('.server').click(function() {
 			Lobby.join($(this).attr('data-server'));
@@ -1073,88 +927,8 @@ function loadServers() {
 	}
 }
 
-var previous = new Object();
-
-function lobbyLoop(ip) {
-	var success = false;
-	if (loopPlayers === false)
-		return;
-	$.getJSON("http://" + ip, function(serverInfo) {
-		success = true;
-		console.log(currentServer);
-		players = serverInfo.players;
-		var colour = "#000000";
-
-		if (serverInfo.variantType == "none")
-				serverInfo.variantType = "Slayer";
-		if (serverInfo.variant == "")
-				serverInfo.variant = "Slayer";
-		$('#gametype-display').text(serverInfo.variant.toUpperCase());
-		$('#gametype-icon').css('background', "url('img/gametypes/" + (serverInfo.variantType === "ctf" || serverInfo.variantType === "koth") ? serverInfo.variantType : serverInfo.variantType.toString().capitalizeFirstLetter + ".png') no-repeat 0 0/cover");
-
-		if (typeof serverInfo.passworded == 'undefined') {
-			players.sort(function(a, b) {
-				return a.team - b.team
-			});
-		}
-
-		if(players !== previous.players) {
-			$('#lobby').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>"+serverInfo.numPlayers+"</span>/<span id='maxplayers'>"+serverInfo.maxPlayers+"</span></span></td></tr>");
-			if (typeof serverInfo.passworded == 'undefined') {
-				for (var i = 0; i < players.length; i++) {
-					if (typeof players[i] != 'undefined' && players[i].name != "") {
-						if (serverInfo.teams)
-							colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
-							var isDev = (developers.indexOf(players[i].uid) >= 0) ? "developer" : "";
-						$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name "+isDev+"'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-					}
-				}
-				previous.players = players;
-				
-				$('#lobby tr').click(function() {
-					var e = $(this).children('.name').text(),
-						n = $(this).attr('id'),
-						nn = "user",
-						col = $(this).attr('hex-colour'),
-						bright = brighter(col);
-					changeMenu("customgame,players,horizontal", e);
-					$('#lobby tr').each(function() {
-						var color = $(this).attr('data-color');
-						$(this).css('background', color);
-					});
-					$(this).css("background-color", hexToRgb(bright, 0.75));
-				});
-			}
-		}
-
-		changeMap2(getMapName(serverInfo.mapFile));
-		$('#subtitle').text(serverInfo.name + " : " + ip);
-		if (loopPlayers && currentServer.address == ip)
-			setTimeout(function() { lobbyLoop(ip); }, 3000);
-	});
-	setTimeout(function() {
-		if (!success) {
-			console.log("Failed to contact server, retrying.");
-			if (loopPlayers && currentServer.address == ip)
-				setTimeout(function() { lobbyLoop(ip); }, 3000);
-		}
-	}, 5000);
-}
-
-function getTotalPlayers() {
-	$.getJSON(infoIP+"/count", function(data) {
-		$('#players-online').text(data.result);
-	});
-}
-
-function directConnect() {
-	var ip = prompt("Enter IP Address: ");
-	jumpToServer(ip);
-}
-
 function getCurrentVersion() {
-	$.getJSON("http://tracks.thefeeltra.in/update", function(data) {
-	});
+	$.getJSON("http://tracks.thefeeltra.in/update", function(data) {});
 }
 
 var infoIP = "http://158.69.166.144:8081",
@@ -1163,24 +937,23 @@ var infoIP = "http://158.69.166.144:8081",
 function totalPlayersLoop() {
 	$.getJSON(infoIP+"/all", function(data) {
 		serverz = data;
-		for (var i = 0; i < serverz.servers.length; i++) {
-			//if (!dewRconConnected) {
-				var startTime = Date.now(),
+		for (var i=0; i<serverz.servers.length; i++) {
+			var startTime = Date.now(),
 				endTime,
 				ping;
-				(function(i) {
-					$.ajax({
-						type: "GET",
-						url: "http://" + serverz.servers[i].address + "/",
-						async: true,
-						success: function() {
-							endTime = Date.now();
-							ping = Math.round((endTime - startTime) * 0.45);
-							serverz.servers[i].ping = ping;
-							$('#ping-'+i).text(ping);
-						}
-					});
-				})(i);
+			(function(i) {
+				$.ajax({
+					type: "GET",
+					url: "http://" + serverz.servers[i].address + "/",
+					async: true,
+					success: function() {
+						endTime = Date.now();
+						ping = Math.round((endTime - startTime) * 0.45);
+						serverz.servers[i].ping = ping;
+						$('#ping-'+i).text(ping);
+					}
+				});
+			})(i);
 		}
 		$('#players-online').text(serverz.count);
 		loadParty();
@@ -1194,68 +967,9 @@ function totalPlayersLoop() {
 	});
 }
 
-function playersJoin(number, max, time, ip) {
-	$.getJSON("http://" + ip, function(serverInfo) {
-		debugLog(ip);
-		players = serverInfo.players;
-		var colour = "#000000";
-
-		if (typeof serverInfo.passworded == 'undefined') {
-			players.sort(function(a, b) {
-				return a.team - b.team
-			});
-		}
-
-		$('#lobby').empty();
-		$('#lobby').append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
-		$('#maxplayers').text(serverInfo.maxPlayers);
-		$('#joined').text(serverInfo.numPlayers);
-		if (typeof serverInfo.passworded != 'undefined')
-			return;
-		for (var i = 0; i < players.length; i++) {
-			if (typeof players[i] != 'undefined' && players[i].name != "") {
-				if (serverInfo.teams)
-					colour = (parseInt(players[i].team) === 0) ? "#c02020" : "#214EC0";
-				var isDev = (developers.indexOf(players[i].uid) >= 0) ? "developer" : "";
-				$('#lobby').append("<tr id='player" + i + "' team='" + players[i].team + "' hex-colour= '" + colour + "' data-color='" + hexToRgb(colour, 0.5) + "' style='background:" + hexToRgb(colour, 0.5) + ";'><td class='name "+isDev+"'>" + players[i].name + "</td><td class='rank'><img src='img/ranks/38.png'</td></tr>");
-				$('#player' + i).css("display", "none");
-				$('#player' + i).fadeIn(anit);
-			}
-		}
-		$('#lobby tr').hover(function() {
-			$('#click')[0].currentTime = 0;
-			$('#click')[0].play();
-		});
-		$("#lobby tr").mouseover(function() {
-			var n = $(this).attr('id'),
-				col = $(this).attr('hex-colour'),
-				bright = brighter(col);
-			$(this).css("background-color", hexToRgb(bright, 0.75));
-		}).mouseout(function() {
-			var n = $(this).attr('id'),
-				col = $(this).attr('hex-colour');
-			$(this).css("background-color", hexToRgb(col, 0.5));
-		});
-		$('#lobby tr').click(function() {
-			var e = $(this).children('.name').text(),
-				n = $(this).attr('id'),
-				nn = "user",
-				col = $(this).attr('hex-colour'),
-				bright = brighter(col);
-			changeMenu("customgame,players,horizontal", e);
-			$('#lobby tr').each(function() {
-				var color = $(this).attr('data-color');
-				$(this).css('background', color);
-			});
-			$(this).css("background-color", hexToRgb(bright, 0.75));
-		});
-	});
-}
-
 function joinServer(details) {
 	var d = servers[details];
 	if ((typeof d.players !== 'undefined' && typeof d.players.current !== 'undefined' && d.players.current != d.players.max) || (typeof d.numPlayers !== 'undefined' && d.numPlayers != d.maxPlayers)) {
-		host = 0;
 		browsing = 0;
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span class='numbers'><span id='joined'>0</span>/<span id='maxplayers'>0</span></span></td></tr>");
@@ -1271,7 +985,6 @@ function joinServer(details) {
 		Menu.customgame.position = "top";
 		changeMenu("serverbrowser,customgame,vertical,serverbrowser");
 		$('#back').attr('data-action', 'customgame,serverbrowser,vertical');
-		playersJoin(d.players.current, d.players.max, 20, d.address);
 		currentServer = d;
 		lobbyLoop(servers[selectedserver].address);
 		loopPlayers = true;
@@ -1289,17 +1002,6 @@ function joinServer(details) {
 	$('#type-selection').show();
 }
 
-function initializeNewMenu() {
-	if (window.location.protocol == "https:") {
-		alert("The server browser doesn't work over HTTPS, switch to HTTP if possible.");
-	}
-	$('#main-menu').click(function() {
-        Menu.change("main");
-		$('#main').show();
-        $('#main2').hide();
-    });
-}
-
 function changeMenuOptions(m,b) {
 	$('#back').hide();
 	var e = m.split(",");
@@ -1314,166 +1016,11 @@ function changeMenuOptions(m,b) {
 		$('#'+e[0]).hide();
 		$('#'+e[1]).fadeIn(anit);
 		$('#back-options').attr('data-action', e[1]+","+e[0]);
-		$('#slide')[0].currentTime = 0;
-		$('#slide')[0].play();
+		Audio.slide.currentTime = 0;
+		Audio.slide.play();
 	}
 	$('#back').hide();
 }
-
-/*function changeMenu(m) {
-	var e = m.split(","), f = Menu[e[0]], t = Menu[e[1]];
-	if(e[0] === e[1]) {
-		return false;
-	}
-	if(e[2] == "vertical") {
-		var l = (t.position == "top") ? "bottom" : "top";
-		f.position = l;
-		t.position = "center";
-	}
-	else if(e[2] == "horizontal") {
-		var l = (t.position == "left") ? "right" : "left";
-		f.position = l;
-		t.position = "center";
-	}
-	else if(e[2] == "fade") {
-		f.hidden = true;
-		$('#'+e[0]).fadeOut(anit);
-		t.hidden = false;
-		$('#'+e[1]).fadeIn(anit);
-	}
-	if(t.logo) {
-		$('#dewrito').removeClass().addClass("animated "+t.logo);
-	} else {
-		$('#dewrito').removeClass().addClass("animated hidden");
-	}
-	if(t.playerlist) {
-		$('#lobby-container').removeClass().addClass('showing');
-	} else {
-		$('#lobby-container').removeClass().addClass('hidden');
-	}
-	if(t.friendslist) {
-		$('#friends-on').stop().fadeIn(anit);
-	} else {
-		$('#friends-on').stop().fadeOut(anit);
-	}
-	if(t.back) {
-		if(e[0] == "options") {e[2] = "vertical";}
-		$('#back').fadeIn(anit);
-		$('#back').attr('data-action', e[1]+","+t.back+","+e[2]);
-	} else {
-		$('#back').fadeOut(anit);
-	}
-	if(typeof t.onchange == "function") {
-		if(e[3]) {
-			t.onchange(e[3]);
-		}
-		else {t.onchange();}
-	}
-	if(t.video) {
-		if(t.video == f.video) {
-		} else {
-			for(var i=0; i< t.video.length; i++) {
-				if($('#bg-'+t.video[i]).length) {
-					$('#bg-'+t.video[i]).fadeIn(anit);
-					$('#bg-'+t.video[i])[0].play();
-					if(f.video) {
-						for(var i=0; i< f.video.length; i++) {
-							if($('#bg-'+f.video[i]).length) {
-								$('#bg-'+f.video[i]).fadeOut(anit);
-								$('#bg-'+f.video[i])[0].pause();
-							}
-						}
-					}
-					else {
-						$('#bg1').fadeOut(anit);
-						$('#bg1')[0].pause();
-					}
-				}
-			}
-		}
-	}
-	else {
-		$('#bg1').fadeIn(anit);
-		$('#bg1')[0].play();
-		if(f.video) {
-			for(var i=0; i< f.video.length; i++) {
-				if($('#bg-'+f.video[i]).length) {
-					$('#bg-'+f.video[i]).fadeOut(anit);
-					$('#bg-'+f.video[i])[0].pause();
-				}
-			}
-		}
-	}
-	$('#'+e[0]).attr('data-menu-position',f.position);
-	$('#'+e[1]).attr('data-menu-position',t.position);
-	$('#slide')[0].currentTime = 0;
-	$('#slide')[0].play();
-	currentMenu = e[1];
-	if(currentMenu != "serverbrowser" && e[0] != "serverbrowser") {
-		browsing = 0;
-	}
-}*/
-
-var KDdata = [{
-		value: 1,
-		color: "#c02020",
-		highlight: "#ed5c5c",
-		label: "Deaths"
-    }, {
-		value: 1,
-		color: "#214EC0",
-		highlight: "#5575b7",
-		label: "Kills"
-    }],
-	ctx = $("#player-kd-chart")[0].getContext("2d"),
-	KDchart = new Chart(ctx).Doughnut(KDdata, {
-		segmentShowStroke: false,
-		percentageInnerCutout: 75,
-		animationEasing: "easeInQuad"
-	}),
-	last_back = "",
-	last_menu = "";
-
-function playerInfo(name) {
-	if (name != "user") {
-		$.getJSON("http://" + servers[selectedserver].address, function(info) {
-			for (var i = 0; i < info.players.length; i++) {
-				if (info.players[i].name == name) {
-					KDchart.segments[0].value = info.players[i].deaths > 0 ? info.players[i].deaths : 1;
-					KDchart.segments[1].value = info.players[i].kills > 0 ? info.players[i].kills : 1;
-					KDchart.update();
-					var kdr = info.players[i].kills / info.players[i].deaths;
-
-					if (!isFinite(kdr))
-						kdr = info.players[i].kills;
-					if (isNaN(kdr))
-						kdr = 0;
-					$('#player-kd-display').text(kdr.toFixed(2));
-					$('#player-name').text(name);
-					$('#player-level-display').text("Level 39");
-					$('#player-rank-display').css('background', "url('img/ranks/39.png') no-repeat center center/72px 72px");
-					$('#player-armor').css('background', "url('img/players/user.png') no-repeat 0 -50px/320px 704px");
-					if (info.nameplate) {
-						$('#player-title').css('background-image', "");
-					} else {
-						$('#player-title').css('background-image', "");
-					}
-				}
-			}
-		});
-	} else {
-		KDchart.segments[0].value = 1;
-		KDchart.segments[1].value = 1;
-		KDchart.update();
-		$('#player-kd-display').text("0.00");
-		$('#player-name').text(user.name);
-		$('#player-level-display').text("Level " + user.rank);
-		$('#player-rank-display').css('background', "url('img/ranks/" + user.rank + ".png') no-repeat center center/72px 72px");
-		$('#player-armor').css('background', "url('img/players/user.png') no-repeat 0 -50px/320px 704px");
-		$('#player-title').css('background-image', "");
-	}
-}
-
 
 function hasMap(map) {
     if(mapList[0].length == 0) {
@@ -1492,8 +1039,8 @@ function startgame(ip, mode, pass) {
 			content: 'You must be connected to the game to join or start a server.',
 			acceptText: "OK"
 		});
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play();
+		Audio.notification.currentTime = 0;
+		Audio.notification.play();
 		return;
 	}
 	if (!hasMap(currentServer.mapFile)) {
@@ -1517,8 +1064,8 @@ function startgame(ip, mode, pass) {
 			content: 'This server is full, try joining a different one.',
 			acceptText: "OK"
 		});
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play();
+		Audio.notification.currentTime = 0;
+		Audio.notification.play();
 		return;
 	}
 
@@ -1529,8 +1076,8 @@ function startgame(ip, mode, pass) {
 				content: 'There are not enough slots for your party, try joining a different one.',
 				acceptText: "OK"
 			});
-			$('#notification')[0].currentTime = 0;
-			$('#notification')[0].play();
+			Audio.notification.currentTime = 0;
+			Audio.notification.play();
 			return;
 		}
 
@@ -1548,15 +1095,15 @@ function startgame(ip, mode, pass) {
 			}
 		}
 	}
-	$('#beep')[0].play();
+	Audio.beep.play();
 	setTimeout(function() {
-		$('#beep')[0].play();
+		Audio.beep.play();
 	}, 1000);
 	setTimeout(function() {
-		$('#beep')[0].play();
+		Audio.beep.play();
 	}, 2000);
 	setTimeout(function() {
-		$('#beeep')[0].play();
+		Audio.beeep.play();
 	}, 3000);
 	$('#music')[0].pause();
 	$('#black').fadeIn(3000);
@@ -1575,8 +1122,8 @@ function startgame(ip, mode, pass) {
 					$.snackbar({
 						content: 'Failed to connect to server.'
 					});
-					$('#notification')[0].currentTime = 0;
-					$('#notification')[0].play();
+					Audio.notification.currentTime = 0;
+					Audio.notification.play();
 
 					return;
 				}
@@ -1705,9 +1252,8 @@ function changeSettingsMenu(setting) {
 		gamepadSelect(currentMenu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', 'setting-settings');
-	debugLog(currentMenu);
-	$('#slide')[0].currentTime = 0;
-	$('#slide')[0].play();
+	Audio.slide.currentTime = 0;
+	Audio.slide.play();
 	$('#back').hide();
 }
 
@@ -1725,9 +1271,8 @@ function changeSettingsBack() {
 		gamepadSelect(last_menu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', last_back);
-	debugLog(currentMenu);
-	$('#slide')[0].currentTime = 0;
-	$('#slide')[0].play();
+	Audio.slide.currentTime = 0;
+	Audio.slide.play();
 }
 
 function changeMap1(game) {
@@ -1746,8 +1291,8 @@ function changeMap1(game) {
 		"opacity": 1
 	}, anit / 8);
 	currentGame = game;
-	$('#slide')[0].currentTime = 0;
-	$('#slide')[0].play();
+	Audio.slide.currentTime = 0;
+	Audio.slide.play();
 }
 
 function getGame(game) {
@@ -1861,8 +1406,8 @@ function changeType1(maintype) {
 		"opacity": 1
 	}, anit / 8);
 	currentType = maintype;
-	$('#slide')[0].currentTime = 0;
-	$('#slide')[0].play();
+	Audio.slide.currentTime = 0;
+	Audio.slide.play();
 }
 
 function changeSong1(game) {
@@ -1897,8 +1442,8 @@ function changeSong1(game) {
 		gamepadSelect(currentMenu + "-" + gp_on);
 	}
 	$('#back').attr('data-action', 'setting-settings');
-	$('#slide')[0].currentTime = 0;
-	$('#slide')[0].play();
+	Audio.slide.currentTime = 0;
+	Audio.slide.play();
 }
 
 function changeSong2(song) {
@@ -1917,8 +1462,8 @@ function changeSong2(song) {
 	$.snackbar({
 		content: 'Now playing ' + song + ' from ' + getGame(currentAlbum) + '.'
 	});
-	$('#notification')[0].currentTime = 0;
-	$('#notification')[0].play();
+	Audio.notification.currentTime = 0;
+	Audio.notification.play();
 }
 
 function changeType2(type, click) {
@@ -1939,7 +1484,6 @@ function changeType2(type, click) {
 			"background-image": "url('img/gametypes/" + (currentType === "ctf" || currentType === "koth") ? currentType : currentType.toString().capitalizeFirstLetter + ".png')"
 		});
 	}
-	debugLog(type);
 	if (dewRconConnected) {
 		dewRcon.send('gametype ' + type.toString().toLowerCase().replace(" ", "_"));
 	}
@@ -1959,12 +1503,4 @@ function changeType2(type, click) {
 	} else if (click === true) {
 		changeMenu("options,customgame,fade");
 	}
-}
-
-function popup(message) {
-	$('#popup').text(message);
-	$('#popup').fadeIn(anit);
-	setTimeout(function() {
-		$('#popup').fadeOut(anit);
-	}, 8000);
 }

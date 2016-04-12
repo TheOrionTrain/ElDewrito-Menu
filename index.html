@@ -7,30 +7,22 @@
 	<link href="css/snackbar.min.css" rel="stylesheet" type="text/css">
 	<link href="css/dewrito.css" rel="stylesheet" type="text/css">
 	<link id="style" href="css/reach.css" rel="stylesheet" type="text/css">
-	<link href="css/spectrum.css" rel="stylesheet" type="text/css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.7.0/spectrum.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script>
 	<script src="js/gamepad.min.js"></script>
 	<script src="js/snackbar.js"></script>
-    <script src="js/dewHelper.js"></script>
-	<script src="js/dewGamepad.js"></script>
+    <script src="js/helper.js"></script>
+	<script src="js/gamepad.js"></script>
 	<script type="text/javascript" src="dew://lib/dew.js"></script>
 </head>
 <body>
 	<script>
 		function clickIE4() {
-			if (event.button == 2) {
-				return false;
-			}
+			if (event.button == 2) {return false;}
 		}
 		function clickNS4(e) {
 			if (document.layers || document.getElementById && !document.all) {
-				if (e.which == 2 || e.which == 3) {
-					return false;
-				}
+				if (e.which == 2 || e.which == 3) {return false;}
 			}
 		}
 		if (document.layers) {
@@ -43,7 +35,7 @@
 	</script>
 	<a id="launch" style="visibility: hidden;"></a>
 	<div id="menu">
-		<div id="version">ElDewrito 0.5.0.2</div>
+		<div id="version"></div>
 		<div id="click-menu-container">
 			<ul id="click-menu">
 				<li class="onlineserver" data-action="join">Join Game</li>
@@ -83,7 +75,6 @@
             <div id="loadingMapName">DIAMONDBACK</div>
             <div id="loadingGametypeImage"></div>
 		</div>
-		<div id="popup"></div>
 		<div id="players-online"></div>
 		<div id="friends-online"></div>
 		<div id="black"></div>
@@ -135,26 +126,6 @@
 			<div id="dewmenu-button">Switch to Scooterpsu's menu</div>
 			<div id="bungie"></div>
 		</div>
-
-		<!-- <div class="menu-container animated" id="main">
-			<div class="select-icon"></div>
-			<div class="select-title">MAIN MENU</div>
-			<div class="select-main">
-				<div data-gp="main-1" data-action="menu" data-menu="main,serverbrowser,vertical" class="selection">BROWSE SERVERS</div>
-				<div data-gp="main-2" data-action="menu" data-menu="main,options,fade,matchmaking" class="selection">MATCHMAKING</div>
-				<div data-gp="main-3" data-action="menu" data-menu="main,customgame,vertical" class="selection">CUSTOM GAME</div>
-				<div data-gp="main-4" data-action="menu" data-menu="main,forge,vertical" class="selection">FORGE</div>
-				<div data-gp="main-5" data-action="menu" data-menu="main,options,fade,dewrito-options" class="selection">SETTINGS</div>
-				<div data-gp="main-6" data-action="menu" data-menu="main,credits,vertical" class="selection">CREDITS</div>
-			</div>
-			<div id="description"></div>
-			<div id="main-line"></div>
-			<div id="controls">
-				<div class="control-a">Select</div>
-				<div class="control-b">Back</div>
-				<div class="control-start">Friends List</div>
-			</div>
-		</div> !-->
 
 		<div class="menu-container animated" id="main">
 			<div id="serverbrowser">
@@ -314,18 +285,12 @@
 		<div id="bg-cover" class="animated"></div>
 		<audio id="music" autoplay></audio>
 		<div id="videos"></div>
-		<audio id="connectgamepad" src="audio/halo3/loop.ogg" type="audio/ogg"></audio>
-		<audio id="notification" src="audio/odst/a_button.ogg" type="audio/ogg"></audio>
-		<audio id="beeep" src="audio/halo3/player_respawn.ogg" type="audio/ogg"></audio>
-		<audio id="beep" src="audio/halo3/countdown_for_respawn.ogg" type="audio/ogg"></audio>
-		<audio id="click" src="audio/halo3/cursor_horizontal.ogg" type="audio/ogg"></audio>
-		<audio id="slide" src="audio/halo3/a_button.ogg" type="audio/ogg"></audio>
 	</div>
 </body>
-<script src="js/friendServer.js"></script>
-<script src="js/matchmakingServer.js"></script>
-<script src="js/dewRcon.js"></script>
+<script src="js/friends.js"></script>
+<script src="js/matchmaking.js"></script>
+<script src="js/rcon.js"></script>
 <script src="js/dewrito.js"></script>
-<script src="js/dewSettings.js"></script>
-<script src="js/dewMenu.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/menu.js"></script>
 </html>

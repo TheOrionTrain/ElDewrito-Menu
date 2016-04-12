@@ -1,4 +1,12 @@
-var Lobby = {
+var Audio = {
+    "connect" : new Audio("audio/halo3/loop.ogg"),
+    "notification" : new Audio("audio/odst/a_button.ogg"),
+    "beep" : new Audio("audio/halo3/countdown_for_respawn.ogg"),
+    "beeep" : new Audio("audio/halo3/player_respawn.ogg"),
+    "click" : new Audio("audio/halo3/cursor_horizontal.ogg"),
+    "slide" : new Audio("audio/halo3/a_button.ogg")
+},
+Lobby = {
     "address" : "0.0.0.0",
     "status" : false,
     "players" : [],
@@ -38,8 +46,8 @@ var Lobby = {
     				}
                 }
                 $('#lobby-container table tr').hover(function() {
-					$('#click')[0].currentTime = 0;
-					$('#click')[0].play();
+					Audio.click.currentTime = 0;
+					Audio.click.play();
 				});
 				$("#lobby-container table tr").mouseover(function() {
 					var n = $(this).attr('id'),
@@ -77,7 +85,117 @@ var Lobby = {
         Lobby.status = 1;
         Menu.change("gamelobby");
         Lobby.update();
+    },
+    "joinIP" : function(ip) {
+        Lobby.address = ip;
+        Lobby.status = 1;
+        Menu.change("gamelobby");
+        Lobby.update();
     }
+},
+Chat = {
+	time: 0,
+	pinned: 0,
+	currentTab: "",
+	hovering: 0,
+	focused: 0,
+	createTab: function(player) {
+		Chat.currentTab = player;
+		$('.chat-tab,.chat-window').removeClass('selected');
+		$('#chat-tabs').append("<div data-player='"+player+"' class='chat-tab selected'>"+player+"<div class='x'></div></div>");
+		$('#chat-windows').append("<div data-player='"+player+"' class='chat-window selected'></div>");
+		$('.chat-tab').click(function() {
+			Chat.changeTab($(this).attr('data-player'));
+		});
+		$('.chat-tab > .x').click(function() {
+			Chat.destroyTab($(this).parent('.chat-tab').attr('data-player'));
+		});
+		var n = $('.chat-tab').length;
+		$('.chat-tab').css('width',Math.floor(420/n)+'px');
+	},
+	renameTab: function(previous, name) {
+		$('.chat-tab[data-player="'+previous+'"]').text(name);
+		$('.chat-tab[data-player="'+previous+'"]').attr("data-player", name);
+		$('.chat-window[data-player="'+previous+'"]').attr("data-player", name);
+	},
+	destroyTab: function(player) {
+		if(player == Chat.currentTab) {
+			$('.chat-window[data-player="'+player+'"]').remove();
+			$('.chat-tab[data-player="'+player+'"]').remove();
+			if($('.chat-tab').length > 0) {
+				var e = $('.chat-tab:first-of-type').attr('data-player');
+				Chat.changeTab(e);
+			} else {
+				Chat.hideBox();
+			}
+		} else {
+			$('.chat-window[data-player="'+player+'"]').remove();
+			$('.chat-tab[data-player="'+player+'"]').remove();
+		}
+		var n = $('.chat-tab').length;
+		$('.chat-tab').css('width',Math.floor(420/n)+'px');
+	},
+	isOpen: function(player) {
+		if($('.chat-tab[data-player="'+player+'"]').length > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	},
+	receiveMessage: function(player,message,balloon) {
+		if(!Chat.isOpen(player)) {
+			Chat.createTab(player);
+		}
+		console.log(balloon);
+		$('<span>', {
+			class: 'chat-message ' + (message.split(': ')[0] == pname ? "self" : ""),
+			text: message
+		}).prepend(balloon == 1 ? '<div class="balloon"/> ' : null).appendTo('.chat-window[data-player="'+player+'"]');
+		$('.chat-window[data-player="'+player+'"]').scrollTop($('.chat-window[data-player="'+player+'"]')[0].scrollHeight);
+		Chat.showBox();
+	},
+	sendMessage: function(player,message) {
+
+		if (player.contains("Party Chat -")) {
+			friendServer.send(JSON.stringify({
+				type: "partymessage",
+				message: message,
+				player: pname,
+				senderguid: puid,
+				partymembers: party
+			}));
+		} else {
+			friendServer.send(JSON.stringify({
+				type: "pm",
+				message: message,
+				player: pname,
+				senderguid: puid,
+				guid: getPlayerUIDFromFriends(player) == "" ? getPlayerUID(player) : getPlayerUIDFromFriends(player)
+			}));
+		}
+
+		Chat.receiveMessage(player,pname+": "+message, party[0].split(':')[0] == pname ? 1 : 0);
+	},
+	showBox: function() {
+		$('#chatbox').clearQueue().fadeIn(anit);
+		Chat.time = 8000;
+	},
+	hideBox: function() {$('#chatbox').clearQueue().fadeOut(anit);},
+	changeTab: function(player) {
+		Chat.currentTab = player;
+		$('.chat-tab,.chat-window').removeClass('selected');
+		$('.chat-tab[data-player="'+player+'"]').addClass('selected');
+		$('.chat-window[data-player="'+player+'"]').addClass('selected');
+	},
+	loop: setInterval(function() {
+		if(!Chat.pinned && !Chat.hovering && !Chat.focused) {
+			Chat.time -= 100;
+			if(Chat.time <= 0) {
+				Chat.time = 0;
+				Chat.hideBox();
+			}
+		}
+	},100)
 },
 Menu = {
     "change" : function(m) {
@@ -144,8 +262,8 @@ Menu = {
             gamepadSelect(m+"-1");
             Menu.selected = m;
             $('#select-main .selection').hover(function() {
-    			$('#click')[0].currentTime = 0;
-    			$('#click')[0].play();
+    			Audio.click.currentTime = 0;
+    			Audio.click.play();
                 $('.selection').removeClass('gp-on');
         		$(this).addClass("gp-on");
         		gp_on = $(this).attr('data-gp').split("-")[1];
@@ -160,8 +278,8 @@ Menu = {
                 var button = $(this).attr('class').split('-')[1];
                 Menu.pages[Menu.selected].controls[button].action();
             });
-            $('#slide')[0].currentTime = 0;
-            $('#slide')[0].play();
+            Audio.slide.currentTime = 0;
+            Audio.slide.play();
             if(ch.onload) {ch.onload();}
         }
     },
