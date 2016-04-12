@@ -58,7 +58,7 @@ StartMatchmakingConnection = function() {
 }
 function startSearch(playlist) {
 	console.log(playlist);
-	$("#search").empty();
+	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
 	for (var i = 0; i < party.length; i++) {
 		var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
 		addPlayer("search", party[i], isDev);
