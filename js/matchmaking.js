@@ -21,8 +21,8 @@ StartMatchmakingConnection = function() {
 
 	matchmakingServer.matchmakingServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Matchmaking Server'});
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play();
+		Audio.notification.currentTime = 0;
+		Audio.notification.play();
         matchmakingServerConnected = false;
     };
 
@@ -30,8 +30,8 @@ StartMatchmakingConnection = function() {
 		if(!snacking) {
 			$.snackbar({content:'Connection to Matchmaking Server failed, retrying.'});
 			if(!played) {
-				$('#notification')[0].currentTime = 0;
-				$('#notification')[0].play();
+				Audio.notification.currentTime = 0;
+				Audio.notification.play();
 				played = 1;
 			}
 			snacking = 1;
