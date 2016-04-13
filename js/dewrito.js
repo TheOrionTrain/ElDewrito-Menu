@@ -426,7 +426,6 @@ function getPlayerColour(guid) {
 }
 
 function addPlayer(id, player, isDev, opacity) {
-	console.log(player.colour);
 	$('<tr>', {
 		'hex-color': player.colour,
 		'data-color': hexToRgb(player.colour, 0.5),
@@ -1104,7 +1103,7 @@ function startgame(ip, mode, pass) {
 			return;
 		}
 
-		if (party[0].split(':')[1] == puid) {
+		if (party[0].guid == puid) {
 			for (var i = 0; i < party.length; i++ ) {
 				if (party[i].guid == puid)
 					continue;

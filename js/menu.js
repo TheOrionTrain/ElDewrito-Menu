@@ -466,7 +466,14 @@ Menu = {
                 },
                 "B" : {
                     "label" : "Back",
-                    "action" : function(){Menu.previous()}
+                    "action" : function(){
+						Menu.previous();
+						matchmakingServer.send(JSON.stringify({
+							type: 'leavesearch',
+							playlist: 'Team Slayer 4v4',
+							player: player
+						}));
+					}
                 },
                 "START" : {
                     "label" : "Friends List",
