@@ -45,6 +45,20 @@ Lobby = {
     					}
     				}
                 }
+                $('#lobby-container table tr').hover(function() {
+					Audio.click.currentTime = 0;
+					Audio.click.play();
+				});
+				$("#lobby-container table tr").mouseover(function() {
+					var n = $(this).attr('id'),
+						col = $(this).attr('hex-color'),
+						bright = brighter(col);
+					$(this).css("background-color", hexToRgb(bright, 0.75));
+				}).mouseout(function() {
+					var n = $(this).attr('id'),
+						col = $(this).attr('hex-color');
+					$(this).css("background-color", hexToRgb(col, 0.5));
+				});
             });
         }
     },
@@ -64,21 +78,6 @@ Lobby = {
     			src: 'img/ranks/38.png'
     		})
     	})).appendTo('#lobby');
-		
-		$('#lobby-container table tr').hover(function() {
-			Audio.click.currentTime = 0;
-			Audio.click.play();
-		});
-		$("#lobby-container table tr").mouseover(function() {
-			var n = $(this).attr('id'),
-			col = $(this).attr('hex-color'),
-			bright = brighter(col);
-			$(this).css("background-color", hexToRgb(bright, 0.75));
-		}).mouseout(function() {
-			var n = $(this).attr('id'),
-			col = $(this).attr('hex-color');
-			$(this).css("background-color", hexToRgb(col, 0.5));
-		});
     },
     "loop" : setInterval(function(){Lobby.update()},5000),
     "join" : function(s) {
