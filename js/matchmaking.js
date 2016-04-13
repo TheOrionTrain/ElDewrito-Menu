@@ -75,6 +75,20 @@ StartMatchmakingConnection = function() {
 							rank: 0
 						}, null, 0.6);
 					}
+					$('#lobby-container table tr').hover(function() {
+						Audio.click.currentTime = 0;
+						Audio.click.play();
+					});
+					$("#lobby-container table tr").mouseover(function() {
+						var n = $(this).attr('id'),
+							col = $(this).attr('hex-color'),
+							bright = brighter(col);
+						$(this).css("background-color", hexToRgb(bright, 0.75));
+					}).mouseout(function() {
+						var n = $(this).attr('id'),
+							col = $(this).attr('hex-color');
+						$(this).css("background-color", hexToRgb(col, 0.5));
+					});
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
@@ -94,11 +108,11 @@ function startSearch(playlist) {
 	console.log(playlist);
 	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
 	for (var i = 0; i < party.length; i++) {
-		var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
+		var isDev = (developers.indexOf(party[i].guid) >= 0) ? "developer" : "";
 		addPlayer("search", {
-			name: party[i].split(':')[0],
-			guid: party[i].split(':')[1],
-			colour: party[i].split(':')[2],
+			name: party[i].name,
+			guid: party[i].guid,
+			colour: party[i].colour,
 			rank: 0,
 		}, isDev);
 	}
@@ -110,18 +124,25 @@ function startSearch(playlist) {
 			rank: 0
 		}, null, 0.6);
 	}
+	$('#lobby-container table tr').hover(function() {
+		Audio.click.currentTime = 0;
+		Audio.click.play();
+	});
+	$("#lobby-container table tr").mouseover(function() {
+		var n = $(this).attr('id'),
+			col = $(this).attr('hex-color'),
+			bright = brighter(col);
+		$(this).css("background-color", hexToRgb(bright, 0.75));
+	}).mouseout(function() {
+		var n = $(this).attr('id'),
+			col = $(this).attr('hex-color');
+		$(this).css("background-color", hexToRgb(col, 0.5));
+	});
 
 	matchmakingServer.send(JSON.stringify({
 		type: "search",
 		playlist: playlist,
-		players: [
-			{
-				name: pname,
-				guid: puid,
-				colour: colour,
-				rank: 0
-			}
-		]
+		players: party
 	}));
 }
 

@@ -378,15 +378,29 @@ function loadParty() {
 		$('#current-party').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Party <span class='numbers'><span id='current-party-count'>"+party.length+"</span>/16</span></td></tr>");
 		if(party.length > 0) {
 			for(var i=0; i < party.length; i++) {
-				$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
-				var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
+				$('#party').append("<div class='friend'>"+party[i].name+"</div>");
+				var isDev = (developers.indexOf(party[i].guid) >= 0) ? "developer" : "";
 				addPlayer('current-party', {
-					name: party[i].split(':')[0],
-					guid: party[i].split(':')[1],
-					colour: party[i].split(':')[2],
+					name: party[i].name,
+					guid: party[i].guid,
+					colour: party[i].colour,
 					rank: 0
 				}, isDev);
 			}
+			$('#lobby-container table tr').hover(function() {
+				Audio.click.currentTime = 0;
+				Audio.click.play();
+			});
+			$("#lobby-container table tr").mouseover(function() {
+				var n = $(this).attr('id'),
+					col = $(this).attr('hex-color'),
+					bright = brighter(col);
+				$(this).css("background-color", hexToRgb(bright, 0.75));
+			}).mouseout(function() {
+				var n = $(this).attr('id'),
+					col = $(this).attr('hex-color');
+				$(this).css("background-color", hexToRgb(col, 0.5));
+			});
 			$('.friend,#friend-add,#friend-remove').hover(function() {
 				Audio.click.currentTime = 0;
 				Audio.click.play();

@@ -45,7 +45,12 @@ StartConnection = function() {
 					}));
 
 					party = [];
-					party.push(name + ":" + uid.split(' ')[2] + ":" + col);
+					party.push({
+						name: pname,
+						guid: puid,
+						colour: colour,
+						rank: 0
+					});
 					loadParty();
 				});
 			});
