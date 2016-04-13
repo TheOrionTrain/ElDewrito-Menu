@@ -110,20 +110,6 @@ function startSearch(playlist) {
 			rank: 0
 		}, null, 0.6);
 	}
-	$('#lobby-container table tr').hover(function() {
-		Audio.click.currentTime = 0;
-		Audio.click.play();
-	});
-	$("#lobby-container table tr").mouseover(function() {
-		var n = $(this).attr('id'),
-			col = $(this).attr('hex-color'),
-			bright = brighter(col);
-		$(this).css("background-color", hexToRgb(bright, 0.75));
-	}).mouseout(function() {
-		var n = $(this).attr('id'),
-			col = $(this).attr('hex-color');
-		$(this).css("background-color", hexToRgb(col, 0.5));
-	});
 
 	matchmakingServer.send(JSON.stringify({
 		type: "search",
