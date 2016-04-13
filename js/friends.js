@@ -102,15 +102,15 @@ StartConnection = function() {
 					}
 
 					if ($.inArray(result.player + ":" + result.guid + ":" + getPlayerColour(result.guid), party) != -1 && party.length > 1) {
-						if (Chat.isOpen("Party Chat - " + party[0].split(':')[0])) {
-							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + sanitizeString(result.player) + " has gone offline.</span>");
-							if (party[0].split(':')[0] == result.player)
-								$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').append("<span class='chat-message alert'>" + party[1].split(':')[0] + " is the new party leader.</span>");
-							$('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]').scrollTop($('.chat-window[data-player="' + "Party Chat - " + party[0].split(':')[0] + '"]')[0].scrollHeight);
-							if (party[0].split(':')[0] == result.player) {
+						if (Chat.isOpen("Party Chat - " + party[0].name)) {
+							$('.chat-window[data-player="' + "Party Chat - " + party[0].name + '"]').append("<span class='chat-message alert'>" + sanitizeString(result.player) + " has gone offline.</span>");
+							if (party[0].name == result.player)
+								$('.chat-window[data-player="' + "Party Chat - " + party[0].name + '"]').append("<span class='chat-message alert'>" + party[1].name + " is the new party leader.</span>");
+							$('.chat-window[data-player="' + "Party Chat - " + party[0].name + '"]').scrollTop($('.chat-window[data-player="' + "Party Chat - " + party[0].name + '"]')[0].scrollHeight);
+							if (party[0].name == result.player) {
 								Chat.destroyTab(result.player);
 								if ((party.length - 1) > 1)
-									Chat.createTab(party[1].split(':')[0]);
+									Chat.createTab(party[1].name);
 							}
 						}
 
@@ -122,7 +122,7 @@ StartConnection = function() {
 							friendServer.send(JSON.stringify({
 								type: "updateparty",
 								party: JSON.stringify(party),
-								guid: party[i].split(':')[1]
+								guid: party[i].guid
 							}));
 
 							if (party[0].split(':')[1] == puid)
@@ -131,7 +131,7 @@ StartConnection = function() {
 							friendServer.send(JSON.stringify({
 								type: "notification",
 								message: result.player + " has left the party.",
-								guid: party[i].split(':')[1]
+								guid: party[i].guid
 							}));
 						}
 
@@ -193,16 +193,16 @@ StartConnection = function() {
 						friendServer.send(JSON.stringify({
 							type: "updateparty",
 							party: JSON.stringify(party),
-							guid: party[i].split(':')[1]
+							guid: party[i].guid
 						}));
 
-						if (party[i].split(':')[1] == result.pguid || party[i].split(':')[1] == puid)
+						if (party[i].guid == result.pguid || party[i].guid == puid)
 							continue;
 
 						friendServer.send(JSON.stringify({
 							type: "notification",
 							message: result.player + " has joined the party.",
-							guid: party[i].split(':')[1]
+							guid: party[i].guid
 						}));
 					}
 
@@ -232,8 +232,8 @@ StartConnection = function() {
 						
 					party = JSON.parse(result.party);
 					loadParty();
-					if(!Chat.isOpen("Party Chat - " + party[0].split(':')[0]) && party.length > 1) {
-						Chat.createTab("Party Chat - " + party[0].split(':')[0]);
+					if(!Chat.isOpen("Party Chat - " + party[0].name) && party.length > 1) {
+						Chat.createTab("Party Chat - " + party[0].name);
 						Chat.showBox();
 					}
 				break;
@@ -245,7 +245,7 @@ StartConnection = function() {
 				case "partymessage":
 					if ($.inArray(result.player + ":" + result.senderguid + ":" + getPlayerColour(result.senderguid), party) == -1)
 						return;
-					var lead = party[0].split(':')[0];
+					var lead = party[0].name;
 					if(result.player == lead) {
 						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message,1);
 					} else {
