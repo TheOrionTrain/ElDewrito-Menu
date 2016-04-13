@@ -9,12 +9,7 @@ StartMatchmakingConnection = function() {
 		matchmakingServer.send(JSON.stringify({
 			type: "connection",
 			message: " has connected.",
-			player: {
-				name: pname,
-				guid: puid,
-				colour: colour,
-				rank: 0
-			},
+			player: player
 		}));
         matchmakingServerConnected = true;
     };
@@ -56,12 +51,7 @@ StartMatchmakingConnection = function() {
 					console.log(result);
 					$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
 					var isDev = (developers.indexOf(puid) >= 0) ? "developer" : "";
-					addPlayer("search", {
-						name: pname,
-						guid: puid,
-						colour: colour,
-						rank: 0
-					}, isDev);
+					addPlayer("search", player, isDev);
 					for (var i = 0; i < result.players.length; i++) {
 						var isDev2 = (developers.indexOf(result.players[i].guid) >= 0) ? "developer" : "";
 						if (result.players[i].guid != puid)

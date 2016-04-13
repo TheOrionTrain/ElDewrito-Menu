@@ -16,6 +16,7 @@ var friendServer,
 	colour = "#000000",
 	onlinePlayers = {},
 	party = [],
+	player = null,
 	developers = [];
 /*jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
@@ -26,31 +27,30 @@ var friendServer,
 StartConnection = function() {
     friendServer = new friendServerHelper();
     friendServer.friendsServerSocket.onopen = function() {
+		friendServer.send(JSON.stringify({'type':'developers'}));
+		
 		dewRcon.send('player.name', function(name) {
 			dewRcon.send('player.printUID', function(uid) {
 				dewRcon.send('Player.Colors.Primary', function(col) {
 					pname = name;
 					puid = uid.split(' ')[2];
 					colour = col;
-
-					friendServer.send(JSON.stringify({
-						type: "connection",
-						message: " has connected.",
-						player: {
-							name: pname,
-							guid: puid,
-							colour: colour,
-							rank: 0
-						},
-					}));
-
-					party = [];
-					party.push({
+					
+					player = {
 						name: pname,
 						guid: puid,
 						colour: colour,
 						rank: 0
-					});
+					};
+
+					friendServer.send(JSON.stringify({
+						type: "connection",
+						message: " has connected.",
+						player: player
+					}));
+
+					party = [];
+					party.push(player);
 					loadParty();
 					
 					StartMatchmakingConnection();
@@ -61,9 +61,6 @@ StartConnection = function() {
 		Audio.notification.currentTime = 0;
 		Audio.notification.play();
         friendServerConnected = true;
-		$.getJSON("http://thefeeltra.in/developers.json", function(json) {
-			developers = json;
-		});
     };
 	friendServer.friendsServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Friend Server'});
@@ -90,7 +87,10 @@ StartConnection = function() {
 		}
     };
     friendServer.friendsServerSocket.onmessage = function(message) {
-		//console.log(message.data);
+		if (typeof friendServer.callback == 'function')
+			friendServer.callback(message.data);
+		friendServer.lastMessage = message.data;
+		
 		try {
 			var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
 			switch (result.type) {
@@ -126,7 +126,7 @@ StartConnection = function() {
 								guid: party[i].guid
 							}));
 
-							if (party[0].split(':')[1] == puid)
+							if (party[0].guid == puid)
 								continue;
 
 							friendServer.send(JSON.stringify({
@@ -136,7 +136,7 @@ StartConnection = function() {
 							}));
 						}
 
-						if (party[0].split(':')[1] == puid) {
+						if (party[0].guid == puid) {
 
 							$.snackbar({content: result.player + ' has left your party.'});
 							Audio.notification.currentTime = 0;
@@ -213,7 +213,7 @@ StartConnection = function() {
 
 				break;
 				case "connect":
-					if (party[0].split(':')[1] != result.guid)
+					if (party[0].guid != result.guid)
 						return;
 					
 					jumpToServer(result.address);
@@ -253,6 +253,9 @@ StartConnection = function() {
 						Chat.receiveMessage("Party Chat - " + lead, result.player + ": " + result.message);
 					}
 				break;
+				case "developers":
+					developers = result.developers;
+				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
 				break;
@@ -261,11 +264,6 @@ StartConnection = function() {
 			console.log(e);
 			console.log(message.data);
 		}
-
-		if (typeof friendServer.callback == 'function')
-			friendServer.callback(message.data);
-        friendServer.lastMessage = message.data;
-				//console.log(friendServer.lastMessage);
     };
 }
 
@@ -303,7 +301,6 @@ friendServerHelper = function() {
     this.friendsServerSocket = new WebSocket('ws://182.239.201.24:55555/friendServer', 'friendServer');
     this.lastMessage = "";
     this.lastCommand = "";
-    this.open = false;
 	this.callback = {};
     this.send = function(command, cb) {
 		this.callback = cb;
