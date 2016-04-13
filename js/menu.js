@@ -45,20 +45,6 @@ Lobby = {
     					}
     				}
                 }
-                $('#lobby-container table tr').hover(function() {
-					Audio.click.currentTime = 0;
-					Audio.click.play();
-				});
-				$("#lobby-container table tr").mouseover(function() {
-					var n = $(this).attr('id'),
-						col = $(this).attr('hex-color'),
-						bright = brighter(col);
-					$(this).css("background-color", hexToRgb(bright, 0.75));
-				}).mouseout(function() {
-					var n = $(this).attr('id'),
-						col = $(this).attr('hex-color');
-					$(this).css("background-color", hexToRgb(col, 0.5));
-				});
             });
         }
     },
@@ -71,7 +57,19 @@ Lobby = {
     			class: 'name ' + isDev,
     			text: player
     		})
-    	}).append(
+    	}).hover(function() {
+            Audio.click.currentTime = 0;
+            Audio.click.play();
+        }).mouseover(function() {
+            var n = $(this).attr('id'),
+                col = $(this).attr('hex-color'),
+                bright = brighter(col);
+            $(this).css("background-color", hexToRgb(bright, 0.75));
+        }).mouseout(function() {
+            var n = $(this).attr('id'),
+                col = $(this).attr('hex-color');
+            $(this).css("background-color", hexToRgb(col, 0.5));
+        }).append(
     	$('<td>', {
     		class: 'rank',
     		html: $('<img>', {

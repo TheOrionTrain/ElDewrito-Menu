@@ -387,20 +387,6 @@ function loadParty() {
 					rank: 0
 				}, isDev);
 			}
-			$('#lobby-container table tr').hover(function() {
-				Audio.click.currentTime = 0;
-				Audio.click.play();
-			});
-			$("#lobby-container table tr").mouseover(function() {
-				var n = $(this).attr('id'),
-					col = $(this).attr('hex-color'),
-					bright = brighter(col);
-				$(this).css("background-color", hexToRgb(bright, 0.75));
-			}).mouseout(function() {
-				var n = $(this).attr('id'),
-					col = $(this).attr('hex-color');
-				$(this).css("background-color", hexToRgb(col, 0.5));
-			});
 			$('.friend,#friend-add,#friend-remove').hover(function() {
 				Audio.click.currentTime = 0;
 				Audio.click.play();
@@ -448,6 +434,18 @@ function addPlayer(id, player, isDev, opacity) {
 			class: 'name ' + isDev,
 			text: player.name
 		})
+	}).hover(function() {
+		Audio.click.currentTime = 0;
+		Audio.click.play();
+	}).mouseover(function() {
+		var n = $(this).attr('id'),
+			col = $(this).attr('hex-color'),
+			bright = brighter(col);
+		$(this).css("background-color", hexToRgb(bright, 0.75));
+	}).mouseout(function() {
+		var n = $(this).attr('id'),
+			col = $(this).attr('hex-color');
+		$(this).css("background-color", hexToRgb(col, 0.5));
 	}).append(
 	$('<td>', {
 		class: 'rank',
