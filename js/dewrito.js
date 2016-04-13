@@ -184,7 +184,7 @@ function loadSettings(i) {
 function initialize() {
 	getCurrentVersion();
 	var set, b, g, i, e;
-	$.getJSON(settings.localmusic.current == 0 ? "music.json" : "http://music.thefeeltra.in/music.json", function(j) {
+	$.getJSON("http://music.thefeeltra.in/music.json", function(j) {
 		songs = j;
 		for (i = 0; i < Object.keys(songs).length; i++) {
 			b = Object.keys(songs)[i];
