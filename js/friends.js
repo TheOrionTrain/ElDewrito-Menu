@@ -52,6 +52,8 @@ StartConnection = function() {
 						rank: 0
 					});
 					loadParty();
+					
+					StartMatchmakingConnection();
 				});
 			});
 		});
@@ -62,7 +64,6 @@ StartConnection = function() {
 		$.getJSON("http://thefeeltra.in/developers.json", function(json) {
 			developers = json;
 		});
-		StartMatchmakingConnection();
     };
 	friendServer.friendsServerSocket.onclose = function() {
         $.snackbar({content:'Lost Connection to Friend Server'});
