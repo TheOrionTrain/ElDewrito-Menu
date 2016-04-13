@@ -403,8 +403,8 @@ function loadParty() {
 function updateFriends() {
 	for (var i = 0; i < onlinePlayers.length; i++) {
 		for (var o = 0; o < friends.length; o++) {
-			if (((!friends[o].contains(":0x") || friends[o].contains(":n")) && friends[o] == onlinePlayers[i].split(':')[0]) || (onlinePlayers[i].split(':')[1] == friends[o].split(':')[1] && onlinePlayers[i].split(':')[0] != friends[o].split(':')[0])) {
-				friends[o] = onlinePlayers[i].split(":")[0] + ":" + onlinePlayers[i].split(":")[1];
+			if (((!friends[o].contains(":0x") || friends[o].contains(":n")) && friends[o] == onlinePlayers[i].name) || (onlinePlayers[i].guid == friends[o].guid && onlinePlayers[i].name != friends[o].name)) {
+				friends[o] = onlinePlayers[i].name + ":" + onlinePlayers[i].guid;
 				localStorage.setItem("friends", JSON.stringify(friends));
 			}
 		}
@@ -531,16 +531,16 @@ function loadFriends() {
 
 function getPlayerName(UID) {
 	for (var i = 0; i < onlinePlayers.length; i++) {
-		if (onlinePlayers[i].split(':')[1] == UID)
-			return onlinePlayers[i].split(':')[0];
+		if (onlinePlayers[i].guid == UID)
+			return onlinePlayers[i].name;
 	}
 	return "";
 }
 
 function getPlayerUID(name) {
 	for (var i = 0; i < onlinePlayers.length; i++) {
-		if (onlinePlayers[i].split(':')[0] == name)
-			return onlinePlayers[i].split(':')[1];
+		if (onlinePlayers[i].name == name)
+			return onlinePlayers[i].guid;
 	}
 	return "";
 }
@@ -609,7 +609,7 @@ function isOnlineServer(friend) {
 
 function isOnline(friend) {
 	for (var i = 0; i < onlinePlayers.length; i++) {
-		if ((friend.contains(":0x") && (onlinePlayers[i].split(':')[1] == friend.split(':')[1])) | onlinePlayers[i].split(':')[0] == friend || (typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined'))
+		if ((friend.contains(":0x") && (onlinePlayers[i].guid == friend.split(':')[1])) | onlinePlayers[i].name == friend || (typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined'))
 			return true;
 	}
 	return false;
@@ -1105,12 +1105,12 @@ function startgame(ip, mode, pass) {
 
 		if (party[0].split(':')[1] == puid) {
 			for (var i = 0; i < party.length; i++ ) {
-				if (party[i].split(':')[1] == puid)
+				if (party[i].guid == puid)
 					continue;
 
 				friendServer.send(JSON.stringify({
 					type: 'connect',
-					guid: party[i].split(':')[1],
+					guid: party[i].guid,
 					address: ip,
 					password: password
 				}));

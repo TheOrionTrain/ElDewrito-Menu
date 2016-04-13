@@ -73,7 +73,7 @@ Lobby = {
     	$('<td>', {
     		class: 'rank',
     		html: $('<img>', {
-    			src: 'img/ranks/38.png'
+    			src: 'img/ranks/0.png'
     		})
     	})).appendTo('#lobby');
     },
@@ -172,7 +172,7 @@ Chat = {
 			}));
 		}
 
-		Chat.receiveMessage(player,pname+": "+message, party[0].split(':')[0] == pname ? 1 : 0);
+		Chat.receiveMessage(player,pname+": "+message, party[0].name == pname ? 1 : 0);
 	},
 	showBox: function() {
 		$('#chatbox').clearQueue().fadeIn(anit);
