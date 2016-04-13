@@ -380,7 +380,12 @@ function loadParty() {
 			for(var i=0; i < party.length; i++) {
 				$('#party').append("<div class='friend'>"+party[i].split(":")[0]+"</div>");
 				var isDev = (developers.indexOf(party[i].split(':')[1]) >= 0) ? "developer" : "";
-				addPlayer('current-party', party[i], isDev);
+				addPlayer('current-party', {
+					name: party[i].split(':')[0],
+					guid: party[i].split(':')[1],
+					colour: party[i].split(':')[2],
+					rank: 0
+				}, isDev);
 			}
 			$('.friend,#friend-add,#friend-remove').hover(function() {
 				Audio.click.currentTime = 0;
@@ -467,7 +472,12 @@ function loadFriends() {
 		if(o == "online") {
 			friends_online++;
 			var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
-			addPlayer('friends-on', friends[i], isDev);
+			addPlayer('friends-on', {
+				name: friends[i].split(':')[0],
+				guid: friends[i].split(':')[1],
+				colour: getPlayerColour(friends[i].split(':')[1]),
+				rank: 0
+			}, isDev);
 		}
 	}
 	$('#friends-online').text(friends_online+" " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
