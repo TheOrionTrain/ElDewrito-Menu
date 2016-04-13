@@ -14,7 +14,7 @@
 }(function( $ ){
 
     $(document).ready(function() {
-        $("body").append("<div id=snackbar-container/>");
+        $("#menu").append("<div id=snackbar-container/>");
     });
 
     function isset(variable) {

@@ -717,3 +717,48 @@ html {
     display: block;
 }
 /* close commented backslash hack */
+
+#snackbar-container {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    z-index: 99999
+}
+.snackbar {
+    overflow: hidden;
+    clear: both;
+    min-width: 150px;
+    max-width: 275px;
+    cursor: pointer;
+    opacity: 0
+}
+.snackbar.snackbar-opened {
+    height: auto;
+    opacity: 1
+}
+
+.snackbar {
+  background-color: #000;
+  color: #FFFFFF;
+  font-size: 12px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  height: 0;
+  -moz-transition: -moz-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, padding 0 linear 0.2s, height 0 linear 0.2s;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, padding 0 linear 0.2s, height 0 linear 0.2s;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, padding 0 linear 0.2s, height 0 linear 0.2s;
+  -moz-transform: translateY(200%);
+  -webkit-transform: translateY(200%);
+  transform: translateY(200%);
+}
+.snackbar.snackbar-opened {
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  height: auto;
+  -moz-transition: -moz-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, height 0 linear 0.2s;
+  -moz-transform: none;
+  -webkit-transform: none;
+  transform: none;
+}
