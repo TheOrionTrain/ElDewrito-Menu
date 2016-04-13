@@ -427,7 +427,7 @@ function getPlayerColour(guid) {
 function addPlayer(id, player, isDev, opacity) {
 	console.log(player.colour);
 	$('<tr>', {
-		'hex-colour': player.colour,
+		'hex-color': player.colour,
 		'data-color': hexToRgb(player.colour, 0.5),
 		'style': 'background:' + hexToRgb(player.colour, 0.5) + ';' + (opacity ? 'opacity:' + opacity : null),
 		html: $('<td>', {
