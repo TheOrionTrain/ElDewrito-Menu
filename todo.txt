@@ -4,15 +4,12 @@ Halo 3 Custom Edition To-Do List
 
 1. Check if user is in a lobby and load directly into that lobby
 2. Pull player armor colors and display them in-lobby
-3. Finish controller support and add Playstation layout (DO THIS SOON)
-4. Work on CSS for other game styles (Low priority)
-5. Add more server browser filters like ping, location, etc.
-6. Remake settings to be less bloated and messy (Add return variable, remove changing text from update functions)
-7. Add Spartan customization (How do we show armor?)
-8. Get player stats showing and working correctly in lobbies
-9. Add controls to bottom of menu like Reach
-10. Take suggestions from people in IRC for more additions/improvements/bug fixes
-11. Integrate in-game chat
+3. Finish controller support and add PlayStation layout (DO THIS SOON)
+4. Remake settings to be less bloated and messy (Add return variable, remove changing text from update functions)
+5. Add Spartan customization (How do we show armor?)
+6. Get player stats showing and working correctly in lobbies
+7. Custom music playlists
+8. Matchmaking with voting
 
 
 Add any suggestions or things I may have missed to this list.
