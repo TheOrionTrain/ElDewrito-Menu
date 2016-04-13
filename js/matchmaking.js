@@ -80,6 +80,7 @@ StartMatchmakingConnection = function() {
         matchmakingServer.lastMessage = message.data;
     };
 }
+
 function startSearch(playlist) {
 	console.log(playlist);
 	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
