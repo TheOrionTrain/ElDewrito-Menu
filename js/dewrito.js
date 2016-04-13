@@ -14,6 +14,7 @@ var players = [],
 	selectedserver,
 	loopPlayers,
 	servers,
+	scale = 1,
 	browsing = 0,
 	sortMap,
 	sortType,
@@ -417,8 +418,8 @@ function getPlayerColour(guid) {
 	if (guid == puid)
 		return colour;
 	for (var i = 0; i < onlinePlayers.length; i++) {
-		if (guid == onlinePlayers[i].split(":")[1]) {
-			return(onlinePlayers[i].split(":")[2] === 'undefined' || onlinePlayers[i].split(":")[2].length < 1 || onlinePlayers[i].split(":")[2] === null) ? "#000000" : onlinePlayers[i].split(":")[2];
+		if (guid == onlinePlayers[i].guid) {
+			return(onlinePlayers[i].colour === 'undefined' || onlinePlayers[i].colour.length < 1 || onlinePlayers[i].colour === null) ? "#000000" : onlinePlayers[i].colour;
 		}
 	}
 	return "#000000";
