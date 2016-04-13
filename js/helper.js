@@ -152,8 +152,8 @@ function dewAlert(options) {
 	else {$('#alert-no').hide();}
 	$('#alert-container').fadeIn(anit);
 	$('#alert').css('top','200px');
-	$('#notification')[0].currentTime = 0;
-	$('#notification')[0].play();
+	Audio.notification.currentTime = 0;
+	Audio.notification.play();
 }
 
 function hideAlert(clicked,callback,info) {

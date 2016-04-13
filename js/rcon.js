@@ -50,8 +50,8 @@ jQuery(function() {
 StartRconConnection = function() {
     dewRcon = new dewRconHelper();
     dewRcon.dewWebSocket.onopen = function() {
-		$('#notification')[0].currentTime = 0;
-		$('#notification')[0].play();
+		Audio.notification.currentTime = 0;
+		Audio.notification.play();
         dewRconConnected = true;
 		//loadSettings(Object.keys(settings).length);
 		loadSettings(0);
@@ -61,8 +61,8 @@ StartRconConnection = function() {
 		if(!snacking) {
 			$.snackbar({content:'Not connected. Is the game running?'});
 			if(!played) {
-				$('#notification')[0].currentTime = 0;
-				$('#notification')[0].play();
+				Audio.notification.currentTime = 0;
+				Audio.notification.play();
 				played = 1;
 			}
 			snacking = 1;
