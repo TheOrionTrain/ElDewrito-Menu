@@ -450,7 +450,7 @@ function addPlayer(id, player, isDev, opacity) {
 	$('<td>', {
 		class: 'rank',
 		html: $('<img>', {
-			src: 'img/ranks/' + player.rank + '.png'
+			src: 'img/ranks/reach/' + player.rank + '.png'
 		})
 	})).appendTo('#'+id);
 }
