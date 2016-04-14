@@ -245,10 +245,6 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     -webkit-transition-timing-function: 200ms;
     -webkit-transition-delay: 0ms;
 }
-#dewrito.main {
-    left: 30px;
-    top: 280px;
-}
 #dewrito.options {
     opacity: 0.9;
     top: 400px;

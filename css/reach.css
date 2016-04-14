@@ -158,6 +158,10 @@
 .browser #description {
     display: none;
 }
+#dewrito.main {
+    left: 30px;
+    top: 280px;
+}
 #browser {
     position: absolute;
     left: 100px;
