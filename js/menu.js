@@ -73,7 +73,7 @@ Lobby = {
     	$('<td>', {
     		class: 'rank',
     		html: $('<img>', {
-    			src: 'img/ranks/0.png'
+    			src: 'img/ranks/reach/0.png'
     		})
     	})).appendTo('#lobby');
     },
