@@ -44,12 +44,10 @@ var players = [],
 })();
 
 function getServers(browser) {
-	if (usingGamepad) {
-		gamepadDeselect();
-	}
+	Controller.deselect();
 	servers = [];
 	gp_servers = 0;
-	gp_on = 0;
+	Controller.selected = 0;
 	for (var i = 0; i < serverz.servers.length; i++) {
 		queryServer(serverz.servers[i], i, browser);
 	}
@@ -133,14 +131,14 @@ function addServer(i) {
 	$('.server').hover(function() {
 		Audio.click.currentTime = 0;
 		Audio.click.play();
-		gamepadSelect($(this).attr('data-gp'));
+		Controller.select($(this).attr('data-gp'));
 	});
 	$('.server').unbind().click(function() {
 		Lobby.join($(this).attr('data-server'));
 	});
 	filterServers();
-	if (usingGamepad && gp_servers == 1) {
-		gamepadSelect('serverbrowser-1');
+	if (gp_servers == 1) {
+		Controller.select('serverbrowser-1');
 	}
 }
 
@@ -631,41 +629,9 @@ $(document).ready(function() {
 	Mousetrap.bind('b', function() {$(".control-B").trigger('click');});
 	Mousetrap.bind('x', function() {$(".control-X").trigger('click');});
 	Mousetrap.bind('y', function() {$(".control-Y").trigger('click');});
+	Mousetrap.bind('up', function() {Controller.backward();});
+	Mousetrap.bind('down', function() {Controller.forward();});
 
-	Mousetrap.bind('up', function() {
-		if ($("[data-gp='" + Menu.selected + "-" + (gp_on - 1) + "']").length > 0) {
-			gp_on -= 1;
-		}
-		gamepadSelect(Menu.selected + "-" + gp_on);
-		if (Menu.selected == "serverbrowser") {
-			$('#browser').scrollTo('.server.gp-on');
-		}
-		if (Menu.selected.indexOf("songs-") > -1) {
-			$('#'+Menu.selected).scrollTo('.selection.gp-on');
-		}
-		Audio.click.currentTime = 0;
-		Audio.click.play();
-	});
-	Mousetrap.bind('down', function() {
-		if ($("[data-gp='" + Menu.selected + "-" + (gp_on + 1) + "']").length > 0) {
-			gp_on += 1;
-		}
-		gamepadSelect(Menu.selected + "-" + gp_on);
-		if (Menu.selected == "serverbrowser") {
-			$('#browser').scrollTo('.server.gp-on');
-		}
-		if (Menu.selected.indexOf("songs-") > -1) {
-			$('#'+Menu.selected).scrollTo('.selection.gp-on');
-		}
-		Audio.click.currentTime = 0;
-		Audio.click.play();
-	});
-	Mousetrap.bind('left', function() {
-		gamepadLeft();
-	});
-	Mousetrap.bind('right', function() {
-		gamepadRight();
-	});
 	$('#main-menu').click(function() {
         Menu.change("main");
 		$('#main').show();
@@ -725,12 +691,12 @@ $(document).ready(function() {
 		}
 		var a = $(this).attr('data-gp').split("-"),
 			b = parseInt(a[a.length-1]);
-		gp_on = b;
-		gamepadSelect(Menu.selected + "-" + gp_on);
+		Controller.selected = b;
+		Controller.select(Menu.selected + "-" + Controller.selected);
 	});
 	$('*[data-gp]').mouseout(function() {
-		gp_on = 0;
-		gamepadSelect(Menu.selected + "-" + gp_on);
+		Controller.selected = 0;
+		Controller.select(Menu.selected + "-" + Controller.selected);
 	});
 	$('#dewmenu-button').click(function() {
 		dewAlert({
@@ -759,7 +725,7 @@ $(document).ready(function() {
 	if (CSSfile) {
 		$('#style').attr('href', 'css/' + CSSfile + '.css');
 	}
-	gamepadBind();
+	Controller.bind();
 	Mousetrap.bind('f11', function() {
 		setTimeout(function() {
 			if (dewRconConnected)
@@ -859,8 +825,8 @@ $(document).ready(function() {
 		Audio.click.play();
 		$('.selection').removeClass('gp-on');
 		$(this).addClass("gp-on");
-		gp_on = $(this).attr('data-gp').split("-")[1];
-		gamepadSelect(Menu.selected + "-" + gp_on);
+		Controller.selected = $(this).attr('data-gp').split("-")[1];
+		Controller.select(Menu.selected + "-" + Controller.selected);
 		$('#description').text(Menu.description[$(this).attr('data-gp')]);
 	});
 	$('.map-select .selection').click(function() {
@@ -906,19 +872,10 @@ $(document).ready(function() {
 	$("[data-action='menu-option']").click(function() {
 		changeMenuOptions($(this).attr('data-menu'));
 	});
-	$('#back').click(function() {
-		changeMenu($(this).attr('data-action'));
-		if (usingGamepad) {
-			gp_on = p_gp_on;
-			gamepadSelect(Menu.selected + "-" + p_gp_on);
-		}
-	});
 	$('#back-options').click(function() {
 		changeMenuOptions($(this).attr('data-action'),1);
-		if (usingGamepad) {
-			gp_on = p_gp_on;
-			gamepadSelect(Menu.selected + "-" + p_gp_on);
-		}
+		Controller.selected = Controller.previous;
+		Controller.select(Menu.selected + "-" + Controller.previous);
 	});
 	if (getURLParameter('browser')) {
 		changeMenu("main2,serverbrowser,vertical");
@@ -1268,11 +1225,9 @@ function changeSettingsMenu(setting) {
 	last_menu = currentMenu;
 	currentSetting = setting;
 	currentMenu = "settings-" + setting;
-	if (usingGamepad) {
-		p_gp_on = gp_on;
-		gp_on = 1;
-		gamepadSelect(currentMenu + "-" + gp_on);
-	}
+	Controller.previous = Controller.selected;
+	Controller.selected = 1;
+	Controller.select(currentMenu + "-" + Controller.selected);
 	$('#back').attr('data-action', 'setting-settings');
 	Audio.slide.currentTime = 0;
 	Audio.slide.play();
@@ -1288,10 +1243,8 @@ function changeSettingsBack() {
 	});
 	currentSetting = "";
 	currentMenu = last_menu;
-	if (usingGamepad) {
-		gp_on = 1;
-		gamepadSelect(last_menu + "-" + gp_on);
-	}
+	Controller.selected = 1;
+	Controller.select(last_menu + "-" + Controller.selected);
 	$('#back').attr('data-action', last_back);
 	Audio.slide.currentTime = 0;
 	Audio.slide.play();
@@ -1458,11 +1411,9 @@ function changeSong1(game) {
 	}
 	last_menu = currentMenu;
 	currentMenu = "songs-" + currentAlbum;
-	if (usingGamepad) {
-		p_gp_on = gp_on;
-		gp_on = 1;
-		gamepadSelect(currentMenu + "-" + gp_on);
-	}
+	Controller.previous = Controller.selected;
+	Controller.selected = 1;
+	Controller.select(currentMenu + "-" + Controller.selected);
 	$('#back').attr('data-action', 'setting-settings');
 	Audio.slide.currentTime = 0;
 	Audio.slide.play();

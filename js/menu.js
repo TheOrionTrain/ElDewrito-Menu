@@ -217,7 +217,7 @@ Menu = {
             $('#select-title').text(ch.title);
             if(ch.previous) {
                 $('#select-previous').text(Menu.pages[ch.previous].title).click(function() {
-                    Menu.previous();
+                    $('.control-B').trigger('click');
                 });
             } else {
                 $('#select-previous').text("");
@@ -257,16 +257,16 @@ Menu = {
                 var co = ch.controls[Object.keys(ch.controls)[i]];
                 $('#controls').append("<div class='control-"+Object.keys(ch.controls)[i]+"'>"+co.label+"</div>");
             }
-            gamepadSelect(m+"-1");
+            Controller.select(m+"-1");
             Menu.selected = m;
             $('#select-main .selection').hover(function() {
     			Audio.click.currentTime = 0;
     			Audio.click.play();
                 $('.selection').removeClass('gp-on');
         		$(this).addClass("gp-on");
-        		gp_on = $(this).attr('data-gp').split("-")[1];
-        		gamepadSelect(Menu.selected + "-" + gp_on);
-                $('#description').text(Menu.pages[Menu.selected].options[Object.keys(Menu.pages[Menu.selected].options)[parseInt(gp_on)-1]].description);
+        		Controller.selected = $(this).attr('data-gp').split("-")[1];
+        		Controller.select(Menu.selected + "-" + Controller.selected);
+                $('#description').text(Menu.pages[Menu.selected].options[Object.keys(Menu.pages[Menu.selected].options)[parseInt(Controller.selected)-1]].description);
     		});
             $('#select-main .selection').click(function() {
                 var n = parseInt($(this).attr('data-gp').split("-")[1])-1;
@@ -286,8 +286,8 @@ Menu = {
     },
     "changeSetting" : function(set) {
         console.log("changeSetting: "+set);
-        $('#beep')[0].currentTime = 0;
-        $('#beep')[0].play();
+        Audio.beep.currentTime = 0;
+        Audio.beep.play();
     },
     "pages" : {
         "main" : {
@@ -343,7 +343,7 @@ Menu = {
                 "START" : {
                     "label" : "Friends List",
                     "action" : function() {
-                        gamepadSelect("lobby-1");
+                        Controller.select("lobby-1");
                     }
                 }
             }
@@ -385,7 +385,7 @@ Menu = {
                 "START" : {
                     "label" : "Friends List",
                     "action" : function() {
-                        gamepadSelect("lobby-1");
+                        Controller.select("lobby-1");
                     }
                 }
             }
@@ -436,7 +436,7 @@ Menu = {
                 "START" : {
                     "label" : "Friends List",
                     "action" : function() {
-                        gamepadSelect("lobby-1");
+                        Controller.select("lobby-1");
                     }
                 }
             }
@@ -478,7 +478,7 @@ Menu = {
                 "START" : {
                     "label" : "Friends List",
                     "action" : function() {
-                        gamepadSelect("lobby-1");
+                        Controller.select("lobby-1");
                     }
                 }
             }
@@ -579,7 +579,7 @@ Menu = {
                 "START" : {
                     "label" : "Friends List",
                     "action" : function() {
-                        gamepadSelect("lobby-1");
+                        Controller.select("lobby-1");
                     }
                 }
             }
@@ -636,7 +636,7 @@ Menu = {
                 "START" : {
                     "label" : "Friends List",
                     "action" : function() {
-                        gamepadSelect("lobby-1");
+                        Controller.select("lobby-1");
                     }
                 }
             }
