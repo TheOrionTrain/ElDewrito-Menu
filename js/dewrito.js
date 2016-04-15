@@ -35,7 +35,25 @@ var players = [],
 	last_back = "",
 	last_menu = "",
 	pings = [],
-	previous = {};
+	previous = {},
+	infoIP = "http://158.69.166.144:8081",
+	totallyLoopingPlayers = setInterval(totalPlayersLoop,10000),
+	settingsToLoad = [
+		['gamemenu', 'game.menuurl'],
+		['username', 'player.name'],
+		['servername', 'server.name'],
+		['centeredcrosshair', 'camera.crosshair'],
+		['fov', 'camera.fov'],
+		['starttimer', 'server.countdown'],
+		['maxplayers', 'server.maxplayers'],
+		['serverpass', 'server.password'],
+		['rawinput', 'input.rawinput'],
+		['saturation', 'graphics.saturation'],
+		['gameversion', 'game.version'],
+		['maplist', 'game.listmaps']
+	],
+	loadedSettings = false,
+	mapList;
 
 (function() {
 	if (window.location.protocol == "https:") {
@@ -46,7 +64,7 @@ var players = [],
 function getServers(browser) {
 	Controller.deselect();
 	servers = [];
-	gp_servers = 0;
+	Controller.servers = 0;
 	Controller.selected = 0;
 	for (var i = 0; i < serverz.servers.length; i++) {
 		queryServer(serverz.servers[i], i, browser);
@@ -81,53 +99,23 @@ function queryServer(serverInfo, i, browser) {
 }
 
 function getMapName(filename) {
-	switch (filename) {
-		case "guardian":
-			return "Guardian";
-		case "riverworld":
-			return "Valhalla";
-		case "s3d_avalanche":
-			return "Diamondback";
-		case "s3d_edge":
-			return "Edge";
-		case "s3d_reactor":
-			return "Reactor";
-		case "s3d_turf":
-			return "Icebox";
-		case "zanzibar":
-			return "Last Resort";
-		case "cyberdyne":
-			return "The Pit";
-		case "Bunkerworld":
-		case "bunkerworld":
-			return "Standoff";
-		case "Standoff":
-			return "Bunkerworld";
-		case "chill":
-			return "Narrows";
-		case "shrine":
-			return "Sandtrap";
-		case "deadlock":
-			return "High Ground";
-		case "hangem-high":
-				return "Hangem-High CE";
-		default:
-			return "Edge";
+	if(Menu.maps[filename]) {
+		return Menu.maps[filename];
+	} else {
+		return "Edge";
 	}
 }
-
-var gp_servers = 0;
 
 function addServer(i) {
 	if (servers[i].map == "")
 		return;
-	++gp_servers;
+	++Controller.servers;
 	var on = (!servers[i].variant) ? "" : "on";
 	servers[i].location_flag = typeof servers[i].location_flag == 'undefined' ? "[" : servers[i].location_flag;
 	servers[i].ping = servers[i].ping || 0;
 	var sprint = (servers[i].sprintEnabled == 1) ? "<img class='sprint' src='img/sprint.svg'>" : " ";
 
-	$('#browser').append("<div data-gp='serverbrowser-" + gp_servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".jpg'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
+	$('#browser').append("<div data-gp='serverbrowser-" + Controller.servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".jpg'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>"+servers[i].ping+"</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") +sprint+"<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
 	$('.server').hover(function() {
 		Audio.click.currentTime = 0;
 		Audio.click.play();
@@ -137,14 +125,10 @@ function addServer(i) {
 		Lobby.join($(this).attr('data-server'));
 	});
 	filterServers();
-	if (gp_servers == 1) {
+	if (Controller.servers == 1) {
 		Controller.select('serverbrowser-1');
 	}
 }
-
-var settingsToLoad = [['gamemenu', 'game.menuurl'], ['username', 'player.name'], ['servername', 'server.name'], ['centeredcrosshair', 'camera.crosshair'], ['fov', 'camera.fov'], ['starttimer', 'server.countdown'], ['maxplayers', 'server.maxplayers'], ['serverpass', 'server.password'], ['rawinput', 'input.rawinput'], ['saturation', 'graphics.saturation'], ['gameversion', 'game.version'], ['maplist', 'game.listmaps']];
-var loadedSettings = false;
-var mapList;
 
 function loadSettings(i) {
 	if (i != settingsToLoad.length) {
@@ -181,7 +165,9 @@ function loadSettings(i) {
 }
 
 function initialize() {
-	getCurrentVersion();
+	$.getJSON("http://tracks.thefeeltra.in/update", function(data) {
+		console.log(data);
+	});
 	var set, b, g, i, e;
 	$.getJSON("http://music.thefeeltra.in/music.json", function(j) {
 		songs = j;
@@ -906,13 +892,6 @@ function loadServers() {
 	}
 }
 
-function getCurrentVersion() {
-	$.getJSON("http://tracks.thefeeltra.in/update", function(data) {});
-}
-
-var infoIP = "http://158.69.166.144:8081",
-	totallyLoopingPlayers = setInterval(totalPlayersLoop,10000);
-
 function totalPlayersLoop() {
 	$.getJSON(infoIP+"/all", function(data) {
 		serverz = data;
@@ -1294,34 +1273,10 @@ function getGame(game) {
 }
 
 function getMapFile(name) {
-	if (typeof name != 'undefined') {
-		switch (name.toString().toLowerCase()) {
-			case "guardian":
-				return "guardian";
-			case "valhalla":
-				return "riverworld";
-			case "diamondback":
-				return "s3d_avalanche";
-			case "edge":
-				return "s3d_edge";
-			case "reactor":
-				return "s3d_reactor";
-			case "icebox":
-				return "s3d_turf";
-			case "high ground":
-				return "deadlock";
-			case "narrows":
-				return "chill";
-			case "the pit":
-				return "cyberdyne";
-			case "sandtrap":
-				return "shrine";
-			case "standoff":
-				return "Bunkerworld";
-			case "Hangem-High CE":
-				return "hangem-high";
+	for(var i=0; i < Object.keys(Menu.maps).length; i++) {
+		if(Menu.maps[Object.keys(Menu.maps)[i]] == name) {
+			return Object.keys(Menu.maps)[i];
 		}
-		return "";
 	}
 }
 

@@ -642,5 +642,20 @@ Menu = {
             }
         }
 	},
+    "maps" : {
+        "guardian" : "Guardian",
+        "riverworld" : "Valhalla",
+        "s3d_avalanche" : "Diamondback",
+        "s3d_edge" : "Edge",
+        "s3d_reactor" : "Reactor",
+        "s3d_turf" : "Icebox",
+        "zanzibar" : "Last Resort",
+        "cyberdyne" : "The Pit",
+        "bunkerworld" : "Standoff",
+        "chill" : "Narrows",
+        "shrine" : "Sandtrap",
+        "deadlock" : "High Ground",
+        "hangem-high" : "Hangem-High CE"
+    },
     "selected" : "main"
 };
