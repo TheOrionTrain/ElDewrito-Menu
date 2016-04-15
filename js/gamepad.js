@@ -1,6 +1,7 @@
 var Controller = {
 	"selected" : 1,
 	"previous" : 0,
+	"servers" : 0,
 	"last" : Date.now(),
 	"buttons" : {
 		"FACE_1": "A",
