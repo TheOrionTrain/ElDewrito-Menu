@@ -417,7 +417,7 @@ Menu = {
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
                      "action" : function() {
-						 startSearch("Team Slayer 4v4");
+						 startSearch("Action Sack");
 						 Menu.change("searching");
 					 }
                 }
