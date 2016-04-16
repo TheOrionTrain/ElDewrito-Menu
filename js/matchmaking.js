@@ -66,6 +66,9 @@ StartMatchmakingConnection = function() {
 						}, null, 0.6);
 					}
 				break;
+				case "connect":
+				dewRcon.send('connect "' + result.server.ip + '"');
+				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
 				break;
