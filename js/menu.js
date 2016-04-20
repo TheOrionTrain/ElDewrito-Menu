@@ -320,6 +320,12 @@ Menu = {
 						 Menu.change("forge");
 					 }
                 },
+                "LEADERBOARD" : {
+                     "description" : "View the top player stats including kills, deaths, and rank. Powered by the HaloStats.Click API.",
+                     "action" : function() {
+						 Menu.change("leaderboard");
+					 }
+                },
                 "SETTINGS" : {
                     "description" : "Change how the game or menu plays or looks. You can customize everything from music, to the background, to the appearance of the server browser.",
                     "action" : function() {Menu.change("settings")}
@@ -381,6 +387,40 @@ Menu = {
                 "Y" : {
                     "label" : "Refresh",
                     "action" : function(){$('#refresh').trigger('click');}
+                },
+                "START" : {
+                    "label" : "Friends List",
+                    "action" : function() {
+                        Controller.select("lobby-1");
+                    }
+                }
+            }
+        },
+        "leaderboard" : {
+            "title" : "LEADERBOARD",
+            "previous" : "main",
+            "onload" : function() {
+                leading = 1;
+        		$('#leaders').empty();
+                $('#lobby').empty();
+        		setTimeout(Leaderboard.load, 1000);
+        		loopPlayers = false;
+            },
+            "class" : "leaderboard",
+            "background": ["matchmaking","multiplayer"],
+            "thumbnail": 0,
+            "lists" : [],
+            "options": {},
+            "controls" : {
+                "A" : {
+                    "label" : "Select",
+                    "action" : function() {
+                        $('.gp-on').trigger('click');
+                    }
+                },
+                "B" : {
+                    "label" : "Back",
+                    "action" : function(){Menu.previous();}
                 },
                 "START" : {
                     "label" : "Friends List",

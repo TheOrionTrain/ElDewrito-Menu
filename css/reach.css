@@ -134,13 +134,31 @@
     transform-origin: top left;
     box-sizing: border-box;
 }
-#main:not(.browser) #serverbrowser {
+#leaders > div {
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    border-left: 3px solid rgba(255, 255, 255, 0);
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    transition: 0.5s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    height: 30px;
+    padding: 5px 20px;
+}
+#main:not(.browser) #serverbrowser,
+#main:not(.leaderboard) #leaderboard {
     display: none;
 }
-.browser #select-previous {
+.browser #select-previous,
+.leaderboard #select-previous {
     left: 105px;
 }
-.browser #select-title {
+.browser #select-title,
+.leaderboard #select-title {
     position: absolute;
     top: 60px;
     left: 100px;
@@ -155,14 +173,18 @@
 .browser #select-main,
 .browser #party-text,
 .browser #select-icon,
-.browser #description {
+.browser #description,
+.leaderboard #select-main,
+.leaderboard #party-text,
+.leaderboard #select-icon,
+.leaderboard #description {
     display: none;
 }
 #dewrito.main {
     left: 30px;
     top: 280px;
 }
-#browser {
+#browser, #leaders {
     position: absolute;
     left: 100px;
     top: 170px;
@@ -544,7 +566,7 @@ audio {
 }
 #line1,
 #line2,
-#line3,
+.line3,
 #line4 {
     position: absolute;
     background: rgba(255, 255, 255, 0.25);
@@ -611,7 +633,7 @@ audio {
     left: 90px;
     width: 700px;
 }
-#line3 {
+.line3 {
     top: 150px;
     left: 100px;
     width: 1080px;
@@ -704,7 +726,8 @@ audio {
     height: 500px;
     opacity: 0;
 }
-#serverbrowser ::-webkit-scrollbar {
+#serverbrowser ::-webkit-scrollbar,
+#leaderboard ::-webkit-scrollbar {
     width: 12px;
 }
 * ::-webkit-scrollbar-track {
@@ -904,6 +927,7 @@ audio {
 .selection:hover,
 #select-main .selection:hover,
 .server:hover,
+#leaders > div:hover,
 .selection.gp-on,
 .server.gp-on {
     animation: menuHover 2s 1s infinite;
