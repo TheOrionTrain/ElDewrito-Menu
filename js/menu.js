@@ -329,10 +329,6 @@ Menu = {
                 "SETTINGS" : {
                     "description" : "Change how the game or menu plays or looks. You can customize everything from music, to the background, to the appearance of the server browser.",
                     "action" : function() {Menu.change("settings")}
-                },
-                "CREDITS" : {
-                    "description" : "View the team of people who worked hard to build and take this menu to where it is today.",
-                    "action" : function() {Menu.change("credits")}
                 }
             },
             "controls" : {
