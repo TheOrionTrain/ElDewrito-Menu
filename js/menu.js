@@ -300,7 +300,7 @@ Menu = {
             "options": {
                 "BROWSE SERVERS" : {
                     "description" : "Take your party to view the current multiplayer servers online that are available to join.",
-                    "action" : function() {Menu.change("leaderboard")}
+                    "action" : function() {Menu.change("serverbrowser")}
                 },
                 "MATCHMAKING" : {
                     "description" : "Take your party online and into the frenetic action of live combat, objective-based missions, and dangerous military exercises.",
@@ -348,40 +348,6 @@ Menu = {
                 }
             }
         },
-		"leaderboard" : {
-			"title" : "LEADERBOARD",
-			"previous" : "main",
-			"onload" : function() {
-				$('#leaders').empty();
-			},
-			"class" : "leaderboard",
-			"background": ["matchmaking","multiplayer"],
-			"thumbnail": 0,
-            "lists" : [],
-            "options": {},
-            "controls" : {
-                "A" : {
-                    "label" : "Select",
-                    "action" : function() {
-                        $('.gp-on').trigger('click');
-                    }
-                },
-                "B" : {
-                    "label" : "Back",
-                    "action" : function(){Menu.previous();}
-                },
-                "Y" : {
-                    "label" : "Refresh",
-                    "action" : function(){$('#refresh').trigger('click');}
-                },
-                "START" : {
-                    "label" : "Friends List",
-                    "action" : function() {
-                        Controller.select("lobby-1");
-                    }
-                }
-            }
-		},
         "serverbrowser" : {
             "title" : "SERVERS",
             "previous" : "main",
