@@ -212,6 +212,10 @@ StartConnection = function() {
 				case "acceptgame":
 
 				break;
+				case "rank":
+					player.rank = parseInt(result.rank);
+					loadParty();
+				break;
 				case "connect":
 					if (party[0].guid != result.guid)
 						return;

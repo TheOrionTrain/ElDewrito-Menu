@@ -93,7 +93,7 @@ function startSearch(playlist) {
 			name: party[i].name,
 			guid: party[i].guid,
 			colour: party[i].colour,
-			rank: 0,
+			rank: party[i].rank,
 		}, isDev);
 	}
 	for (var i = 0; i < (8 - party.length); i++) {
