@@ -204,7 +204,26 @@ var Browser = {
 		"locked" : false,
 		"sprint" : false,
 	}
-}
+},
+Leaderboard = {
+	"load" : function() {
+		if (leading === 1) {
+			$('#leaders').empty();
+			$.getJSON("http://halostats.click/api/Leaderboard/25", function(data) {
+				Leaderboard.stats = data;
+				for (var i=0; i<Leaderboard.stats.length; i++) {
+					Leaderboard.add(Leaderboard.stats[i]);
+				}
+			});
+		}
+	},
+	"add" : function(lb) {
+		$("<div>"+JSON.stringify(lb)+"</div>").hover(function() {
+			Audio.click.currentTime = 0;
+			Audio.click.play();
+		}).appendTo('#leaders');
+	}
+};
 
 function getMapName(filename) {
 	if(Menu.maps[filename]) {
