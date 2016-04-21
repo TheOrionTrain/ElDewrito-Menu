@@ -116,7 +116,7 @@ StartConnection = function() {
 						}
 
 						party = $.grep(party, function(value) {
-						  return value != (result.player + ":" + result.guid + ":" + getPlayerColour(result.guid));
+						  return value.guid != result.player.guid);
 						});
 
 						for (var i = 0; i < party.length; i++) {
@@ -213,6 +213,7 @@ StartConnection = function() {
 
 				break;
 				case "rank":
+					console.log(result);
 					player.rank = parseInt(result.rank);
 					loadParty();
 				break;
