@@ -393,7 +393,7 @@ function changeSetting(s, by) {
 }
 
 function loadParty() {
-	if(party !== previous.party) {
+	//if(party !== previous.party) {
 		$('#party').empty();
 		$('#current-party').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Party <span class='numbers'><span id='current-party-count'>"+party.length+"</span>/16</span></td></tr>");
 		if(party.length > 0) {
@@ -404,7 +404,7 @@ function loadParty() {
 					name: party[i].name,
 					guid: party[i].guid,
 					colour: party[i].colour,
-					rank: 0
+					rank: party[i].rank
 				}, isDev);
 			}
 			$('.friend,#friend-add,#friend-remove').hover(function() {
@@ -416,8 +416,8 @@ function loadParty() {
 			$('#party').append("<div class='nofriends'>You're not partying :(</div>");
 			$('#current-party').empty();
 		}
-	}
-	previous.party = party;
+	//}
+	//previous.party = party;
 }
 
 function updateFriends() {
@@ -580,7 +580,7 @@ function getPlayerUIDFromFriends(name) {
 	return "";
 }
 
-function addFriend(name) {
+function addFriend(player) {
 	if(name !== null || name !== "" || name !== undefined) {
 		$('#friend-input').val("");
 		if(friends.indexOf(name) == -1) {
