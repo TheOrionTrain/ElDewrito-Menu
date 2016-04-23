@@ -1010,7 +1010,7 @@ td.name.developer {
 }
 #lobby-container table td.rank {
     width: 50px;
-    padding: 0px 10px 0px 10px;
+    padding: 2.5px 10px 0px 10px;
     text-align: center;
     background: rgba(0, 0, 0, 0.15);
 }
