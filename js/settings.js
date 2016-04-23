@@ -140,6 +140,10 @@ var user = {
             "Crash",
             "Waypoint",
             "Halo Reach Beta",
+			"Skyline",
+			"Relic",
+			"Landfall",
+			"Shrine",
 			"Random"
         ],
 			"increment": 1,
@@ -174,8 +178,11 @@ var user = {
 					else if (r === 3) {
 						$('#videos').append("<video id='bg1' src='"+d+"reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
 					}
-					else if (c === 12) {
+					else if (r === 13) {
 						$('#videos').append("<video id='bg1' src='"+d+"reach/custom_games.webm' loop autoplay type='video/webm'></video>");
+					}
+					else if (r >= 14 && r <= 17) {
+						$('#videos').append("<video id='bg1' src='"+d+"mcc/" + settings.background.labels[r] + ".webm' loop autoplay type='video/webm'></video>");
 					}
 					else {
 						$('#videos').append("<video id='bg1' src='"+d+"" + settings.background.labels[r] + ".webm' autoplay type='video/webm'></video>");
@@ -211,9 +218,11 @@ var user = {
 						$('#videos').append("<video id='bg1' src='"+d+"halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
 						$('#videos').append("<video id='bg-multiplayer' src='"+d+"halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
 						$('#videos').append("<video id='bg-forge' src='"+d+"halo3/forge.webm' preload='none' loop type='video/webm'></video>");
-					} else if (c === 12) {
+					} else if (c === 13) {
 						$('#videos').append("<video id='bg1' src='"+d+"reach/custom_games.webm' loop autoplay type='video/webm'></video>");
 						$('#bg-cover').css('background', 'rgba(0,0,0,0)');
+					} else if (c >= 14 && c <= 17) {
+						$('#videos').append("<video id='bg1' src='"+d+"mcc/" + settings.background.labels[c] + ".webm' loop autoplay type='video/webm'></video>");
 					} else {
 						$('#videos').append("<video id='bg1' src='"+d+"" + settings.background.labels[c] + ".webm' loop autoplay type='video/webm'></video>");
 					}
