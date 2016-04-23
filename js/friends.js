@@ -116,7 +116,7 @@ StartConnection = function() {
 						}
 
 						party = $.grep(party, function(value) {
-						  return value.guid != result.player.guid);
+						  return value.guid != result.player.guid;
 						});
 
 						for (var i = 0; i < party.length; i++) {
