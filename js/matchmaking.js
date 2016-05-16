@@ -49,7 +49,7 @@ StartMatchmakingConnection = function() {
 				break;
 				case "updatesearch":
 					console.log(result);
-					$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
+					$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching... <span id="search-count">' + result.players.length + '/16</span></td></tr>');
 					var isDev = (developers.indexOf(puid) >= 0) ? "developer" : "";
 					addPlayer("search", player, isDev);
 					for (var i = 0; i < result.players.length; i++) {
@@ -57,7 +57,7 @@ StartMatchmakingConnection = function() {
 						if (result.players[i].guid != puid)
 							addPlayer("search", result.players[i], isDev2);
 					}
-					for (var i = 0; i < (8 - result.players.length); i++) {
+					for (var i = 0; i < (16 - result.players.length); i++) {
 						addPlayer("search", {
 							name: "Looking for player...",
 							guid: "000000",
@@ -67,7 +67,10 @@ StartMatchmakingConnection = function() {
 					}
 				break;
 				case "connect":
-				dewRcon.send('connect "' + result.server.ip + '"');
+					dewRcon.send('connect "' + result.server.ip + '"');
+				break;
+				case "id":
+					player.id = result.id;
 				break;
 				default:
 					console.log("Unhandled packet: " + result.type);
@@ -86,7 +89,7 @@ StartMatchmakingConnection = function() {
 
 function startSearch(playlist) {
 	console.log(playlist);
-	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching...</td></tr>');
+	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching... <span id="search-count">' + party.length + '/16</span></td></tr>');
 	for (var i = 0; i < party.length; i++) {
 		var isDev = (developers.indexOf(party[i].guid) >= 0) ? "developer" : "";
 		addPlayer("search", {
@@ -96,7 +99,7 @@ function startSearch(playlist) {
 			rank: party[i].rank,
 		}, isDev);
 	}
-	for (var i = 0; i < (8 - party.length); i++) {
+	for (var i = 0; i < (16 - party.length); i++) {
 		addPlayer("search", {
 			name: "Looking for player...",
 			guid: "000000",
@@ -114,7 +117,7 @@ function startSearch(playlist) {
 
 matchmakingServerHelper = function() {
     window.WebSocket2 = window.WebSocket2 || window.MozWebSocket2;
-    this.matchmakingServerSocket = new WebSocket('ws://182.239.201.24:55555/matchmakingServer', 'matchmakingServer');
+    this.matchmakingServerSocket = new WebSocket('ws://127.0.0.1:55555/matchmakingServer', 'matchmakingServer');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
