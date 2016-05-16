@@ -453,7 +453,7 @@ Menu = {
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
                      "action" : function() {
-						 startSearch("Action Sack");
+						 startSearch("Big Team Battle");
 						 Menu.change("searching");
 					 }
                 }
