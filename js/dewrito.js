@@ -332,11 +332,13 @@ function initialize() {
 		settings[set].update();
 	}
 	$.getJSON("http://158.69.166.144/matchmaking/Standard.json", function(json) {
+		Setting.playlist.options.standard = json;
 		for (i = 0; i < Object.keys(json).length; i++) {
 			$("#settings-standard").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
 		}
 	});
 	$.getJSON("http://158.69.166.144/matchmaking/Social.json", function(json) {
+		Setting.playlist.options.social = json;
 		for (i = 0; i < Object.keys(json).length; i++) {
 			$("#settings-social").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
 		}

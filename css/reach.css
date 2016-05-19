@@ -452,8 +452,7 @@ audio {
     top: 0px;
     left: 0;
 }*/
-#map-thumb,
-#map-thumb-options {
+#map-thumb {
     position: absolute;
     top: 40px;
     width: 450px;
@@ -508,31 +507,36 @@ audio {
     border: 1px solid #000;
     box-shadow: 0px 0px 50px 16px #000;
 }
-#map-thumb-options {
+#setting-thumbnail {
     right: 150px;
     border: 2px solid rgba(255, 255, 255, 1);
 }
-#map-name-options,
-#music-game,
-#map-info-options,
-#type-name-options,
-#type-info-options {
+#setting-name,
+#setting-info {
     position: absolute;
-    left: 680px;
+    left: 780px;
     font-weight: 300;
     color: #fff;
     width: 450px;
 }
-#map-name-options,
-#music-game,
-#type-name-options {
-    top: 320px;
+#setting-name {
+    top: 355px;
     font-size: 26px;
     opacity: 0.85;
+    text-transform: uppercase;
 }
-#map-info-options,
-#type-info-options {
-    top: 380px;
+#setting-thumbnail {
+    position: absolute;
+    top: 150px;
+    width: 350px;
+    height: 155px;
+    border-radius: 1px;
+    right: 150px;
+    border: 2px solid rgba(255, 255, 255, 1);
+    background: url('../img/maps/EDGE.jpg') no-repeat 0 0/cover;
+}
+#setting-info {
+    top: 415px;
     font-size: 16px;
     opacity: 0.7;
 }
@@ -666,17 +670,14 @@ audio {
     left: 110px;
     width: 450px;
 }
-.map-select,
-.music-select,
-.type-select,
-.options-select {
+#setting-select {
     position: absolute;
     top: 150px;
     left: 150px;
     width: 260px;
 }
 .map-select .selection,
-.music-select .selection,
+#setting-select .selection,
 .type-select .selection {
     background: url('../img/right.svg') no-repeat 232px 8px/36px 18px;
 }
@@ -760,7 +761,7 @@ audio {
     opacity: 0;
 }
 
-.music-select2 {
+.subsetting-select {
     position: absolute;
     top: 150px;
     left: 310px;
@@ -772,74 +773,37 @@ audio {
     opacity: 0;
 }
 
-.music-select .selection .label,
-.music-select2 .selection .label {
-    text-align: left;
-    display: table-cell;
-    width: 400px;
-    padding: 7px 10px 0px 10px;
-    box-sizing: border-box;
-    height: 40px;
-}
-
-.map-select .selection .label,
-.map-select2 .selection .label,
-.type-select .selection .label,
-.type-select2 .selection .label,
-.options-select .selection .label {
-    text-align: left;
-    display: table-cell;
-    width: 260px;
-    padding: 7px 10px 0px 10px;
-    box-sizing: border-box;
-    height: 80px;
-}
 .selection {overflow: hidden;}
-.music-select .selection,
-.music-select2 .selection {
+.subsetting-select .selection,
+#setting-select .selection {
     font-weight: 300;
-    font-size: 23px;
-    color: rgba(255, 255, 255, 0.85);
-    width: 400px;
-    height: 35px;
+    font-size: 19px;
+    color: rgba(255, 255, 255, 0.75);
+    width: 260px;
+    height: 30px;
     border-left: 3px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
     line-height: 20px;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     transition: 0.5s;
+    padding: 5px 10px;
 }
 
-.music-select .selection, .music-select2 .label {
-    width: 260px;
+#setting-select .selection {
+    background: url('../img/right.svg') no-repeat 232px 6px/18px 18px;
 }
 
-.map-select .selection,
-.map-select2 .selection,
-.type-select .selection,
-.type-select2 .selection,
-.options-select .selection {
-    font-weight: 300;
-    font-size: 23px;
-    color: rgba(255, 255, 255, 0.85);
-    width: 260px;
-    height: 35px;
-    border-left: 3px solid rgba(255, 255, 255, 0);
-    box-sizing: border-box;
-    line-height: 20px;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    transition: 0.5s;
+#setting-select .selection:hover,
+.subsetting-select .selection:hover {
+    animation: menuHover 2s 1s infinite;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.95);
 }
-.map-select .selection,
-.music-select .selection,
-.type-select .selection,
-.options-select .selection {
-    background: url('../img/right.svg') no-repeat 232px 8px/18px 18px;
-}
-.music-select .selection {
-    background: url('../img/right.svg') no-repeat 230px 8px/18px 18px;
-}
+
+
 .left,
 .right {
     text-align: center;
@@ -881,7 +845,19 @@ audio {
     opacity: 0.125;
     transform-origin: top left;
 }
-#select-previous:hover {
+#options-previous {
+    transform: rotate(90deg);
+    position: absolute;
+    top: 130px;
+    left: 155px;
+    font-weight: 600;
+    font-size: 46px;
+    color: #fff;
+    opacity: 0.125;
+    transform-origin: top left;
+}
+#select-previous:hover,
+#options-previous:hover {
     cursor: pointer;
     opacity: 0.25;
 }
@@ -1134,6 +1110,7 @@ td.name.developer {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
     background: -webkit-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
     background: linear-gradient(to bottom, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
+    backdrop-filter: blur(3px);
     position: absolute;
     top: 0px;
     left: 0;
@@ -1150,7 +1127,7 @@ td.name.developer {
     left: 0px;
     display: none;
 }
-.options-title {
+#options-title {
     position: absolute;
     top: 60px;
     left: 150px;
@@ -1162,6 +1139,7 @@ td.name.developer {
     background: -webkit-linear-gradient(#fff, #999);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
 }
 #dot {
     position: absolute;
