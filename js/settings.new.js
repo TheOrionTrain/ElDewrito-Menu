@@ -5,12 +5,11 @@ var Setting = {
         $('#options-previous').text(Menu.pages[Menu.selected].title);
         $('#options-title').text(Setting[s].title);
         if(Setting[s].thumb) {
-            var first = Object.keys(Setting[s].options[Object.keys(Setting[s].options)[0]])[0];
             $('#setting-thumbnail,#setting-name,#setting-info').show();
             $('#setting-thumbnail').css({
-                "background-image": "url(img/"+s+"/"+Object.keys(Setting[s].options)[0].toLowerCase()+"/"+first+".jpg)"
+                "background-image": "url('img/"+s+"/"+Setting[s].selected+"/"+Setting[s].current+".jpg')"
             });
-            $('#setting-name').text(first);
+            $('#setting-name').text(Setting[s].current);
         } else {
             $('#setting-thumbnail,#setting-name,#setting-info').hide();
         }
