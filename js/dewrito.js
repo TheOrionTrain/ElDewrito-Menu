@@ -334,13 +334,33 @@ function initialize() {
 	$.getJSON("http://158.69.166.144/matchmaking/Standard.json", function(json) {
 		Setting.playlist.options.standard = json;
 		for (i = 0; i < Object.keys(json).length; i++) {
-			$("#settings-standard").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
+			var list1 = "",
+				list2 = "",
+				maps = Setting.playlist.options.standard[Object.keys(json)[i]].Maps,
+				types = Setting.playlist.options.standard[Object.keys(json)[i]].Types;
+			for (e = 0; e < maps.length; e++) {
+				list1+= "<li>"+maps[e].displayName+"</li>";
+			}
+			for (g = 0; g < types.length; g++) {
+				list2+= "<li>"+types[g].displayName+"</li>";
+			}
+			Setting.playlist.options.standard[Object.keys(json)[i]].description = "<ul><li class='label'>MAPS</li>" + list1 + "</ul><ul><li class='label'>GAMETYPES</li>" + list2 + "</ul>";
 		}
 	});
 	$.getJSON("http://158.69.166.144/matchmaking/Social.json", function(json) {
 		Setting.playlist.options.social = json;
 		for (i = 0; i < Object.keys(json).length; i++) {
-			$("#settings-social").append("<div class='selection' style='width: 250px; line-height: 20px;'><span class='label'>" + Object.keys(json)[i] + "</span></div>");
+			var list1 = "",
+				list2 = "",
+				maps = Setting.playlist.options.social[Object.keys(json)[i]].Maps,
+				types = Setting.playlist.options.social[Object.keys(json)[i]].Types;
+			for (e = 0; e < maps.length; e++) {
+				list1+= "<li>"+maps[e].displayName+"</li>";
+			}
+			for (g = 0; g < types.length; g++) {
+				list2+= "<li>"+types[g].displayName+"</li>";
+			}
+			Setting.playlist.options.social[Object.keys(json)[i]].description = "<ul><li class='label'>MAPS</li>" + list1 + "</ul><ul><li class='label'>GAMETYPES</li>" + list2 + "</ul>";
 		}
 	});
 	for (i = 0; i < Object.keys(maps).length; i++) {

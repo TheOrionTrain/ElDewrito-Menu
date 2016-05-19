@@ -516,13 +516,26 @@ audio {
     position: absolute;
     left: 780px;
     font-weight: 300;
-    color: #fff;
     width: 450px;
+}
+#setting-info ul {
+    display: inline-block;
+    list-style: none;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+#setting-info ul li.label {
+    font-size: 22px;
+    padding: 0 0 8px;
+    color: rgba(255,255,255,0.85);
 }
 #setting-name {
     top: 355px;
     font-size: 26px;
-    opacity: 0.85;
+    color: rgba(255,255,255,0.85);
     text-transform: uppercase;
 }
 #setting-thumbnail {
@@ -538,7 +551,7 @@ audio {
 #setting-info {
     top: 415px;
     font-size: 16px;
-    opacity: 0.7;
+    color: rgba(255,255,255,0.7);
 }
 #gametype-icon {
     position: absolute;
@@ -745,7 +758,8 @@ audio {
 #chatbox ::-webkit-scrollbar {
     width: 4px;
 }
-#lobby-container::-webkit-scrollbar{
+#lobby-container::-webkit-scrollbar,
+#options::-webkit-scrollbar {
 	width: 0px;
 }
 .map-select2,
@@ -765,7 +779,7 @@ audio {
     position: absolute;
     top: 150px;
     left: 310px;
-    width: 400px;
+    width: 260px;
     display: none;
     height: 500px;
     overflow-y: scroll;
