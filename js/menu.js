@@ -430,6 +430,9 @@ Menu = {
             "title" : "MATCHMAKING",
             "background" : ["matchmaking","multiplayer"],
             "previous" : "main",
+			"onload" : function() {
+				Setting.playlist.display();
+			},
             "thumbnail": 1,
             "lists" : [
                 "current-party",
@@ -438,13 +441,13 @@ Menu = {
             "options": {
                 "PLAYLIST" : {
                     "description" : "Select a playlist that suits your favorite play style.",
-                    "value" : "OFFLINE",
+                    "value" : Setting.playlist.current.toUpperCase(),
                     "action" : function() {Setting.change("playlist");}
                 },
                 "SEARCH RESTRICTIONS" : {
                     "description" : "Select options to prioritize how you get matched in matchmaking.",
                     "value" : "NONE (FASTEST)",
-                    "action" : function() {Menu.changeSetting("restrictions")}
+                    "action" : function() {Setting.change("restrictions")}
                 },
                 "PSYCH PROFILE" : {
                     "description" : "Select options that describe your playlist so that we can find you better matches.",
@@ -453,7 +456,7 @@ Menu = {
                 "START MATCHMAKING" : {
                      "description" : "Start selected Matchmaking game playlist.",
                      "action" : function() {
-						 startSearch("Big Team Battle");
+						 startSearch(Setting.playlist.current);
 						 Menu.change("searching");
 					 }
                 }
@@ -506,7 +509,7 @@ Menu = {
 						Menu.previous();
 						matchmakingServer.send(JSON.stringify({
 							type: 'leavesearch',
-							playlist: 'Team Slayer 4v4',
+							playlist: Setting.playlist.selected,
 							player: player
 						}));
 					}
