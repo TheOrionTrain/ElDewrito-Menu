@@ -10,6 +10,7 @@ var Setting = {
                 "background-image": "url('img/"+s+"/"+Setting[s].selected+"/"+Setting[s].current+".jpg')"
             });
             $('#setting-name').text(Setting[s].current);
+            $('#setting-info').html(Setting[s].options[Setting[s].selected.toLowerCase()][Setting[s].current].description);
         } else {
             $('#setting-thumbnail,#setting-name,#setting-info').hide();
         }
@@ -46,6 +47,7 @@ var Setting = {
                         "background-image": "url('img/"+s+"/"+p+"/"+m+".jpg')"
                     });
                     $('#setting-name').text(m);
+                    $('#setting-info').html(Setting[s].options[p][m].description);
                     Audio.click.currentTime = 0;
                 	Audio.click.play();
                 });
@@ -86,7 +88,7 @@ var Setting = {
 	restrictions: {
 		title: "Search Restrictions",
 		options: {
-			
+
 		}
 	}
 };
