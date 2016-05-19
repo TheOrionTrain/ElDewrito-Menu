@@ -322,25 +322,25 @@ Menu = {
                 "opacity" : 0.667
             });
         }, 10);
-        $('#main:not(.browser) #select-title').removeClass('animated').css({
+        $('#main:not(.browser):not(.leaderboard) #select-title').removeClass('animated').css({
             "top": "280px",
             "opacity" : 0
         });
 
-        $('#main:not(.browser) #select-previous').removeClass('animated').css({
+        $('#main:not(.browser):not(.leaderboard) #select-previous').removeClass('animated').css({
             "top" : "260px",
             "width": "0px"
         });
-        $('.browser #select-title, .browser #select-previous').attr('style'," ");
+        $('.browser #select-title, .browser #select-previous, .leaderboard #select-title, .leaderboard #select-previous').attr('style'," ");
         setTimeout(function() {
             $('#select-icon').css({
                 "transform": "scale(1)"
             })
-            $('#main:not(.browser) #select-title').addClass('animated').css({
+            $('#main:not(.browser):not(.leaderboard) #select-title').addClass('animated').css({
                 "top": "240px",
                 "opacity" : 1
             });
-            $('#main:not(.browser) #select-previous').addClass('animated').css({
+            $('#main:not(.browser):not(.leaderboard) #select-previous').addClass('animated').css({
                 "top" : "320px",
                 "width": "400px"
             });
