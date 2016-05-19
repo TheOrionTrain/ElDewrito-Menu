@@ -76,11 +76,17 @@ var Setting = {
         },
         selected: "Standard",
         current: "Slayer",
-        title: "Matchmaking Playlist",
+        title: "Playlist",
         thumb: 1,
         options: {
             standard: {},
             social: {}
         }
-    }
+    },
+	restrictions: {
+		title: "Search Restrictions",
+		options: {
+			
+		}
+	}
 };

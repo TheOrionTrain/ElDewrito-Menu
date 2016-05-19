@@ -49,7 +49,7 @@ StartMatchmakingConnection = function() {
 				break;
 				case "updatesearch":
 					console.log(result);
-					$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching... <span id="search-count">' + result.players.length + '/16</span></td></tr>');
+					$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching... <span id="search-count">' + result.players.length + '/' + Setting.playlist.options[Setting.playlist.selected.toLowerCase()][Setting.playlist.current].maxPlayers + '</span></td></tr>');
 					var isDev = (developers.indexOf(puid) >= 0) ? "developer" : "";
 					addPlayer("search", player, isDev);
 					for (var i = 0; i < result.players.length; i++) {
@@ -57,7 +57,7 @@ StartMatchmakingConnection = function() {
 						if (result.players[i].guid != puid)
 							addPlayer("search", result.players[i], isDev2);
 					}
-					for (var i = 0; i < (16 - result.players.length); i++) {
+					for (var i = 0; i < (Setting.playlist.options[Setting.playlist.selected.toLowerCase()][Setting.playlist.current].maxPlayers - result.players.length); i++) {
 						addPlayer("search", {
 							name: "Looking for player...",
 							guid: "000000",
@@ -89,7 +89,7 @@ StartMatchmakingConnection = function() {
 
 function startSearch(playlist) {
 	console.log(playlist);
-	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching... <span id="search-count">' + party.length + '/16</span></td></tr>');
+	$("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching... <span id="search-count">' + party.length + '/' + Setting.playlist.options[Setting.playlist.selected.toLowerCase()][Setting.playlist.current].maxPlayers + '</span></td></tr>');
 	for (var i = 0; i < party.length; i++) {
 		var isDev = (developers.indexOf(party[i].guid) >= 0) ? "developer" : "";
 		addPlayer("search", {
@@ -99,7 +99,7 @@ function startSearch(playlist) {
 			rank: party[i].rank,
 		}, isDev);
 	}
-	for (var i = 0; i < (16 - party.length); i++) {
+	for (var i = 0; i < (Setting.playlist.options[Setting.playlist.selected.toLowerCase()][Setting.playlist.current].maxPlayers - party.length); i++) {
 		addPlayer("search", {
 			name: "Looking for player...",
 			guid: "000000",
