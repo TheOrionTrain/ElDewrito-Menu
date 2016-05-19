@@ -521,7 +521,7 @@ audio {
 #setting-info ul {
     display: inline-block;
     list-style: none;
-    width: 50%;
+    width: 180px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -1120,7 +1120,7 @@ td.name.developer {
     cursor: pointer;
     opacity: 1;
 }
-.options-menu {
+#options {
     background: -moz-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
     background: -webkit-linear-gradient(top, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
     background: linear-gradient(to bottom, rgba(0, 38, 64, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
@@ -1129,7 +1129,7 @@ td.name.developer {
     top: 0px;
     left: 0;
     margin: 0;
-    z-index: 3;
+    z-index: 6;
     display: none;
     width: 1280px;
     height: 720px;
