@@ -196,23 +196,28 @@ Chat = {
 	},100)
 },
 Menu = {
+    "background" : "default",
     "change" : function(m) {
         if(Menu.pages[m]) {
             var ch = Menu.pages[m];
             if(ch.background) {
         		for(var i=0; i< ch.background.length; i++) {
-        			if($('#bg-'+ch.background[i]).length) {
+        			if($('#bg-'+ch.background[i]).length && ch.background[i] != Menu.background) {
                         $('#videos > video').fadeOut(anit);
                         $('#videos > video')[0].pause();
         				$('#bg-'+ch.background[i]).stop().fadeIn(anit);
         				$('#bg-'+ch.background[i])[0].play();
+                        Menu.background = ch.background[i];
         			}
         		}
         	} else {
-                $('#videos > video').fadeOut(anit);
-                $('#videos > video')[0].pause();
-        		$('#bg1').stop().stop().fadeIn(anit);
-        		$('#bg1')[0].play();
+                if(Menu.background != "default") {
+                    $('#videos > video').fadeOut(anit);
+                    $('#videos > video')[0].pause();
+            		$('#bg1').stop().stop().fadeIn(anit);
+            		$('#bg1')[0].play();
+                    Menu.background = "default";
+                }
         	}
             $('#select-title').text(ch.title);
             if(ch.previous) {
@@ -279,15 +284,70 @@ Menu = {
             Audio.slide.currentTime = 0;
             Audio.slide.play();
             if(ch.onload) {ch.onload();}
+            Menu.animate();
         }
+    },
+    animate: function() {
+        $('#select-main .selection').each(function(i) {
+            var el=$(this);
+            el.css({
+                "margin-left": "-100px",
+                "opacity" : 0
+            });
+            setTimeout(function() {
+                el.css({
+                    "margin-left": "0px",
+                    "opacity" : 1
+                });
+            }, i * (anit/8));
+        });
+        $('#select-icon').css({
+            "transform": "scale(0.9)"
+        })
+        $('#party-text, #description, #map-thumb').removeClass('animated').css({
+            "opacity" : 0
+        });
+        setTimeout(function() {
+            $('#description').addClass('animated').css({
+                "opacity" : 0.667
+            });
+        }, 300);
+        setTimeout(function() {
+            $('#map-thumb').addClass('animated').css({
+                "opacity" : 1
+            });
+        }, 400);
+        setTimeout(function() {
+            $('#party-text').addClass('animated').css({
+                "opacity" : 0.667
+            });
+        }, 10);
+        $('#main:not(.browser) #select-title').removeClass('animated').css({
+            "top": "280px",
+            "opacity" : 0
+        });
+
+        $('#main:not(.browser) #select-previous').removeClass('animated').css({
+            "top" : "260px",
+            "width": "0px"
+        });
+        $('.browser #select-title, .browser #select-previous').attr('style'," ");
+        setTimeout(function() {
+            $('#select-icon').css({
+                "transform": "scale(1)"
+            })
+            $('#main:not(.browser) #select-title').addClass('animated').css({
+                "top": "240px",
+                "opacity" : 1
+            });
+            $('#main:not(.browser) #select-previous').addClass('animated').css({
+                "top" : "320px",
+                "width": "400px"
+            });
+        }, 200);
     },
     "previous" : function() {
         Menu.change(Menu.pages[Menu.selected].previous);
-    },
-    "changeSetting" : function(set) {
-        console.log("changeSetting: "+set);
-        Audio.beep.currentTime = 0;
-        Audio.beep.play();
     },
     "pages" : {
         "main" : {
@@ -309,14 +369,18 @@ Menu = {
                 "CUSTOM GAME" : {
                     "description" : "Take your party to combat and objective-based missions that you select and design. Your rules, your maps, your game.",
                     "action" : function() {
-						dewRcon.send("server.lobbytype 2");
+						if (dewRconConnected) {
+                            dewRcon.send("server.lobbytype 2");
+                        }
 						Menu.change("customgame");
 					}
                 },
                 "FORGE" : {
                      "description" : "Take your party to collaborate in real time to edit and play variations of your favorite maps, from the subtle to the insane.",
                      "action" : function() {
-						 dewRcon.send("server.lobbytype 3");
+						if (dewRconConnected) {
+                            dewRcon.send("server.lobbytype 3");
+                        }
 						 Menu.change("forge");
 					 }
                 },
