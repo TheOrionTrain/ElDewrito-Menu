@@ -421,7 +421,7 @@ Menu = {
                 browsing = 1;
         		$('#browser').empty();
                 $('#lobby').empty();
-        		setTimeout(Browser.load, 1000);
+        		setTimeout(Browser.load, anit/2);
         		loopPlayers = false;
             },
             "class" : "browser",
