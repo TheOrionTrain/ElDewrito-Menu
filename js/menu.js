@@ -439,7 +439,7 @@ Menu = {
                 "PLAYLIST" : {
                     "description" : "Select a playlist that suits your favorite play style.",
                     "value" : "OFFLINE",
-                    "action" : function() {Menu.changeSetting("playlist")}
+                    "action" : function() {Setting.change("playlist");}
                 },
                 "SEARCH RESTRICTIONS" : {
                     "description" : "Select options to prioritize how you get matched in matchmaking.",
