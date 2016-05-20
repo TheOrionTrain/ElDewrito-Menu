@@ -209,7 +209,7 @@ Leaderboard = {
 	"load" : function() {
 		if (leading === 1) {
 			$('#leaders').empty();
-			$.getJSON("http://halostats.click/api/Leaderboard/25", function(data) {
+			$.getJSON("http://halostats.click/api/Leaderboard/25/1", function(data) {
 				Leaderboard.stats = data;
 				for (var i=0; i<Leaderboard.stats.length; i++) {
 					Leaderboard.add(Leaderboard.stats[i]);
