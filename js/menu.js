@@ -634,6 +634,23 @@ Menu = {
             "title" : "CUSTOM GAME",
             "background" : ["custom_games","multiplayer"],
             "previous" : "main",
+			"onload" : function() {
+				if (Menu.selected != "customgame")
+					return;
+				
+				dewRcon.send("server.listplayersjson", function(ret) {
+					ret = JSON.parse(ret.replaceAll("color", "colour"));
+					$("#lobby").empty().append('<tr class="top"><td class="info" colspan="2">Custom Game <span id="lobby-count">' + ret.length + '/16</span></td></tr>');
+					for (var i = 0; i < ret.length; i++) {
+						ret[i].rank = 0;
+						ret[i].UID = "0x" + ret[i].UID;
+						var isDev = (developers.indexOf(ret[i].UID) >= 0) ? "developer" : "";
+						addPlayer("lobby", ret[i], isDev);
+					}
+				});
+				
+				setTimeout(Menu.pages["customgame"].onload, 2000);
+			},
             "thumbnail": 1,
             "lists" : [
                 "current-party",
@@ -691,6 +708,23 @@ Menu = {
             "title" : "FORGE",
             "background" : ["forge","multiplayer"],
             "previous" : "main",
+			"onload" : function() {
+				if (Menu.selected != "forge")
+					return;
+				
+				dewRcon.send("server.listplayersjson", function(ret) {
+					ret = JSON.parse(ret.replaceAll("color", "colour"));
+					$("#lobby").empty().append('<tr class="top"><td class="info" colspan="2">Custom Game <span id="lobby-count">' + ret.length + '/16</span></td></tr>');
+					for (var i = 0; i < ret.length; i++) {
+						ret[i].rank = 0;
+						ret[i].UID = "0x" + ret[i].UID;
+						var isDev = (developers.indexOf(ret[i].UID) >= 0) ? "developer" : "";
+						addPlayer("lobby", ret[i], isDev);
+					}
+				});
+				
+				setTimeout(Menu.pages["forge"].onload, 2000);
+			},
             "thumbnail": 1,
             "lists" : [
                 "current-party",
