@@ -1,466 +1,437 @@
-
-div[data-menu-position="top"] {top: -720px;}
-div[data-menu-position="bottom"] {top: 720px;}
-div[data-menu-position="left"] {left: -720px;}
-div[data-menu-position="right"] {left: 720px;}
-div[data-menu-position="center"] {left: 0px; top: 0px;}
-
+div[data-menu-position='top'] {
+    top: -720px;
+}
+div[data-menu-position='bottom'] {
+    top: 720px;
+}
+div[data-menu-position='left'] {
+    left: -720px;
+}
+div[data-menu-position='right'] {
+    left: 720px;
+}
+div[data-menu-position='center'] {
+    top: 0;
+    left: 0;
+}
 #credits a {
+    transition: color .4s;
     text-decoration: none;
     color: inherit;
-    transition: color 0.4s;
 }
-
 #credits a:hover {
     color: #32aacd;
 }
-
 #alert-container, #click-menu-container {
-    display: none;
-    z-index: 11;
     position: absolute;
-    left: 0;
+    z-index: 11;
     top: 0;
+    left: 0;
+    display: none;
     width: 1280px;
     height: 720px;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, .2);
 }
-
 .chat-tab > .x {
-    width: 8px;
-    height: 8px;
     position: absolute;
+    z-index: 10;
     top: 2px;
     right: 2px;
-    background: url('../img/x.svg') no-repeat 0px 0px/8px 8px;
+    width: 8px;
+    height: 8px;
     cursor: pointer;
-    opacity: 0.8;
-    z-index: 10;
+    opacity: .8;
+    background: url('../img/x.svg') no-repeat 0 0/8px 8px;
 }
 .chat-tab > .x:hover {
     opacity: 1;
 }
-
 #chatbox {
+    position: absolute;
+    z-index: 100;
+    right: 20px;
+    bottom: 30px;
     display: none;
     width: 450px;
     height: 250px;
-    position: absolute;
-    bottom: 30px;
-    right: 20px;
-    background: rgba(0,0,0,0.4);
-    z-index: 100;
+    background: rgba(0, 0, 0, .4);
 }
-
 #chat-tabs {
     position: absolute;
     top: 0;
     left: 0;
+    overflow: hidden;
     width: 420px;
     height: 30px;
-    overflow: hidden;
 }
-
 #chat-pin {
     position: absolute;
     top: 0;
     right: 0;
     width: 30px;
     height: 30px;
+    opacity: .75;
     background-image: url(../img/pin.svg);
-    background-size: 20px;
-    background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.75;
+    background-position: center;
+    background-size: 20px;
 }
-
 #chat-input {
+    font-size: 14px;
     position: absolute;
     top: 220px;
     left: 0;
+    overflow: hidden;
+    box-sizing: border-box;
     width: 390px;
     height: 30px;
-    overflow: hidden;
-    outline: 0;
-    border: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: transparent;
-    color: #fff;
-    font-size: 14px;
     padding: 5px;
-    border-top: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, .25);
+    outline: 0;
+    background-color: transparent;
 }
-
 #chat-enter {
+    font-size: 15px;
     position: absolute;
     top: 220px;
     right: 0;
-    height: 30px;
-    width: 60px;
-    color: #fff;
-    padding: 5px 10px;
-    font-size: 15px;
     box-sizing: border-box;
+    width: 60px;
+    height: 30px;
     margin: 0;
+    padding: 5px 10px;
     text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, .25);
 }
-
 .chat-message {
-    display: block;
     font-size: 16px;
+    display: block;
     color: #fff;
 }
 .chat-message.self {
-    color: rgba(255,255,255,0.667);
+    color: rgba(255, 255, 255, .667);
 }
-
 .chat-message.alert {
-    color: rgba(255,0,0,0.9);
+    color: rgba(255, 0, 0, .9);
 }
-
 .chat-message > .balloon {
-    background-image: url(../img/party.svg);
-    background-size: 100%;
-    background-repeat: none;
-    background-position: center;
+    display: inline-block;
     width: 12px;
     height: 12px;
-    opacity: 0.9;
-    display: inline-block;
+    opacity: .9;
+    background-image: url(../img/party.svg);
+    background-repeat: none;
+    background-position: center;
+    background-size: 100%;
 }
-
-#chat-pin.pinned,
-#chat-pin:hover,
-#chat-enter:hover {
+#chat-pin.pinned, #chat-pin:hover, #chat-enter:hover {
+    cursor: pointer;
     opacity: 1;
-    background-color: rgba(0,0,0,0.4);
-    cursor: pointer;
+    background-color: rgba(0, 0, 0, .4);
 }
-
 .chat-tab {
-    display: inline-block;
-    height: 30px;
-    color: rgba(255,255,255,0.75);
-    padding: 5px 10px;
     font-size: 15px;
-    box-sizing: border-box;
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     position: relative;
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 30px;
+    margin: 0;
+    padding: 5px 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: rgba(255, 255, 255, .75);
 }
-
 .chat-tab.selected, .chat-tab:hover {
-    color: #fff;
-    background: rgba(0,0,0,0.4);
     cursor: pointer;
+    color: #fff;
+    background: rgba(0, 0, 0, .4);
 }
-
 #chat-windows {
     position: absolute;
-    height: 190px;
-    width: 450px;
     top: 30px;
     left: 0;
+    width: 450px;
+    height: 190px;
 }
-
 .chat-window {
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    left: 0;
     display: none;
+    overflow-y: scroll;
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     padding: 20px;
-    box-sizing: border-box;
-    font-size: 14px;
     color: #fff;
-    background: rgba(0,0,0,0.4);
-    overflow-y: scroll;
-    position: absolute;
-    left: 0;
-    top: 0;
+    background: rgba(0, 0, 0, .4);
 }
-
 .chat-window.selected {
     display: block;
 }
-
 .chat-window span {
     display: block;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
-
 #alert {
+    font-family: 'TV Nord';
     position: absolute;
-    left: 390px;
     top: -300px;
-    width: 500px;
-    background-color: #000;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    left: 390px;
     box-sizing: border-box;
+    width: 500px;
     padding: 16px;
-    font-family: "TV Nord";
+    border-radius: 5px;
+    background-color: #000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 }
-
 #alert-title {
     font-size: 24px;
-    color: #fff;
     margin: 0 0 24px 0;
     padding: 0;
     text-align: left;
+    color: #fff;
 }
-
 #alert-content {
     font-size: 16px;
-    color: #eee;
     margin: 0;
     padding: 0;
     text-align: left;
+    color: #eee;
 }
-
 #alert-actions {
     text-align: right;
 }
-
-#alert-yes,
-#alert-no {
-    display: inline-block;
+#alert-yes, #alert-no {
     font-size: 16px;
+    display: inline-block;
+    margin: 24px 8px 0 8px;
     color: #ddd;
-    margin: 24px 8px 0px 8px;
 }
-
-#alert-yes:hover,
-#alert-no:hover {
+#alert-yes:hover, #alert-no:hover {
     cursor: pointer;
     color: #fff;
 }
-
 #alert a {
-    color: #32aacd;
-    text-decoration: none;
     cursor: pointer;
+    text-decoration: none;
+    color: #32aacd;
 }
-
 #alert a:hover {
-    color: #55ccee;
+    color: #5ce;
 }
-
 #dewrito.credits {
     top: -30px;
     left: 265px;
-    -webkit-transition-timing-function: 200ms;
     -webkit-transition-delay: 0ms;
+    -webkit-transition-timing-function: 200ms;
 }
 #dewrito.options {
-    opacity: 0.9;
     top: 400px;
     left: -10px;
-    -webkit-transition-timing-function: 200ms;
     -webkit-transition-delay: 200ms;
+    -webkit-transition-timing-function: 200ms;
+    opacity: .9;
 }
 #dewrito.hidden {
-    opacity: 0;
-    left: 30px;
     top: 280px;
+    left: 30px;
+    opacity: 0;
 }
-
 .options-section.show {
     display: block;
 }
-
 .sprint, .nosprint {
-    vertical-align: middle;
     width: 20px;
     height: 20px;
     margin-left: 10px;
+    vertical-align: middle;
 }
-
 #click-menu {
     position: absolute;
-    left: 500px;
-    top: 200px;
-    width: 125px;
-    background-color: #000;
-    border-radius: 4px;
     z-index: 9999;
-    list-style: none;
+    top: 200px;
+    left: 500px;
     box-sizing: border-box;
-    padding: 0;
+    width: 125px;
     margin: 0;
+    padding: 0;
+    list-style: none;
+    border-radius: 4px;
+    background-color: #000;
 }
-
 #click-menu li {
-    height: 30px;
-    box-sizing: border-box;
-    color: rgba(255, 255, 255, 0.9);
-    font-family: "TV Nord";
+    font-family: 'TV Nord';
     font-size: 14px;
-    text-align: left;
+    box-sizing: border-box;
+    height: 30px;
     margin: 0;
     padding: 7px;
+    text-align: left;
+    color: rgba(255, 255, 255, .9);
 }
-
 #back-options {
-    left: 20px;
-    bottom: 20px;
     font-size: 18px;
-    opacity: 0.75;
     z-index: 99999999;
+    bottom: 20px;
+    left: 20px;
+    opacity: .75;
 }
-
 #friendslist {
     position: absolute;
-    top: 0px;
-    right: -250px;
     z-index: 10;
+    top: 0;
+    right: -250px;
     width: 250px;
     height: 720px;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, .8);
 }
 .list-half {
     position: relative;
-    height: 360px;
-    width: 250px;
     box-sizing: border-box;
+    width: 250px;
+    height: 360px;
 }
 #friends, #party {
     position: absolute;
     top: 50px;
     left: 10px;
+    overflow-y: scroll;
     width: 235px;
     height: 250px;
-    overflow-y: scroll;
 }
 #friends-close {
-    width: 14px;
-    height: 14px;
     position: absolute;
+    z-index: 10;
     top: 25px;
     right: 25px;
-    background: url('../img/x.svg') no-repeat 0px 0px/14px 14px;
+    width: 14px;
+    height: 14px;
     cursor: pointer;
-    opacity: 0.8;
-    z-index: 10;
+    opacity: .8;
+    background: url('../img/x.svg') no-repeat 0 0/14px 14px;
 }
 #friends-close:hover {
     opacity: 1;
 }
 .nofriends {
-    padding: 8px 10px;
     font-size: 18px;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
+    padding: 8px 10px;
+    color: rgba(255, 255, 255, .9);
 }
 .friends-title {
     font-size: 26px;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
     margin: 25px 25px 50px 25px;
+    color: rgba(255, 255, 255, .9);
 }
 .friend {
-    padding: 8px 10px;
     font-size: 16px;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
-    border-radius: 4px;
     margin: 5px 0;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    transition: 0.5s;
+    padding: 8px 10px;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s;
+    color: rgba(255, 255, 255, .9);
+    border-radius: 4px;
 }
 .friend:hover, #click-menu li:hover {
-    color: rgba(255, 255, 255, 1);
-    background: rgba(50,50,50,0.9);
     cursor: pointer;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(50, 50, 50, .9);
 }
 .friend.online:after {
-    content: " ";
-    background: rgba(0,255,55,0.66);
+    float: right;
     width: 8px;
     height: 8px;
-    border-radius: 8px;
-    float: right;
     margin: 5px;
+    content: ' ';
+    border-radius: 8px;
+    background: rgba(0, 255, 55, .66);
 }
 .friend.offline:after {
-    content: " ";
-    background: rgba(255,0,55,0.66);
+    float: right;
     width: 8px;
     height: 8px;
-    border-radius: 8px;
-    float: right;
     margin: 5px;
+    content: ' ';
+    border-radius: 8px;
+    background: rgba(255, 0, 55, .66);
 }
 #party .friend:first-of-type:after {
-    content: " ";
-    background-image: url(../img/party.svg);
-    background-size: 100%;
-    background-repeat: none;
-    background-position: center;
+    float: right;
     width: 16px;
     height: 16px;
-    float: right;
     margin: 0;
-    opacity: 0.9;
+    content: ' ';
+    opacity: .9;
+    background-image: url(../img/party.svg);
+    background-repeat: none;
+    background-position: center;
+    background-size: 100%;
 }
-
 #party .friend:first-of-type:hover:after {
     opacity: 1;
 }
 #addfriend {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     left: 15px;
     width: 220px;
 }
 #friend-input {
-    padding: 8px 10px;
     font-size: 16px;
     font-weight: 300;
-    color: rgba(0, 0, 0, 0.9);
-    background: rgba(255,255,255,0.9);
-    border-radius: 4px;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    transition: 0.5s;
-    border: 0;
-    outline: 0;
-    margin: 0;
-    width: 80%;
     display: inline-block;
     box-sizing: border-box;
+    width: 80%;
+    margin: 0;
+    padding: 8px 10px;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s;
+    color: rgba(0, 0, 0, .9);
+    border: 0;
+    border-radius: 4px;
+    outline: 0;
+    background: rgba(255, 255, 255, .9);
 }
 #friend-add, #friend-remove {
-    padding: 8px 10px;
     font-size: 16px;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0 0 0 5px;
-    border-radius: 4px;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    transition: 0.5s;
-    width: calc(20% - 5px);
     display: inline-block;
-    text-align: center;
     box-sizing: border-box;
+    width: calc(20% - 5px);
+    margin: 0 0 0 5px;
+    padding: 8px 10px;
     cursor: pointer;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s;
+    text-align: center;
+    color: rgba(255, 255, 255, .9);
+    border-radius: 4px;
 }
 #friend-add {
-    background: rgba(0,160,25,0.9);
+    background: rgba(0, 160, 25, .9);
 }
 #friend-remove {
-    background: rgba(160,0,25,0.9);
+    background: rgba(160, 0, 25, .9);
 }
 #friend-add:hover {
-    background: rgba(0,255,55,0.9);
+    background: rgba(0, 255, 55, .9);
 }
 #friend-remove:hover {
-    background: rgba(255,0,55,0.9);
+    background: rgba(255, 0, 55, .9);
 }
 .regular .elversion {
     font-size: 15px;
@@ -474,38 +445,38 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     padding-right: 20px;
 }
 .elversion {
-    vertical-align: middle;
     padding-left: 10px;
+    vertical-align: middle;
 }
 #loading {
     position: absolute;
-    left: 0;
     top: 0;
+    left: 0;
+    display: none;
     width: 100%;
     height: 100%;
-    display: none;
 }
 #loadingMapImage {
-    z-index: 20;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    z-index: 20;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: url('../img/loading/maps/diamondback.jpg') 50% 50% / contain no-repeat;
 }
 #loadingBars {
-    z-index: 22;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    z-index: 22;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: url('../img/loading/bars.png') 50% 50% / contain no-repeat;
 }
 #hoImage {
-    z-index: 22;
     position: absolute;
+    z-index: 22;
     top: -20px;
     left: 15px;
     width: 20%;
@@ -513,17 +484,17 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     background: url('../img/loading/ho.png') 50% 50% / contain no-repeat;
 }
 #edImage {
-    z-index: 22;
     position: absolute;
+    z-index: 22;
     top: 635px;
-    left: 0px;
+    left: 0;
     width: 10%;
     height: 10%;
     background: url('../img/loading/ed.png') 50% 50% / contain no-repeat;
 }
 #loadingGametypeImage {
-    z-index: 22;
     position: absolute;
+    z-index: 22;
     top: 10px;
     right: 10px;
     width: 80px;
@@ -531,18 +502,18 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     background: url('../img/gametypes/Slayer.png') 0 0 / cover no-repeat;
 }
 #loadingMapName {
-    z-index: 22;
+    font-family: 'Conduit ITC';
+    font-size: 30px;
+    font-weight: 300;
     position: absolute;
+    z-index: 22;
     bottom: 35px;
     left: 8%;
-    font-family: "Conduit ITC";
-    font-weight: 300;
-    font-size: 30px;
     color: #fff;
 }
 #mapOverlay {
-    z-index: 22;
     position: absolute;
+    z-index: 22;
     top: 150px;
     left: 20px;
     width: 55%;
@@ -550,67 +521,67 @@ div[data-menu-position="center"] {left: 0px; top: 0px;}
     background: url('../img/loading/maps/db-overlay.png') 50% 50% / contain no-repeat;
 }
 #popup {
+    font-size: 15px;
     position: fixed;
     z-index: 3000;
     top: 20px;
     right: 20px;
+    display: none;
+    box-sizing: border-box;
     max-width: 250px;
     padding: 10px;
-    box-sizing: border-box;
-    font-size: 15px;
     color: #fff;
-    display: none;
-    background: rgba(0, 0, 0, 0.66);
     border-radius: 8px;
+    background: rgba(0, 0, 0, .66);
 }
 html {
     background: #000;
 }
 @-webkit-keyframes rotatingcw {
     from {
-        -moz-transform: rotate(0deg);
         -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
         transform: rotate(0deg);
     }
     to {
-        -moz-transform: rotate(-360deg);
         -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(-360deg);
         transform: rotate(360deg);
     }
 }
 @keyframes rotatingcw {
     from {
-        -moz-transform: rotate(0deg);
         -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
         transform: rotate(0deg);
     }
     to {
-        -moz-transform: rotate(360deg);
         -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
 @-webkit-keyframes rotating {
     from {
-        -moz-transform: rotate(0deg);
         -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
         transform: rotate(0deg);
     }
     to {
-        -moz-transform: rotate(-360deg);
         -webkit-transform: rotate(-360deg);
+        -moz-transform: rotate(-360deg);
         transform: rotate(-360deg);
     }
 }
 @keyframes rotating {
     from {
-        -moz-transform: rotate(0deg);
         -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
         transform: rotate(0deg);
     }
     to {
-        -moz-transform: rotate(-360deg);
         -webkit-transform: rotate(-360deg);
+        -moz-transform: rotate(-360deg);
         transform: rotate(-360deg);
     }
 }
@@ -619,23 +590,19 @@ html {
     -moz-animation: rotating 2s linear infinite;
     animation: rotating 2s linear infinite;
 }
-#back,
-#back-options,
-#version,
-#dewmenu-button,
-#browser-settings {
+#back, #back-options, #version, #dewmenu-button, #browser-settings {
     position: absolute;
-    cursor: pointer;
     z-index: 4;
+    cursor: pointer;
     color: #fff;
 }
 #browser.list .flag {
     position: relative;
-    top: 0px;
+    top: 0;
     display: inline-block;
-    vertical-align: top;
     max-width: 30px;
     max-height: 20px;
+    vertical-align: top;
 }
 #browser.regular .name {
     position: relative;
@@ -643,11 +610,11 @@ html {
 }
 #browser.regular .flag {
     position: relative;
-    top: 0px;
+    top: 0;
     display: inline-block;
-    vertical-align: top;
     max-width: 30px;
     max-height: 23px;
+    vertical-align: top;
 }
 #browser.condensed .name {
     position: relative;
@@ -655,65 +622,66 @@ html {
 }
 #browser.condensed .flag {
     position: relative;
-    top: 0px;
+    top: 0;
     display: inline-block;
-    vertical-align: top;
     max-width: 30px;
     max-height: 18px;
+    vertical-align: top;
 }
 .server.passworded {
     position: relative;
 }
 .regular .server.passworded .thumb:before {
-    content: " ";
-    display: block;
-    background: rgba(0, 0, 0, 0.59) url(../img/passworded.svg) no-repeat 50% 50%;
-    width: 210px;
-    height: 79px;
-    padding: 0;
-    margin: 0;
     position: absolute;
     top: 11px;
     left: 15px;
+    display: block;
+    width: 210px;
+    height: 79px;
+    margin: 0;
+    padding: 0;
+    content: ' ';
+    background: rgba(0, 0, 0, .59) url(../img/passworded.svg) no-repeat 50% 50%;
     background-size: 15%;
 }
 .condensed .server.passworded .thumb:before {
-    content: " ";
-    display: block;
-    background: rgba(0, 0, 0, 0.59) url(../img/passworded.svg) no-repeat 50% 50%;
-    width: 210px;
-    height: 60px;
-    padding: 0;
-    margin: 0;
     position: absolute;
     top: 6px;
     left: 15px;
+    display: block;
+    width: 210px;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    content: ' ';
+    background: rgba(0, 0, 0, .59) url(../img/passworded.svg) no-repeat 50% 50%;
     background-size: 15%;
 }
 .list .server.passworded .thumb:before {
-    content: " ";
-    display: block;
-    background: rgba(0, 0, 0, 0.59) url(../img/passworded.svg) no-repeat 50% 50%;
-    width: 70px;
-    height: 24px;
-    padding: 0;
-    margin: 0;
     position: absolute;
     top: 3px;
     left: 15px;
+    display: block;
+    width: 70px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    content: ' ';
+    background: rgba(0, 0, 0, .59) url(../img/passworded.svg) no-repeat 50% 50%;
     background-size: 15%;
 }
 .cf:after {
-    visibility: hidden;
-    display: block;
     font-size: 0;
-    content: " ";
+    display: block;
+    visibility: hidden;
     clear: both;
     height: 0;
+    content: ' ';
 }
 .cf {
     display: inline-block;
 }
+
 /* start commented backslash hack \*/
 
 * html .cf {
@@ -722,49 +690,49 @@ html {
 .cf {
     display: block;
 }
+
 /* close commented backslash hack */
 
 #snackbar-container {
     position: fixed;
-    right: 10px;
+    z-index: 99999;
     top: 10px;
-    z-index: 99999
+    right: 10px;
 }
 .snackbar {
-    overflow: hidden;
     clear: both;
+    overflow: hidden;
     min-width: 150px;
     max-width: 275px;
     cursor: pointer;
-    opacity: 0
+    opacity: 0;
 }
 .snackbar.snackbar-opened {
     height: auto;
-    opacity: 1
+    opacity: 1;
 }
-
 .snackbar {
-  background-color: #000;
-  color: #FFFFFF;
-  font-size: 12px;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  height: 0;
-  -moz-transition: -moz-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, padding 0 linear 0.2s, height 0 linear 0.2s;
-  -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, padding 0 linear 0.2s, height 0 linear 0.2s;
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, padding 0 linear 0.2s, height 0 linear 0.2s;
-  -moz-transform: translateY(200%);
-  -webkit-transform: translateY(200%);
-  transform: translateY(200%);
+    font-size: 12px;
+    height: 0;
+    -webkit-transition: -webkit-transform .2s ease-in-out, opacity .2s ease-in, height 0 linear .2s, padding 0 linear .2s, height 0 linear .2s;
+    -moz-transition: -moz-transform .2s ease-in-out, opacity .2s ease-in, height 0 linear .2s, padding 0 linear .2s, height 0 linear .2s;
+    transition: transform .2s ease-in-out, opacity .2s ease-in, height 0 linear .2s, padding 0 linear .2s, height 0 linear .2s;
+    -webkit-transform: translateY(200%);
+    -moz-transform: translateY(200%);
+    transform: translateY(200%);
+    color: #fff;
+    border-radius: 3px;
+    background-color: #000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 }
 .snackbar.snackbar-opened {
-  padding: 8px 10px;
-  margin-bottom: 10px;
-  height: auto;
-  -moz-transition: -moz-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s;
-  -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s;
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s, height 0 linear 0.2s;
-  -moz-transform: none;
-  -webkit-transform: none;
-  transform: none;
+    height: auto;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    -webkit-transition: -webkit-transform .2s ease-in-out, opacity .2s ease-in, height 0 linear .2s;
+    -moz-transition: -moz-transform .2s ease-in-out, opacity .2s ease-in, height 0 linear .2s;
+    transition: transform .2s ease-in-out, opacity .2s ease-in, height 0 linear .2s, height 0 linear .2s;
+    -webkit-transform: none;
+    -moz-transform: none;
+    transform: none;
 }
