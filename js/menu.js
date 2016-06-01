@@ -95,6 +95,56 @@ var Audio = {
             Lobby.status = 1;
             Menu.change("gamelobby");
             Lobby.update();
+        },
+        voting: {
+            status: 0,
+            polling: 0,
+            start: function() {
+                Lobby.voting.status = 1;
+                Lobby.voting.polling = setInterval(Lobby.voting.update, 5000);
+                $('#select-main').hide();
+                $('#select-voting').show();
+                Lobby.voting.update();
+            },
+            update: function() {
+                if (Menu.selected == "gamelobby" || Menu.selected == "matchmaking") {
+                    $.ajax({
+                        url: "http://test.eriq.xyz",
+                        type: "post",
+                        data: {
+                            "action": "update"
+                        },
+                        success: function(data) {
+                            data = $.parseJSON(data);
+                            $('#select-voting').empty();
+                            for (var i = 0; i < data.length; i++) {
+                                var c = data[i];
+                                $('#select-voting').append("<div data-option='" + i + "' class='selection' data-gp='voting-" + (i + 1) + "'><div class='thumb'><img src='img/maps/" + getMapName(c.file).toString().toUpperCase() + ".jpg'></div><div class='info'>" + c.map + "<br/>" + c.type + "</div><div class='votes'>" + c.votes + "</div><div class='square'></div></div>");
+                            }
+                            $('#select-voting .selection').hover(function() {
+                                Audio.click.currentTime = 0;
+                                Audio.click.play();
+                                $('.selection').removeClass('gp-on');
+                                $(this).addClass("gp-on");
+                                Controller.selected = $(this).attr('data-gp').split("-")[1];
+                                Controller.select("voting-" + Controller.selected);
+                            });
+                        },
+                        error: function(xhr, desc, err) {
+                            console.log(xhr);
+                            console.log("Details: " + desc + "\nError:" + err);
+                        }
+                    });
+                } else {
+                    Lobby.voting.status = 0;
+                    clearInterval(Lobby.voting.polling);
+                    $('#select-main').show();
+                    $('#select-voting').hide();
+                }
+            },
+            send: function(vote) {
+
+            }
         }
     },
     Chat = {

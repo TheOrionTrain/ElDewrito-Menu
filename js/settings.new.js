@@ -80,7 +80,7 @@ var Setting = {
                 "background-image": "url('img/playlist/" + Setting.playlist.selected + "/" + Setting.playlist.current + ".jpg')"
             });
         },
-        selected: "Standard",
+        selected: "standard",
         current: "Slayer",
         title: "Playlist",
         thumb: 1,
