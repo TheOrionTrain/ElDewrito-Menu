@@ -99,9 +99,11 @@ var Audio = {
         voting: {
             status: 0,
             polling: 0,
+            voted: "none",
             start: function() {
                 Lobby.voting.status = 1;
                 Lobby.voting.polling = setInterval(Lobby.voting.update, 5000);
+                Lobby.voting.voted = "none";
                 $('#select-main').hide();
                 $('#select-voting').show();
                 Lobby.voting.update();
@@ -121,6 +123,7 @@ var Audio = {
                                 var c = data[i];
                                 $('#select-voting').append("<div data-option='" + i + "' class='selection' data-gp='voting-" + (i + 1) + "'><div class='thumb'><img src='img/maps/" + getMapName(c.file).toString().toUpperCase() + ".jpg'></div><div class='info'>" + c.map + "<br/>" + c.type + "</div><div class='votes'>" + c.votes + "</div><div class='square'></div></div>");
                             }
+                            $('#select-voting .selection[data-option="' + Lobby.voting.voted + '"]').addClass('voted');
                             $('#select-voting .selection').hover(function() {
                                 Audio.click.currentTime = 0;
                                 Audio.click.play();
@@ -128,6 +131,12 @@ var Audio = {
                                 $(this).addClass("gp-on");
                                 Controller.selected = $(this).attr('data-gp').split("-")[1];
                                 Controller.select("voting-" + Controller.selected);
+                            }).click(function() {
+                                var v = parseInt($(this).attr('data-option'));
+                                console.log(v);
+                                Audio.slide.currentTime = 0;
+                                Audio.slide.play();
+                                Lobby.voting.send(v);
                             });
                         },
                         error: function(xhr, desc, err) {
@@ -142,8 +151,22 @@ var Audio = {
                     $('#select-voting').hide();
                 }
             },
-            send: function(vote) {
-
+            send: function(v) {
+                if (typeof Lobby.voting.voted != "number") {
+                    Lobby.voting.voted = v;
+                    $.ajax({
+                        url: "http://test.eriq.xyz",
+                        type: "post",
+                        data: {
+                            "action": "vote",
+                            "vote": v
+                        },
+                        success: function() {
+                            Lobby.voting.update();
+                            console.log("Voted for " + v);
+                        }
+                    });
+                }
             }
         }
     },
