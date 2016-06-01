@@ -1183,6 +1183,7 @@ td.name.developer {
     vertical-align: middle;
 }
 #select-voting .square {
+    position: relative;
     display: inline-block;
     box-sizing: border-box;
     width: 40px;
@@ -1197,4 +1198,13 @@ td.name.developer {
 }
 #select-voting {
     display: none;
+}
+#select-voting .selection.voted .square:after {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    content: ' ';
+    background-color: rgba(255, 255, 255, .75);
 }
