@@ -13,7 +13,7 @@
 	<script src="js/snackbar.js"></script>
 	<script src="js/helper.js"></script>
 	<script src="js/gamepad.js"></script>
-	<script type="text/javascript" src="dew://lib/dew.js"></script>
+	<script src="dew://lib/dew.js"></script>
 </head>
 
 <body>
@@ -23,6 +23,7 @@
 				return false;
 			}
 		}
+
 		function clickNS4(e) {
 			if (document.layers || document.getElementById && !document.all) {
 				if (e.which == 2 || e.which == 3) {
@@ -167,6 +168,7 @@
 			<div id="party-text">This party is local to this computer.</div>
 			<div id="select-previous"></div>
 			<div id="select-main"></div>
+			<div id="select-voting"></div>
 			<div id="description"></div>
 			<div id="controls"></div>
 		</div>
