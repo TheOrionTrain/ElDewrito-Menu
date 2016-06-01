@@ -99,6 +99,7 @@ var Audio = {
             status: 0,
             polling: 0,
             voted: "none",
+            previous: 0,
             start: function() {
                 $.ajax({
                     url: "http://test.eriq.xyz",
@@ -135,26 +136,29 @@ var Audio = {
                         },
                         success: function(data) {
                             data = $.parseJSON(data);
-                            $('#select-voting').empty();
-                            for (var i = 0; i < data.length; i++) {
-                                var c = data[i];
-                                $('#select-voting').append("<div data-option='" + i + "' class='selection' data-gp='voting-" + (i + 1) + "'><div class='thumb'><img src='img/maps/" + getMapName(c.file).toString().toUpperCase() + ".jpg'></div><div class='info'>" + c.map + "<br/>" + c.type + "</div><div class='votes'>" + c.votes + "</div><div class='square'></div></div>");
+                            if (JSON.stringify(Lobby.voting.previous) != JSON.stringify(data)) {
+                                $('#select-voting').empty();
+                                for (var i = 0; i < data.length; i++) {
+                                    var c = data[i];
+                                    $('#select-voting').append("<div data-option='" + i + "' class='selection' data-gp='voting-" + (i + 1) + "'><div class='thumb'><img src='img/maps/" + getMapName(c.file).toString().toUpperCase() + ".jpg'></div><div class='info'>" + c.map + "<br/>" + c.type + "</div><div class='votes'>" + c.votes + "</div><div class='square'></div></div>");
+                                }
+                                $('#select-voting .selection[data-option="' + Lobby.voting.voted + '"]').addClass('voted');
+                                $('#select-voting .selection').hover(function() {
+                                    Audio.click.currentTime = 0;
+                                    Audio.click.play();
+                                    $('.selection').removeClass('gp-on');
+                                    $(this).addClass("gp-on");
+                                    Controller.selected = $(this).attr('data-gp').split("-")[1];
+                                    Controller.select("voting-" + Controller.selected);
+                                }).click(function() {
+                                    var v = parseInt($(this).attr('data-option'));
+                                    console.log(v);
+                                    Audio.slide.currentTime = 0;
+                                    Audio.slide.play();
+                                    Lobby.voting.send(v);
+                                });
+                                Lobby.voting.previous = data;
                             }
-                            $('#select-voting .selection[data-option="' + Lobby.voting.voted + '"]').addClass('voted');
-                            $('#select-voting .selection').hover(function() {
-                                Audio.click.currentTime = 0;
-                                Audio.click.play();
-                                $('.selection').removeClass('gp-on');
-                                $(this).addClass("gp-on");
-                                Controller.selected = $(this).attr('data-gp').split("-")[1];
-                                Controller.select("voting-" + Controller.selected);
-                            }).click(function() {
-                                var v = parseInt($(this).attr('data-option'));
-                                console.log(v);
-                                Audio.slide.currentTime = 0;
-                                Audio.slide.play();
-                                Lobby.voting.send(v);
-                            });
                         },
                         error: function(xhr, desc, err) {
                             console.log(xhr);
