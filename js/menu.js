@@ -107,6 +107,7 @@ var Audio = {
                         "action": "start"
                     },
                     success: function(data) {
+                        clearInterval(Lobby.voting.polling);
                         Lobby.voting.session = data.session;
                         Lobby.voting.status = 1;
                         Lobby.voting.polling = setInterval(function() {
