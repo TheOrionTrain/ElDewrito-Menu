@@ -25,7 +25,6 @@ var Audio = {
                             Lobby[x] = d[x];
                         }
                     }
-                    console.log(Lobby);
                     var o = Menu.pages.gamelobby.options;
                     $('[data-option="GAME TYPE"]').html("GAME TYPE <span class='value'>" + Lobby.variant.toUpperCase() + "</span>");
                     $('[data-option="MAP"]').html("MAP <span class='value'>" + Lobby.map.toUpperCase() + "</span>");
@@ -101,20 +100,37 @@ var Audio = {
             polling: 0,
             voted: "none",
             start: function() {
-                Lobby.voting.status = 1;
-                Lobby.voting.polling = setInterval(Lobby.voting.update, 5000);
-                Lobby.voting.voted = "none";
-                $('#select-main').hide();
-                $('#select-voting').show();
-                Lobby.voting.update();
+                $.ajax({
+                    url: "http://test.eriq.xyz",
+                    type: "post",
+                    data: {
+                        "action": "start"
+                    },
+                    success: function(data) {
+                        Lobby.voting.session = data.session;
+                        Lobby.voting.status = 1;
+                        Lobby.voting.polling = setInterval(function() {
+                            Lobby.voting.update(data.session)
+                        }, 5000);
+                        Lobby.voting.voted = "none";
+                        $('#select-main').hide();
+                        $('#select-voting').show();
+                        Lobby.voting.update(data.session);
+                    },
+                    error: function(xhr, desc, err) {
+                        console.log(xhr);
+                        console.log("Details: " + desc + "\nError:" + err);
+                    }
+                });
             },
-            update: function() {
+            update: function(session) {
                 if (Menu.selected == "gamelobby" || Menu.selected == "matchmaking") {
                     $.ajax({
                         url: "http://test.eriq.xyz",
                         type: "post",
                         data: {
-                            "action": "update"
+                            "action": "update",
+                            "session": session
                         },
                         success: function(data) {
                             data = $.parseJSON(data);
@@ -159,11 +175,11 @@ var Audio = {
                         type: "post",
                         data: {
                             "action": "vote",
+                            "session": Lobby.voting.session,
                             "vote": v
                         },
                         success: function() {
-                            Lobby.voting.update();
-                            console.log("Voted for " + v);
+                            Lobby.voting.update(Lobby.voting.session);
                         }
                     });
                 }
