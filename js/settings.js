@@ -39,7 +39,7 @@ var user = {
             "increment": 5,
             "update": function() {
                 var c = settings.musicvolume.current;
-                $('#music')[0].volume = c * 0.01;
+                Audio.music.volume = c * 0.01;
                 $("[data-option='musicvolume']").children('.value').text(c);
             }
         },
@@ -192,7 +192,7 @@ var user = {
                     $('#bg1')[0].play();
                 } else {
                     if (c === 9001) {
-                        $('#music')[0].pause();
+                        Audio.music.pause();
                         $('#videos').append("<video id='bg1' src='" + d + "Halo 5.webm' loop autoplay type='video/webm'></video>");
                         $('#menu').children().hide();
                         $('#videos').show();

@@ -8,7 +8,8 @@ var Audio = {
         "beep": new Audio("audio/halo3/countdown_for_respawn.ogg"),
         "beeep": new Audio("audio/halo3/player_respawn.ogg"),
         "click": new Audio("audio/halo3/cursor_horizontal.ogg"),
-        "slide": new Audio("audio/halo3/a_button.ogg")
+        "slide": new Audio("audio/halo3/a_button.ogg"),
+        "music": new Audio(),
     },
     Lobby = {
         "address": "0.0.0.0",
