@@ -256,7 +256,7 @@ function loadSettings(i) {
             StartConnection();
         loadedSettings = true;
         if (!dewRconConnected && hook) {
-            $('#music')[0].pause();
+            Audio.music.pause();
             $("video").each(function() {
                 $(this)[0].pause();
             });
@@ -801,7 +801,8 @@ $(document).ready(function() {
     Audio.notification.currentTime = 0;
     Audio.notification.play();
     totalPlayersLoop();
-    $('#music')[0].addEventListener('ended', function() {
+    Audio.music.play();
+    Audio.music.addEventListener('ended', function() {
         if (settings.shufflemusic.current === 1) {
             changeSong2(nextSong);
         } else {
@@ -869,7 +870,7 @@ $(document).ready(function() {
     });
     var e = ((window.innerHeight - $('#menu').height()) / 2) - 40;
     Audio.connect.volume = settings.musicvolume.current * 0.01;
-    $('#music')[0].volume = settings.musicvolume.current * 0.01;
+    Audio.music.volume = settings.musicvolume.current * 0.01;
     Audio.click.volume = settings.sfxvolume.current * 0.01;
     Audio.notification.volume = settings.sfxvolume.current * 0.01;
     $('#start').click(function() {
@@ -1120,7 +1121,7 @@ function startgame(ip, mode, pass) {
     setTimeout(function() {
         Audio.beeep.play();
     }, 3000);
-    $('#music')[0].pause();
+    Audio.music.pause();
     $('#black').fadeIn(3000);
     delay(function() {
         if (mode[0] === "JOIN") {
@@ -1378,7 +1379,8 @@ function changeSong2(song) {
     }
     $('.music-select2 .selection').removeClass('selected');
     $("[data-song='" + song + "']").addClass('selected');
-    $('#music').attr('src', directory + currentAlbum + "/" + song + '.ogg');
+    Audio.music.src = directory + currentAlbum + "/" + song + '.ogg';
+    Audio.music.play();
     localStorage.setItem('song', song);
     localStorage.setItem('album', currentAlbum);
     $.snackbar({
