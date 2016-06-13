@@ -470,7 +470,7 @@ function addPlayer(id, player, isDev, opacity) {
     $('<tr>', {
         'hex-color': player.colour,
         'data-color': hexToRgb(player.colour, 0.5),
-        'style': 'background:' + hexToRgb(player.colour, 0.5) + ';' + (opacity ? 'opacity:' + opacity : null),
+        'style': 'background:' + hexToRgb(player.colour, 0.5) + ';' + (opacity ? 'opacity:' + opacity : ''),
         html: $('<td>', {
             class: 'name ' + isDev,
             text: player.name
