@@ -75,6 +75,7 @@ StartMatchmakingConnection = function() {
                     }
                     break;
                 case "connect":
+					clearInterval(dot);
                     dewRcon.send('connect "' + result.server.ip + '"');
                     break;
                 case "id":
@@ -95,6 +96,36 @@ StartMatchmakingConnection = function() {
     };
 }
 
+var dot;
+var dotCount = 0;
+var backwards = false;
+
+function dots() {
+	if ($("#search tr:not(.top) .name:contains('Looking for player')").length <= 0)
+		return;
+	
+	$("#search tr:not(.top) .name:contains('Looking for player')").text("Looking for player" + getDots());
+}
+
+function getDots() {
+	var dotdot = "";
+	if (dotCount >= 3) {
+		backwards = true;
+	} else if (dotCount < 0) {
+		backwards = false;
+	}
+	
+	if (backwards)
+		dotCount--;
+	else
+		dotCount++;
+	
+	for (var i = 0; i < dotCount; i++)
+		dotdot += ".";
+	
+	return dotdot;
+}
+
 function startSearch(playlist) {
     console.log(playlist);
     $("#search").empty().append('<tr class="top"><td class="info" colspan="2">Searching... <span id="search-count">' + party.length + '/' + Setting.playlist.options[Setting.playlist.selected.toLowerCase()][Setting.playlist.current].maxPlayers + '</span></td></tr>');
@@ -109,12 +140,14 @@ function startSearch(playlist) {
     }
     for (var i = 0; i < (Setting.playlist.options[Setting.playlist.selected.toLowerCase()][Setting.playlist.current].maxPlayers - party.length); i++) {
         addPlayer("search", {
-            name: "Looking for player...",
+            name: "Looking for player",
             guid: "000000",
             colour: "#BDBDBD",
             rank: 0
         }, null, 0.6);
     }
+	
+	dot = setInterval(dots, 250);
 
     matchmakingServer.send(JSON.stringify({
         type: "search",

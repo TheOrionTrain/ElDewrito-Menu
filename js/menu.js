@@ -745,6 +745,7 @@ var Audio = {
                         "label": "Back",
                         "action": function() {
                             Menu.previous();
+							clearInterval(dot);
                             matchmakingServer.send(JSON.stringify({
                                 type: 'leavesearch',
                                 playlist: Setting.playlist.selected,
