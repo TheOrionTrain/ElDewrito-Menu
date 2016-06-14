@@ -3,8 +3,6 @@
     http://creativecommons.org/licenses/by-nc-sa/4.0/
 */
 
-var servermode = 4;
-
 if (hook) {
 	dew.on("VoteCountsUpdated", function(event) {
 		event.data.forEach(function(entry, i) {
@@ -843,11 +841,9 @@ var Audio = {
                         "action": function() {
 							if ($("#select-main .selection[data-option='NETWORK'] .value").text() == "LOCAL") {
 								$("#select-main .selection[data-option='NETWORK'] .value").text("ONLINE");
-								servermode = 3;
 								dewRcon.send("server.mode 3");
 							} else {
 								$("#select-main .selection[data-option='NETWORK'] .value").text("LOCAL");
-								servermode = 4;
 								dewRcon.send("server.mode 4");
 							}
 						}
@@ -934,11 +930,9 @@ var Audio = {
                         "action": function() {
 							if ($("#select-main .selection[data-option='NETWORK'] .value").text() == "LOCAL") {
 								$("#select-main .selection[data-option='NETWORK'] .value").text("ONLINE");
-								servermode = 3;
 								dewRcon.send("server.mode 3");
 							} else {
 								$("#select-main .selection[data-option='NETWORK'] .value").text("LOCAL");
-								servermode = 4;
 								dewRcon.send("server.mode 4");
 							}
 						}
