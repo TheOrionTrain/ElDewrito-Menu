@@ -797,6 +797,10 @@ $(document).ready(function() {
                 dew.hide();
         }, anit);
     });
+	Mousetrap.bind(['t', 'y'], function(e) {
+		if ($.inArray(Menu.selected, ["customgame", "forge"]) >= 0)
+			dew.show("chat", {'captureInput': true, 'teamChat': e.keyCode == 121});
+	});
     initialize();
     Audio.notification.currentTime = 0;
     Audio.notification.play();
