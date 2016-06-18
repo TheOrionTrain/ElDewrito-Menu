@@ -55,7 +55,7 @@ jQuery(function() {
 		});
 
 		dew.on("VotingOptionsUpdated", function(event) {
-			if (Lobby.voting.status != 1)
+			if (Lobby.voting.status != 1 && Menu.selected == "customgame")
 				Lobby.voting.start();
 			clearInterval(Lobby.voting.timeleft);
 			if (JSON.stringify(Lobby.voting.previous) != JSON.stringify(event.data)) {

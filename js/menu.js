@@ -833,6 +833,9 @@ var Audio = {
                         "label": "Back",
                         "action": function() {
                             Menu.previous();
+							Lobby.voting.status = 0;
+							$('#select-main').show();
+							$('#select-voting').hide();
 							dewRcon.send("server.mode 4");
                         }
                     },
