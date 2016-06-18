@@ -112,6 +112,7 @@ var Audio = {
                 Lobby.voting.voted = "none";
                 $('#select-main').hide();
                 $('#select-voting').show();
+				$('#party-text').text("VOTE FOR GAME AND MAP");
                 //Lobby.voting.update(data.session);
             },
             /*update: function(data) {
@@ -836,6 +837,7 @@ var Audio = {
 							Lobby.voting.status = 0;
 							$('#select-main').show();
 							$('#select-voting').hide();
+							$('#party-text').text("This party is local to this computer.");
 							dewRcon.send("server.mode 4");
                         }
                     },
