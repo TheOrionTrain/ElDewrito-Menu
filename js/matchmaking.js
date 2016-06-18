@@ -77,6 +77,7 @@ StartMatchmakingConnection = function() {
                 case "connect":
 					clearInterval(dot);
                     dewRcon.send('connect "' + result.server.ip + '"');
+					setTimeout(function() {Menu.change("customgame");}, 1500);
                     break;
                 case "id":
                     player.id = result.id;
@@ -101,10 +102,11 @@ var dotCount = 0;
 var backwards = false;
 
 function dots() {
+	var dts = getDots();
+	$("#select-main [data-option='SEARCHING FOR PLAYERS...']").text("SEARCHING FOR PLAYERS" + dts);
 	if ($("#search tr:not(.top) .name:contains('Looking for player')").length <= 0)
 		return;
-	
-	$("#search tr:not(.top) .name:contains('Looking for player')").text("Looking for player" + getDots());
+	$("#search tr:not(.top) .name:contains('Looking for player')").text("Looking for player" + dts);
 }
 
 function getDots() {
