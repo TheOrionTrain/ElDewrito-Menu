@@ -9,7 +9,7 @@ var friendServer,
     pname,
     puid,
     colour = "#000000",
-    onlinePlayers = {},
+    onlinePlayers = [],
     party = [],
     player = null,
     developers = [];
