@@ -79,6 +79,7 @@ StartMatchmakingConnection = function() {
                     dewRcon.send('connect "' + result.server.ip + '"');
 					setTimeout(function() {
 						Menu.change("customgame");
+						$('#select-main').hide();
 						$("#select-title").text("MATCH FOUND");
 					}, 2000);
                     break;

@@ -738,6 +738,14 @@ var Audio = {
                         "description": "Start the selected mission.",
                         "action": function() {
                             //Join the game officially
+							dewRcon.send("connect " + Lobby.address);
+							setTimeout(function() {
+								Menu.change("customgame");
+								$('div[data-gp=customgame-1]').hide();
+								$('div[data-gp=customgame-4]').hide();
+								$('div[data-gp=customgame-5]').hide();
+								$("#select-title").text("ONLINE GAME");
+							}, 2000);
                         }
                     }
                 },
@@ -766,10 +774,10 @@ var Audio = {
 
                     dewRcon.send("server.listplayersjson", function(ret) {
                         ret = JSON.parse(ret.replaceAll("color", "colour"));
-                        $("#lobby").empty().append('<tr class="top"><td class="info" colspan="2">Custom Game <span id="lobby-count">' + ret.length + '/16</span></td></tr>');
+                        $("#lobby").empty().append('<tr class="top"><td class="info" colspan="2">' + $("#select-title").text().toTitleCase() + ' <span id="lobby-count">' + ret.length + '/16</span></td></tr>');
                         for (var i = 0; i < ret.length; i++) {
-                            ret[i].rank = 0;
                             ret[i].UID = "0x" + ret[i].UID;
+							ret[i].rank = onlinePlayers.getFromGUID(ret[i].UID).rank;
                             var isDev = (developers.indexOf(ret[i].UID) >= 0) ? "developer" : "";
                             addPlayer("lobby", ret[i], isDev);
                         }

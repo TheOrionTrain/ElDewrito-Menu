@@ -37,6 +37,14 @@ Array.prototype.remove = function(value) {
     }
 }
 
+Array.prototype.getFromGUID = function(guid) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i].guid == guid)
+			return this[i];
+	}
+	return {name: "", guid: "", id: null, colour: "", rank: 0};
+}
+
 $.fn.pressEnter = function(fn) {
     return this.each(function() {
         $(this).bind('enterPress', fn);
