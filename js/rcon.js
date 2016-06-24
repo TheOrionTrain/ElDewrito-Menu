@@ -7,7 +7,8 @@ var dewRcon,
     snacking = 0,
     played = 0,
     port = 11776,
-    hook = false;
+    hook = false,
+    fails = 0;
 jQuery(function() {
     try {
         dewRcon = new dewHook();
@@ -41,57 +42,59 @@ jQuery(function() {
             loopPlayers = false;
             clearInterval(totallyLoopingPlayers);
         });
-		
-		dew.on("VoteCountsUpdated", function(event) {
-			event.data.forEach(function(entry, i) {
-				$('#select-voting .selection[data-option="' + entry.OptionIndex + '"] .votes').text(entry.Count);
-			});
-		});
 
-		dew.on("Winner", function(event) {
-			clearInterval(Lobby.voting.timeleft);
-			setTimeout(function(){ dew.hide(); }, 4000);
-			//$('#select-voting .selection[data-option="voting' + entry.data.Winner + '"]').text("Winner");
-		});
+        dew.on("VoteCountsUpdated", function(event) {
+            event.data.forEach(function(entry, i) {
+                $('#select-voting .selection[data-option="' + entry.OptionIndex + '"] .votes').text(entry.Count);
+            });
+        });
 
-		dew.on("VotingOptionsUpdated", function(event) {
-			if (Lobby.voting.status != 1 && Menu.selected == "customgame")
-				Lobby.voting.start();
-			clearInterval(Lobby.voting.timeleft);
-			if (JSON.stringify(Lobby.voting.previous) != JSON.stringify(event.data)) {
-				$('#select-voting').empty();
-				event.data.votingOptions.forEach(function(entry, i) {
-					if (entry.mapname == "Revote")
-						$('#select-voting').append("<div data-option='" + entry.index + "' class='selection' data-gp='voting-" + entry.index + "'><div class='info' style='width:320px;vertical-align:middle;padding:0 0 0 0;font-size:30px;'>NONE OF THE ABOVE</div><div class='votes'>0</div><div class='square'></div></div>");
-					else if (entry.mapname != '')
-						$('#select-voting').append("<div data-option='" + entry.index + "' class='selection' data-gp='voting-" + entry.index + "'><div class='thumb'><img src='img/maps/" + getMapName(entry.image).toString().toUpperCase() + ".jpg'></div><div class='info'>" + entry.mapname + "<br/>" + entry.typename + "</div><div class='votes'>0</div><div class='square'></div></div>");
-				});
-				$('#select-voting .selection').hover(function() {
-					Audio.click.currentTime = 0;
-					Audio.click.play();
-					$('.selection').removeClass('gp-on');
-					$(this).addClass("gp-on");
-					Controller.selected = $(this).attr('data-gp').split("-")[1];
-					Controller.select("voting-" + Controller.selected);
-				}).click(function() {
-					var v = parseInt($(this).attr('data-option'));
-					console.log(v);
-					Audio.slide.currentTime = 0;
-					Audio.slide.play();
-					Lobby.voting.send(v);
-				});
-				Lobby.voting.previous = event.data;
-			}
-			Lobby.voting.seconds_left = event.data.timeRemaining; //event.data[0].voteTime;
-			Lobby.voting.timeleft = setInterval(function() {
-				$('#description').text("Voting round ends in: " + secondsToHms(--Lobby.voting.seconds_left));
+        dew.on("Winner", function(event) {
+            clearInterval(Lobby.voting.timeleft);
+            setTimeout(function() {
+                dew.hide();
+            }, 4000);
+            //$('#select-voting .selection[data-option="voting' + entry.data.Winner + '"]').text("Winner");
+        });
 
-				if (Lobby.voting.seconds_left <= 0) {
-					$('#description').text("Voting round ends in: 0:00");
-					clearInterval(Lobby.voting.timeleft);
-				}
-			}, 1000);
-		});
+        dew.on("VotingOptionsUpdated", function(event) {
+            if (Lobby.voting.status != 1 && Menu.selected == "customgame")
+                Lobby.voting.start();
+            clearInterval(Lobby.voting.timeleft);
+            if (JSON.stringify(Lobby.voting.previous) != JSON.stringify(event.data)) {
+                $('#select-voting').empty();
+                event.data.votingOptions.forEach(function(entry, i) {
+                    if (entry.mapname == "Revote")
+                        $('#select-voting').append("<div data-option='" + entry.index + "' class='selection' data-gp='voting-" + entry.index + "'><div class='info' style='width:320px;vertical-align:middle;padding:0 0 0 0;font-size:30px;'>NONE OF THE ABOVE</div><div class='votes'>0</div><div class='square'></div></div>");
+                    else if (entry.mapname != '')
+                        $('#select-voting').append("<div data-option='" + entry.index + "' class='selection' data-gp='voting-" + entry.index + "'><div class='thumb'><img src='img/maps/" + getMapName(entry.image).toString().toUpperCase() + ".jpg'></div><div class='info'>" + entry.mapname + "<br/>" + entry.typename + "</div><div class='votes'>0</div><div class='square'></div></div>");
+                });
+                $('#select-voting .selection').hover(function() {
+                    Audio.click.currentTime = 0;
+                    Audio.click.play();
+                    $('.selection').removeClass('gp-on');
+                    $(this).addClass("gp-on");
+                    Controller.selected = $(this).attr('data-gp').split("-")[1];
+                    Controller.select("voting-" + Controller.selected);
+                }).click(function() {
+                    var v = parseInt($(this).attr('data-option'));
+                    console.log(v);
+                    Audio.slide.currentTime = 0;
+                    Audio.slide.play();
+                    Lobby.voting.send(v);
+                });
+                Lobby.voting.previous = event.data;
+            }
+            Lobby.voting.seconds_left = event.data.timeRemaining; //event.data[0].voteTime;
+            Lobby.voting.timeleft = setInterval(function() {
+                $('#description').text("Voting round ends in: " + secondsToHms(--Lobby.voting.seconds_left));
+
+                if (Lobby.voting.seconds_left <= 0) {
+                    $('#description').text("Voting round ends in: 0:00");
+                    clearInterval(Lobby.voting.timeleft);
+                }
+            }, 1000);
+        });
 
         hook = true;
         loadSettings(0);
@@ -113,6 +116,7 @@ StartRconConnection = function() {
         console.log("rcon");
     };
     dewRcon.dewWebSocket.onerror = function() {
+        fails++;
         if (!snacking) {
             $.snackbar({
                 content: 'Not connected. Is the game running?'
@@ -128,8 +132,15 @@ StartRconConnection = function() {
             }, 9000);
         }
         dewRconConnected = false;
-        if (!dewRconConnected) {
+        if (!dewRconConnected && fails < 5) {
             setTimeout(StartRconConnection, 1000);
+        }
+        else if(fails >= 5) {
+            $.snackbar({
+                content: 'Unable to connect to the game. Switched to offline mode.'
+            });
+            Audio.notification.currentTime = 0;
+            Audio.notification.play();
         }
     };
     dewRcon.dewWebSocket.onmessage = function(message) {

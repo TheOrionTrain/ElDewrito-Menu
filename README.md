@@ -25,4 +25,4 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareA
 - Fix audio crackling/popping on sound effects
 - Style leaderboard
 - Make static images default background, adding setting for video
-- After 5 connect fails, switch to offline mode
+- Remove friends sidebar and merge functionality into the player list
