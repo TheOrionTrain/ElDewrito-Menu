@@ -196,7 +196,7 @@ StartConnection = function() {
                     Audio.notification.currentTime = 0;
                     Audio.notification.play();
 
-                    party.push(result.player + ":" + result.pguid + ":" + result.colour);
+                    party.push(result.player);
 
                     for (var i = 0; i < party.length; i++) {
                         friendServer.send(JSON.stringify({
@@ -287,10 +287,7 @@ function partyInvite(accepted, guid) {
     if (accepted && party.length < 2) {
         friendServer.send(JSON.stringify({
             type: 'acceptparty',
-            player: pname,
-            guid: guid,
-            pguid: puid,
-            colour: colour
+            player: player
         }));
     } else if (party.length > 1) {
         $.snackbar({
