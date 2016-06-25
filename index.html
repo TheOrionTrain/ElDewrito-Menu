@@ -7,7 +7,9 @@
 	<meta name="author" content="TheFeelTrain and Orion">
 	<link href="css/dewrito.css" rel="stylesheet" type="text/css">
 	<link id="style" href="css/reach.css" rel="stylesheet" type="text/css">
+	<link href="css/easy-autocomplete.css" rel="stylesheet" type="text/css">
 	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.easy-autocomplete.min.js"></script>
 	<script src="js/mousetrap.min.js"></script>
 	<script src="js/gamepad.min.js"></script>
 	<script src="js/snackbar.js"></script>
@@ -85,21 +87,6 @@
 		<div id="friends-online"></div>
 		<div id="black"></div>
 		<div id="back">Back</div>
-		<div class="animated" id="friendslist">
-			<div id="friends-close"></div>
-			<div class="list-half">
-				<div class="friends-title">Friends</div>
-				<div id="friends"></div>
-				<div id="addfriend">
-					<input id="friend-input" type="text" />
-					<div id="friend-add">+</div>
-				</div>
-			</div>
-			<div class="list-half">
-				<div class="friends-title">Current Party</div>
-				<div id="party"></div>
-			</div>
-		</div>
 		<div id="playerinfo" class="animated">
 			<div id="player-title">
 				<div id="player-rank-display"></div>
@@ -171,6 +158,11 @@
 			<div id="select-voting"></div>
 			<div id="description"></div>
 			<div id="controls"></div>
+		</div>
+
+		<div id="friend-search">
+			<input type="text" placeholder="Search for player..." />
+			<div id="friend-add">Add</div>
 		</div>
 
 		<div class="menu-container animated" id="credits">

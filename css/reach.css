@@ -1209,3 +1209,15 @@ td.name.developer {
     content: ' ';
     background-color: rgba(255, 255, 255, .75);
 }
+
+#show-search {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 12px;
+    color: rgba(255,255,255,0.667);
+}
+
+#show-search:hover {
+    cursor: pointer;
+    color: rgba(255,255,255,0.9);
+}
