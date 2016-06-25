@@ -726,10 +726,10 @@ audio {
 *::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, .5);
 }
-#choosemap::-webkit-scrollbar, #choosemusic::-webkit-scrollbar, #choosetype::-webkit-scrollbar, #customgame::-webkit-scrollbar, #friendslist::-webkit-scrollbar, #chatbox::-webkit-scrollbar {
+#lobby-container::-webkit-scrollbar, #customgame::-webkit-scrollbar, #friendslist::-webkit-scrollbar, #chatbox::-webkit-scrollbar {
     width: 4px;
 }
-#lobby-container::-webkit-scrollbar, #options::-webkit-scrollbar {
+#options::-webkit-scrollbar {
     width: 0;
 }
 .map-select2, .type-select2 {
@@ -921,7 +921,8 @@ audio {
     z-index: 5;
     top: 40px;
     overflow-y: scroll;
-    width: 300px;
+    overflow-x: hidden;
+    width: 304px;
     height: 590px;
     transition: .5s;
 }
