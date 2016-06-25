@@ -499,7 +499,12 @@ function addPlayer(id, player, isDev, opacity) {
 
 function loadFriends() {
     $('#friends').empty();
-    $('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <span class='numbers'><span id='friends-on-count'>0</span>/<span id='friends-on-total'>0</span></span></td></tr>");
+    $('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <div id='show-search'>Add Friends</div> <span class='numbers'><span id='friends-on-count'>0</span>/<span id='friends-on-total'>0</span></span></td></tr>");
+    $('#show-search').click(function() {
+        $('#friend-search').fadeIn(anit);
+        Audio.slide.currentTime = 0;
+        Audio.slide.play();
+    });
     friends_online = 0;
     friends = JSON.parse(localStorage.getItem("friends"));
 
@@ -624,6 +629,9 @@ function addFriend(name) {
         localStorage.setItem("friends", JSON.stringify(friends));
         updateFriends();
         loadFriends();
+        $('#friend-search').fadeOut(anit);
+        Audio.notification.currentTime = 0;
+        Audio.notification.play();
     }
 }
 
@@ -737,7 +745,8 @@ $(document).ready(function() {
     $('#friend-add').click(function() {
         Audio.slide.currentTime = 0;
         Audio.slide.play();
-        addFriend($('#friend-input').val());
+        addFriend($('#friend-search input').val());
+        $('#friend-search input').val("");
     });
     $('#click-menu li').click(function() {
         submenu($(this).attr('data-action'), $('#click-menu').attr('data-friend'));

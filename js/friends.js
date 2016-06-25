@@ -12,7 +12,8 @@ var friendServer,
     onlinePlayers = [],
     party = [],
     player = null,
-    developers = [];
+    developers = [],
+    lastComplete = 5;
 /*jQuery(function() {
 	if(getURLParameter('offline') !== "1" && dewRconConnected) {
 		StartConnection();
@@ -255,6 +256,19 @@ StartConnection = function() {
                     break;
                 case "updateplayers":
                     onlinePlayers = JSON.parse(result.players);
+                    lastComplete++;
+                    if(lastComplete >= 5) {
+                        $('#friend-search input').easyAutocomplete({
+                            data: onlinePlayers,
+                            getValue: "name",
+                            list: {
+                        		match: {
+                        			enabled: true
+                        		}
+                        	}
+                        });
+                        lastComplete = 0;
+                    }
                     updateFriends();
                     loadFriends();
                     break;
