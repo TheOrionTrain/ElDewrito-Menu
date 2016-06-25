@@ -164,7 +164,7 @@ function startSearch(playlist) {
 
 matchmakingServerHelper = function() {
     window.WebSocket2 = window.WebSocket2 || window.MozWebSocket2;
-    this.matchmakingServerSocket = new WebSocket('ws://127.0.0.1:55555/matchmakingServer', 'matchmakingServer');
+    this.matchmakingServerSocket = new WebSocket('ws://182.239.214.210:55555/matchmakingServer', 'matchmakingServer');
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;

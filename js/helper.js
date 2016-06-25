@@ -45,6 +45,22 @@ Array.prototype.getFromGUID = function(guid) {
 	return {name: "", guid: "", id: null, colour: "", rank: 0};
 }
 
+Array.prototype.getFromName = function(name) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i].name == name)
+			return this[i];
+	}
+	return {name: name, guid: "", id: null, colour: "", rank: 0};
+}
+
+Array.prototype.isOnline = function(guid) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i].guid == guid)
+			return true;
+	}
+	return false;
+}
+
 $.fn.pressEnter = function(fn) {
     return this.each(function() {
         $(this).bind('enterPress', fn);

@@ -443,14 +443,12 @@ function loadParty() {
 }
 
 function updateFriends() {
-    for (var i = 0; i < onlinePlayers.length; i++) {
-        for (var o = 0; o < friends.length; o++) {
-            if (((!friends[o].contains(":0x") || friends[o].contains(":n")) && friends[o] == onlinePlayers[i].name) || (onlinePlayers[i].guid == friends[o].guid && onlinePlayers[i].name != friends[o].name)) {
-                friends[o] = onlinePlayers[i].name + ":" + onlinePlayers[i].guid;
-                localStorage.setItem("friends", JSON.stringify(friends));
-            }
-        }
-    }
+	for (var i = 0; i < friends.length; i++) {
+		if (onlinePlayers.isOnline(friends[i].guid)) {
+			friends[i] = onlinePlayers.getFromGUID(friends[i].guid);
+			localStorage.setItem("friends", JSON.stringify(friends));
+		}
+	}
 }
 
 function getPlayerColour(guid) {
@@ -510,26 +508,26 @@ function loadFriends() {
         return false;
     }
     friends.sort(function(a, b) {
-        if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
-        if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
-        return 0;
-    });
-    friends.sort(function(a, b) {
-        if (isOnline(a) > isOnline(b)) return -1;
-        if (isOnline(a) < isOnline(b)) return 1;
-        return 0;
-    });
+		if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+		if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+		return 0;
+	});
+	friends.sort(function(a, b) {
+		if (onlinePlayers.isOnline(a.guid) > onlinePlayers.isOnline(b.guid)) return -1;
+		if (onlinePlayers.isOnline(a.guid) < onlinePlayers.isOnline(b.guid)) return 1;
+		return 0;
+	});
     for (var i = 0; i < friends.length; i++) {
-        var o = (isOnline(friends[i])) ? "online" : "offline";
-        $('#friends').append("<div class='friend " + o + "'>" + friends[i].split(':')[0] + "</div>");
+        var o = (onlinePlayers.isOnline(friends[i].guid)) ? "online" : "offline";
+        $('#friends').append("<div class='friend " + o + "'>" + friends[i].name + "</div>");
         if (o == "online") {
             friends_online++;
-            var isDev = (developers.indexOf(friends[i].split(':')[1]) >= 0) ? "developer" : "";
+            var isDev = (developers.indexOf(friends[i].guid) >= 0) ? "developer" : "";
             addPlayer('friends-on', {
-                name: friends[i].split(':')[0],
-                guid: friends[i].split(':')[1],
-                colour: getPlayerColour(friends[i].split(':')[1]),
-                rank: 0
+                name: friends[i].name,
+                guid: friends[i].guid,
+                colour: onlinePlayers.getFromGUID(friends[i].guid).colour,
+                rank: onlinePlayers.getFromGUID(friends[i].guid).rank
             }, isDev);
         }
     }
@@ -590,33 +588,33 @@ function getPlayerUID(name) {
 
 function getPlayerNameFromFriends(UID) {
     for (var i = 0; i < friends.length; i++) {
-        if (friends[i].split(':')[1] == UID)
-            return friends[i].split(':')[0];
+        if (friends[i].guid == UID)
+            return friends[i].name;
     }
     return "";
 }
 
 function getPlayerUIDFromFriends(name) {
     for (var i = 0; i < friends.length; i++) {
-        if (friends[i].contains(":0x") && friends[i].split(':')[0] == name)
-            return friends[i].split(':')[1];
+        if (friends[i].guid.contains(":0x") && friends[i].name == name)
+            return friends[i].guid;
     }
     return "";
 }
 
-function addFriend(player) {
+function addFriend(name) {
     if (name !== null || name !== "" || name !== undefined) {
         $('#friend-input').val("");
         if (friends.indexOf(name) == -1) {
-            friends.push(getPlayerUID(name) != "" ? name + ":" + getPlayerUID(name) : name);
+            friends.push(onlinePlayers.getFromName(name));
             friends.sort(function(a, b) {
-                if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
-                if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
+                if ((!a.guid.contains(":0x") ? a.name.toLowerCase() : a.name.toLowerCase()) < (!b.guid.contains ? b.toLowerCase() : b.name.toLowerCase())) return -1;
+                if ((!a.guid.contains(":0x") ? a.name.toLowerCase() : a.name.toLowerCase()) > (!b.guid.contains ? b.toLowerCase() : b.name.toLowerCase())) return 1;
                 return 0;
             });
             friends.sort(function(a, b) {
-                if (isOnline(a) > isOnline(b)) return -1;
-                if (isOnline(a) < isOnline(b)) return 1;
+                if (onlinePlayers.isOnline(a.guid) > onlinePlayers.isOnline(b.guid)) return -1;
+                if (onlinePlayers.isOnline(a.guid) < onlinePlayers.isOnline(b.guid)) return 1;
                 return 0;
             });
         }
@@ -629,17 +627,17 @@ function addFriend(player) {
 function removeFriend(name) {
     if (name !== null || name !== "" || name !== undefined) {
         $('#friend-input').val("");
-        friends.remove(getPlayerUIDFromFriends(name) == "" ? name : name + ":" + getPlayerUIDFromFriends(name));
-        friends.sort(function(a, b) {
-            if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) < (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return -1;
-            if ((!a.contains(":0x") ? a.toLowerCase() : a.split(':')[0].toLowerCase()) > (!b.contains(":0x") ? b.toLowerCase() : b.split(':')[0].toLowerCase())) return 1;
-            return 0;
-        });
-        friends.sort(function(a, b) {
-            if (isOnline(a) > isOnline(b)) return -1;
-            if (isOnline(a) < isOnline(b)) return 1;
-            return 0;
-        });
+		friends.remove(onlinePlayers.getFromName(name).name == "" ? friends.getFromName(name) : onlinePlayers.getFromName(name));
+		friends.sort(function(a, b) {
+			if ((!a.guid.contains(":0x") ? a.name.toLowerCase() : a.name.toLowerCase()) < (!b.guid.contains ? b.toLowerCase() : b.name.toLowerCase())) return -1;
+			if ((!a.guid.contains(":0x") ? a.name.toLowerCase() : a.name.toLowerCase()) > (!b.guid.contains ? b.toLowerCase() : b.name.toLowerCase())) return 1;
+			return 0;
+		});
+		friends.sort(function(a, b) {
+			if (onlinePlayers.isOnline(a.guid) > onlinePlayers.isOnline(b.guid)) return -1;
+			if (onlinePlayers.isOnline(a.guid) < onlinePlayers.isOnline(b.guid)) return 1;
+			return 0;
+		});
         localStorage.setItem("friends", JSON.stringify(friends));
         updateFriends();
         loadFriends();
