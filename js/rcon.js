@@ -95,6 +95,10 @@ jQuery(function() {
                 }
             }, 1000);
         });
+		
+		dew.on("serverconnect", function(event) {
+			console.log(event);
+		});
 
         hook = true;
         loadSettings(0);
