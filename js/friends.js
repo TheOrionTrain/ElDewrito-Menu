@@ -287,7 +287,8 @@ function partyInvite(accepted, guid) {
     if (accepted && party.length < 2) {
         friendServer.send(JSON.stringify({
             type: 'acceptparty',
-            player: player
+            player: player,
+			guid: guid
         }));
     } else if (party.length > 1) {
         $.snackbar({
