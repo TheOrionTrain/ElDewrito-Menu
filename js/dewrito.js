@@ -541,9 +541,9 @@ function loadFriends() {
     }
     $('#friends-online').text(friends_online + " " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
     $('#friends-on-count').text(friends_online);
-    if (friends_online === 0) {
+    /*if (friends_online === 0) {
         $('#friends-on').empty();
-    }
+    }*/
     $('#friends-on-total').text(friends.length);
     $('.friend,#friend-add,#friend-remove,#lobby-container table tr').hover(function() {
         Audio.click.currentTime = 0;
