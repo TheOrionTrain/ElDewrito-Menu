@@ -444,7 +444,10 @@ function loadParty() {
 
 function updateFriends() {
 	for (var i = 0; i < friends.length; i++) {
-		if (onlinePlayers.isOnline(friends[i].guid)) {
+		if (friends[i].guid.length == 0) {
+			friends[i] = onlinePlayers.getFromName(friends[i].name);
+			localStorage.setItem("friends", JSON.stringify(friends));
+		} else if (onlinePlayers.isOnline(friends[i].guid)) {
 			friends[i] = onlinePlayers.getFromGUID(friends[i].guid);
 			localStorage.setItem("friends", JSON.stringify(friends));
 		}
@@ -526,8 +529,8 @@ function loadFriends() {
             addPlayer('friends-on', {
                 name: friends[i].name,
                 guid: friends[i].guid,
-                colour: onlinePlayers.getFromGUID(friends[i].guid).colour,
-                rank: onlinePlayers.getFromGUID(friends[i].guid).rank
+                colour: friends[i].colour,
+                rank: friends[i].rank
             }, isDev);
         }
     }
@@ -627,7 +630,7 @@ function addFriend(name) {
 function removeFriend(name) {
     if (name !== null || name !== "" || name !== undefined) {
         $('#friend-input').val("");
-		friends.remove(onlinePlayers.getFromName(name).name == "" ? friends.getFromName(name) : onlinePlayers.getFromName(name));
+		friends.remove(friends.getFromName(name));
 		friends.sort(function(a, b) {
 			if ((!a.guid.contains(":0x") ? a.name.toLowerCase() : a.name.toLowerCase()) < (!b.guid.contains ? b.toLowerCase() : b.name.toLowerCase())) return -1;
 			if ((!a.guid.contains(":0x") ? a.name.toLowerCase() : a.name.toLowerCase()) > (!b.guid.contains ? b.toLowerCase() : b.name.toLowerCase())) return 1;
