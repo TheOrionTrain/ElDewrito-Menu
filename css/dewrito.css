@@ -746,9 +746,9 @@ html {
     z-index: 100;
     top: 0;
     left: 0;
+    display: none;
     width: 1280px;
     height: 720px;
-    display: none;
 }
 #friend-search input {
     font-size: 16px;
@@ -758,7 +758,7 @@ html {
     box-sizing: border-box;
     width: 250px;
     height: 30px;
-    padding: 0px 10px;
+    padding: 0 10px;
     color: #fff;
     border: 0;
     outline: 0;

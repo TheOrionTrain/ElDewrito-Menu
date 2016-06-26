@@ -125,7 +125,7 @@
     -moz-transform-origin: top left;
     transform-origin: top left;
 }
-#leaders > div {
+#leaders> div {
     font-size: 16px;
     font-weight: 300;
     overflow: hidden;
@@ -569,7 +569,7 @@ audio {
     padding: 10px 0 0 0;
     border-top: 1px solid rgba(255, 255, 255, .25);
 }
-#controls > div {
+#controls> div {
     font-size: 18px;
     display: inline-block;
     height: 20px;
@@ -581,7 +581,7 @@ audio {
     background-position: top left;
     background-size: 20px;
 }
-#controls > div:hover {
+#controls> div:hover {
     cursor: pointer;
     opacity: 1;
 }
@@ -879,7 +879,7 @@ audio {
         background-color: rgba(255, 255, 255, .1);
     }
 }
-.selection:hover, #select-main .selection:hover, .server:hover, #leaders > div:hover, .selection.gp-on, .server.gp-on {
+.selection:hover, #select-main .selection:hover, .server:hover, #leaders> div:hover, .selection.gp-on, .server.gp-on {
     cursor: pointer;
     animation: menuHover 2s 1s infinite;
     color: rgba(255, 255, 255, .95);
@@ -920,13 +920,13 @@ audio {
     position: absolute;
     z-index: 5;
     top: 40px;
-    overflow-y: scroll;
     overflow-x: hidden;
+    overflow-y: scroll;
     width: 304px;
     height: 590px;
     transition: .5s;
 }
-#lobby-container table .top td.info > span {
+#lobby-container table .top td.info> span {
     float: right;
 }
 #lobby-container table .top td.info {
@@ -1209,17 +1209,17 @@ td.name.developer {
     content: ' ';
     background-color: rgba(255, 255, 255, .75);
 }
-
 #show-search {
-    vertical-align: middle;
-    display: inline-block;
     font-size: 11px;
-    color: rgba(255,255,255,0.667);
+    display: inline-block;
+    box-sizing: border-box;
     width: 160px;
+    padding: 0 10px 0 0;
     text-align: right;
+    vertical-align: middle;
+    color: rgba(255, 255, 255, .667);
 }
-
 #show-search:hover {
     cursor: pointer;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, .9);
 }
