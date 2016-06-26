@@ -748,47 +748,45 @@ html {
     left: 0;
     width: 1280px;
     height: 720px;
-    background-color: rgba(0, 0, 0, .75);
     display: none;
 }
 #friend-search input {
-    font-size: 26px;
+    font-size: 16px;
     position: absolute;
-    top: 100px;
-    left: 300px;
+    top: 52px;
+    right: 214px;
     box-sizing: border-box;
-    width: 680px;
-    height: 40px;
-    padding: 10px;
+    width: 250px;
+    height: 30px;
+    padding: 0px 10px;
     color: #fff;
     border: 0;
-    border-radius: 4px;
     outline: 0;
     background: #000;
 }
 #friend-add {
-    font-size: 22px;
+    font-size: 14px;
     font-weight: 300;
     position: absolute;
-    top: 100px;
-    left: 875px;
+    top: 52px;
+    right: 164px;
     display: inline-block;
     box-sizing: border-box;
-    width: 100px;
-    height: 40px;
+    width: 50px;
+    height: 30px;
     margin: 0 0 0 5px;
-    padding: 9px 0;
+    padding: 8px 0;
     cursor: pointer;
     -webkit-transition: .5s;
     -moz-transition: .5s;
     transition: .5s;
     text-align: center;
     color: rgba(255, 255, 255, .9);
-    border-radius: 0 4px 4px 0;
+    border-radius: 0;
 }
 #friend-add {
-    background: rgba(0, 160, 25, .9);
+    background: #00a019;
 }
 #friend-add:hover {
-    background: rgba(0, 255, 55, .9);
+    background: rgba(0, 255, 55, 1);
 }
