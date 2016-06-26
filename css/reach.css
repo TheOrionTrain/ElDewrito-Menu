@@ -1213,8 +1213,10 @@ td.name.developer {
 #show-search {
     vertical-align: middle;
     display: inline-block;
-    font-size: 12px;
+    font-size: 11px;
     color: rgba(255,255,255,0.667);
+    width: 160px;
+    text-align: right;
 }
 
 #show-search:hover {

@@ -7,9 +7,6 @@
  * Copyright  License:
  */
 
-.easy-autocomplete {
-    position: relative;
-}
 .easy-autocomplete input:hover, .easy-autocomplete input:focus {
     box-shadow: none;
 }
@@ -233,9 +230,9 @@
 }
 .easy-autocomplete-container {
     position: absolute;
-    left: 300px;
-    top: 140px;
-    width: 680px;
+    right: 164px;
+    top: 83px;
+    width: 300px;
     z-index: 2;
 }
 .easy-autocomplete-container ul {
@@ -250,7 +247,7 @@
 .easy-autocomplete-container ul li, .easy-autocomplete-container ul .eac-category {
     background: inherit;
     display: block;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: normal;
     padding: 4px 12px;
     color: #fff;
