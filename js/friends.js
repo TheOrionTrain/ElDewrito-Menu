@@ -267,14 +267,15 @@ StartConnection = function() {
                                 }
                             }
                         });
-                        var t = $('#friends-on .top').position().top + 4;
-                        $('#friend-search input').css('top', t + "px");
-                        $('#friend-add').css('top', t + "px");
-                        $('.easy-autocomplete-container').css('top', t + 30 + "px");
                         lastComplete = 0;
                     }
                     updateFriends();
                     loadFriends();
+                    var t = ($('#friends-on .top').position().top / scale) + 40;
+                    console.log(t);
+                    $('#friend-search input').css('top', t + "px");
+                    $('#friend-add').css('top', t + "px");
+                    $('.easy-autocomplete-container').css('top', t + 30 + "px");
                     break;
                 case "partymessage":
                     if ($.inArray(result.player + ":" + result.senderguid + ":" + getPlayerColour(result.senderguid), party) == -1)

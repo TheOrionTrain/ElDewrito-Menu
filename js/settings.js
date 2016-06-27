@@ -112,6 +112,7 @@ var user = {
                         '-moz-transform': 'scale(' + s + ')'
                     });
                     $("[data-option='resolution']").children('.value').text("Auto (" + Math.floor(1280 * s) + "x" + Math.floor(720 * s) + ")");
+                    scale = s;
                 } else {
                     s = l.split("x")[0] / 1280;
                     $('#menu').css({
