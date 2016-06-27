@@ -257,16 +257,20 @@ StartConnection = function() {
                 case "updateplayers":
                     onlinePlayers = JSON.parse(result.players);
                     lastComplete++;
-                    if(lastComplete >= 5) {
+                    if (lastComplete >= 5) {
                         $('#friend-search input').easyAutocomplete({
                             data: onlinePlayers,
                             getValue: "name",
                             list: {
-                        		match: {
-                        			enabled: true
-                        		}
-                        	}
+                                match: {
+                                    enabled: true
+                                }
+                            }
                         });
+                        var t = $('#friends-on .top').position().top + 4;
+                        $('#friend-search input').css('top', t + "px");
+                        $('#friend-add').css('top', t + "px");
+                        $('.easy-autocomplete-container').css('top', t + 30 + "px");
                         lastComplete = 0;
                     }
                     updateFriends();
@@ -302,7 +306,7 @@ function partyInvite(accepted, guid) {
         friendServer.send(JSON.stringify({
             type: 'acceptparty',
             player: player,
-			guid: guid
+            guid: guid
         }));
     } else if (party.length > 1) {
         $.snackbar({
