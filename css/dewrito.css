@@ -764,6 +764,7 @@ html {
     border: 0;
     outline: 0;
     background: #000;
+    z-index: 25;
 }
 #friend-add {
     font-size: 14px;
@@ -784,6 +785,7 @@ html {
     text-align: center;
     color: rgba(255, 255, 255, .9);
     border-radius: 0;
+    z-index: 25;
 }
 #friend-add {
     background: #00a019;

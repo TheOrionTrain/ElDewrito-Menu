@@ -1223,3 +1223,11 @@ td.name.developer {
     cursor: pointer;
     color: rgba(255, 255, 255, .9);
 }
+#hide-search {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 720px;
+    z-index: 10;
+}
