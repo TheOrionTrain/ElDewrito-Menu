@@ -502,6 +502,12 @@ function loadFriends() {
     $('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <div id='show-search'>Add Friends</div> <span class='numbers'><span id='friends-on-count'>0</span>/<span id='friends-on-total'>0</span></span></td></tr>");
     $('#show-search').click(function() {
         $('#friend-search').fadeIn(anit);
+        $('#friend-search input').focus();
+        Audio.slide.currentTime = 0;
+        Audio.slide.play();
+    });
+    $('#hide-search').click(function() {
+        $('#friend-search').fadeOut(anit);
         Audio.slide.currentTime = 0;
         Audio.slide.play();
     });
