@@ -426,7 +426,8 @@ function loadParty() {
                 name: party[i].name,
                 guid: party[i].guid,
                 colour: party[i].colour,
-                rank: party[i].rank
+                rank: party[i].rank,
+                status: "online"
             }, isDev);
         }
         $('.friend,#friend-add,#friend-remove').hover(function() {
@@ -468,10 +469,16 @@ function getPlayerColour(guid) {
 }
 
 function addPlayer(id, player, isDev, opacity) {
+    if(player.status == "online") {
+        var c = player.colour;
+    } else {
+        var c = "#000000";
+    }
     $('<tr>', {
-        'hex-color': player.colour,
-        'data-color': hexToRgb(player.colour, 0.5),
-        'style': 'background:' + hexToRgb(player.colour, 0.5) + ';' + (opacity ? 'opacity:' + opacity : ''),
+        'hex-color': c,
+        'data-color': hexToRgb(c, 0.5),
+        'data-status': player.status,
+        'style': 'background:' + hexToRgb(c, 0.5) + ';' + (opacity ? 'opacity:' + opacity : ''),
         html: $('<td>', {
             class: 'name ' + isDev,
             text: player.name
@@ -498,8 +505,7 @@ function addPlayer(id, player, isDev, opacity) {
 }
 
 function loadFriends() {
-    $('#friends').empty();
-    $('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <div id='show-search'>Add Friends</div> <span class='numbers'><span id='friends-on-count'>0</span>/<span id='friends-on-total'>0</span></span></td></tr>");
+    $('#friends-on').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Friends Online <div id='show-search'></div> <span class='numbers'><span id='friends-on-count'>0</span>/<span id='friends-on-total'>0</span></span></td></tr>");
     $('#show-search').click(function() {
         $('#friend-search').fadeIn(anit);
         $('#friend-search input').focus();
@@ -532,25 +538,21 @@ function loadFriends() {
 		return 0;
 	});
     for (var i = 0; i < friends.length; i++) {
-        var o = (onlinePlayers.isOnline(friends[i].guid)) ? "online" : "offline";
-        $('#friends').append("<div class='friend " + o + "'>" + friends[i].name + "</div>");
+        var o = (onlinePlayers.isOnline(friends[i].guid)) ? "online" : "offline",
+            isDev = (developers.indexOf(friends[i].guid) >= 0) ? "developer" : "";
+        addPlayer('friends-on', {
+            name: friends[i].name,
+            guid: friends[i].guid,
+            colour: friends[i].colour,
+            rank: friends[i].rank,
+            status: o
+        }, isDev);
         if (o == "online") {
             friends_online++;
-            var isDev = (developers.indexOf(friends[i].guid) >= 0) ? "developer" : "";
-            addPlayer('friends-on', {
-                name: friends[i].name,
-                guid: friends[i].guid,
-                colour: friends[i].colour,
-                rank: friends[i].rank
-            }, isDev);
+            $('#friends-on-count').text(friends_online);
+            $('#friends-on-total').text(friends.length);
         }
     }
-    $('#friends-online').text(friends_online + " " + (friends_online == 1 ? "Friend" : "Friends") + " Online");
-    $('#friends-on-count').text(friends_online);
-    /*if (friends_online === 0) {
-        $('#friends-on').empty();
-    }*/
-    $('#friends-on-total').text(friends.length);
     $('.friend,#friend-add,#friend-remove,#lobby-container table tr').hover(function() {
         Audio.click.currentTime = 0;
         Audio.click.play();
@@ -565,7 +567,7 @@ function loadFriends() {
             col = $(this).attr('hex-colour');
         $(this).css("background-color", hexToRgb(col, 0.5));
     });
-    $('#friends .friend, #friends-on td.name').click(function(e) {
+    $('#friends-on td.name').click(function(e) {
         if ($(this).hasClass("online") || $(this).hasClass("name")) {
             submenu("show", $(this).text(), 1, e);
         } else {
@@ -574,7 +576,6 @@ function loadFriends() {
         Audio.slide.currentTime = 0;
         Audio.slide.play();
     });
-
     $('#party .friend, #current-party td.name').unbind().click(function(e) {
         if ($(this).text() != pname) {
             partysubmenu("show", $(this).text(), e);
