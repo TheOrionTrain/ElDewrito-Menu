@@ -38,27 +38,39 @@ Array.prototype.remove = function(value) {
 }
 
 Array.prototype.getFromGUID = function(guid) {
-	for (var i = 0; i < this.length; i++) {
-		if (this[i].guid == guid)
-			return this[i];
-	}
-	return {name: "", guid: "", id: null, colour: "", rank: 0};
+    for (var i = 0; i < this.length; i++) {
+        if (this[i].guid == guid)
+            return this[i];
+    }
+    return {
+        name: "",
+        guid: "",
+        id: null,
+        colour: "",
+        rank: 0
+    };
 }
 
 Array.prototype.getFromName = function(name) {
-	for (var i = 0; i < this.length; i++) {
-		if (this[i].name == name)
-			return this[i];
-	}
-	return {name: name, guid: "", id: null, colour: "", rank: 0};
+    for (var i = 0; i < this.length; i++) {
+        if (this[i].name == name)
+            return this[i];
+    }
+    return {
+        name: name,
+        guid: "",
+        id: null,
+        colour: "",
+        rank: 0
+    };
 }
 
 Array.prototype.isOnline = function(guid) {
-	for (var i = 0; i < this.length; i++) {
-		if (this[i].guid == guid)
-			return true;
-	}
-	return false;
+    for (var i = 0; i < this.length; i++) {
+        if (this[i].guid == guid)
+            return true;
+    }
+    return false;
 }
 
 $.fn.pressEnter = function(fn) {
@@ -138,20 +150,134 @@ function checkFileExists(f) {
     });
 }
 
-/*Delete these test functions when done testing the alerts */
-function test() {
-    dewAlert({
-        title: "This is a test alert",
-        content: "Here is some text and even <a href='http://thefeeltra.in'>a link here</a>. This is so cool yay.",
-        cancel: true,
-        callback: test_callback
-    });
+function getMapName(filename) {
+    if (Menu.maps[filename]) {
+        return Menu.maps[filename];
+    } else {
+        return "Edge";
+    }
 }
 
-function test_callback(clicked) {
-    console.log("Callback: " + clicked);
+function getPlayerColour(guid) {
+    if (guid == "000000")
+        return "#BDBDBD";
+    if (guid == puid)
+        return colour;
+    for (var i = 0; i < onlinePlayers.length; i++) {
+        if (guid == onlinePlayers[i].guid) {
+            return (onlinePlayers[i].colour === 'undefined' || onlinePlayers[i].colour.length < 1 || onlinePlayers[i].colour === null) ? "#000000" : onlinePlayers[i].colour;
+        }
+    }
+    return "#000000";
 }
-/* Delete these test functions when done testing the alerts */
+
+function getPlayerName(UID) {
+    for (var i = 0; i < onlinePlayers.length; i++) {
+        if (onlinePlayers[i].guid == UID)
+            return onlinePlayers[i].name;
+    }
+    return "";
+}
+
+function getPlayerUID(name) {
+    for (var i = 0; i < onlinePlayers.length; i++) {
+        if (onlinePlayers[i].name == name)
+            return onlinePlayers[i].guid;
+    }
+    return "";
+}
+
+function getPlayerNameFromFriends(UID) {
+    for (var i = 0; i < friends.length; i++) {
+        if (friends[i].guid == UID)
+            return friends[i].name;
+    }
+    return "";
+}
+
+function getPlayerUIDFromFriends(name) {
+    for (var i = 0; i < friends.length; i++) {
+        if (friends[i].guid.contains(":0x") && friends[i].name == name)
+            return friends[i].guid;
+    }
+    return "";
+}
+
+function isOnlineServer(friend) {
+    return typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined';
+}
+
+function isOnline(friend) {
+    for (var i = 0; i < onlinePlayers.length; i++) {
+        if ((friend.contains(":0x") && (onlinePlayers[i].guid == friend.split(':')[1])) | onlinePlayers[i].name == friend || (typeof serverz.players[friend.contains(":0x") ? friend.split(':')[0] : friend] != 'undefined'))
+            return true;
+    }
+    return false;
+}
+
+function hasMap(map) {
+    if (mapList[0].length == 0) {
+        return true;
+    } else if ($.inArray(map, mapList[0]) > -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+var delay = (function() {
+    var timer = 0;
+    return function(callback, ms) {
+        clearTimeout(timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
+
+function getGame(game) {
+    switch (game) {
+        case "haloce":
+            return "Halo Combat Evolved";
+        case "hcea":
+            return "Halo Anniversary";
+        case "halo2":
+            return "Halo 2";
+        case "h2a":
+            return "Halo 2 Anniversary";
+        case "halo3":
+            return "Halo 3";
+        case "odst":
+            return "Halo 3 ODST";
+        case "reach":
+            return "Halo Reach";
+        case "online":
+            return "Halo Online";
+        case "halo5":
+            return "Halo 5";
+    }
+}
+
+function getMapFile(name) {
+    for (var i = 0; i < Object.keys(Menu.maps).length; i++) {
+        if (Menu.maps[Object.keys(Menu.maps)[i]] == name) {
+            return Object.keys(Menu.maps)[i];
+        }
+    }
+}
+
+function getMapId(map) {
+    switch (map.toString().toLowerCase()) {
+        case "diamondback":
+            return 0;
+        case "edge":
+            return 1;
+        case "icebox":
+            return 3;
+        case "reactor":
+            return 4;
+        case "valhalla":
+            return 5;
+    }
+}
 
 var current_callback;
 
