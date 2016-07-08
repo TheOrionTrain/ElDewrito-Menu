@@ -610,7 +610,6 @@ var Audio = {
                 "background": ["matchmaking", "multiplayer"],
                 "previous": "main",
                 "onload": function() {
-					$('#description').text("Select a playlist that suits your favorite play style.");
                     Setting.playlist.display();
                 },
                 "thumbnail": 1,
@@ -695,7 +694,6 @@ var Audio = {
                         "label": "Back",
                         "action": function() {
                             Menu.previous();
-							clearInterval(waitingCountdown);
 							clearInterval(dot);
                             matchmakingServer.send(JSON.stringify({
                                 type: 'leavesearch',
