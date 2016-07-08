@@ -75,6 +75,7 @@ StartMatchmakingConnection = function() {
                     }
                     break;
                 case "connect":
+					clearInterval(waitingCountdown);
 					clearInterval(dot);
                     dewRcon.send('connect "' + result.server.ip + '"');
 					setTimeout(function() {
@@ -86,6 +87,19 @@ StartMatchmakingConnection = function() {
                 case "id":
                     player.id = result.id;
                     break;
+				case "timeUpdate":
+					var timeStarted = result.timeStarted;
+					waitingCountdown = setInterval(function() {
+						var timeLeft = 30 - (Math.floor((new Date()).getTime() / 1000) - timeStarted);
+						var players = playerCount;
+						$('#description').text("Waiting for more players: " + secondsToHms(timeLeft));
+						if (timeLeft == 0)
+							clearInterval(waitingCountdown);
+						
+						if ($("#search tr:not(.top)").length < (Setting.playlist.options[Setting.playlist.selected.toLowerCase()][Setting.playlist.current].maxPlayers / 2 + 2))
+							clearInterval(waitingCountdown);
+					}, 1000);
+				break;
                 default:
                     console.log("Unhandled packet: " + result.type);
                     break;
@@ -100,6 +114,8 @@ StartMatchmakingConnection = function() {
         matchmakingServer.lastMessage = message.data;
     };
 }
+
+var waitingCountdown;
 
 var dot;
 var dotCount = 0;
