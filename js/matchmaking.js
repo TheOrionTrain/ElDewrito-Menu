@@ -75,13 +75,13 @@ StartMatchmakingConnection = function() {
                     }
                     break;
                 case "connect":
-					clearInterval(dot);
+                    clearInterval(dot);
                     dewRcon.send('connect "' + result.server.ip + '"');
-					setTimeout(function() {
-						Menu.change("customgame");
-						$('#select-main').hide();
-						$("#select-title").text("MATCH FOUND");
-					}, 2000);
+                    setTimeout(function() {
+                        Menu.change("customgame");
+                        $('#select-main').hide();
+                        $("#select-title").text("MATCH FOUND");
+                    }, 2000);
                     break;
                 case "id":
                     player.id = result.id;
@@ -106,30 +106,30 @@ var dotCount = 0;
 var backwards = false;
 
 function dots() {
-	var dts = getDots();
-	$("#select-main [data-option='SEARCHING FOR PLAYERS...']").text("SEARCHING FOR PLAYERS" + dts);
-	if ($("#search tr:not(.top) .name:contains('Looking for player')").length <= 0)
-		return;
-	$("#search tr:not(.top) .name:contains('Looking for player')").text("Looking for player" + dts);
+    var dts = getDots();
+    $("#select-main [data-option='SEARCHING FOR PLAYERS...']").text("SEARCHING FOR PLAYERS" + dts);
+    if ($("#search tr:not(.top) .name:contains('Looking for player')").length <= 0)
+        return;
+    $("#search tr:not(.top) .name:contains('Looking for player')").text("Looking for player" + dts);
 }
 
 function getDots() {
-	var dotdot = "";
-	if (dotCount >= 3) {
-		backwards = true;
-	} else if (dotCount < 0) {
-		backwards = false;
-	}
-	
-	if (backwards)
-		dotCount--;
-	else
-		dotCount++;
-	
-	for (var i = 0; i < dotCount; i++)
-		dotdot += ".";
-	
-	return dotdot;
+    var dotdot = "";
+    if (dotCount >= 3) {
+        backwards = true;
+    } else if (dotCount < 0) {
+        backwards = false;
+    }
+
+    if (backwards)
+        dotCount--;
+    else
+        dotCount++;
+
+    for (var i = 0; i < dotCount; i++)
+        dotdot += ".";
+
+    return dotdot;
 }
 
 function startSearch(playlist) {
@@ -152,8 +152,8 @@ function startSearch(playlist) {
             rank: 0
         }, null, 0.6);
     }
-	
-	dot = setInterval(dots, 250);
+
+    dot = setInterval(dots, 250);
 
     matchmakingServer.send(JSON.stringify({
         type: "search",

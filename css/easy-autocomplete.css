@@ -15,7 +15,7 @@
 }
 .easy-autocomplete-container {
     position: absolute;
-    z-index: 2;
+    z-index: 25;
     top: 83px;
     right: 164px;
     width: 300px;
