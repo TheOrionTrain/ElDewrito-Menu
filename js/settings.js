@@ -2,23 +2,7 @@
     (c) 2016 Brayden Strasen & Ryan Palmer
     http://creativecommons.org/licenses/by-nc-sa/4.0/
 */
-var user = {
-        "name": isset(localStorage.getItem('username'), "Your Username"),
-        "color": isset(localStorage.getItem('color'), "#ff0000"),
-        "rank": 0,
-        "infsens": 0,
-        "armor": {
-            "helmet": "air_assault",
-            "chest": "hoplite",
-            "shoulders": "air_assault",
-            "arms": "juggernaut",
-            "legs": "juggernaut",
-            "accessory": "base",
-            "pelvis": "base"
-        }
-    },
-
-    catergories = {
+var catergories = {
         "menu": 0,
         "eldewrito": 0,
         "controls": 0,
@@ -210,7 +194,7 @@ var user = {
                         $('#videos').append("<video id='bg1' src='" + d + "reach/campaign_act2.webm' loop autoplay type='video/webm'></video>");
                     } else if (c === 3) {
                         $('#videos').append("<video id='bg1' src='" + d + "reach/campaign_act3.webm' loop autoplay type='video/webm'></video>");
-                    } else if (c === Halo3Index) {
+                    } else if (c === 7) {
                         $('#videos').append("<video id='bg1' src='" + d + "halo3/mainmenu.webm' loop autoplay type='video/webm'></video>");
                         $('#videos').append("<video id='bg-multiplayer' src='" + d + "halo3/multiplayer.webm' preload='none' loop type='video/webm'></video>");
                         $('#videos').append("<video id='bg-forge' src='" + d + "halo3/forge.webm' preload='none' loop type='video/webm'></video>");
@@ -224,7 +208,7 @@ var user = {
                     }
                     $('#bg1').show();
                     $("[data-option='background']").children('.value').text(settings.background.labels[c]);
-                    if (c == Halo3Index || c == 3 || c == 5) {
+                    if (c == 7 || c == 3 || c == 5) {
                         $('#bg-cover').css('background', 'rgba(0,0,0,0)');
                     } else {
                         $('#bg-cover').css('background', 'rgba(0,0,0,0.25)');

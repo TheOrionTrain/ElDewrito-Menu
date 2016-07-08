@@ -65,7 +65,6 @@ var Controller = {
                 value = device.axes[i];
             }
             Controller.select("main1");
-            usingGamepad = true;
             $.snackbar({
                 content: 'Controller connected! Use the left thumbstick to navigate the menu. Use the A and B buttons to go forwards and back.'
             });

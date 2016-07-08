@@ -102,87 +102,18 @@ var Audio = {
             timeleft: 0,
             voted: "none",
             previous: 0,
-			seconds_left: 0,
+            seconds_left: 0,
             start: function() {
-                //clearInterval(Lobby.voting.polling);
                 Lobby.voting.status = 1;
-                /*Lobby.voting.polling = setInterval(function() {
-					Lobby.voting.update(data.session)
-                }, 5000);*/
                 Lobby.voting.voted = "none";
                 $('#select-main').hide();
                 $('#select-voting').show();
-				$('#party-text').text("VOTE FOR GAME AND MAP");
-                //Lobby.voting.update(data.session);
+                $('#party-text').text("VOTE FOR GAME AND MAP");
             },
-            /*update: function(data) {
-                if (Menu.selected == "gamelobby" || Menu.selected == "matchmaking" || Menu.selected == "searching") {
-                    $.ajax({
-                        url: "http://test.eriq.xyz",
-                        type: "post",
-                        data: {
-                            "action": "update",
-                            "session": session
-                        },
-                        success: function(data) {
-                            data = $.parseJSON(data);
-							console.log(data);
-                            if (JSON.stringify(Lobby.voting.previous) != JSON.stringify(data)) {
-                                $('#select-voting').empty();
-                                for (var i = 0; i < data.length; i++) {
-                                    var c = data[i];
-                                    $('#select-voting').append("<div data-option='" + i + "' class='selection' data-gp='voting-" + (i + 1) + "'><div class='thumb'><img src='img/maps/" + getMapName(c.file).toString().toUpperCase() + ".jpg'></div><div class='info'>" + c.map + "<br/>" + c.type + "</div><div class='votes' data-option='voting" + i + "'>" + c.votes + "</div><div class='square'></div></div>");
-                                }
-								$('#select-voting').append("<div data-option='3' class='selection' data-gp='voting-" + (3 + 1) + "'><div class='info' style='width:320px;vertical-align:middle;padding:0 0 0 0;font-size:30px;'>NONE OF THE ABOVE</div><div class='votes' data-option='voting" + data.length + "'>0</div><div class='square'></div></div>");
-                                $('#select-voting .selection[data-option="' + Lobby.voting.voted + '"]').addClass('voted');
-                                $('#select-voting .selection').hover(function() {
-                                    Audio.click.currentTime = 0;
-                                    Audio.click.play();
-                                    $('.selection').removeClass('gp-on');
-                                    $(this).addClass("gp-on");
-                                    Controller.selected = $(this).attr('data-gp').split("-")[1];
-                                    Controller.select("voting-" + Controller.selected);
-                                }).click(function() {
-                                    var v = parseInt($(this).attr('data-option'));
-                                    console.log(v);
-                                    Audio.slide.currentTime = 0;
-                                    Audio.slide.play();
-                                    Lobby.voting.send(v);
-                                });
-                                Lobby.voting.previous = data;
-                            }
-                        },
-                        error: function(xhr, desc, err) {
-                            console.log(xhr);
-                            console.log("Details: " + desc + "\nError:" + err);
-                        }
-                    });
-                } else {
-                    Lobby.voting.status = 0;
-                    clearInterval(Lobby.voting.polling);
-                    $('#select-main').show();
-                    $('#select-voting').hide();
-                }
-            },*/
             send: function(v) {
-				$('#select-voting .selection').removeClass('voted');
-				$('#select-voting .selection[data-option="' + v + '"]').addClass('voted');
-				dewRcon.send("server.SubmitVote " + v);
-                /*if (typeof Lobby.voting.voted != "number") {
-                    Lobby.voting.voted = v;
-                    $.ajax({
-                        url: "http://test.eriq.xyz",
-                        type: "post",
-                        data: {
-                            "action": "vote",
-                            "session": Lobby.voting.session,
-                            "vote": v
-                        },
-                        success: function() {
-                            Lobby.voting.update(Lobby.voting.session);
-                        }
-                    });
-                }*/
+                $('#select-voting .selection').removeClass('voted');
+                $('#select-voting .selection[data-option="' + v + '"]').addClass('voted');
+                dewRcon.send("server.SubmitVote " + v);
             }
         }
     },
@@ -192,6 +123,36 @@ var Audio = {
         currentTab: "",
         hovering: 0,
         focused: 0,
+        initialize: function() {
+            $('#chatbox').hover(
+                function() {
+                    Chat.hovering = 1;
+                },
+                function() {
+                    Chat.hovering = 0;
+                }
+            );
+            $('#chat-input').focus(function() {
+                Chat.focused = 1;
+            });
+            $('#chat-input').blur(function() {
+                Chat.focused = 0;
+            });
+            $('#chat-pin').click(function() {
+                Chat.pinned = (Chat.pinned) ? 0 : 1;
+                $(this).toggleClass('pinned');
+            });
+            $('#chat-enter').click(function() {
+                var m = $('#chat-input').val();
+                if (m.length > 0) {
+                    $('#chat-input').val("");
+                    Chat.sendMessage(Chat.currentTab, m);
+                }
+            });
+            $('#chat-input').pressEnter(function(e) {
+                $('#chat-enter').trigger('click');
+            });
+        },
         createTab: function(player) {
             Chat.currentTab = player;
             $('.chat-tab,.chat-window').removeClass('selected');
@@ -694,7 +655,7 @@ var Audio = {
                         "label": "Back",
                         "action": function() {
                             Menu.previous();
-							clearInterval(dot);
+                            clearInterval(dot);
                             matchmakingServer.send(JSON.stringify({
                                 type: 'leavesearch',
                                 playlist: Setting.playlist.selected,
@@ -738,14 +699,14 @@ var Audio = {
                         "description": "Start the selected mission.",
                         "action": function() {
                             //Join the game officially
-							dewRcon.send("connect " + Lobby.address);
-							setTimeout(function() {
-								Menu.change("customgame");
-								$('div[data-gp=customgame-1]').hide();
-								$('div[data-gp=customgame-4]').hide();
-								$('div[data-gp=customgame-5]').hide();
-								$("#select-title").text("ONLINE GAME");
-							}, 2000);
+                            dewRcon.send("connect " + Lobby.address);
+                            setTimeout(function() {
+                                Menu.change("customgame");
+                                $('div[data-gp=customgame-1]').hide();
+                                $('div[data-gp=customgame-4]').hide();
+                                $('div[data-gp=customgame-5]').hide();
+                                $("#select-title").text("ONLINE GAME");
+                            }, 2000);
                         }
                     }
                 },
@@ -777,7 +738,7 @@ var Audio = {
                         $("#lobby").empty().append('<tr class="top"><td class="info" colspan="2">' + $("#select-title").text().toTitleCase() + ' <span id="lobby-count">' + ret.length + '/16</span></td></tr>');
                         for (var i = 0; i < ret.length; i++) {
                             ret[i].UID = "0x" + ret[i].UID;
-							ret[i].rank = onlinePlayers.getFromGUID(ret[i].UID).rank;
+                            ret[i].rank = onlinePlayers.getFromGUID(ret[i].UID).rank;
                             var isDev = (developers.indexOf(ret[i].UID) >= 0) ? "developer" : "";
                             addPlayer("lobby", ret[i], isDev);
                         }
@@ -795,14 +756,14 @@ var Audio = {
                         "description": "Choose which network to play on.",
                         "value": "LOCAL",
                         "action": function() {
-							if ($("#select-main .selection[data-option='NETWORK'] .value").text() == "LOCAL") {
-								$("#select-main .selection[data-option='NETWORK'] .value").text("ONLINE");
-								dewRcon.send("server.mode 3");
-							} else {
-								$("#select-main .selection[data-option='NETWORK'] .value").text("LOCAL");
-								dewRcon.send("server.mode 4");
-							}
-						}
+                            if ($("#select-main .selection[data-option='NETWORK'] .value").text() == "LOCAL") {
+                                $("#select-main .selection[data-option='NETWORK'] .value").text("ONLINE");
+                                dewRcon.send("server.mode 3");
+                            } else {
+                                $("#select-main .selection[data-option='NETWORK'] .value").text("LOCAL");
+                                dewRcon.send("server.mode 4");
+                            }
+                        }
                     },
                     "GAME TYPE": {
                         "description": "Choose the game type you would like to play.",
@@ -842,11 +803,11 @@ var Audio = {
                         "label": "Back",
                         "action": function() {
                             Menu.previous();
-							Lobby.voting.status = 0;
-							$('#select-main').show();
-							$('#select-voting').hide();
-							$('#party-text').text("This party is local to this computer.");
-							dewRcon.send("server.mode 4");
+                            Lobby.voting.status = 0;
+                            $('#select-main').show();
+                            $('#select-voting').hide();
+                            $('#party-text').text("This party is local to this computer.");
+                            dewRcon.send("server.mode 4");
                         }
                     },
                     "START": {
@@ -888,14 +849,14 @@ var Audio = {
                         "description": "Choose which network to play on.",
                         "value": "LOCAL",
                         "action": function() {
-							if ($("#select-main .selection[data-option='NETWORK'] .value").text() == "LOCAL") {
-								$("#select-main .selection[data-option='NETWORK'] .value").text("ONLINE");
-								dewRcon.send("server.mode 3");
-							} else {
-								$("#select-main .selection[data-option='NETWORK'] .value").text("LOCAL");
-								dewRcon.send("server.mode 4");
-							}
-						}
+                            if ($("#select-main .selection[data-option='NETWORK'] .value").text() == "LOCAL") {
+                                $("#select-main .selection[data-option='NETWORK'] .value").text("ONLINE");
+                                dewRcon.send("server.mode 3");
+                            } else {
+                                $("#select-main .selection[data-option='NETWORK'] .value").text("LOCAL");
+                                dewRcon.send("server.mode 4");
+                            }
+                        }
                     },
                     "GAME TYPE": {
                         "description": "Choose the game type you would like to edit object setup for.",
@@ -935,7 +896,7 @@ var Audio = {
                         "label": "Back",
                         "action": function() {
                             Menu.previous();
-							dewRcon.send("server.mode 4");
+                            dewRcon.send("server.mode 4");
                         }
                     },
                     "START": {
@@ -964,11 +925,11 @@ var Audio = {
         },
         "selected": "main"
     };
-	
-	function secondsToHms(d) {
-		d = Number(d);
-		var h = Math.floor(d / 3600);
-		var m = Math.floor(d % 3600 / 60);
-		var s = Math.floor(d % 3600 % 60);
-		return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
-	}
+
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
+}

@@ -938,6 +938,7 @@ audio {
     padding: 5px 10px;
     color: #fff;
     background: rgba(0, 0, 0, .5);
+    position: relative;
 }
 #lobby-container table tr {
     -webkit-transition: .5s;
@@ -1210,18 +1211,22 @@ td.name.developer {
     background-color: rgba(255, 255, 255, .75);
 }
 #show-search {
-    font-size: 11px;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 150px;
-    padding: 0 10px 0 0;
-    text-align: right;
-    vertical-align: middle;
-    color: rgba(255, 255, 255, .667);
+    position: absolute;
+    top: 7px;
+    left: 220px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/cog.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5;
+    transition: .4s;
 }
 #show-search:hover {
     cursor: pointer;
-    color: rgba(255, 255, 255, .9);
+    opacity: 1;
+    transform: rotate(90deg);
 }
 #hide-search {
     position: absolute;

@@ -12,15 +12,9 @@ var dewRcon,
 jQuery(function() {
     try {
         dewRcon = new dewHook();
-        dew.on("pong", function(event) {
-            // event.data.address contains the IPv4 address
-            // event.data.latency contains the latency in milliseconds
-        });
+        dew.on("pong", function(event) {});
 
         dew.on("show", function(event) {
-            // This code will be run when your screen is shown.
-            // Use event.data to access any data passed to your screen.
-
             $('#music')[0].play();
             $("video").each(function() {
                 console.log($(this).attr('id'));
@@ -31,14 +25,11 @@ jQuery(function() {
         });
 
         dew.on("hide", function(event) {
-            // This code will be run when your screen is hidden.
-
             $('#music')[0].pause();
             $("video").each(function() {
                 console.log($(this).attr('id'));
                 $(this)[0].pause();
             });
-
             loopPlayers = false;
             clearInterval(totallyLoopingPlayers);
         });
@@ -54,7 +45,6 @@ jQuery(function() {
             setTimeout(function() {
                 dew.hide();
             }, 4000);
-            //$('#select-voting .selection[data-option="voting' + entry.data.Winner + '"]').text("Winner");
         });
 
         dew.on("VotingOptionsUpdated", function(event) {
@@ -85,7 +75,7 @@ jQuery(function() {
                 });
                 Lobby.voting.previous = event.data;
             }
-            Lobby.voting.seconds_left = event.data.timeRemaining; //event.data[0].voteTime;
+            Lobby.voting.seconds_left = event.data.timeRemaining;
             Lobby.voting.timeleft = setInterval(function() {
                 $('#description').text("Voting round ends in: " + secondsToHms(--Lobby.voting.seconds_left));
 
@@ -95,10 +85,10 @@ jQuery(function() {
                 }
             }, 1000);
         });
-		
-		dew.on("serverconnect", function(event) {
-			console.log(event);
-		});
+
+        dew.on("serverconnect", function(event) {
+            console.log(event);
+        });
 
         hook = true;
         loadSettings(0);
@@ -115,7 +105,6 @@ StartRconConnection = function() {
         Audio.notification.currentTime = 0;
         Audio.notification.play();
         dewRconConnected = true;
-        //loadSettings(Object.keys(settings).length);
         loadSettings(0);
         console.log("rcon");
     };
@@ -138,8 +127,7 @@ StartRconConnection = function() {
         dewRconConnected = false;
         if (!dewRconConnected && fails < 5) {
             setTimeout(StartRconConnection, 1000);
-        }
-        else if(fails >= 5) {
+        } else if (fails >= 5) {
             $.snackbar({
                 content: 'Unable to connect to the game. Switched to offline mode.'
             });
@@ -148,17 +136,15 @@ StartRconConnection = function() {
         }
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
-        //console.log(message.data);
         if (typeof dewRcon.callback == 'function')
             dewRcon.callback(message.data);
         dewRcon.lastMessage = message.data;
-        //console.log(dewRcon.lastMessage);
     };
 }
 
 dewRconHelper = function() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
-    this.dewWebSocket = new WebSocket('ws://127.0.0.1:' + port, 'dew-rcon');
+    this.dewWebSocket = new WebSocket('ws://127.0.0.1:' + port);
     this.lastMessage = "";
     this.lastCommand = "";
     this.open = false;
