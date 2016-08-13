@@ -137,7 +137,7 @@ var catergories = {
             ],
             "increment": 1,
             "update": function() {
-                videoURL = (infoIP == "http://158.69.166.144:8081") ? "http://158.69.166.144/video/" : "http://video.thefeeltra.in/";
+                videoURL = (Menu.domain == "http://orion.thefeeltra.in:8081") ? "http://orion.thefeeltra.in/video/" : "http://video.thefeeltra.in/";
                 console.log("Videos served from " + videoURL + ".");
                 var c = settings.background.current,
                     l = settings.background.labels[c],
