@@ -4,6 +4,7 @@
 */
 var players = [],
     serverz = [],
+    user = "", //Temporary Fix
     anit = 400,
     currentAlbum = isset(localStorage.getItem('album'), "halo3"),
     currentServer,
@@ -17,11 +18,9 @@ var players = [],
     nextSong,
     songIndex,
     localBackground = isset(localStorage.getItem('localbackground'), 0),
-    videoURL = "http://158.69.166.144/video/",
+    videoURL = "http://orion.thefeeltra.in/video/",
     online = true,
-    pings = [],
     previous = {},
-    infoIP = "http://158.69.166.144:8081",
     totallyLoopingPlayers = setInterval(totalPlayersLoop, 10000),
     settingsToLoad = [
         ['gamemenu', 'game.menuurl'],
@@ -97,36 +96,36 @@ function initialize() {
         ++catergories[category];
         settings[set].update();
     }
-    $.getJSON("http://158.69.166.144/matchmaking/Standard.json", function(json) {
-        Setting.playlist.options.standard = json;
+    $.getJSON("http://orion.thefeeltra.in/matchmaking/Standard.json", function(json) {
+        Options.playlist.options.standard = json;
         for (i = 0; i < Object.keys(json).length; i++) {
             var list1 = "",
                 list2 = "",
-                maps = Setting.playlist.options.standard[Object.keys(json)[i]].Maps,
-                types = Setting.playlist.options.standard[Object.keys(json)[i]].Types;
+                maps = Options.playlist.options.standard[Object.keys(json)[i]].Maps,
+                types = Options.playlist.options.standard[Object.keys(json)[i]].Types;
             for (e = 0; e < maps.length; e++) {
                 list1 += "<li>" + maps[e].displayName + "</li>";
             }
             for (g = 0; g < types.length; g++) {
                 list2 += "<li>" + types[g].displayName + "</li>";
             }
-            Setting.playlist.options.standard[Object.keys(json)[i]].description = "<ul><li class='label'>MAPS</li>" + list1 + "</ul><ul><li class='label'>GAMETYPES</li>" + list2 + "</ul>";
+            Options.playlist.options.standard[Object.keys(json)[i]].description = "<ul><li class='label'>MAPS</li>" + list1 + "</ul><ul><li class='label'>GAMETYPES</li>" + list2 + "</ul>";
         }
     });
-    $.getJSON("http://158.69.166.144/matchmaking/Social.json", function(json) {
-        Setting.playlist.options.social = json;
+    $.getJSON("http://orion.thefeeltra.in/matchmaking/Social.json", function(json) {
+        Options.playlist.options.social = json;
         for (i = 0; i < Object.keys(json).length; i++) {
             var list1 = "",
                 list2 = "",
-                maps = Setting.playlist.options.social[Object.keys(json)[i]].Maps,
-                types = Setting.playlist.options.social[Object.keys(json)[i]].Types;
+                maps = Options.playlist.options.social[Object.keys(json)[i]].Maps,
+                types = Options.playlist.options.social[Object.keys(json)[i]].Types;
             for (e = 0; e < maps.length; e++) {
                 list1 += "<li>" + maps[e].displayName + "</li>";
             }
             for (g = 0; g < types.length; g++) {
                 list2 += "<li>" + types[g].displayName + "</li>";
             }
-            Setting.playlist.options.social[Object.keys(json)[i]].description = "<ul><li class='label'>MAPS</li>" + list1 + "</ul><ul><li class='label'>GAMETYPES</li>" + list2 + "</ul>";
+            Options.playlist.options.social[Object.keys(json)[i]].description = "<ul><li class='label'>MAPS</li>" + list1 + "</ul><ul><li class='label'>GAMETYPES</li>" + list2 + "</ul>";
         }
     });
 }
@@ -519,9 +518,8 @@ $(document).ready(function() {
 });
 
 function totalPlayersLoop() {
-    $.getJSON(infoIP + "/all", function(data) {
+    $.getJSON(Menu.domain + "/all", function(data) {
         serverz = data;
-        console.log("SERVED");
         for (var i = 0; i < serverz.servers.length; i++) {
             var startTime = Date.now(),
                 endTime,
@@ -545,9 +543,9 @@ function totalPlayersLoop() {
         if (!friendServerConnected)
             loadFriends();
     }).fail(function(d) {
-        console.log(infoIP + " is currently down.");
-        infoIP = (infoIP == "http://158.69.166.144:8081" ? "http://servers.thefeeltra.in" : "http://158.69.166.144:8081");
-        console.log("Switched to " + infoIP + ".");
+        console.log(Menu.domain + " is currently down.");
+        Menu.domain = (Menu.domain == "http://orion.thefeeltra.in:8081" ? "http://servers.thefeeltra.in" : "http://orion.thefeeltra.in:8081");
+        console.log("Switched to " + Menu.domain + ".");
         totalPlayersLoop();
     });
 }

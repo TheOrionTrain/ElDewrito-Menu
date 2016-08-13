@@ -1,5 +1,5 @@
 var Browser = {
-        "status": 0,
+        status: 0,
         "get": function() {
             Controller.deselect();
             servers = [];
@@ -108,7 +108,6 @@ var Browser = {
         },
         "load": function() {
             if (browsing === 1) {
-                pings = [];
                 $('#refresh img').addClass('rotating');
                 setTimeout(function() {
                     $('#refresh img').removeClass('rotating');

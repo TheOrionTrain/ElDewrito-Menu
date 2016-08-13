@@ -254,6 +254,7 @@ var Audio = {
         }, 100)
     },
     Menu = {
+        "domain" : "http://orion.thefeeltra.in:8081",
         "background": "default",
         "change": function(m) {
             if (Menu.pages[m]) {
@@ -572,7 +573,7 @@ var Audio = {
                 "previous": "main",
                 "onload": function() {
 					$('#description').text("Select a playlist that suits your favorite play style.");
-                    Setting.playlist.display();
+                    Options.playlist.display();
                 },
                 "thumbnail": 1,
                 "lists": [
@@ -582,16 +583,16 @@ var Audio = {
                 "options": {
                     "PLAYLIST": {
                         "description": "Select a playlist that suits your favorite play style.",
-                        "value": Setting.playlist.current.toUpperCase(),
+                        "value": Options.playlist.current.toUpperCase(),
                         "action": function() {
-                            Setting.change("playlist");
+                            Options.change("playlist");
                         }
                     },
                     "SEARCH RESTRICTIONS": {
                         "description": "Select options to prioritize how you get matched in matchmaking.",
                         "value": "NONE (FASTEST)",
                         "action": function() {
-                            Setting.change("restrictions")
+                            Options.change("restrictions")
                         }
                     },
                     "PSYCH PROFILE": {
@@ -603,7 +604,7 @@ var Audio = {
                     "START MATCHMAKING": {
                         "description": "Start selected Matchmaking game playlist.",
                         "action": function() {
-                            startSearch(Setting.playlist.current);
+                            startSearch(Options.playlist.current);
                             Menu.change("searching");
                         }
                     }
@@ -660,7 +661,7 @@ var Audio = {
                             clearInterval(dot);
                             matchmakingServer.send(JSON.stringify({
                                 type: 'leavesearch',
-                                playlist: Setting.playlist.selected,
+                                playlist: Options.playlist.selected,
                                 player: player
                             }));
                         }
