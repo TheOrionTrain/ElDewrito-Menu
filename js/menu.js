@@ -3,14 +3,38 @@
     http://creativecommons.org/licenses/by-nc-sa/4.0/
 */
 
-var Audio = {
-        "connect": new Audio("audio/halo3/loop.ogg"),
-        "notification": new Audio("audio/odst/a_button.ogg"),
-        "beep": new Audio("audio/halo3/countdown_for_respawn.ogg"),
-        "beeep": new Audio("audio/halo3/player_respawn.ogg"),
-        "click": new Audio("audio/halo3/cursor_horizontal.ogg"),
-        "slide": new Audio("audio/halo3/a_button.ogg"),
-        "music": new Audio(),
+var Music = {
+        song: new Audio(),
+        album: isset(localStorage.getItem('album'), "halo3"),
+        list: {},
+        name: "Menu Theme",
+        next: "Ashes",
+        index: 0,
+        change: function(song) {
+            var directory = settings.localmusic.current == 1 ? "music/" : "http://music.thefeeltra.in/";
+            Music.index = Music.list[Music.album].indexOf(song);
+            Music.name = Music.list[Music.album][Music.index];
+            Music.next = Music.list[Music.album][Music.index + 1];
+            if (Music.index + 1 >= Music.list[Music.album].length) {
+                Music.next = Music.list[Music.album][0];
+            }
+            $('.music-select2 .selection').removeClass('selected');
+            $("[data-song='" + song + "']").addClass('selected');
+            Music.song.src = directory + Music.album + "/" + song + '.ogg';
+            Music.song.play();
+            localStorage.setItem('song', song);
+            localStorage.setItem('album', Music.album);
+            Audio.notification.currentTime = 0;
+            Audio.notification.play();
+        }
+    },
+    Audio = {
+        connect: new Audio("audio/halo3/loop.ogg"),
+        notification: new Audio("audio/odst/a_button.ogg"),
+        beep: new Audio("audio/halo3/countdown_for_respawn.ogg"),
+        beeep: new Audio("audio/halo3/player_respawn.ogg"),
+        click: new Audio("audio/halo3/cursor_horizontal.ogg"),
+        slide: new Audio("audio/halo3/a_button.ogg")
     },
     Lobby = {
         "address": "0.0.0.0",
@@ -254,8 +278,10 @@ var Audio = {
         }, 100)
     },
     Menu = {
-        "domain" : "http://orion.thefeeltra.in:8081",
+        "domain": "http://orion.thefeeltra.in:8081",
+        "scale": 1,
         "background": "default",
+        "local": isset(localStorage.getItem('localbackground'), 0),
         "change": function(m) {
             if (Menu.pages[m]) {
                 var ch = Menu.pages[m];
@@ -491,7 +517,6 @@ var Audio = {
                     $('#browser').empty();
                     $('#lobby').empty();
                     setTimeout(Browser.load, anit / 2);
-                    loopPlayers = false;
                 },
                 "class": "browser",
                 "background": ["matchmaking", "multiplayer"],
@@ -539,7 +564,6 @@ var Audio = {
                     $('#leaders').empty();
                     $('#lobby').empty();
                     setTimeout(Leaderboard.load, 1000);
-                    loopPlayers = false;
                 },
                 "class": "leaderboard",
                 "background": ["matchmaking", "multiplayer"],
@@ -572,7 +596,7 @@ var Audio = {
                 "background": ["matchmaking", "multiplayer"],
                 "previous": "main",
                 "onload": function() {
-					$('#description').text("Select a playlist that suits your favorite play style.");
+                    $('#description').text("Select a playlist that suits your favorite play style.");
                     Options.playlist.display();
                 },
                 "thumbnail": 1,
@@ -657,7 +681,7 @@ var Audio = {
                         "label": "Back",
                         "action": function() {
                             Menu.previous();
-							clearInterval(waitingCountdown);
+                            clearInterval(waitingCountdown);
                             clearInterval(dot);
                             matchmakingServer.send(JSON.stringify({
                                 type: 'leavesearch',
