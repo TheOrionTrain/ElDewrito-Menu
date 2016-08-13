@@ -30,7 +30,6 @@ jQuery(function() {
                 console.log($(this).attr('id'));
                 $(this)[0].pause();
             });
-            loopPlayers = false;
             clearInterval(totallyLoopingPlayers);
         });
 
@@ -91,7 +90,7 @@ jQuery(function() {
         });
 
         hook = true;
-        loadSettings(0);
+        Settings.load(0);
     } catch (err) {
         console.log(err);
         if (getURLParameter('offline') !== "1") {
@@ -105,7 +104,7 @@ StartRconConnection = function() {
         Audio.notification.currentTime = 0;
         Audio.notification.play();
         dewRconConnected = true;
-        loadSettings(0);
+        Settings.load(0);
         console.log("rcon");
     };
     dewRcon.dewWebSocket.onerror = function() {

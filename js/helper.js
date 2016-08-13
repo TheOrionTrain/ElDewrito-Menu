@@ -328,7 +328,7 @@ function submenu(action, friend, isOnline, o) {
         $('#click-menu-container').hide();
     }
     if (action == "show") {
-        console.log(o.pageX / scale);
+        console.log(o.pageX / Menu.scale);
         if (isOnlineServer(friend)) {
             $('#click-menu li.onlineserver').show();
             $('#click-menu li.online').hide();
@@ -340,8 +340,8 @@ function submenu(action, friend, isOnline, o) {
             $('#click-menu li.onlineserver').hide();
         }
         $('#click-menu').css({
-            "left": o.pageX / scale + "px",
-            "top": o.pageY / scale + "px"
+            "left": o.pageX / Menu.scale + "px",
+            "top": o.pageY / Menu.scale + "px"
         }).attr("data-friend", friend);
         $('#click-menu-container').show();
     } else if (action == "join") {
@@ -373,15 +373,15 @@ function partysubmenu(action, friend, o) {
         $('#click-menu-container').hide();
     }
     if (action == "show") {
-        console.log(o.pageX / scale);
+        console.log(o.pageX / Menu.scale);
         if (getPlayerUIDFromFriends(friend) == "") {
             $('#party-click-menu li.notfriend').show();
         } else {
             $('#party-click-menu li.notfriend').hide();
         }
         $('#party-click-menu').css({
-            "left": o.pageX / scale + "px",
-            "top": o.pageY / scale + "px"
+            "left": o.pageX / Menu.scale + "px",
+            "top": o.pageY / Menu.scale + "px"
         }).attr("data-friend", friend);
         $('#click-menu-container').show();
     } else if (action == "kick") {

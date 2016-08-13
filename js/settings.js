@@ -23,7 +23,7 @@ var catergories = {
             "increment": 5,
             "update": function() {
                 var c = settings.musicvolume.current;
-                Audio.music.volume = c * 0.01;
+                Music.song.volume = c * 0.01;
                 $("[data-option='musicvolume']").children('.value').text(c);
             }
         },
@@ -96,7 +96,7 @@ var catergories = {
                         '-moz-transform': 'scale(' + s + ')'
                     });
                     $("[data-option='resolution']").children('.value').text("Auto (" + Math.floor(1280 * s) + "x" + Math.floor(720 * s) + ")");
-                    scale = s;
+                    Menu.scale = s;
                 } else {
                     s = l.split("x")[0] / 1280;
                     $('#menu').css({
@@ -137,11 +137,11 @@ var catergories = {
             ],
             "increment": 1,
             "update": function() {
-                videoURL = (Menu.domain == "http://orion.thefeeltra.in:8081") ? "http://orion.thefeeltra.in/video/" : "http://video.thefeeltra.in/";
+                var videoURL = (Menu.domain == "http://orion.thefeeltra.in:8081") ? "http://orion.thefeeltra.in/video/" : "http://video.thefeeltra.in/";
                 console.log("Videos served from " + videoURL + ".");
                 var c = settings.background.current,
                     l = settings.background.labels[c],
-                    d = (localBackground == 1) ? "video/" : videoURL;
+                    d = (Menu.local == 1) ? "video/" : videoURL;
                 $('#videos').empty();
                 if (l == "Random") {
                     var r = Math.floor(Math.random() * settings.background.labels.length - 1);
@@ -177,7 +177,7 @@ var catergories = {
                     $('#bg1')[0].play();
                 } else {
                     if (c === 9001) {
-                        Audio.music.pause();
+                        Music.song.pause();
                         $('#videos').append("<video id='bg1' src='" + d + "Halo 5.webm' loop autoplay type='video/webm'></video>");
                         $('#menu').children().hide();
                         $('#videos').show();
@@ -230,7 +230,7 @@ var catergories = {
             "increment": 1,
             "update": function() {
                 var c = settings.localbackground.current;
-                localBackground = c;
+                Menu.local = c;
                 settings.background.update();
                 $("[data-option='localbackground']").children('.value').text(settings.localbackground.labels[c]);
             }
@@ -251,7 +251,7 @@ var catergories = {
                 var c = settings.localmusic.current;
                 localmusic = c;
                 if ($('#choosemusic').children('.music-select2').length > 0)
-                    changeSong2(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
+                    Music.change(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
                 $("[data-option='localmusic']").children('.value').text(settings.localmusic.labels[c]);
             }
         },
@@ -332,7 +332,7 @@ var catergories = {
             "update": function() {
                 var c = settings.username.current;
                 user.name = c;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send("player.name \"" + c + "\"");
                     dewRcon.send('writeconfig');
                 }
@@ -410,7 +410,7 @@ var catergories = {
             "increment": 1,
             "update": function() {
                 var c = settings.rawinput.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('input.rawinput ' + c);
                     dewRcon.send('writeconfig');
                 }
@@ -467,7 +467,7 @@ var catergories = {
             "increment": 1,
             "update": function() {
                 var c = settings.centeredcrosshair.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('camera.crosshair ' + c);
                     dewRcon.send('writeconfig');
                 }
@@ -521,7 +521,7 @@ var catergories = {
             "increment": 5,
             "update": function() {
                 var c = parseFloat(settings.fov.current);
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('camera.fov ' + c);
                     dewRcon.send('writeconfig');
                 }
@@ -538,7 +538,7 @@ var catergories = {
             "increment": 1,
             "update": function() {
                 var c = settings.starttimer.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('server.countdown ' + c);
                     dewRcon.send('writeconfig');
                 }
@@ -555,7 +555,7 @@ var catergories = {
             "increment": 1,
             "update": function() {
                 var c = settings.maxplayers.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('server.maxplayers ' + c);
                     dewRcon.send('writeconfig');
                 }
@@ -569,7 +569,7 @@ var catergories = {
             "current": parseInt(isset(localStorage.getItem('servername'), "Halo Online Server")),
             "update": function() {
                 var c = settings.servername.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     console.log(c);
                     dewRcon.send("server.name \"" + c + "\"");
                     dewRcon.send('writeconfig');
@@ -585,7 +585,7 @@ var catergories = {
             "current": parseInt(isset(localStorage.getItem('serverpass'), "")),
             "update": function() {
                 var c = settings.serverpass.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('server.password ' + c);
                     dewRcon.send('writeconfig');
                 }
@@ -670,7 +670,7 @@ var catergories = {
             "increment": 0.1,
             "update": function() {
                 var c = parseFloat(settings.saturation.current);
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('graphics.saturation ' + c);
                     dewRcon.send('writeconfig');
                 }
@@ -687,7 +687,7 @@ var catergories = {
             "increment": 0.05,
             "update": function() {
                 var c = settings.red.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('graphics.redhue ' + c);
                 }
                 $("[data-option='red']").children('.value').text(c.toFixed(2));
@@ -703,7 +703,7 @@ var catergories = {
             "increment": 0.05,
             "update": function() {
                 var c = settings.blue.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('graphics.bluehue ' + c);
                 }
                 $("[data-option='blue']").children('.value').text(c.toFixed(2));
@@ -719,7 +719,7 @@ var catergories = {
             "increment": 0.05,
             "update": function() {
                 var c = settings.green.current;
-                if (dewRconConnected && loadedSettings) {
+                if (dewRconConnected && Settings.done) {
                     dewRcon.send('graphics.greenhue ' + c);
                 }
                 $("[data-option='green']").children('.value').text(c.toFixed(2));

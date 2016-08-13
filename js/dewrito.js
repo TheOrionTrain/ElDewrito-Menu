@@ -6,37 +6,9 @@ var players = [],
     serverz = [],
     user = "", //Temporary Fix
     anit = 400,
-    currentAlbum = isset(localStorage.getItem('album'), "halo3"),
-    currentServer,
-    selectedserver,
-    loopPlayers,
     servers,
-    scale = 1,
-    currentVersion,
-    songs,
-    thisSong,
-    nextSong,
-    songIndex,
-    localBackground = isset(localStorage.getItem('localbackground'), 0),
-    videoURL = "http://orion.thefeeltra.in/video/",
     online = true,
-    previous = {},
     totallyLoopingPlayers = setInterval(totalPlayersLoop, 10000),
-    settingsToLoad = [
-        ['gamemenu', 'game.menuurl'],
-        ['username', 'player.name'],
-        ['servername', 'server.name'],
-        ['centeredcrosshair', 'camera.crosshair'],
-        ['fov', 'camera.fov'],
-        ['starttimer', 'server.countdown'],
-        ['maxplayers', 'server.maxplayers'],
-        ['serverpass', 'server.password'],
-        ['rawinput', 'input.rawinput'],
-        ['saturation', 'graphics.saturation'],
-        ['gameversion', 'game.version'],
-        ['maplist', 'game.listmaps']
-    ],
-    loadedSettings = false,
     mapList,
     friends = [],
     friends_online;
@@ -47,48 +19,14 @@ var players = [],
     }
 })();
 
-function loadSettings(i) {
-    if (i != settingsToLoad.length) {
-        if (settingsToLoad[i][0] == "serverpass")
-            i++;
-        dewRcon.send(settingsToLoad[i][1], function(ret) {
-            if (settingsToLoad[i][0] == "gameversion") {
-                settings[settingsToLoad[i][0]].set(ret);
-                $('#version').text("ElDewrito " + ret);
-            } else if (settingsToLoad[i][0] == "maplist") {
-                mapList = new Array(ret.split(','));
-            } else {
-                settings[settingsToLoad[i][0]].current = ret;
-                settings[settingsToLoad[i][0]].update();
-                //console.log(settingsToLoad[i][0] + ": " + settings[settingsToLoad[i][0]].current);
-            }
-            i++;
-            loadSettings(i);
-        });
-    } else {
-        if (!friendServerConnected)
-            StartConnection();
-        loadedSettings = true;
-        if (!dewRconConnected && hook) {
-            Audio.music.pause();
-            $("video").each(function() {
-                $(this)[0].pause();
-            });
-
-            loopPlayers = false;
-            clearInterval(totallyLoopingPlayers);
-        }
-    }
-}
-
 function initialize() {
     $.getJSON("http://tracks.thefeeltra.in/update", function(data) {
         console.log(data);
     });
     var set, b, g, i, e;
     $.getJSON("http://music.thefeeltra.in/music.json", function(j) {
-        songs = j;
-        changeSong2(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
+        Music.list = j;
+        Music.change(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
     });
     for (i = 0; i < Object.keys(settings).length; i++) {
         var set = Object.keys(settings)[i],
@@ -435,12 +373,12 @@ $(document).ready(function() {
             });
     });
     initialize();
-    Audio.music.play();
-    Audio.music.addEventListener('ended', function() {
+    Music.song.play();
+    Music.song.addEventListener('ended', function() {
         if (settings.shufflemusic.current === 1) {
-            changeSong2(nextSong);
+            Music.change(Music.next);
         } else {
-            changeSong2(thisSong);
+            Music.change(Music.name);
         }
     });
     $('#browser-full').click(function() {
@@ -492,7 +430,7 @@ $(document).ready(function() {
     });
     var e = ((window.innerHeight - $('#menu').height()) / 2) - 40;
     Audio.connect.volume = settings.musicvolume.current * 0.01;
-    Audio.music.volume = settings.musicvolume.current * 0.01;
+    Music.song.volume = settings.musicvolume.current * 0.01;
     Audio.click.volume = settings.sfxvolume.current * 0.01;
     Audio.notification.volume = settings.sfxvolume.current * 0.01;
     $('#start').click(function() {
@@ -500,7 +438,7 @@ $(document).ready(function() {
         if (mode[1] === "FORGE" || (mode[0] === "START" && mode[1] === "GAME"))
             startgame("127.0.0.1:11775", mode, "");
         else
-            startgame(currentServer.address, mode, "");
+            startgame(Lobby.address, mode, "");
     });
     Mousetrap.bind('enter up up down down left right left right b a enter', function() {
         settings.background.current = 9001;
@@ -561,22 +499,20 @@ function startgame(ip, mode, pass) {
         Audio.notification.play();
         return;
     }
-    if (!hasMap(currentServer.mapFile)) {
-        var map = getMapName(currentServer.mapFile);
+    if (!hasMap(Lobby.mapFile)) {
+        var map = getMapName(Lobby.mapFile);
         dewAlert({
             title: "Missing Map",
-            content: "You don't have " + ((map == "Edge" && currentServer.mapFile != "s3d_edge") ? currentServer.map : map) + ". Try finding it at <a href='https://www.reddit.com/r/HaloOnline/'>https://www.reddit.com/r/HaloOnline/</a>",
+            content: "You don't have " + ((map == "Edge" && Lobby.mapFile != "s3d_edge") ? Lobby.map : map) + ". Try finding it at <a href='https://www.reddit.com/r/HaloOnline/'>https://www.reddit.com/r/HaloOnline/</a>",
             acceptText: "OK"
         });
         return;
     }
-
-    loopPlayers = false;
     var password = pass;
     if (mode[0] === "JOIN" && pass == "")
-        password = currentServer.password == true ? prompt(currentServer.name + " has a password, enter the password to join", "") : "";
+        password = Lobby.password == true ? prompt(Lobby.name + " has a password, enter the password to join", "") : "";
 
-    if ((typeof currentServer.players !== 'undefined' && typeof currentServer.players.current !== 'undefined' && currentServer.players.current == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && currentServer.numPlayers == currentServer.maxPlayers)) {
+    if ((typeof Lobby.players !== 'undefined' && typeof Lobby.players.current !== 'undefined' && Lobby.players.current == Lobby.players.max) || (typeof Lobby.numPlayers !== 'undefined' && Lobby.numPlayers == Lobby.maxPlayers)) {
         dewAlert({
             title: "Server Full",
             content: 'This server is full, try joining a different one.',
@@ -588,7 +524,7 @@ function startgame(ip, mode, pass) {
     }
 
     if (party.length > 1) {
-        if ((typeof currentServer.players !== 'undefined' && (currentServer.players.current + party.length) == currentServer.players.max) || (typeof currentServer.numPlayers !== 'undefined' && (currentServer.numPlayers + party.length) == currentServer.maxPlayers)) {
+        if ((typeof Lobby.players !== 'undefined' && (Lobby.players.current + party.length) == Lobby.players.max) || (typeof Lobby.numPlayers !== 'undefined' && (Lobby.numPlayers + party.length) == Lobby.maxPlayers)) {
             dewAlert({
                 title: "Not Enough Slots",
                 content: 'There are not enough slots for your party, try joining a different one.',
@@ -623,7 +559,7 @@ function startgame(ip, mode, pass) {
     setTimeout(function() {
         Audio.beeep.play();
     }, 3000);
-    Audio.music.pause();
+    Music.song.pause();
     $('#black').fadeIn(3000);
     delay(function() {
         if (mode[0] === "JOIN") {
@@ -646,11 +582,11 @@ function startgame(ip, mode, pass) {
                     return;
                 }
             });
-            if (currentServer.status != "InLobby") {
-                $('#loadingMapName').text(currentServer.map.toString().toUpperCase().replace("BUNKERWORLD", "STANDOFF")); //lazy
-                $('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(currentServer.mapFile.toString()).replace(/ /g, "").toLowerCase() + '.jpg)');
-                $('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
-                $('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g, "").toLowerCase() + '-overlay.png)');
+            if (Lobby.status != "InLobby") {
+                $('#loadingMapName').text(Lobby.map.toString().toUpperCase().replace("BUNKERWORLD", "STANDOFF")); //lazy
+                $('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(Lobby.mapFile.toString()).replace(/ /g, "").toLowerCase() + '.jpg)');
+                $('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + Lobby.variantType.toString().capitalizeFirstLetter() + '.png)');
+                $('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + Lobby.map.toString().replace(/ /g, "").toLowerCase() + '-overlay.png)');
                 $('#mapOverlay').css('opacity', '0.8');
                 $('#loading').show();
                 $('#back').hide();
@@ -661,10 +597,10 @@ function startgame(ip, mode, pass) {
                 dewRcon.send('Game.SetMenuEnabled 0');
             }
         } else if (mode[1] === "FORGE") {
-            $('#loadingMapName').text(currentServer.map.toString().toUpperCase());
-            $('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g, "").toLowerCase() + '.jpg)');
-            $('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + currentServer.variantType.toString().capitalizeFirstLetter() + '.png)');
-            $('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + currentServer.map.toString().replace(/ /g, "").toLowerCase() + '-overlay.png)');
+            $('#loadingMapName').text(Lobby.map.toString().toUpperCase());
+            $('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + Lobby.map.toString().replace(/ /g, "").toLowerCase() + '.jpg)');
+            $('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + Lobby.variantType.toString().capitalizeFirstLetter() + '.png)');
+            $('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + Lobby.map.toString().replace(/ /g, "").toLowerCase() + '-overlay.png)');
             $('#loading').show();
             $('#back').hide();
             dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
@@ -672,22 +608,4 @@ function startgame(ip, mode, pass) {
             dewRcon.send('start');
         }
     }, 3700);
-}
-
-function changeSong2(song) {
-    var directory = settings.localmusic.current == 1 ? "music/" : "http://music.thefeeltra.in/";
-    songIndex = songs[currentAlbum].indexOf(song);
-    thisSong = songs[currentAlbum][songIndex];
-    nextSong = songs[currentAlbum][songIndex + 1];
-    if (songIndex + 1 >= songs[currentAlbum].length) {
-        nextSong = songs[currentAlbum][0];
-    }
-    $('.music-select2 .selection').removeClass('selected');
-    $("[data-song='" + song + "']").addClass('selected');
-    Audio.music.src = directory + currentAlbum + "/" + song + '.ogg';
-    Audio.music.play();
-    localStorage.setItem('song', song);
-    localStorage.setItem('album', currentAlbum);
-    Audio.notification.currentTime = 0;
-    Audio.notification.play();
 }
