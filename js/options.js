@@ -148,7 +148,7 @@ var Options = {
                     for (var g = 0; g < sets.length; g++) {
                         var setting = Settings[categories[i]][sets[g]];
                         if (!setting.load) {
-                            setting.current = parseInt(isset(localStorage.getItem(sets[g]), setting.original));
+                            setting.current = parseFloat(isset(localStorage.getItem(sets[g]), setting.original));
                             console.log("Current: " + setting.current + ", Original: " + setting.original);
                         }
                     }
