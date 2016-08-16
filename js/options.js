@@ -113,7 +113,7 @@ var Options = {
             ['maplist', 'game.listmaps']
         ],
         load: function(i) {
-            if (i != Settings.list.length) {
+            for (var i = 0; i < Settings.list.length; i++) {
                 if (Settings.list[i][0] == "serverpass")
                     i++;
                 dewRcon.send(Settings.list[i][1], function(ret) {
@@ -126,19 +126,61 @@ var Options = {
                         settings[Settings.list[i][0]].current = ret;
                         settings[Settings.list[i][0]].update();
                     }
-                    i++;
-                    Settings.load(i);
                 });
-            } else {
-                if (!friendServerConnected)
-                    StartConnection();
-                Settings.done = 1;
-                if (!dewRconConnected && hook) {
-                    Music.song.pause();
-                    $("video").each(function() {
-                        $(this)[0].pause();
-                    });
-                    clearInterval(totallyLoopingPlayers);
+                if (i != Settings.list.length) {} else {
+                    if (!friendServerConnected)
+                        StartConnection();
+                    Settings.done = 1;
+                    if (!dewRconConnected && hook) {
+                        Music.song.pause();
+                        $("video").each(function() {
+                            $(this)[0].pause();
+                        });
+                        clearInterval(totallyLoopingPlayers);
+                    }
+                }
+            }
+            var categories = Object.keys(Settings);
+            for (var i = 0; i < categories.length; i++) {
+                var category = Settings[categories[i]];
+                if (categories[i] != "done" && categories[i] != "list" && categories[i] != "load" && categories[i] != "update") {
+                    var sets = Object.keys(category);
+                    for (var g = 0; g < sets.length; g++) {
+                        var setting = Settings[categories[i]][sets[g]];
+                        if (!setting.load) {
+                            setting.current = parseInt(isset(localStorage.getItem(sets[g]), setting.original));
+                            console.log("Current: " + setting.current + ", Original: " + setting.original);
+                        }
+                    }
+                }
+            }
+        },
+        update: function(setting, o = 0) {
+            var p = setting.split('.');
+            setting = Settings[p[0]][p[1]];
+            if (setting.type == "number") {
+                setting.current += setting.increment * o;
+                if (setting.current > setting.max) {
+                    setting.current = setting.max;
+                } else if (setting.current < setting.min) {
+                    setting.current = setting.min;
+                }
+                localStorage.setItem(p[1], setting.current);
+                return setting.return();
+            }
+        },
+        menu: {
+            musicvolume: {
+                type: "number",
+                label: "Music Volume",
+                original: 0.25,
+                min: 0,
+                max: 1,
+                increment: 0.05,
+                return: function() {
+                    var c = Settings.menu.musicvolume.current;
+                    Music.song.volume = c;
+                    return (c * 100).toFixed(0);
                 }
             }
         }
