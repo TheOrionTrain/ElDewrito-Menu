@@ -27,6 +27,15 @@ function initialize() {
     $.getJSON("http://music.thefeeltra.in/music.json", function(j) {
         Music.list = j;
         Music.change(isset(localStorage.getItem('song'), "Mythic Menu Theme"));
+        Music.song.volume = Settings.menu.musicvolume.current;
+        Music.song.play();
+        Music.song.addEventListener('ended', function() {
+            if (settings.shufflemusic.current === 1) {
+                Music.change(Music.next);
+            } else {
+                Music.change(Music.name);
+            }
+        });
     });
     for (i = 0; i < Object.keys(settings).length; i++) {
         var set = Object.keys(settings)[i],
@@ -373,14 +382,6 @@ $(document).ready(function() {
             });
     });
     initialize();
-    Music.song.play();
-    Music.song.addEventListener('ended', function() {
-        if (settings.shufflemusic.current === 1) {
-            Music.change(Music.next);
-        } else {
-            Music.change(Music.name);
-        }
-    });
     $('#browser-full').click(function() {
         if (Browser.filters.full) {
             Browser.filters.full = false;
