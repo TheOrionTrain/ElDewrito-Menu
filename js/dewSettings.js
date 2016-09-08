@@ -259,6 +259,12 @@ var user = {
 						$('#videos').append("<video id='bg1' src='"+d+"" + settings.background.labels[c] + ".webm' loop autoplay type='video/webm'></video>");
 					}
 					$('#bg1').show();
+					$('#bg1')[0].onerror = function() {
+						console.log(infoIP+" is currently down.");
+						infoIP = (infoIP == "http://158.69.166.144:8081" ? "http://servers.thefeeltra.in" : "http://158.69.166.144:8081");
+						console.log("Switched to "+infoIP+".");
+						settings.background.update();
+					};
 					$("[data-option='background']").children('.value').text(settings.background.labels[c]);
 					if (c == Halo3Index || c == 3 || c == 5) {
 						$('#bg-cover').css('background', 'rgba(0,0,0,0)');
