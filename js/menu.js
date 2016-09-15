@@ -284,23 +284,34 @@ var Music = {
         "local": isset(localStorage.getItem('localbackground'), 0),
         "change": function(m) {
             if (Menu.pages[m]) {
-                var ch = Menu.pages[m];
+                var ch = Menu.pages[m],
+                    sbg = Settings.menu.staticbg.current;
                 if (ch.background) {
                     for (var i = 0; i < ch.background.length; i++) {
                         if ($('#bg-' + ch.background[i]).length && ch.background[i] != Menu.background) {
-                            $('#videos > video').fadeOut(anit);
-                            $('#videos > video')[0].pause();
-                            $('#bg-' + ch.background[i]).stop().fadeIn(anit);
-                            $('#bg-' + ch.background[i])[0].play();
+                            if(sbg == "Off") {
+                                $('#videos > video').fadeOut(anit);
+                                $('#videos > video')[0].pause();
+                                $('#bg-' + ch.background[i]).stop().fadeIn(anit);
+                                $('#bg-' + ch.background[i])[0].play();
+                            } else {
+                                $('#videos > img').fadeOut(anit);
+                                $('#bg-' + ch.background[i]).stop().fadeIn(anit);
+                            }
                             Menu.background = ch.background[i];
                         }
                     }
                 } else {
                     if (Menu.background != "default") {
-                        $('#videos > video').fadeOut(anit);
-                        $('#videos > video')[0].pause();
-                        $('#bg1').stop().stop().fadeIn(anit);
-                        $('#bg1')[0].play();
+                        if(sbg == "Off") {
+                            $('#videos > video').fadeOut(anit);
+                            $('#videos > video')[0].pause();
+                            $('#bg1').stop().stop().fadeIn(anit);
+                            $('#bg1')[0].play();
+                        } else {
+                            $('#videos > img').fadeOut(anit);
+                            $('#bg1').stop().stop().fadeIn(anit);
+                        }
                         Menu.background = "default";
                     }
                 }

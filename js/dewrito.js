@@ -37,6 +37,7 @@ function initialize() {
             }
         });
     });
+    Settings.menu.background.choices = Object.keys(backgrounds);
     for (i = 0; i < Object.keys(settings).length; i++) {
         var set = Object.keys(settings)[i],
             category = settings[set].category;
@@ -564,14 +565,12 @@ function startgame(ip, mode, pass) {
     $('#black').fadeIn(3000);
     delay(function() {
         if (mode[0] === "JOIN") {
-            //$('#hoImage').css('background-image','url(./img/' + settings.logo.labels[settings.logo.current] + '.png)');
             dewRcon.send('connect ' + ip + ' ' + password, function(ret) {
                 if (!ret.contains("Attempting")) {
                     $.snackbar({
                         content: ret
                     });
 
-                    $('#loading').hide();
                     $('#black').hide();
                     backButton.appendTo('body');
                     $.snackbar({
@@ -584,13 +583,6 @@ function startgame(ip, mode, pass) {
                 }
             });
             if (Lobby.status != "InLobby") {
-                $('#loadingMapName').text(Lobby.map.toString().toUpperCase().replace("BUNKERWORLD", "STANDOFF")); //lazy
-                $('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + getMapName(Lobby.mapFile.toString()).replace(/ /g, "").toLowerCase() + '.jpg)');
-                $('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + Lobby.variantType.toString().capitalizeFirstLetter() + '.png)');
-                $('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + Lobby.map.toString().replace(/ /g, "").toLowerCase() + '-overlay.png)');
-                $('#mapOverlay').css('opacity', '0.8');
-                $('#loading').show();
-                $('#back').hide();
                 setTimeout(function() {
                     dewRcon.send('Game.SetMenuEnabled 0');
                 }, 10000);
@@ -598,12 +590,6 @@ function startgame(ip, mode, pass) {
                 dewRcon.send('Game.SetMenuEnabled 0');
             }
         } else if (mode[1] === "FORGE") {
-            $('#loadingMapName').text(Lobby.map.toString().toUpperCase());
-            $('#loadingMapImage').css('background-image', 'url(./img/loading/maps/' + Lobby.map.toString().replace(/ /g, "").toLowerCase() + '.jpg)');
-            $('#loadingGametypeImage').css('background-image', 'url(./img/gametypes/' + Lobby.variantType.toString().capitalizeFirstLetter() + '.png)');
-            $('#mapOverlay').css('background-image', 'url(./img/loading/maps/' + Lobby.map.toString().replace(/ /g, "").toLowerCase() + '-overlay.png)');
-            $('#loading').show();
-            $('#back').hide();
             dewRcon.send('game.forceload ' + getMapFile($('#currentmap').text().toString().toLowerCase()) + ' 5')
         } else if (mode[0] === "START" && mode[1] === "GAME") {
             dewRcon.send('start');
