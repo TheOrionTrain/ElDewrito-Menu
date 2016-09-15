@@ -137,7 +137,7 @@ var catergories = {
             ],
             "increment": 1,
             "update": function() {
-                var videoURL = (Menu.domain == "http://orion.thefeeltra.in:8081") ? "http://orion.thefeeltra.in/video/" : "http://video.thefeeltra.in/";
+                /*var videoURL = (Menu.domain == "http://orion.thefeeltra.in:8081") ? "http://orion.thefeeltra.in/video/" : "http://video.thefeeltra.in/";
                 console.log("Videos served from " + videoURL + ".");
                 var c = settings.background.current,
                     l = settings.background.labels[c],
@@ -213,7 +213,7 @@ var catergories = {
                     } else {
                         $('#bg-cover').css('background', 'rgba(0,0,0,0.25)');
                     }
-                }
+                }*/
             }
         },
         "localbackground": {
@@ -973,5 +973,25 @@ var catergories = {
             "STANDOFF": "Once, nearby telescopes listened for a message from the stars. Now, these silos contain our prepared response.",
             "THE PIT": "Software simulations are held in contempt by the veteran instructors who run these training facilities.",
             "VALHALLA": "The crew of V-398 barely survived their unplanned landing in this gorge... this curious gorge."
+        }
+    },
+    backgrounds = {
+        "Halo Reach": {
+            "folder": "reach",
+            "files": [
+                "mainmenu",
+                "custom_games",
+                "matchmaking",
+                "firefight",
+                "forge"
+            ]
+        },
+        "Halo 3": {
+            "folder": "halo3",
+            "files": [
+                "mainmenu",
+                "multiplayer",
+                "forge"
+            ]
         }
     };

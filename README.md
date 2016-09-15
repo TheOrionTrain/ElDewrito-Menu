@@ -24,11 +24,11 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareA
 - ~~Matchmaking with voting~~
 - Fix audio crackling/popping on sound effects
 - Style leaderboard
-- Make static images default background, adding setting for video
+- ~~Make static images default background, adding setting for video~~
 - Remove friends sidebar and merge functionality into the player list
 - Add server browser sorting
 - Make server list, music, and video server domains independent of each other
-- Remove loading screen elements (RIP Personality)
+- ~~Remove loading screen elements (RIP Personality)~~
 - Rename menu and github repo something more representative and unique
 - Come up with a name and domain for the dream team
 - Prevent users and developers from switching to Halo 5 Forge

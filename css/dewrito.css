@@ -793,3 +793,13 @@ html {
 #friend-add:hover {
     background: rgba(0, 255, 55, 1);
 }
+
+#videos img {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 1280px;
+    height: 720px;
+    display: none;
+}

@@ -148,8 +148,12 @@ var Options = {
                     for (var g = 0; g < sets.length; g++) {
                         var setting = Settings[categories[i]][sets[g]];
                         if (!setting.load) {
-                            setting.current = parseFloat(isset(localStorage.getItem(sets[g]), setting.original));
-                            console.log("Current: " + setting.current + ", Original: " + setting.original);
+                            setting.current = isset(localStorage.getItem(sets[g]), setting.original);
+                            if (setting.type == "number") {
+                                setting.current = parseFloat(setting.current);
+                            }
+                            console.log(sets[g]+": " + setting.current + " - " + setting.original);
+                            setting.return();
                         }
                     }
                 }
@@ -167,9 +171,56 @@ var Options = {
                 }
                 localStorage.setItem(p[1], setting.current);
                 return setting.return();
+            } else if (setting.type == "choice") {
+                setting.current = o;
+                localStorage.setItem(p[1], setting.current);
+                return setting.return();
             }
         },
         menu: {
+            background: {
+                type: "choice",
+                label: "Background",
+                original: "Halo Reach",
+                choices: [
+                    "Halo Reach",
+                    "Reach Act 1",
+                    "Reach Act 2",
+                    "Reach Act 3",
+                    "Halo CE",
+                    "Halo CEA",
+                    "Halo 2",
+                    "Halo 3",
+                    "Halo 3A",
+                    "Halo 3 ODST",
+                    "Halo 4",
+                    "Crash",
+                    "Waypoint",
+                    "Halo Reach Beta",
+                    "Skyline",
+                    "Relic",
+                    "Landfall",
+                    "Shrine",
+                    "Random"
+                ],
+                return: function() {
+                    var c = Settings.menu.background.current,
+                        s = Settings.menu.staticbg.current,
+                        dir = backgrounds[c].folder,
+                        files = backgrounds[c].files;
+                    $('#videos').empty();
+                    for(var i=0; i < files.length; i++) {
+                        var b = (i == 0) ? "bg1" : "bg-"+files[i];
+                        if (s == "Off") {
+                            $('#videos').append("<video id='"+ b +"' src='video/"+ dir + "/" + files[i] + ".webm' loop autoplay type='video/webm'></video>");
+                        } else {
+                            $('#videos').append("<img id='"+ b +"' src='img/backgrounds/"+ dir + "/" + files[i] + ".jpg'>");
+                        }
+                    }
+                    $('#bg1').show();
+                    return c;
+                }
+            },
             musicvolume: {
                 type: "number",
                 label: "Music Volume",
@@ -181,6 +232,20 @@ var Options = {
                     var c = Settings.menu.musicvolume.current;
                     Music.song.volume = c;
                     return (c * 100).toFixed(0);
+                }
+            },
+            staticbg: {
+                type: "choice",
+                label: "Static Background",
+                original: "On",
+                choices: [
+                    "On",
+                    "Off"
+                ],
+                return: function() {
+                    var c = Settings.menu.staticbg.current;
+                    Settings.menu.background.return();
+                    return c;
                 }
             }
         }
