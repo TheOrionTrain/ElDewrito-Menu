@@ -152,7 +152,6 @@ var Options = {
                             if (setting.type == "number") {
                                 setting.current = parseFloat(setting.current);
                             }
-                            console.log(sets[g]+": " + setting.current + " - " + setting.original);
                             setting.return();
                         }
                     }
@@ -162,59 +161,35 @@ var Options = {
         update: function(setting, o = 0) {
             var p = setting.split('.');
             setting = Settings[p[0]][p[1]];
-            if (setting.type == "number") {
-                setting.current += setting.increment * o;
-                if (setting.current > setting.max) {
-                    setting.current = setting.max;
-                } else if (setting.current < setting.min) {
-                    setting.current = setting.min;
-                }
-                localStorage.setItem(p[1], setting.current);
-                return setting.return();
-            } else if (setting.type == "choice") {
-                setting.current = o;
-                localStorage.setItem(p[1], setting.current);
-                return setting.return();
-            }
+            setting.current = o;
+            localStorage.setItem(p[1], setting.current);
+            return setting.return();
         },
         menu: {
             background: {
                 type: "choice",
                 label: "Background",
                 original: "Halo Reach",
-                choices: [
-                    "Halo Reach",
-                    "Reach Act 1",
-                    "Reach Act 2",
-                    "Reach Act 3",
-                    "Halo CE",
-                    "Halo CEA",
-                    "Halo 2",
-                    "Halo 3",
-                    "Halo 3A",
-                    "Halo 3 ODST",
-                    "Halo 4",
-                    "Crash",
-                    "Waypoint",
-                    "Halo Reach Beta",
-                    "Skyline",
-                    "Relic",
-                    "Landfall",
-                    "Shrine",
-                    "Random"
-                ],
                 return: function() {
                     var c = Settings.menu.background.current,
-                        s = Settings.menu.staticbg.current,
-                        dir = backgrounds[c].folder,
-                        files = backgrounds[c].files;
+                        s = Settings.menu.staticbg.current;
                     $('#videos').empty();
-                    for(var i=0; i < files.length; i++) {
-                        var b = (i == 0) ? "bg1" : "bg-"+files[i];
+                    if (typeof backgrounds[c] == "object") {
+                        var dir = backgrounds[c].folder,
+                            files = backgrounds[c].files;
+                        for (var i = 0; i < files.length; i++) {
+                            var b = (i == 0) ? "bg1" : "bg-" + files[i];
+                            if (s == "Off") {
+                                $('#videos').append("<video id='" + b + "' src='video/" + dir + "/" + files[i] + ".webm' loop autoplay type='video/webm'></video>");
+                            } else {
+                                $('#videos').append("<img id='" + b + "' src='img/backgrounds/" + dir + "/" + files[i] + ".jpg'>");
+                            }
+                        }
+                    } else if(typeof backgrounds[c] == "string") {
                         if (s == "Off") {
-                            $('#videos').append("<video id='"+ b +"' src='video/"+ dir + "/" + files[i] + ".webm' loop autoplay type='video/webm'></video>");
+                            $('#videos').append("<video id='bg1' src='video/" + backgrounds[c] + ".webm' loop autoplay type='video/webm'></video>");
                         } else {
-                            $('#videos').append("<img id='"+ b +"' src='img/backgrounds/"+ dir + "/" + files[i] + ".jpg'>");
+                            $('#videos').append("<img id='bg1' src='img/backgrounds/" + backgrounds[c] + ".jpg'>");
                         }
                     }
                     $('#bg1').show();

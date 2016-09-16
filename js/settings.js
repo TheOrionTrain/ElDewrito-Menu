@@ -987,6 +987,13 @@ var catergories = {
                 "theater"
             ]
         },
+        "Reach Act 1": "reach/campaign_act1",
+        "Reach Act 2": "reach/campaign_act2",
+        "Reach Act 3": "reach/campaign_act3",
+        "Halo Reach Beta": "reach/custom_games",
+        "Halo Combat Evolved": "Halo CE",
+        "Halo Anniversary Edition": "Halo CEA",
+        "Halo 2": "Halo 2",
         "Halo 3": {
             "folder": "halo3",
             "files": [
@@ -994,5 +1001,15 @@ var catergories = {
                 "multiplayer",
                 "forge"
             ]
-        }
+        },
+        "Halo 3 Anniversary Edition": "Halo 3A",
+        "Halo 3 ODST": "Halo 3 ODST",
+        "Halo 4": "Halo 4",
+        "Crash": "Crash",
+        "Waypoint": "Waypoint",
+        "Skyline": "mcc/Skyline",
+        "Relic": "mcc/Relic",
+        "Landfall": "mcc/Landfall",
+        "Shrine": "mcc/Shrine",
+        "Random": "Random"
     };
