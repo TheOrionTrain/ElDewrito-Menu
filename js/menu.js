@@ -24,17 +24,52 @@ var Music = {
             Music.song.play();
             localStorage.setItem('song', song);
             localStorage.setItem('album', Music.album);
-            Audio.notification.currentTime = 0;
-            Audio.notification.play();
+            Audio.play("notification");
         }
     },
     Audio = {
-        connect: new Audio("audio/halo3/loop.ogg"),
-        notification: new Audio("audio/odst/a_button.ogg"),
-        beep: new Audio("audio/halo3/countdown_for_respawn.ogg"),
-        beeep: new Audio("audio/halo3/player_respawn.ogg"),
-        click: new Audio("audio/halo3/cursor_horizontal.ogg"),
-        slide: new Audio("audio/halo3/a_button.ogg")
+        play: function(e) {
+            n = ++Audio[e].n;
+            if (n >= 19) {
+                Audio[e].n = 0;
+            }
+            if (!Audio[e].temp[n]) {
+                Audio[e].temp[n] = new Aud("audio/" + Audio[e].file);
+                Audio[e].temp[n].volume = settings.sfxvolume.current * 0.01;
+            }
+            Audio[e].temp[n].currentTime = 0;
+            Audio[e].temp[n].play();
+        },
+        connect: {
+            file: "halo3/loop.ogg",
+            temp: [],
+            n: 0
+        },
+        notification: {
+            file: "odst/a_button.ogg",
+            temp: [],
+            n: 0
+        },
+        beep: {
+            file: "halo3/countdown_for_respawn.ogg",
+            temp: [],
+            n: 0
+        },
+        beeep: {
+            file: "halo3/player_respawn.ogg",
+            temp: [],
+            n: 0
+        },
+        click: {
+            file: "halo3/cursor_horizontal.ogg",
+            temp: [],
+            n: 0
+        },
+        slide: {
+            file: "halo3/a_button.ogg",
+            temp: [],
+            n: 0
+        }
     },
     Lobby = {
         "address": "0.0.0.0",
@@ -87,8 +122,7 @@ var Music = {
                     text: player
                 })
             }).hover(function() {
-                Audio.click.currentTime = 0;
-                Audio.click.play();
+                Audio.play("click");
             }).mouseover(function() {
                 var n = $(this).attr('id'),
                     col = $(this).attr('hex-color'),
@@ -361,8 +395,7 @@ var Music = {
                 Controller.select(m + "-1");
                 Menu.selected = m;
                 $('#select-main .selection').hover(function() {
-                    Audio.click.currentTime = 0;
-                    Audio.click.play();
+                    Audio.play("click");
                     $('.selection').removeClass('gp-on');
                     $(this).addClass("gp-on");
                     Controller.selected = $(this).attr('data-gp').split("-")[1];
@@ -377,8 +410,7 @@ var Music = {
                     var button = $(this).attr('class').split('-')[1];
                     Menu.pages[Menu.selected].controls[button].action();
                 });
-                Audio.slide.currentTime = 0;
-                Audio.slide.play();
+                Audio.play("slide");
                 if (ch.onload) {
                     ch.onload();
                 }

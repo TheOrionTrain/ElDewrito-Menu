@@ -46,8 +46,7 @@ var Browser = {
 
             $('#browser').append("<div data-gp='serverbrowser-" + Controller.servers + "' class='server" + ((servers[i].password) ? " passworded" : "") + " ' id='server" + i + "' data-server=" + i + "><div class='thumb'><img src='img/maps/" + getMapName(servers[i].mapFile).toString().toUpperCase() + ".jpg'></div><div class='info'><span class='name'>" + ((servers[i].password) ? "[LOCKED] " : "") + servers[i].name + " (" + servers[i].host + ")  " + servers[i].location_flag + "<span id='ping-" + i + "'>" + servers[i].ping + "</span>ms]</span><span class='settings'>" + servers[i].variant + " " + on + " " + servers[i].map.replace("Bunkerworld", "Standoff") + sprint + "<span class='elversion'>" + servers[i].eldewritoVersion + "</span></span></div><div class='players'>" + servers[i].players.current + "/" + servers[i].players.max + "</div></div>");
             $('.server').hover(function() {
-                Audio.click.currentTime = 0;
-                Audio.click.play();
+                Audio.play("click");
                 Controller.select($(this).attr('data-gp'));
             });
             $('.server').unbind().click(function() {
@@ -115,8 +114,7 @@ var Browser = {
                 $('#browser').empty();
                 Browser.get();
                 $('.server').hover(function() {
-                    Audio.click.currentTime = 0;
-                    Audio.click.play();
+                    Audio.play("click");
                 });
                 $('.server').click(function() {
                     Lobby.join($(this).attr('data-server'));
@@ -159,8 +157,7 @@ var Browser = {
         },
         "add": function(lb) {
             $("<div>" + JSON.stringify(lb) + "</div>").hover(function() {
-                Audio.click.currentTime = 0;
-                Audio.click.play();
+                Audio.play("click");
             }).appendTo('#leaders');
         }
     };

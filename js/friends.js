@@ -59,16 +59,14 @@ StartConnection = function() {
         $.snackbar({
             content: 'Connected to Friend Server!'
         });
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
         friendServerConnected = true;
     };
     friendServer.friendsServerSocket.onclose = function() {
         $.snackbar({
             content: 'Lost Connection to Friend Server'
         });
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
         friendServerConnected = false;
     };
     friendServer.friendsServerSocket.onerror = function() {
@@ -77,8 +75,7 @@ StartConnection = function() {
                 content: 'Connection to Friend Server failed, retrying.'
             });
             if (!played) {
-                Audio.notification.currentTime = 0;
-                Audio.notification.play();
+                Audio.play("notification");
                 played = 1;
             }
             snacking = 1;
@@ -146,8 +143,7 @@ StartConnection = function() {
                             $.snackbar({
                                 content: result.player + ' has left your party.'
                             });
-                            Audio.notification.currentTime = 0;
-                            Audio.notification.play();
+                            Audio.play("notification");
 
                         }
 
@@ -194,8 +190,7 @@ StartConnection = function() {
                     $.snackbar({
                         content: result.player + ' has joined your party.'
                     });
-                    Audio.notification.currentTime = 0;
-                    Audio.notification.play();
+                    Audio.play("notification");
 
                     party.push(result.player);
 
@@ -239,8 +234,7 @@ StartConnection = function() {
                     $.snackbar({
                         content: result.message
                     });
-                    Audio.notification.currentTime = 0;
-                    Audio.notification.play();
+                    Audio.play("notification");
                     break;
                 case "updateparty":
                     if ($.inArray(result.player + ":" + result.guid, party) == -1) {
@@ -313,8 +307,7 @@ function partyInvite(accepted, guid) {
         $.snackbar({
             content: "You are already in a party."
         });
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
     }
     console.log(accepted);
 }
