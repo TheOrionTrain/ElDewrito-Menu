@@ -289,7 +289,7 @@ var Music = {
                 if (ch.background) {
                     for (var i = 0; i < ch.background.length; i++) {
                         if ($('#bg-' + ch.background[i]).length && ch.background[i] != Menu.background) {
-                            if(sbg == "Off") {
+                            if (sbg == "Off") {
                                 $('#videos > video').fadeOut(anit);
                                 $('#videos > video')[0].pause();
                                 $('#bg-' + ch.background[i]).stop().fadeIn(anit);
@@ -303,7 +303,7 @@ var Music = {
                     }
                 } else {
                     if (Menu.background != "default") {
-                        if(sbg == "Off") {
+                        if (sbg == "Off") {
                             $('#videos > video').fadeOut(anit);
                             $('#videos > video')[0].pause();
                             $('#bg1').stop().stop().fadeIn(anit);
