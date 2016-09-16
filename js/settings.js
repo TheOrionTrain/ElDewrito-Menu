@@ -983,7 +983,8 @@ var catergories = {
                 "custom_games",
                 "matchmaking",
                 "firefight",
-                "forge"
+                "forge",
+                "theater"
             ]
         },
         "Halo 3": {
