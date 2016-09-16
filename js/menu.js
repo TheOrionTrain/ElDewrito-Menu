@@ -577,7 +577,7 @@ var Music = {
                     setTimeout(Leaderboard.load, 1000);
                 },
                 "class": "leaderboard",
-                "background": ["matchmaking", "multiplayer"],
+                "background": ["theater", "multiplayer"],
                 "thumbnail": 0,
                 "lists": [],
                 "options": {},
