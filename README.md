@@ -22,7 +22,7 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareA
 - Add Spartan customization w/ camera control
 - Get player stats showing and working correctly in lobbies
 - ~~Matchmaking with voting~~
-- Fix audio crackling/popping on sound effects
+- ~~Fix audio crackling/popping on sound effects~~
 - Style leaderboard
 - ~~Make static images default background, adding setting for video~~
 - Remove friends sidebar and merge functionality into the player list

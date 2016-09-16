@@ -977,8 +977,8 @@ var catergories = {
     },
     backgrounds = {
         "Halo Reach": {
-            "folder": "reach",
-            "files": [
+            folder: "reach",
+            files: [
                 "mainmenu",
                 "custom_games",
                 "matchmaking",
@@ -995,8 +995,8 @@ var catergories = {
         "Halo Anniversary Edition": "Halo CEA",
         "Halo 2": "Halo 2",
         "Halo 3": {
-            "folder": "halo3",
-            "files": [
+            folder: "halo3",
+            files: [
                 "mainmenu",
                 "multiplayer",
                 "forge"

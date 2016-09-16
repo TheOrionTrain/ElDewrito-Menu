@@ -22,8 +22,7 @@ StartMatchmakingConnection = function() {
         $.snackbar({
             content: 'Lost Connection to Matchmaking Server'
         });
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
         matchmakingServerConnected = false;
     };
 
@@ -33,8 +32,7 @@ StartMatchmakingConnection = function() {
                 content: 'Connection to Matchmaking Server failed, retrying.'
             });
             if (!played) {
-                Audio.notification.currentTime = 0;
-                Audio.notification.play();
+                Audio.play("notification");
                 played = 1;
             }
             snacking = 1;

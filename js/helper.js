@@ -309,8 +309,7 @@ function dewAlert(options) {
     }
     $('#alert-container').fadeIn(anit);
     $('#alert').css('top', '200px');
-    Audio.notification.currentTime = 0;
-    Audio.notification.play();
+    Audio.play("notification");
 }
 
 function hideAlert(clicked, callback, info) {
@@ -319,7 +318,6 @@ function hideAlert(clicked, callback, info) {
     }
     $('#alert').css('top', '-300px');
     $('#alert-container').fadeOut(anit);
-    $('#slide')[0].currentTime = 0;
     $('#slide')[0].play();
 }
 

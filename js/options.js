@@ -33,12 +33,10 @@ var Options = {
                         "opacity": 1
                     }, anit / 8);
                     Options[s].selected = m;
-                    Audio.slide.currentTime = 0;
-                    Audio.slide.play();
+                    Audio.play("slide");
                 });
                 $('#setting-select .selection').hover(function() {
-                    Audio.click.currentTime = 0;
-                    Audio.click.play();
+                    Audio.play("click");
                 });
                 $('#options').append("<div class='subsetting-select animated' id='menu-" + b + "'></div>");
                 for (e = 0; e < Object.keys(Options[s].options[b]).length; e++) {
@@ -52,26 +50,22 @@ var Options = {
                         });
                         $('#setting-name').text(m);
                         $('#setting-info').html(Options[s].options[p][m].description);
-                        Audio.click.currentTime = 0;
-                        Audio.click.play();
+                        Audio.play("click");
                     });
                     $('.subsetting-select .selection').click(function() {
                         Options[s].current = $(this).attr('data-setting');
                         Options[s].display();
                         $('#options').fadeOut(anit);
-                        Audio.slide.currentTime = 0;
-                        Audio.slide.play();
+                        Audio.play("slide");
                     });
                 }
             }
             $('#options').fadeIn(anit);
             $('#options-previous').click(function() {
                 $('#options').fadeOut(anit);
-                Audio.slide.currentTime = 0;
-                Audio.slide.play();
+                Audio.play("slide");
             });
-            Audio.slide.currentTime = 0;
-            Audio.slide.play();
+            Audio.play("slide");
         },
         playlist: {
             display: function() {
@@ -113,30 +107,32 @@ var Options = {
             ['maplist', 'game.listmaps']
         ],
         load: function(i) {
-            for (var i = 0; i < Settings.list.length; i++) {
-                if (Settings.list[i][0] == "serverpass")
-                    i++;
-                dewRcon.send(Settings.list[i][1], function(ret) {
-                    if (Settings.list[i][0] == "gameversion") {
-                        settings[Settings.list[i][0]].set(ret);
-                        $('#version').text("ElDewrito " + ret);
-                    } else if (Settings.list[i][0] == "maplist") {
-                        mapList = new Array(ret.split(','));
-                    } else {
-                        settings[Settings.list[i][0]].current = ret;
-                        settings[Settings.list[i][0]].update();
-                    }
-                });
-                if (i != Settings.list.length) {} else {
-                    if (!friendServerConnected)
-                        StartConnection();
-                    Settings.done = 1;
-                    if (!dewRconConnected && hook) {
-                        Music.song.pause();
-                        $("video").each(function() {
-                            $(this)[0].pause();
-                        });
-                        clearInterval(totallyLoopingPlayers);
+            if(dewRconConnected) {
+                for (var i = 0; i < Settings.list.length; i++) {
+                    if (Settings.list[i][0] == "serverpass")
+                        i++;
+                    dewRcon.send(Settings.list[i][1], function(ret) {
+                        if (Settings.list[i][0] == "gameversion") {
+                            settings[Settings.list[i][0]].set(ret);
+                            $('#version').text("ElDewrito " + ret);
+                        } else if (Settings.list[i][0] == "maplist") {
+                            mapList = new Array(ret.split(','));
+                        } else {
+                            settings[Settings.list[i][0]].current = ret;
+                            settings[Settings.list[i][0]].update();
+                        }
+                    });
+                    if (i != Settings.list.length) {} else {
+                        if (!friendServerConnected)
+                            StartConnection();
+                        Settings.done = 1;
+                        if (!dewRconConnected && hook) {
+                            Music.song.pause();
+                            $("video").each(function() {
+                                $(this)[0].pause();
+                            });
+                            clearInterval(totallyLoopingPlayers);
+                        }
                     }
                 }
             }
@@ -152,6 +148,7 @@ var Options = {
                             if (setting.type == "number") {
                                 setting.current = parseFloat(setting.current);
                             }
+                            console.log(sets[g] + ": " + setting.current);
                             setting.return();
                         }
                     }
@@ -185,7 +182,7 @@ var Options = {
                                 $('#videos').append("<img id='" + b + "' src='img/backgrounds/" + dir + "/" + files[i] + ".jpg'>");
                             }
                         }
-                    } else if(typeof backgrounds[c] == "string") {
+                    } else if (typeof backgrounds[c] == "string") {
                         if (s == "Off") {
                             $('#videos').append("<video id='bg1' src='video/" + backgrounds[c] + ".webm' loop autoplay type='video/webm'></video>");
                         } else {

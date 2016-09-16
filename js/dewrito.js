@@ -11,7 +11,8 @@ var players = [],
     totallyLoopingPlayers = setInterval(totalPlayersLoop, 10000),
     mapList,
     friends = [],
-    friends_online;
+    friends_online,
+    Aud = Audio;
 
 (function() {
     if (window.location.protocol == "https:") {
@@ -95,8 +96,7 @@ function loadParty() {
                 }, isDev);
             }
             $('.friend,#friend-add,#friend-remove').hover(function() {
-                Audio.click.currentTime = 0;
-                Audio.click.play();
+                Audio.play("click");
             });
             $('#party .friend:first-of-type').attr('title', 'Party Leader');
         } else {
@@ -134,8 +134,7 @@ function addPlayer(id, player, isDev, opacity) {
             text: player.name
         })
     }).hover(function() {
-        Audio.click.currentTime = 0;
-        Audio.click.play();
+        Audio.play("click");
     }).mouseover(function() {
         var n = $(this).attr('id'),
             col = $(this).attr('hex-color'),
@@ -159,13 +158,11 @@ function loadFriends() {
     $('#show-search').click(function() {
         $('#friend-search').fadeIn(anit);
         $('#friend-search input').focus();
-        Audio.slide.currentTime = 0;
-        Audio.slide.play();
+        Audio.play("slide");
     });
     $('#hide-search').click(function() {
         $('#friend-search').fadeOut(anit);
-        Audio.slide.currentTime = 0;
-        Audio.slide.play();
+        Audio.play("slide");
     });
     friends_online = 0;
     friends = JSON.parse(localStorage.getItem("friends"));
@@ -204,8 +201,7 @@ function loadFriends() {
         }
     }
     $('.friend,#friend-add,#friend-remove,#lobby-container table tr').hover(function() {
-        Audio.click.currentTime = 0;
-        Audio.click.play();
+        Audio.play("click");
     });
     $("#lobby-container table tr").mouseover(function() {
         var n = $(this).attr('id'),
@@ -223,14 +219,12 @@ function loadFriends() {
         } else {
             submenu("show", $(this).text(), 0, e);
         }
-        Audio.slide.currentTime = 0;
-        Audio.slide.play();
+        Audio.play("slide");
     });
     $('#party .friend, #current-party td.name').unbind().click(function(e) {
         if ($(this).text() != pname) {
             partysubmenu("show", $(this).text(), e);
-            Audio.slide.currentTime = 0;
-            Audio.slide.play();
+            Audio.play("slide");
         }
     });
 }
@@ -255,8 +249,7 @@ function addFriend(name) {
         updateFriends();
         loadFriends();
         $('#friend-search').fadeOut(anit);
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
     }
 }
 
@@ -282,6 +275,7 @@ function removeFriend(name) {
 
 $(document).ready(function() {
     totalPlayersLoop();
+    Settings.load(0);
     $(window).resize(function() {
         settings.resolution.update();
     });
@@ -319,8 +313,7 @@ $(document).ready(function() {
         hideAlert(false, c, false);
     });
     $('#friend-add').click(function() {
-        Audio.slide.currentTime = 0;
-        Audio.slide.play();
+        Audio.play("slide");
         addFriend($('#friend-search input').val());
         $('#friend-search input').val("");
     });
@@ -328,8 +321,7 @@ $(document).ready(function() {
         submenu($(this).attr('data-action'), $('#click-menu').attr('data-friend'));
     });
     $('#click-menu li').hover(function() {
-        Audio.click.currentTime = 0;
-        Audio.click.play();
+        Audio.play("click");
     });
     $('#click-menu-container').click(function() {
         $(this).hide();
@@ -447,8 +439,7 @@ $(document).ready(function() {
         settings.background.update();
     });
     $('.selection').hover(function() {
-        Audio.click.currentTime = 0;
-        Audio.click.play();
+        Audio.play("click");
         $('.selection').removeClass('gp-on');
         $(this).addClass("gp-on");
         Controller.selected = $(this).attr('data-gp').split("-")[1];
@@ -497,8 +488,7 @@ function startgame(ip, mode, pass) {
             content: 'You must be connected to the game to join or start a server.',
             acceptText: "OK"
         });
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
         return;
     }
     if (!hasMap(Lobby.mapFile)) {
@@ -520,8 +510,7 @@ function startgame(ip, mode, pass) {
             content: 'This server is full, try joining a different one.',
             acceptText: "OK"
         });
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
         return;
     }
 
@@ -532,8 +521,7 @@ function startgame(ip, mode, pass) {
                 content: 'There are not enough slots for your party, try joining a different one.',
                 acceptText: "OK"
             });
-            Audio.notification.currentTime = 0;
-            Audio.notification.play();
+            Audio.play("notification");
             return;
         }
 
@@ -551,15 +539,15 @@ function startgame(ip, mode, pass) {
             }
         }
     }
-    Audio.beep.play();
+    Audio.play("beep");
     setTimeout(function() {
-        Audio.beep.play();
+        Audio.play("beep");
     }, 1000);
     setTimeout(function() {
-        Audio.beep.play();
+        Audio.play("beep");
     }, 2000);
     setTimeout(function() {
-        Audio.beeep.play();
+        Audio.play("beeep");
     }, 3000);
     Music.song.pause();
     $('#black').fadeIn(3000);
@@ -576,9 +564,7 @@ function startgame(ip, mode, pass) {
                     $.snackbar({
                         content: 'Failed to connect to server.'
                     });
-                    Audio.notification.currentTime = 0;
-                    Audio.notification.play();
-
+                    Audio.play("notification");
                     return;
                 }
             });

@@ -31,8 +31,7 @@ var Controller = {
         if (Menu.selected.indexOf("songs-") > -1) {
             $('#' + Menu.selected).scrollTo('.selection.gp-on');
         }
-        Audio.click.currentTime = 0;
-        Audio.click.play();
+        Audio.play("click");
     },
     "backward": function() {
         if ($("[data-gp='" + Menu.selected + "-" + (Controller.selected - 1) + "']").length > 0) {
@@ -45,8 +44,7 @@ var Controller = {
         if (Menu.selected.indexOf("songs-") > -1) {
             $('#' + Menu.selected).scrollTo('.selection.gp-on');
         }
-        Audio.click.currentTime = 0;
-        Audio.click.play();
+        Audio.play("click");
     },
     "bind": function() {
         window.gamepad = new Gamepad();
@@ -68,7 +66,7 @@ var Controller = {
             $.snackbar({
                 content: 'Controller connected! Use the left thumbstick to navigate the menu. Use the A and B buttons to go forwards and back.'
             });
-            Audio.connect.play();
+            Audio.play("connect");
         });
 
         gamepad.bind(Gamepad.Event.DISCONNECTED, function(device) {

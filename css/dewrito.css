@@ -37,7 +37,7 @@ div[data-menu-position='center'] {
     height: 720px;
     background-color: rgba(0, 0, 0, .2);
 }
-.chat-tab> .x {
+.chat-tab>.x {
     position: absolute;
     z-index: 10;
     top: 2px;
@@ -48,7 +48,7 @@ div[data-menu-position='center'] {
     opacity: .8;
     background: url('../img/x.svg') no-repeat 0 0/8px 8px;
 }
-.chat-tab> .x:hover {
+.chat-tab>.x:hover {
     opacity: 1;
 }
 #chatbox {
@@ -123,7 +123,7 @@ div[data-menu-position='center'] {
 .chat-message.alert {
     color: rgba(255, 0, 0, .9);
 }
-.chat-message> .balloon {
+.chat-message>.balloon {
     display: inline-block;
     width: 12px;
     height: 12px;
@@ -754,6 +754,7 @@ html {
 #friend-search input {
     font-size: 16px;
     position: absolute;
+    z-index: 25;
     top: 52px;
     right: 214px;
     box-sizing: border-box;
@@ -764,12 +765,12 @@ html {
     border: 0;
     outline: 0;
     background: #000;
-    z-index: 25;
 }
 #friend-add {
     font-size: 14px;
     font-weight: 300;
     position: absolute;
+    z-index: 25;
     top: 52px;
     right: 164px;
     display: inline-block;
@@ -785,7 +786,6 @@ html {
     text-align: center;
     color: rgba(255, 255, 255, .9);
     border-radius: 0;
-    z-index: 25;
 }
 #friend-add {
     background: #00a019;
@@ -793,13 +793,12 @@ html {
 #friend-add:hover {
     background: rgba(0, 255, 55, 1);
 }
-
 #videos img {
     position: absolute;
     z-index: -1;
-    left: 0;
     top: 0;
+    left: 0;
+    display: none;
     width: 1280px;
     height: 720px;
-    display: none;
 }

@@ -59,8 +59,7 @@ jQuery(function() {
                         $('#select-voting').append("<div data-option='" + entry.index + "' class='selection' data-gp='voting-" + entry.index + "'><div class='thumb'><img src='img/maps/" + getMapName(entry.image).toString().toUpperCase() + ".jpg'></div><div class='info'>" + entry.mapname + "<br/>" + entry.typename + "</div><div class='votes'>0</div><div class='square'></div></div>");
                 });
                 $('#select-voting .selection').hover(function() {
-                    Audio.click.currentTime = 0;
-                    Audio.click.play();
+                    Audio.play("click");
                     $('.selection').removeClass('gp-on');
                     $(this).addClass("gp-on");
                     Controller.selected = $(this).attr('data-gp').split("-")[1];
@@ -68,8 +67,7 @@ jQuery(function() {
                 }).click(function() {
                     var v = parseInt($(this).attr('data-option'));
                     console.log(v);
-                    Audio.slide.currentTime = 0;
-                    Audio.slide.play();
+                    Audio.play("slide");
                     Lobby.voting.send(v);
                 });
                 Lobby.voting.previous = event.data;
@@ -90,7 +88,6 @@ jQuery(function() {
         });
 
         hook = true;
-        Settings.load(0);
     } catch (err) {
         console.log(err);
         if (getURLParameter('offline') !== "1") {
@@ -101,10 +98,8 @@ jQuery(function() {
 StartRconConnection = function() {
     dewRcon = new dewRconHelper();
     dewRcon.dewWebSocket.onopen = function() {
-        Audio.notification.currentTime = 0;
-        Audio.notification.play();
+        Audio.play("notification");
         dewRconConnected = true;
-        Settings.load(0);
         console.log("rcon");
     };
     dewRcon.dewWebSocket.onerror = function() {
@@ -114,8 +109,7 @@ StartRconConnection = function() {
                 content: 'Not connected. Is the game running?'
             });
             if (!played) {
-                Audio.notification.currentTime = 0;
-                Audio.notification.play();
+                Audio.play("notification");
                 played = 1;
             }
             snacking = 1;
@@ -130,8 +124,7 @@ StartRconConnection = function() {
             $.snackbar({
                 content: 'Unable to connect to the game. Switched to offline mode.'
             });
-            Audio.notification.currentTime = 0;
-            Audio.notification.play();
+            Audio.play("notification");
         }
     };
     dewRcon.dewWebSocket.onmessage = function(message) {
