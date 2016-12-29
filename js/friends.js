@@ -94,7 +94,7 @@ StartConnection = function() {
         friendServer.lastMessage = message.data;
 
         try {
-            var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
+            var result = JSON.parse(JSON.stringify(eval('(' + LZString.decompress(message.data) + ')')));
             switch (result.type) {
                 case "disconnected":
                     if ($.inArray(result.player + ":" + result.guid, friends) != -1 || $.inArray(result.player, friends) != -1) {

@@ -48,7 +48,7 @@ StartMatchmakingConnection = function() {
 
     matchmakingServer.matchmakingServerSocket.onmessage = function(message) {
         try {
-            var result = JSON.parse(JSON.stringify(eval('(' + message.data + ')')));
+            var result = JSON.parse(JSON.stringify(eval('(' + LZString.decompress(message.data) + ')')));
             switch (result.type) {
                 case "disconnected":
 
