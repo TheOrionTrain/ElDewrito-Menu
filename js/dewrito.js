@@ -338,7 +338,7 @@ function loadSettings(i) {
 			$("video").each(function(){
 				$(this)[0].pause();
 			});
-			
+
 			loopPlayers = false;
 			clearInterval(totallyLoopingPlayers);
 		}
@@ -520,7 +520,7 @@ function jumpToServer(ip) {
 			return;
 		}
 		changeMap2(getMapName(d.mapFile));
-		$('#subtitle').text(d.name + " : " + d.address);
+		$('#subtitle').text(d.name);
 		if (d.variant === "")
 			d.variant = "Slayer";
 		$('#gametype-display').text(d.variant.toUpperCase());
@@ -1085,7 +1085,7 @@ function lobbyLoop(ip) {
 		$('#lobby').empty().append("<tr class='top' hex-colour='#000000' data-color='" + hexToRgb("#000000", 0.5) + "' style='background:" + hexToRgb("#000000", 0.5) + ";'><td class='info' colspan='2'>Current Lobby <span id='joined'>"+serverInfo.numPlayers+"</span>/<span id='maxplayers'>"+serverInfo.maxPlayers+"</span></td></tr>");
 
 		changeMap2(getMapName(serverInfo.mapFile));
-		$('#subtitle').text(serverInfo.name + " : " + ip);
+		$('#subtitle').text(serverInfo.name);
 
 		if (typeof serverInfo.passworded == 'undefined') {
 			for (var i = 0; i < players.length; i++) {
@@ -1261,7 +1261,7 @@ function joinServer(details) {
 		$('#lobby').empty();
 		$('#lobby').append("<tr class='top'><td class='info' colspan='2'>Current Lobby <span id='joined'>1</span>/<span id='maxplayers'>0</span></td></tr>");
 		changeMap2(getMapName(d.mapFile));
-		$('#subtitle').text(d.name + " : " + d.address);
+		$('#subtitle').text(d.name);
 		if (d.variant === "") {
 			d.variant = "Slayer";
 		}
