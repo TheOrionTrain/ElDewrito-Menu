@@ -158,7 +158,7 @@ var checked = 0;
 var masters = 0;
 
 function getMasterServers() {
-	$.getJSON("https://raw.githubusercontent.com/ElDewrito/ElDorito/master/dewrito.json", function(data) {
+	$.getJSON("https://raw.githubusercontent.com/ElDewrito/ElDorito/master/dist/mods/dewrito.json", function(data) {
 		masters = data.masterServers.length;
 		$.each(data.masterServers, function(key, val) {
 			debugLog("Trying master server: " + val['list']);
