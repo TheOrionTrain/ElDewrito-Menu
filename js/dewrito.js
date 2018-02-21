@@ -36,7 +36,7 @@ var players = [],
 	nextSong,
 	songIndex,
 	localBackground = isset(localStorage.getItem('localbackground'), 0),
-	videoURL = "http://158.69.166.144/video/";
+	videoURL = "http://video.thefeeltra.in/";
 
 var Chat = {
 	time: 0,
